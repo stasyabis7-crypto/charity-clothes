@@ -166,7 +166,7 @@
             color: #9E9E9E;
         }
 
-        /* Кнопка «Добавить категории» */
+        /* Кнопка «Выбрать / Редактировать категории» */
         .add-cat-btn {
             margin-top: 12px;
             display: block;
@@ -181,6 +181,34 @@
             font-weight: 400;
             text-align: center;
             cursor: pointer;
+        }
+
+        /* Выбранная категория в блоке step5 */
+        .selected-cat-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .selected-cat-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .selected-cat-name {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .selected-cat-count {
+            margin-top: 2px;
+            font-size: 13px;
+            color: #9E9E9E;
         }
 
         /* Блок фотографий */
@@ -343,9 +371,9 @@
 
         <!-- ВЫБЕРИТЕ ЧТО ПЕРЕДАТЬ -->
         <div class="section">
-            <div class="section-title">Выберите, что готовы передать</div>
+            <div class="section-title" id="cat-section-title">Выберите, что готовы передать</div>
             <div class="section-sub">Фонды увидят эти вещи в вашем объявлении</div>
-            <button class="add-cat-btn">Добавить категории</button>
+            <div id="cat-content"></div>
         </div>
 
         <!-- ФОТОГРАФИИ -->
@@ -390,7 +418,7 @@
 
     <!-- КНОПКА СНИЗУ -->
     <div class="bottom-bar">
-        <button class="continue-btn">Продолжить</button>
+        <button class="continue-btn" id="continue-btn">Продолжить</button>
     </div>
 
     <script>
@@ -430,20 +458,73 @@
             sessionStorage.setItem('bannerClosed', '1');
         }
 
-        function openSheet() {
-            // шторка — будет добавлена позже
+        function openSheet() { /* шторка — будет добавлена позже */ }
+
+        // ── КАТЕГОРИИ ──
+        function pluralItems(n) {
+            const m10 = n % 10, m100 = n % 100;
+            if (m100 >= 11 && m100 <= 14) return 'вещей';
+            if (m10 === 1) return 'вещь';
+            if (m10 >= 2 && m10 <= 4) return 'вещи';
+            return 'вещей';
         }
 
+        function updateCategorySection() {
+            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+            const titleEl = document.getElementById('cat-section-title');
+            const contentEl = document.getElementById('cat-content');
+            const continueBtn = document.getElementById('continue-btn');
+
+            if (cats.length > 0) {
+                titleEl.textContent = 'Вещи, которые вы выбрали для передачи';
+                contentEl.innerHTML = cats.map(c => `
+                    <div class="selected-cat-row">
+                        <img class="selected-cat-img" src="${c.image}" width="44" height="44" alt="">
+                        <div>
+                            <div class="selected-cat-name">${c.name}</div>
+                            <div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>
+                        </div>
+                    </div>
+                `).join('') + `
+                    <button class="add-cat-btn" onclick="window.location.href='step6.html'">Редактировать категории</button>
+                `;
+                continueBtn.style.background = '#1A1A1A';
+                continueBtn.style.cursor = 'pointer';
+            } else {
+                titleEl.textContent = 'Выберите, что готовы передать';
+                contentEl.innerHTML = `
+                    <button class="add-cat-btn" onclick="window.location.href='step6.html'">Выбрать категории</button>
+                `;
+                continueBtn.style.background = '#C4C4C4';
+                continueBtn.style.cursor = 'default';
+            }
+        }
+
+        // ── ОПИСАНИЕ ──
         const ta = document.getElementById('desc-textarea');
+
+        function syncCommentToCategories(text) {
+            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+            if (cats.length === 0) return;
+            const cat = cats[0];
+            const header = `${cat.name}, ${cat.quantity} ${pluralItems(cat.quantity)}`;
+            if (text.startsWith(header)) {
+                cat.comment = text.slice(header.length).replace(/^\n+/, '');
+                sessionStorage.setItem('adCategories', JSON.stringify(cats));
+            }
+        }
+
         ta.addEventListener('input', () => {
             ta.style.height = 'auto';
             ta.style.height = ta.scrollHeight + 'px';
             sessionStorage.setItem('adDesc', ta.value);
+            syncCommentToCategories(ta.value);
         });
 
         if (sessionStorage.getItem('bannerClosed')) {
             document.getElementById('banner').style.display = 'none';
         }
+
         const savedDesc = sessionStorage.getItem('adDesc');
         if (savedDesc) {
             ta.value = savedDesc;
@@ -452,6 +533,7 @@
 
         updatePhotosCount();
         loadTitle();
+        updateCategorySection();
     </script>
 
 </body>
