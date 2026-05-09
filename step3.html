@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Укажите название</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 120px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px;
+        }
+
+        .save-exit {
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            cursor: default;
+        }
+
+        .page-title {
+            margin-top: 12px;
+            padding: 0 16px;
+            font-weight: 800;
+            font-size: 31px;
+            color: #1A1A1A;
+            line-height: 1.1;
+        }
+
+        .content {
+            margin-top: 24px;
+            padding: 0 16px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #F4F4F4;
+            border-radius: 16px;
+            padding: 14px 16px;
+            gap: 8px;
+        }
+
+        .title-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            outline: none;
+            min-width: 0;
+        }
+
+        .title-input::placeholder {
+            color: #9E9E9E;
+        }
+
+        .erase-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .chip {
+            background: #F4F4F4;
+            border: none;
+            border-radius: 20px;
+            padding: 9px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .chip:active {
+            background: #E8E8E8;
+        }
+
+        .bottom-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+        }
+
+        .continue-btn {
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="#" onclick="goBack(); return false;">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit">Сохранить и выйти</span>
+    </header>
+
+    <h1 class="page-title">Укажите название</h1>
+
+    <div class="content">
+        <div class="input-wrapper">
+            <input
+                type="text"
+                id="title-input"
+                class="title-input"
+                placeholder="Начните вводить категорию"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="sentences"
+            >
+            <button class="erase-btn" id="erase-btn" onclick="clearInput()">
+                <img src="step 3 materials/erase.svg" width="20" height="20" alt="">
+            </button>
+        </div>
+        <div class="chips-container" id="chips-container"></div>
+    </div>
+
+    <div class="bottom-bar" id="bottom-bar">
+        <button class="continue-btn" onclick="goNext()">Продолжить</button>
+    </div>
+
+    <script>
+        const input = document.getElementById('title-input');
+        const eraseBtn = document.getElementById('erase-btn');
+        const bottomBar = document.getElementById('bottom-bar');
+        const chipsContainer = document.getElementById('chips-container');
+
+        // Suggestions pool for clothing charity ads
+        const pool = [
+            'Пакет вещей', 'Вещи пакетом', 'Детские вещи', 'Детские',
+            'Женская одежда', 'Мужская одежда', 'Детская одежда',
+            'Бесплатно', 'Даром', 'Хорошее состояние', 'Отличное состояние', 'Новое', 'Б/у',
+            '42, 44', '46, 48', '50, 52', '38, 40', 'XS, S', 'M, L', 'XL, XXL',
+            'Пальто', 'Куртка', 'Платье', 'Джинсы', 'Свитер', 'Футболки', 'Блузка',
+            'Зимняя', 'Летняя', 'Демисезонная', 'Спортивная', 'Школьная',
+            'Zara', 'H&M', 'Uniqlo', 'Nike', 'Adidas',
+        ];
+
+        // Context rules: keyword in input → boost these suggestions
+        const rules = [
+            { match: ['пакет'], boost: ['Вещи пакетом', 'Детские', '42, 44', '46, 48', 'Бесплатно', 'Даром'] },
+            { match: ['дет', 'ребен', 'детс', 'малыш'], boost: ['Детские вещи', 'Детские', 'Бесплатно', 'Школьная', 'Хорошее состояние'] },
+            { match: ['жен', 'платье', 'блуз'], boost: ['Женская одежда', 'Платье', 'Блузка', '42, 44', '46, 48', 'Zara', 'H&M'] },
+            { match: ['муж', 'брюк', 'рубаш'], boost: ['Мужская одежда', 'Джинсы', 'Свитер', 'M, L', 'XL, XXL'] },
+            { match: ['зим', 'пальт', 'куртк'], boost: ['Зимняя', 'Пальто', 'Куртка', 'Демисезонная', 'Хорошее состояние'] },
+            { match: ['спорт', 'nike', 'adidas'], boost: ['Спортивная', 'Nike', 'Adidas', 'Новое', 'XL, XXL'] },
+        ];
+
+        function getSuggestions(text) {
+            if (!text.trim()) return [];
+            const lower = text.toLowerCase();
+
+            const boosted = new Set();
+            rules.forEach(rule => {
+                if (rule.match.some(kw => lower.includes(kw))) {
+                    rule.boost.forEach(s => boosted.add(s));
+                }
+            });
+
+            const result = [];
+            // First add boosted suggestions not already in input
+            pool.filter(s => boosted.has(s) && !lower.includes(s.toLowerCase()))
+                .slice(0, 5)
+                .forEach(s => result.push(s));
+
+            // Fill remaining slots with generic relevant ones
+            if (result.length < 4) {
+                pool.filter(s => !boosted.has(s) && !lower.includes(s.toLowerCase()))
+                    .slice(0, 4 - result.length)
+                    .forEach(s => result.push(s));
+            }
+
+            return result.slice(0, 5);
+        }
+
+        function renderChips(suggestions) {
+            chipsContainer.innerHTML = '';
+            suggestions.forEach(text => {
+                const chip = document.createElement('button');
+                chip.className = 'chip';
+                chip.textContent = text;
+                chip.addEventListener('mousedown', e => e.preventDefault()); // keep focus on input
+                chip.onclick = () => applyChip(text);
+                chipsContainer.appendChild(chip);
+            });
+        }
+
+        function applyChip(text) {
+            const current = input.value.trimEnd();
+            input.value = current ? current + ' ' + text : text;
+            save();
+            updateUI();
+            input.focus();
+        }
+
+        function updateUI() {
+            const hasText = input.value.trim().length > 0;
+            eraseBtn.style.display = hasText ? 'flex' : 'none';
+            bottomBar.style.display = hasText ? 'block' : 'none';
+            renderChips(getSuggestions(input.value));
+        }
+
+        function clearInput() {
+            input.value = '';
+            sessionStorage.removeItem('adTitle');
+            updateUI();
+            input.focus();
+        }
+
+        function save() {
+            sessionStorage.setItem('adTitle', input.value);
+        }
+
+        function goBack() {
+            save();
+            history.back();
+        }
+
+        function goNext() {
+            save();
+            // navigate to next step when ready
+        }
+
+        input.addEventListener('input', () => { save(); updateUI(); });
+
+        // Restore previously saved title
+        const saved = sessionStorage.getItem('adTitle');
+        if (saved) { input.value = saved; }
+        updateUI();
+    </script>
+
+</body>
+</html>
