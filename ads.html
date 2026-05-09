@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Мои объявления</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FFFFFF;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 148px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            position: relative;
+        }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            text-decoration: none;
+            color: #1A1A1A;
+            font-size: 20px;
+        }
+
+        .header-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 17px;
+            color: #1A1A1A;
+            white-space: nowrap;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            margin-top: 8px;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 0 16px;
+            border-bottom: 1px solid #EBEBEB;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 8px 14px 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            white-space: nowrap;
+            position: relative;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            color: #1A1A1A;
+            font-weight: 700;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1A1A1A;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tab-count {
+            font-size: 11px;
+            vertical-align: super;
+            margin-left: 2px;
+        }
+
+        /* ===== SEARCH ===== */
+        .search-wrapper {
+            margin-top: 16px;
+            padding: 0 16px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #F4F4F4;
+            border-radius: 10px;
+            padding: 9px 12px;
+            gap: 8px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            color: #9E9E9E;
+            outline: none;
+            min-width: 0;
+            pointer-events: none;
+        }
+
+        .search-bar input::placeholder {
+            color: #9E9E9E;
+        }
+
+        /* ===== AD LIST ===== */
+        .ads-list {
+            margin-top: 20px;
+            padding: 0 16px;
+        }
+
+        .ad-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .ad-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 1.5px solid #C4C4C4;
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .ad-photo {
+            width: 96px;
+            height: 96px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .ad-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ad-title-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .ad-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            color: #1A1A1A;
+            line-height: 1.3;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .ad-edit {
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .ad-price {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: #1A1A1A;
+            margin-top: 4px;
+            text-decoration: none;
+        }
+
+        .ad-days {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: #9E9E9E;
+            margin-top: 4px;
+        }
+
+        .ad-stats {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: #9E9E9E;
+        }
+
+        .stat-plus {
+            color: #34C759;
+        }
+
+        /* ===== BOTTOM FIXED ===== */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #FFFFFF;
+            z-index: 100;
+        }
+
+        .place-btn {
+            display: block;
+            margin: 12px 16px 8px;
+            background: #1A1A1A;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            width: calc(100% - 32px);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            border-top: 1px solid #EBEBEB;
+            display: flex;
+            padding: 9px 0 14px;
+        }
+
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .footer-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            color: #B8B8B8;
+        }
+
+        .footer-item.active .footer-label {
+            color: #1A1A1A;
+        }
+
+        .footer-item.active img {
+            filter: brightness(0);
+        }
+
+        .footer-item.search-item img {
+            filter: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="main.html" class="header-back">←</a>
+        <span class="header-title">Мои объявления</span>
+    </header>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <div class="tab">Ждут действий<sup class="tab-count">25</sup></div>
+        <div class="tab active">Активные<sup class="tab-count">25</sup></div>
+        <div class="tab">Архив</div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-wrapper">
+        <div class="search-bar">
+            <img src="icons header/search.svg" width="20" height="20" alt="">
+            <input type="text" placeholder="Поиск по объявлениям" readonly>
+            <img src="icons header/filters.svg" width="24" height="24" alt="">
+        </div>
+    </div>
+
+    <!-- AD LIST -->
+    <div class="ads-list">
+        <div class="ad-item">
+            <div class="ad-checkbox"></div>
+            <img src="step 0 photo/Elements/Картинка.png" class="ad-photo" alt="">
+            <div class="ad-content">
+                <div class="ad-title-row">
+                    <span class="ad-title">Sony a7 IV (a7m4) Body</span>
+                    <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
+                </div>
+                <div class="ad-price">24 990 ₽</div>
+                <div class="ad-days">Осталось 15 дней</div>
+                <div class="ad-stats">
+                    <div class="stat-item">
+                        <img src="step 0 icons/Visibility.svg" width="16" height="16" alt="">
+                        601 <span class="stat-plus">+30</span>
+                    </div>
+                    <div class="stat-item">
+                        <img src="step 0 icons/Person.svg" width="16" height="16" alt="">
+                        25 <span class="stat-plus">+3</span>
+                    </div>
+                    <div class="stat-item">
+                        <img src="step 0 icons/Favorite.svg" width="16" height="16" alt="">
+                        64 <span class="stat-plus">+25</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <button class="place-btn">Разместить объявление</button>
+        <footer class="footer">
+            <a href="main.html" class="footer-item search-item">
+                <img src="icons footer/Main.svg" width="24" height="24" alt="">
+                <span class="footer-label">Поиск</span>
+            </a>
+            <div class="footer-item">
+                <img src="icons footer/Favorites.svg" width="24" height="24" alt="">
+                <span class="footer-label">Избранное</span>
+            </div>
+            <div class="footer-item active">
+                <img src="icons footer/Ads.svg" width="24" height="24" alt="">
+                <span class="footer-label">Объявления</span>
+            </div>
+            <div class="footer-item">
+                <img src="icons footer/Chat.svg" width="24" height="24" alt="">
+                <span class="footer-label">Сообщения</span>
+            </div>
+            <div class="footer-item">
+                <img src="icons footer/User.svg" width="24" height="24" alt="">
+                <span class="footer-label">Профиль</span>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
