@@ -29,6 +29,7 @@
             font-size: 15px;
             font-weight: 400;
             color: #9E9E9E;
+            cursor: pointer;
         }
 
         .page-title {
@@ -40,15 +41,12 @@
             line-height: 1.1;
         }
 
-        /* ── CATEGORY LIST ── */
         .category-list {
             margin-top: 24px;
             padding: 0 16px;
         }
 
-        .cat-item {
-            margin-bottom: 4px;
-        }
+        .cat-item { margin-bottom: 4px; }
 
         .cat-row {
             display: flex;
@@ -80,12 +78,8 @@
             color: #9E9E9E;
         }
 
-        /* ── EXPANDED SECTION ── */
-        .cat-expanded {
-            padding-bottom: 16px;
-        }
+        .cat-expanded { padding-bottom: 16px; }
 
-        /* Quantity row */
         .qty-row {
             display: flex;
             align-items: center;
@@ -119,7 +113,6 @@
             text-align: center;
         }
 
-        /* Comment */
         .comment-wrap {
             position: relative;
             margin-bottom: 12px;
@@ -156,7 +149,6 @@
             padding: 0;
         }
 
-        /* Dropdown */
         .dropdown {
             background: #F4F4F4;
             border-radius: 12px;
@@ -177,14 +169,8 @@
             color: #1A1A1A;
         }
 
-        .dropdown-chevron {
-            transition: transform 0.2s;
-            flex-shrink: 0;
-        }
-
-        .dropdown-chevron.rotated {
-            transform: rotate(180deg);
-        }
+        .dropdown-chevron { transition: transform 0.2s; flex-shrink: 0; }
+        .dropdown-chevron.rotated { transform: rotate(180deg); }
 
         .dropdown-body {
             display: none;
@@ -240,8 +226,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 16px;
-            color: #1A1A1A;
         }
 
         .sheet-title {
@@ -294,7 +278,6 @@
         }
 
         .sheet-step img { flex-shrink: 0; }
-
         .sheet-step-text { flex: 1; min-width: 0; }
 
         .sheet-step-title {
@@ -391,8 +374,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 16px;
-            color: #1A1A1A;
         }
 
         .popup-title {
@@ -444,7 +425,7 @@
 <body>
 
     <header class="header">
-        <a href="step5.html">
+        <a href="step5-crisis.html">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="header-right" onclick="openSheet()" style="cursor:pointer;">Как это работает?</span>
@@ -459,12 +440,12 @@
         <button class="save-btn" onclick="saveAndReturn()">Сохранить</button>
     </div>
 
-    <!-- ШТОРКА -->
+    <!-- ШТОРКА: КАК ЭТО РАБОТАЕТ -->
     <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
             <button class="sheet-close" onclick="closeSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
-            <h2 class="sheet-title">Передача вещей<br>на благотворительность</h2>
+            <h2 class="sheet-title">Передача вещей на благотворительность</h2>
             <div class="sheet-tabs">
                 <button class="sheet-tab active" id="stab-how" onclick="switchSheetTab('how')">Как это работает</button>
                 <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Преимущества</button>
@@ -473,22 +454,22 @@
                 <div class="sheet-step">
                     <img src="sheets materials/1.png" width="64" height="64" alt="">
                     <div class="sheet-step-text">
-                        <div class="sheet-step-title">Разместите бесплатное объявление</div>
-                        <div class="sheet-step-sub">Выберите категории вещей, которые нужны фондам</div>
+                        <div class="sheet-step-title">Разместите благотворительное объявление</div>
+                        <div class="sheet-step-sub">Выберите вещи, которые готовы передать пострадавшим</div>
                     </div>
                 </div>
                 <div class="sheet-step">
                     <img src="sheets materials/2.png" width="64" height="64" alt="">
                     <div class="sheet-step-text">
-                        <div class="sheet-step-title">Фонд напишет вам в чате</div>
-                        <div class="sheet-step-sub">Обычно это занимает несколько дней</div>
+                        <div class="sheet-step-title">Объявление увидят люди и фонды</div>
+                        <div class="sheet-step-sub">Оно попадёт в специальный раздел помощи для региона ЧС</div>
                     </div>
                 </div>
                 <div class="sheet-step">
                     <img src="sheets materials/3.png" width="64" height="64" alt="">
                     <div class="sheet-step-text">
-                        <div class="sheet-step-title">Передайте вещи Авито Доставкой</div>
-                        <div class="sheet-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div>
+                        <div class="sheet-step-title">Отправьте вещи Авито Доставкой</div>
+                        <div class="sheet-step-sub">Получатель сможет оформить доставку всего за 1 ₽</div>
                     </div>
                 </div>
             </div>
@@ -496,31 +477,32 @@
                 <div class="sheet-step">
                     <img src="sheets materials/4.png" width="64" height="64" alt="">
                     <div class="sheet-step-text">
-                        <div class="sheet-step-title">Пишут только проверенные фонды</div>
-                        <div class="sheet-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div>
+                        <div class="sheet-step-title">Помощь быстрее доходит до пострадавших</div>
+                        <div class="sheet-step-sub">Объявления показываются людям и фондам в регионе ЧС</div>
                     </div>
                 </div>
                 <div class="sheet-step">
                     <img src="sheets materials/5.png" width="64" height="64" alt="">
                     <div class="sheet-step-text">
-                        <div class="sheet-step-title">Передайте нужные вещи</div>
-                        <div class="sheet-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div>
+                        <div class="sheet-step-title">Можно отдать вещи даром или за символическую цену</div>
+                        <div class="sheet-step-sub">Подойдут товары первой необходимости и гуманитарная помощь</div>
                     </div>
                 </div>
                 <div class="sheet-step">
                     <img src="sheets materials/6.png" width="64" height="64" alt="">
                     <div class="sheet-step-text">
-                        <div class="sheet-step-title">Без затрат на размещение и доставку</div>
-                        <div class="sheet-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div>
+                        <div class="sheet-step-title">Льготная доставка за счёт Авито</div>
+                        <div class="sheet-step-sub">Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ПОПАП: СБРОС КАТЕГОРИЙ -->
     <div class="popup-overlay" id="popup" onclick="handleOverlayClick(event)">
         <div class="popup-card">
-            <button class="popup-close" onclick="closePopup()">✕</button>
+            <button class="popup-close" onclick="closePopup()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
             <p class="popup-title">Сбросить выбор категорий?</p>
             <p class="popup-text">Все выбранные категории и введённые данные будут удалены безвозвратно.</p>
             <button class="popup-confirm" onclick="confirmReset()">Да, сбросить всё</button>
@@ -531,36 +513,70 @@
     <script>
         const CATEGORIES = [
             {
-                id: 'kids-clothes',
-                name: 'Детская одежда и обувь',
-                subtitle: 'Осталось собрать 5 штук',
-                image: 'step 6 materials/Детская одежда и обувь.png',
-                what: '— Одежда для новорождённых (размеры 50–68);\n— Одежда для детей ясельного возраста (68–98);\n— Одежда для дошкольников (98–122);\n— Школьная форма и повседневная одежда (122+);\n— Верхняя одежда: куртки, пальто, комбинезоны;\n— Обувь для детей любого возраста;\n— Головные уборы, шарфы, варежки;\n— Принимаем чистые вещи без дыр и сильного износа.'
+                id: 'clothes',
+                name: 'Одежда',
+                subtitle: 'Для взрослых и детей',
+                image: 'crisis help/cat 1.png',
+                what: '— Тёплая/демисезонная одежда и обувь;\n— Повседневная одежда и обувь для взрослых и детей;\n— Новое нижнее бельё.'
             },
             {
-                id: 'adult-clothes',
-                name: 'Мужская и женская одежда',
-                subtitle: 'Осталось собрать 15 штук',
-                image: 'step 6 materials/Мужская и женская одежда.png',
-                what: '— Одежда любого размера и сезона;\n— Верхняя одежда: куртки, пальто, шубы;\n— Обувь мужская и женская;\n— Головные уборы и аксессуары;\n— Принимаем чистые вещи в хорошем состоянии.'
+                id: 'hygiene',
+                name: 'Средства гигиены',
+                subtitle: 'Товары первой необходимости',
+                image: 'crisis help/cat 2.png',
+                what: '— Зубная щётка;\n— Зубная паста;\n— Шампунь;\n— Гель для душа;\n— Мыло кусковое;\n— Порошок стиральный;\n— Антисептик;\n— Маски;\n— Влажные салфетки;\n— Туалетная бумага;\n— Бритва;\n— Пена для бритья;\n— Предметы женской гигиены;\n— Товары первой необходимости и постельные принадлежности (новое с бирками).'
             },
             {
-                id: 'strollers',
-                name: 'Детские коляски',
-                subtitle: 'Осталось собрать 3 штуки',
-                image: 'step 6 materials/Детские коляски.png',
-                what: '— Коляски-трансформеры;\n— Прогулочные коляски;\n— Коляски для новорождённых;\n— Принимаем в рабочем состоянии, без сильных повреждений.'
+                id: 'home',
+                name: 'Домашняя утварь',
+                subtitle: 'Только новые предметы',
+                image: 'crisis help/cat 3.png',
+                what: '— Столовые приборы (нож, вилка, ложка);\n— Посуда (тарелка глубокая, кружка);\n— Кастрюля от 3 л. с крышкой;\n— Сковорода глубокая от 24 см. в диаметре;\n— Таз (9 л.);\n— Полотенце банное;\n— Полотенце для рук;\n— Постельное бельё 2-х спальное;\n— Постельное бельё 1-спальное;\n— Одеяло 2-х спальное;\n— Одеяло 1-спальное;\n— Подушка.'
             },
             {
-                id: 'toys',
-                name: 'Игрушки',
-                subtitle: 'Осталось собрать 100 штук',
-                image: 'step 6 materials/Игрушки.png',
-                what: '— Мягкие игрушки;\n— Конструкторы и наборы;\n— Настольные и развивающие игры;\n— Куклы, машинки, музыкальные игрушки;\n— Принимаем чистые игрушки в рабочем состоянии.'
+                id: 'kids',
+                name: 'Гуманитарная помощь для детей',
+                subtitle: 'Гигиена, игрушки, канцелярия',
+                image: 'crisis help/cat 4.png',
+                what: '— Детская гигиена (подгузники, пеленки, присыпки, влажные салфетки и пр.);\n— Детские игрушки и канцелярские принадлежности (для оборудования детских комнат в ПВР и оказания психосоциальной поддержки детям).'
+            },
+            {
+                id: 'appliances',
+                name: 'Рабочая техника',
+                subtitle: 'В хорошем состоянии',
+                image: 'crisis help/cat 5.png',
+                what: '— Микроволновки;\n— Чайники;\n— Утюги.'
+            },
+            {
+                id: 'disabled',
+                name: 'Гуманитарная помощь для людей с ОВЗ',
+                subtitle: 'Для маломобильных граждан',
+                image: 'crisis help/cat 6.png',
+                what: '— Подгузники взрослые (большие размеры).'
+            },
+            {
+                id: 'water',
+                name: 'Откачка воды и осушение',
+                subtitle: 'Оборудование для ликвидации последствий',
+                image: 'crisis help/cat 7.png',
+                what: '— Помпа для откачки воды;\n— Пушка для сушки;\n— Напорные пожарные рукава.'
+            },
+            {
+                id: 'tools',
+                name: 'Инструменты для расчистки и земляных работ',
+                subtitle: 'Ручной и моторизованный инструмент',
+                image: 'crisis help/cat 8.png',
+                what: '— Лопаты штыковые;\n— Лопаты шуфельные (совковые);\n— Бензиновые пилы.'
+            },
+            {
+                id: 'protection',
+                name: 'Средства индивидуальной защиты и спецодежда',
+                subtitle: 'Для волонтёров и работников',
+                image: 'crisis help/cat 9.png',
+                what: '— Спецодежда для волонтёров;\n— Резиновые сапоги;\n— Защитные каски.'
             }
         ];
 
-        // state keyed by category id
         let state = {};
         const saved = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
         saved.forEach(s => { state[s.id] = { ...s }; });
@@ -587,7 +603,6 @@
                 const wrapper = document.createElement('div');
                 wrapper.className = 'cat-item';
 
-                // Row
                 const row = document.createElement('div');
                 row.className = 'cat-row';
                 row.onclick = () => toggleCategory(cat.id);
@@ -636,7 +651,6 @@
                     `;
                     wrapper.appendChild(expanded);
 
-                    // Set up textarea after insertion
                     requestAnimationFrame(() => {
                         const ta = document.getElementById(`comment-${cat.id}`);
                         if (!ta) return;
@@ -726,7 +740,6 @@
 
             sessionStorage.setItem('adCategories', JSON.stringify(selected));
 
-            // Build description for step5
             if (selected.length > 0) {
                 const desc = selected.map(s => {
                     const header = `${s.name}, ${s.quantity} ${pluralItems(s.quantity)}`;
@@ -735,10 +748,9 @@
                 sessionStorage.setItem('adDesc', desc);
             }
 
-            window.location.href = 'step5.html';
+            window.location.href = 'step5-crisis.html';
         }
 
-        // Pin bottom bar right above keyboard using transform (GPU-composited, no reflow)
         function pinBar() {
             requestAnimationFrame(() => {
                 const vv = window.visualViewport;
