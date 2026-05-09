@@ -301,6 +301,124 @@
 
         .desc-textarea::placeholder { color: #9E9E9E; }
 
+        /* ── SHEET ── */
+        .sheet-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 300;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .sheet-overlay.open { display: flex; }
+
+        .sheet-card {
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 430px;
+            padding: 12px 16px 44px;
+            max-height: 82vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .sheet-drag {
+            width: 40px;
+            height: 4px;
+            background: #E0E0E0;
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .sheet-close {
+            position: absolute;
+            top: 20px;
+            right: 16px;
+            background: #F4F4F4;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: #1A1A1A;
+        }
+
+        .sheet-title {
+            font-weight: 800;
+            font-size: 28px;
+            line-height: 1.15;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+            padding-right: 44px;
+        }
+
+        .sheet-tabs {
+            display: flex;
+            border-bottom: 1px solid #EBEBEB;
+            margin-bottom: 24px;
+        }
+
+        .sheet-tab {
+            padding: 0 0 10px;
+            margin-right: 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: #9E9E9E;
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .sheet-tab.active { color: #1A1A1A; }
+
+        .sheet-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1A1A1A;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .sheet-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .sheet-step img { flex-shrink: 0; }
+
+        .sheet-step-text { flex: 1; min-width: 0; }
+
+        .sheet-step-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #1A1A1A;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .sheet-step-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            line-height: 1.4;
+        }
+
         /* ── BOTTOM BUTTON ── */
         .bottom-bar {
             position: fixed;
@@ -416,6 +534,65 @@
 
     </div>
 
+    <!-- ШТОРКА -->
+    <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()">
+        <div class="sheet-card" onclick="event.stopPropagation()">
+            <div class="sheet-drag"></div>
+            <button class="sheet-close" onclick="closeSheet()">✕</button>
+            <h2 class="sheet-title">Передача вещей<br>на благотворительность</h2>
+            <div class="sheet-tabs">
+                <button class="sheet-tab active" id="stab-how" onclick="switchSheetTab('how')">Как это работает</button>
+                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Преимущества</button>
+            </div>
+            <div class="sheet-pane" id="spane-how">
+                <div class="sheet-step">
+                    <img src="sheets materials/1.png" width="64" height="64" alt="">
+                    <div class="sheet-step-text">
+                        <div class="sheet-step-title">Разместите бесплатное объявление</div>
+                        <div class="sheet-step-sub">Выберите категории вещей, которые нужны фондам</div>
+                    </div>
+                </div>
+                <div class="sheet-step">
+                    <img src="sheets materials/2.png" width="64" height="64" alt="">
+                    <div class="sheet-step-text">
+                        <div class="sheet-step-title">Фонд напишет вам в чате</div>
+                        <div class="sheet-step-sub">Обычно это занимает несколько дней</div>
+                    </div>
+                </div>
+                <div class="sheet-step">
+                    <img src="sheets materials/3.png" width="64" height="64" alt="">
+                    <div class="sheet-step-text">
+                        <div class="sheet-step-title">Передайте вещи Авито Доставкой</div>
+                        <div class="sheet-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sheet-pane" id="spane-benefits" style="display:none">
+                <div class="sheet-step">
+                    <img src="sheets materials/4.png" width="64" height="64" alt="">
+                    <div class="sheet-step-text">
+                        <div class="sheet-step-title">Пишут только проверенные фонды</div>
+                        <div class="sheet-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div>
+                    </div>
+                </div>
+                <div class="sheet-step">
+                    <img src="sheets materials/5.png" width="64" height="64" alt="">
+                    <div class="sheet-step-text">
+                        <div class="sheet-step-title">Передайте нужные вещи</div>
+                        <div class="sheet-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div>
+                    </div>
+                </div>
+                <div class="sheet-step">
+                    <img src="sheets materials/6.png" width="64" height="64" alt="">
+                    <div class="sheet-step-text">
+                        <div class="sheet-step-title">Без затрат на размещение и доставку</div>
+                        <div class="sheet-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- КНОПКА СНИЗУ -->
     <div class="bottom-bar">
         <button class="continue-btn" id="continue-btn">Продолжить</button>
@@ -463,7 +640,22 @@
             sessionStorage.setItem('bannerClosed', '1');
         }
 
-        function openSheet() { /* шторка — будет добавлена позже */ }
+        function openSheet() {
+            document.getElementById('sheet-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheet() {
+            document.getElementById('sheet-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function switchSheetTab(tab) {
+            document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
+            document.getElementById('stab-' + tab).classList.add('active');
+            document.getElementById('spane-' + tab).style.display = 'block';
+        }
 
         // ── КАТЕГОРИИ ──
         function pluralItems(n) {
