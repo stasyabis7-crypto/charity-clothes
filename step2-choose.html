@@ -228,7 +228,9 @@
         }
 
         function goToDone() {
-            window.location.href = 'step2-end.html';
+            const returnPage = sessionStorage.getItem('photoReturnPage') || 'step2-end.html';
+            sessionStorage.removeItem('photoReturnPage');
+            window.location.href = returnPage;
         }
 
         render();
