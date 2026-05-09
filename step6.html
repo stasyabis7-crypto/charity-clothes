@@ -209,6 +209,7 @@
             display: flex;
             gap: 10px;
             z-index: 100;
+            will-change: transform;
         }
 
         .reset-btn {
@@ -437,7 +438,7 @@
                             <textarea
                                 class="comment-textarea"
                                 id="comment-${cat.id}"
-                                placeholder="Уточните: размер, состояние или цвет"
+                                placeholder="Уточните: размер, состояние или цвет вещей, которые вы передаёте в этой категории"
                             ></textarea>
                             <button class="comment-clear" id="clear-${cat.id}"
                                 onclick="event.stopPropagation(); clearComment('${cat.id}')">
@@ -543,17 +544,22 @@
             window.location.href = 'step5.html';
         }
 
-        // Pin bottom bar right above keyboard
+        // Pin bottom bar right above keyboard using transform (GPU-composited, no reflow)
         function pinBar() {
-            const vv = window.visualViewport;
-            if (!vv) return;
-            const distFromBottom = window.innerHeight - vv.offsetTop - vv.height;
-            document.getElementById('bottom-bar').style.bottom = Math.max(0, distFromBottom) + 'px';
+            requestAnimationFrame(() => {
+                const vv = window.visualViewport;
+                if (!vv) return;
+                const bar = document.getElementById('bottom-bar');
+                const keyboardHeight = Math.max(0, window.innerHeight - vv.offsetTop - vv.height);
+                bar.style.transform = `translateX(-50%) translateY(-${keyboardHeight}px)`;
+                bar.style.paddingBottom = keyboardHeight > 10 ? '12px' : '28px';
+            });
         }
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', pinBar);
             window.visualViewport.addEventListener('scroll', pinBar);
         }
+        pinBar();
 
         render();
     </script>
