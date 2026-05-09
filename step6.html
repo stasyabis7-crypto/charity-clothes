@@ -543,12 +543,16 @@
             window.location.href = 'step5.html';
         }
 
-        // Pin bottom bar above keyboard
+        // Pin bottom bar right above keyboard
+        function pinBar() {
+            const vv = window.visualViewport;
+            if (!vv) return;
+            const distFromBottom = window.innerHeight - vv.offsetTop - vv.height;
+            document.getElementById('bottom-bar').style.bottom = Math.max(0, distFromBottom) + 'px';
+        }
         if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', () => {
-                const kb = window.innerHeight - window.visualViewport.height;
-                document.getElementById('bottom-bar').style.bottom = Math.max(0, kb) + 'px';
-            });
+            window.visualViewport.addEventListener('resize', pinBar);
+            window.visualViewport.addEventListener('scroll', pinBar);
         }
 
         render();

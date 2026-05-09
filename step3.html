@@ -277,12 +277,13 @@
         if (saved) { input.value = saved; }
         updateUI();
 
-        // Stick bottom bar to top of keyboard
+        // Stick bottom bar right above keyboard
         function pinToKeyboard() {
+            const vv = window.visualViewport;
             const bar = document.getElementById('bottom-bar');
-            if (!bar) return;
-            const kb = window.innerHeight - window.visualViewport.height;
-            bar.style.bottom = Math.max(0, kb) + 'px';
+            if (!bar || !vv) return;
+            const distFromBottom = window.innerHeight - vv.offsetTop - vv.height;
+            bar.style.bottom = Math.max(0, distFromBottom) + 'px';
         }
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', pinToKeyboard);
