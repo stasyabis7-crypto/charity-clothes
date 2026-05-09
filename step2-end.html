@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Внешний вид</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 90px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px;
+        }
+
+        .save-exit {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            cursor: default;
+        }
+
+        /* PAGE TITLE */
+        .page-title {
+            margin-top: 12px;
+            padding: 0 16px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 31px;
+            color: #1A1A1A;
+            line-height: 1.1;
+        }
+
+        /* CONTENT */
+        .content {
+            margin-top: 24px;
+            padding: 0 16px;
+        }
+
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            color: #1A1A1A;
+            margin-bottom: 12px;
+        }
+
+        /* TOGGLE ROW */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .toggle-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            color: #1A1A1A;
+        }
+
+        .toggle-switch {
+            width: 51px;
+            height: 31px;
+            background: #E0E0E0;
+            border-radius: 16px;
+            position: relative;
+            cursor: default;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 25px;
+            height: 25px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        /* PHOTOS GRID */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .photo-cell {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .photo-cell img.photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .main-tag {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: #1A1A1A;
+            z-index: 10;
+        }
+
+        .delete-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(255,255,255,0.92);
+            border: none;
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* ADD CELL */
+        .add-cell {
+            background: #F4F4F4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        .add-cell span {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        /* BOTTOM BUTTON */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+        }
+
+        .continue-btn {
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="step1.html">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit">Сохранить и выйти</span>
+    </header>
+
+    <h1 class="page-title">Внешний вид</h1>
+
+    <div class="content">
+        <div class="section-label">Фотографии</div>
+
+        <div class="toggle-row">
+            <span class="toggle-label">Улучшить фото</span>
+            <div class="toggle-switch"></div>
+        </div>
+
+        <div class="photos-grid" id="photos-grid"></div>
+    </div>
+
+    <div class="bottom-bar">
+        <button class="continue-btn">Продолжить без улучшения</button>
+    </div>
+
+    <script>
+        let photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+
+        if (photos.length === 0) {
+            window.location.replace('step2.html');
+        }
+
+        function deletePhoto(id) {
+            photos = photos.filter(p => p !== id);
+            sessionStorage.setItem('selectedPhotos', JSON.stringify(photos));
+            if (photos.length === 0) {
+                window.location.href = 'step2.html';
+            } else {
+                renderPhotos();
+            }
+        }
+
+        function renderPhotos() {
+            const grid = document.getElementById('photos-grid');
+            grid.innerHTML = '';
+
+            photos.forEach((id, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'photo-cell';
+                cell.innerHTML = `
+                    ${index === 0 ? '<span class="main-tag">Главная</span>' : ''}
+                    <img src="step 2 materials/pic ${id}.png" class="photo-img" alt="">
+                    <button class="delete-btn" onclick="deletePhoto(${id})">
+                        <img src="step 2 materials/delete.svg" width="20" height="20" alt="">
+                    </button>
+                `;
+                grid.appendChild(cell);
+            });
+
+            const addCell = document.createElement('div');
+            addCell.className = 'photo-cell add-cell';
+            addCell.onclick = () => window.location.href = 'step2-choose.html';
+            addCell.innerHTML = `
+                <img src="step 2 materials/Camera.svg" width="24" height="24" alt="">
+                <span>Добавить</span>
+            `;
+            grid.appendChild(addCell);
+        }
+
+        renderPhotos();
+    </script>
+
+</body>
+</html>

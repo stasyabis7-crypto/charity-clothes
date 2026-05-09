@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Внешний вид</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px;
+        }
+
+        .save-exit {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            cursor: default;
+        }
+
+        .page-title {
+            margin-top: 12px;
+            padding: 0 16px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 31px;
+            color: #1A1A1A;
+            line-height: 1.1;
+        }
+
+        .content {
+            margin-top: 24px;
+            padding: 0 16px;
+        }
+
+        .add-photo-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 170px;
+            height: 160px;
+            background: #F4F4F4;
+            border-radius: 16px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .add-photo-btn span {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            color: #1A1A1A;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const saved = sessionStorage.getItem('selectedPhotos');
+            if (saved && JSON.parse(saved).length > 0) {
+                window.location.replace('step2-end.html');
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <header class="header">
+        <a href="step1.html">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit">Сохранить и выйти</span>
+    </header>
+
+    <h1 class="page-title">Внешний вид</h1>
+
+    <div class="content">
+        <a href="step2-choose.html" class="add-photo-btn">
+            <img src="step 2 materials/Camera.svg" width="28" height="28" alt="">
+            <span>Добавить фото</span>
+        </a>
+    </div>
+
+</body>
+</html>

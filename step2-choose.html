@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Выбор фото</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 16px 16px;
+            gap: 8px;
+        }
+
+        .header-title {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 17px;
+            color: #1A1A1A;
+        }
+
+        /* CAMERA AREA */
+        .camera-area {
+            width: 100%;
+            height: 220px;
+            background: #1A1A1A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* PHOTO GRID */
+        .photos-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3px;
+            margin-top: 3px;
+        }
+
+        .photos-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+            margin-top: 3px;
+        }
+
+        .photo-item {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .photo-item img.photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.15s;
+        }
+
+        .photo-item.selected img.photo-img {
+            opacity: 0.85;
+        }
+
+        .photo-item.selected::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 3px solid #fff;
+            border-radius: 0;
+            pointer-events: none;
+        }
+
+        .badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #1A1A1A;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 2px solid #fff;
+        }
+
+        /* FLOATING FOOTER */
+        .floating-footer {
+            display: none;
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 398px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 10px 10px 10px 10px;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+        }
+
+        .footer-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .footer-count {
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .done-btn {
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="#" onclick="history.back(); return false;">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <div class="header-title">
+            Недавние
+            <img src="step 2 materials/Expand More.svg" width="20" height="20" alt="">
+        </div>
+        <div style="width:48px"></div>
+    </header>
+
+    <!-- Black camera area (non-clickable) -->
+    <div class="camera-area">
+        <img src="step 2 materials/Camera.svg" width="32" height="32" alt="" style="filter: invert(1); opacity:0.6">
+    </div>
+
+    <!-- Top row: 3 photos -->
+    <div class="photos-top">
+        <div class="photo-item" data-id="1" onclick="toggle(1)">
+            <img src="step 2 materials/pic 1.png" class="photo-img" alt="">
+            <span class="badge" id="badge-1"></span>
+        </div>
+        <div class="photo-item" data-id="2" onclick="toggle(2)">
+            <img src="step 2 materials/pic 2.png" class="photo-img" alt="">
+            <span class="badge" id="badge-2"></span>
+        </div>
+        <div class="photo-item" data-id="3" onclick="toggle(3)">
+            <img src="step 2 materials/pic 3.png" class="photo-img" alt="">
+            <span class="badge" id="badge-3"></span>
+        </div>
+    </div>
+
+    <!-- Bottom row: 2 photos -->
+    <div class="photos-bottom">
+        <div class="photo-item" data-id="4" onclick="toggle(4)">
+            <img src="step 2 materials/pic 4.png" class="photo-img" alt="">
+            <span class="badge" id="badge-4"></span>
+        </div>
+        <div class="photo-item" data-id="5" onclick="toggle(5)">
+            <img src="step 2 materials/pic 5.png" class="photo-img" alt="">
+            <span class="badge" id="badge-5"></span>
+        </div>
+    </div>
+
+    <!-- Floating footer -->
+    <div class="floating-footer" id="floating-footer">
+        <img class="footer-thumb" id="footer-thumb" src="" alt="">
+        <span class="footer-count" id="footer-count"></span>
+        <button class="done-btn" onclick="goToDone()">Готово</button>
+    </div>
+
+    <script>
+        let selected = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+
+        function toggle(id) {
+            const idx = selected.indexOf(id);
+            if (idx === -1) {
+                selected.push(id);
+            } else {
+                selected.splice(idx, 1);
+            }
+            sessionStorage.setItem('selectedPhotos', JSON.stringify(selected));
+            render();
+        }
+
+        function render() {
+            for (let i = 1; i <= 5; i++) {
+                const item = document.querySelector(`[data-id="${i}"]`);
+                const badge = document.getElementById(`badge-${i}`);
+                const idx = selected.indexOf(i);
+                if (idx !== -1) {
+                    item.classList.add('selected');
+                    badge.textContent = idx + 1;
+                    badge.style.display = 'flex';
+                } else {
+                    item.classList.remove('selected');
+                    badge.style.display = 'none';
+                }
+            }
+
+            const footer = document.getElementById('floating-footer');
+            if (selected.length > 0) {
+                footer.style.display = 'flex';
+                document.getElementById('footer-count').textContent = selected.length + ' фото';
+                const last = selected[selected.length - 1];
+                document.getElementById('footer-thumb').src = `step 2 materials/pic ${last}.png`;
+            } else {
+                footer.style.display = 'none';
+            }
+        }
+
+        function goToDone() {
+            window.location.href = 'step2-end.html';
+        }
+
+        render();
+    </script>
+
+</body>
+</html>
