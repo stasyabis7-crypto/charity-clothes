@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Видео</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px 8px 8px;
+        }
+
+        .save-exit {
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+        }
+
+        /* ── PAGE TITLE ── */
+        .page-title {
+            margin-top: 8px;
+            padding: 0 16px;
+            font-weight: 800;
+            font-size: 31px;
+            color: #1A1A1A;
+            line-height: 1.1;
+        }
+
+        /* ── SUBTITLE ── */
+        .page-sub {
+            margin-top: 8px;
+            padding: 0 16px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.4;
+        }
+
+        .page-sub a {
+            color: #9E9E9E;
+            text-decoration: underline;
+        }
+
+        /* ── UPLOAD CARDS ── */
+        .upload-row {
+            margin-top: 20px;
+            padding: 0 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .upload-card {
+            flex: 1;
+            background: #F4F4F4;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 28px 16px;
+        }
+
+        .upload-card-label {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        /* ── PROMO BLOCK ── */
+        .promo-block {
+            margin-top: 32px;
+            padding: 0 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .promo-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .promo-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1A1A1A;
+            line-height: 1.2;
+        }
+
+        .promo-desc {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.4;
+        }
+
+        .promo-more {
+            margin-top: 16px;
+            display: inline-block;
+            background: #F4F4F4;
+            border: none;
+            border-radius: 20px;
+            padding: 9px 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: default;
+        }
+
+        .promo-phone {
+            flex-shrink: 0;
+            width: 156px;
+            object-fit: contain;
+        }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+        }
+
+        .skip-btn {
+            display: block;
+            width: 100%;
+            background: #F4F4F4;
+            color: #1A1A1A;
+            border: none;
+            border-radius: 16px;
+            padding: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="javascript:history.back()">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit">Сохранить и выйти</span>
+    </header>
+
+    <!-- PAGE TITLE -->
+    <h1 class="page-title">Видео</h1>
+
+    <!-- SUBTITLE -->
+    <p class="page-sub">Перед загрузкой загляните в <a href="#">список требований</a>.</p>
+
+    <!-- UPLOAD CARDS -->
+    <div class="upload-row">
+        <div class="upload-card">
+            <img src="video materials/Video.svg" width="32" height="32" alt="">
+            <span class="upload-card-label">Из галереи</span>
+        </div>
+        <div class="upload-card">
+            <img src="video materials/Rec.svg" width="32" height="32" alt="">
+            <span class="upload-card-label">Снять новое</span>
+        </div>
+    </div>
+
+    <!-- PROMO BLOCK -->
+    <div class="promo-block">
+        <div class="promo-text">
+            <div class="promo-title">+15% заказов<br>с доставкой</div>
+            <div class="promo-desc">В среднем получают объявления, в которых есть видео</div>
+            <button class="promo-more">Подробнее</button>
+        </div>
+        <img src="video materials/phone.png" class="promo-phone" alt="">
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <button class="skip-btn" onclick="window.location.href='ads.html'">Продолжить без видео</button>
+    </div>
+
+</body>
+</html>
