@@ -15,7 +15,7 @@
             max-width: 430px;
             margin: 0 auto;
             overflow-x: hidden;
-            padding-bottom: 100px;
+            padding-bottom: 160px;
         }
 
         /* HEADER */
@@ -52,8 +52,9 @@
         .photos-grid-all {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 3px;
-            margin-top: 3px;
+            gap: 8px;
+            margin-top: 8px;
+            padding: 0 16px;
         }
 
         .photo-item {
@@ -61,6 +62,7 @@
             cursor: pointer;
             overflow: hidden;
             aspect-ratio: 1;
+            border-radius: 28px;
         }
 
         .photo-item img.photo-img {
@@ -80,7 +82,7 @@
             position: absolute;
             inset: 0;
             border: 3px solid #1A1A1A;
-            border-radius: 0;
+            border-radius: 28px;
             pointer-events: none;
         }
 
@@ -103,33 +105,37 @@
             border: 2px solid #fff;
         }
 
-        /* FLOATING FOOTER */
-        .floating-footer {
+        /* BOTTOM BAR */
+        .bottom-bar {
             display: none;
             position: fixed;
-            bottom: 16px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 398px;
+            width: 100%;
+            max-width: 430px;
             background: #fff;
-            border-radius: 16px;
-            padding: 10px 10px 10px 10px;
+            padding: 12px 16px 28px;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .bottom-bar-info {
+            display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
         }
 
         .footer-thumb {
             width: 48px;
             height: 48px;
-            border-radius: 8px;
+            border-radius: 12px;
             object-fit: cover;
             flex-shrink: 0;
         }
 
         .footer-count {
-            flex: 1;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
             font-weight: 400;
@@ -137,17 +143,18 @@
         }
 
         .done-btn {
+            display: block;
+            width: 100%;
             background: #1A1A1A;
             color: #fff;
             border: none;
-            border-radius: 12px;
-            padding: 12px 20px;
+            border-radius: 28px;
+            padding: 16px;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
             font-weight: 400;
+            text-align: center;
             cursor: pointer;
-            text-decoration: none;
-            white-space: nowrap;
         }
     </style>
 </head>
@@ -193,10 +200,12 @@
         </div>
     </div>
 
-    <!-- Floating footer -->
-    <div class="floating-footer" id="floating-footer">
-        <img class="footer-thumb" id="footer-thumb" src="" alt="">
-        <span class="footer-count" id="footer-count"></span>
+    <!-- Bottom bar -->
+    <div class="bottom-bar" id="floating-footer">
+        <div class="bottom-bar-info">
+            <img class="footer-thumb" id="footer-thumb" src="" alt="">
+            <span class="footer-count" id="footer-count"></span>
+        </div>
         <button class="done-btn" onclick="goToDone()">Готово</button>
     </div>
 
