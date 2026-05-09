@@ -38,7 +38,7 @@
             font-size: 15px;
             font-weight: 400;
             color: #1A1A1A;
-            cursor: default;
+            cursor: pointer;
         }
 
         /* Текстовой блок внутри градиента */
@@ -339,7 +339,7 @@
             <a href="step4.html">
                 <img src="step 2 materials/back.svg" width="48" height="48" alt="">
             </a>
-            <span class="save-exit">Сохранить и выйти</span>
+            <span class="save-exit" onclick="saveAndExit()">Сохранить и выйти</span>
         </header>
 
         <!-- Заголовок, подзаголовок, кнопка — всё в градиенте -->
@@ -422,6 +422,11 @@
     </div>
 
     <script>
+        function saveAndExit() {
+            sessionStorage.setItem('hasDraft', '1');
+            window.location.href = 'ads.html?tab=drafts&toast=1';
+        }
+
         function openPhotoEdit() {
             sessionStorage.setItem('photoReturnPage', 'step5.html');
             window.location.href = 'step2-choose.html';

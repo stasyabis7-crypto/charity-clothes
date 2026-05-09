@@ -131,15 +131,6 @@
             gap: 10px;
         }
 
-        .ad-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 1.5px solid #C4C4C4;
-            border-radius: 5px;
-            flex-shrink: 0;
-            margin-top: 6px;
-        }
-
         .ad-photo {
             width: 96px;
             height: 96px;
@@ -168,11 +159,19 @@
             line-height: 1.3;
             text-decoration: none;
             flex: 1;
+            min-width: 0;
+        }
+
+        .ad-title-single {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .ad-edit {
             flex-shrink: 0;
             margin-top: 1px;
+            display: block;
         }
 
         .ad-price {
@@ -212,6 +211,46 @@
 
         .stat-plus {
             color: #9E9E9E;
+        }
+
+        /* ===== CHARITY BADGE ===== */
+        .ad-badge-row {
+            margin-top: 6px;
+        }
+
+        .charity-badge {
+            display: inline-block;
+            background: #0077FF;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 148px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: calc(430px - 32px);
+            background: #1A1A1A;
+            color: #fff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
+            z-index: 200;
+        }
+
+        .toast.visible {
+            display: block;
         }
 
         /* ===== BOTTOM FIXED ===== */
@@ -289,9 +328,10 @@
 
     <!-- TABS -->
     <div class="tabs">
-        <div class="tab">Ждут действий<sup class="tab-count">25</sup></div>
-        <div class="tab active">Активные<sup class="tab-count">25</sup></div>
-        <div class="tab">Архив</div>
+        <div class="tab" data-tab="waiting" onclick="switchTab('waiting')">Ждут действий<sup class="tab-count">25</sup></div>
+        <div class="tab" data-tab="active" onclick="switchTab('active')">Активные<sup class="tab-count">1</sup></div>
+        <div class="tab" data-tab="drafts" onclick="switchTab('drafts')">Черновики<sup class="tab-count" id="drafts-count"></sup></div>
+        <div class="tab" data-tab="archive" onclick="switchTab('archive')">Архив</div>
     </div>
 
     <!-- SEARCH -->
@@ -303,33 +343,55 @@
         </div>
     </div>
 
-    <!-- AD LIST -->
-    <div class="ads-list">
-        <div class="ad-item">
-            <img src="step 0 photo/Elements/Картинка.png" class="ad-photo" alt="">
-            <div class="ad-content">
-                <div class="ad-title-row">
-                    <span class="ad-title">Sony a7 IV (a7m4) Body</span>
-                    <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
-                </div>
-                <div class="ad-price">24 990 ₽</div>
-                <div class="ad-days">Осталось 15 дней</div>
-                <div class="ad-stats">
-                    <div class="stat-item">
-                        <img src="step 0 icons/Visibility.svg" width="16" height="16" alt="">
-                        601 <span class="stat-plus">+30</span>
+    <!-- TAB: Активные -->
+    <div id="content-active" class="tab-pane" style="display:none">
+        <div class="ads-list">
+            <div class="ad-item">
+                <img src="step 0 photo/Elements/Картинка.png" class="ad-photo" alt="">
+                <div class="ad-content">
+                    <div class="ad-title-row">
+                        <span class="ad-title">Sony a7 IV (a7m4) Body</span>
+                        <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
                     </div>
-                    <div class="stat-item">
-                        <img src="step 0 icons/Person.svg" width="16" height="16" alt="">
-                        25 <span class="stat-plus">+3</span>
-                    </div>
-                    <div class="stat-item">
-                        <img src="step 0 icons/Favorite.svg" width="16" height="16" alt="">
-                        64 <span class="stat-plus">+25</span>
+                    <div class="ad-price">24 990 ₽</div>
+                    <div class="ad-days">Осталось 15 дней</div>
+                    <div class="ad-stats">
+                        <div class="stat-item">
+                            <img src="step 0 icons/Visibility.svg" width="16" height="16" alt="">
+                            601 <span class="stat-plus">+30</span>
+                        </div>
+                        <div class="stat-item">
+                            <img src="step 0 icons/Person.svg" width="16" height="16" alt="">
+                            25 <span class="stat-plus">+3</span>
+                        </div>
+                        <div class="stat-item">
+                            <img src="step 0 icons/Favorite.svg" width="16" height="16" alt="">
+                            64 <span class="stat-plus">+25</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- TAB: Черновики -->
+    <div id="content-drafts" class="tab-pane" style="display:none">
+        <div class="ads-list" id="drafts-list"></div>
+    </div>
+
+    <!-- TAB: Ждут действий -->
+    <div id="content-waiting" class="tab-pane" style="display:none">
+        <div class="ads-list"></div>
+    </div>
+
+    <!-- TAB: Архив -->
+    <div id="content-archive" class="tab-pane" style="display:none">
+        <div class="ads-list"></div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        Объявление сохранилось, как черновик. Вы можете найти его на вкладке «черновики»
     </div>
 
     <!-- BOTTOM BAR -->
@@ -358,6 +420,79 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === tabId);
+            });
+            document.querySelectorAll('.tab-pane').forEach(p => {
+                p.style.display = 'none';
+            });
+            const pane = document.getElementById('content-' + tabId);
+            if (pane) pane.style.display = 'block';
+            if (tabId === 'drafts') renderDrafts();
+        }
+
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function renderDrafts() {
+            const hasDraft = sessionStorage.getItem('hasDraft') === '1';
+            const list = document.getElementById('drafts-list');
+            if (!hasDraft) {
+                list.innerHTML = '';
+                return;
+            }
+            const title = sessionStorage.getItem('adTitle') || 'Без названия';
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            const photoSrc = photos.length > 0
+                ? `step 2 materials/pic ${photos[0]}.png`
+                : 'drafts materials/img drafts.png';
+
+            list.innerHTML = `
+                <div class="ad-item">
+                    <img src="${photoSrc}" class="ad-photo" alt="">
+                    <div class="ad-content">
+                        <div class="ad-title-row">
+                            <span class="ad-title ad-title-single">${escHtml(title)}</span>
+                            <a href="step5.html" style="flex-shrink:0;margin-top:1px;">
+                                <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
+                            </a>
+                        </div>
+                        <div class="ad-days">Бесплатно</div>
+                        <div class="ad-price">Бесплатно</div>
+                        <div class="ad-badge-row">
+                            <span class="charity-badge">Благотворительность</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateDraftsCount() {
+            const countEl = document.getElementById('drafts-count');
+            countEl.textContent = sessionStorage.getItem('hasDraft') === '1' ? '1' : '';
+        }
+
+        function showToastNotification() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 5000);
+        }
+
+        // Init
+        const params = new URLSearchParams(window.location.search);
+        const initTab = params.get('tab') || 'active';
+
+        updateDraftsCount();
+        switchTab(initTab);
+
+        if (params.get('toast') === '1') {
+            setTimeout(showToastNotification, 150);
+        }
+    </script>
 
 </body>
 </html>
