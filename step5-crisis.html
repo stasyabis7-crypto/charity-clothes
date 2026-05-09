@@ -608,7 +608,7 @@
     </div>
 
     <div class="bottom-bar">
-        <button class="continue-btn" id="continue-btn">Продолжить</button>
+        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Продолжить</button>
     </div>
 
     <!-- ШТОРКА: КАК ЭТО РАБОТАЕТ -->
@@ -778,6 +778,12 @@
         function saveAndExit() {
             sessionStorage.setItem('hasDraft', '1');
             window.location.href = 'ads.html?tab=drafts&toast=1';
+        }
+
+        function goToDelivery() {
+            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+            if (cats.length === 0) return;
+            window.location.href = 'delivery.html';
         }
 
         function openPhotoEdit() {
