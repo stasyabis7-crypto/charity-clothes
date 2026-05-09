@@ -133,13 +133,13 @@
 
         .delete-btn {
             position: absolute;
-            bottom: 8px;
-            right: 8px;
+            bottom: 12px;
+            right: 12px;
             background: rgba(255,255,255,0.92);
             border: none;
-            border-radius: 8px;
-            width: 34px;
-            height: 34px;
+            border-radius: 28px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -176,6 +176,7 @@
             max-width: 430px;
             background: #fff;
             padding: 12px 16px 28px;
+            z-index: 100;
         }
 
         .continue-btn {
@@ -184,7 +185,7 @@
             background: #1A1A1A;
             color: #fff;
             border: none;
-            border-radius: 14px;
+            border-radius: 28px;
             padding: 16px;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
@@ -248,7 +249,7 @@
                     ${index === 0 ? '<span class="main-tag">Главная</span>' : ''}
                     <img src="step 2 materials/pic ${id}.png" class="photo-img" alt="">
                     <button class="delete-btn" onclick="deletePhoto(${id})">
-                        <img src="step 2 materials/delete.svg" width="20" height="20" alt="">
+                        <img src="step 2 materials/delete.svg" width="24" height="24" alt="">
                     </button>
                 `;
                 grid.appendChild(cell);
