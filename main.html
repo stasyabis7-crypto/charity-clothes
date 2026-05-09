@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Главная</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FFFFFF;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 68px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            gap: 10px;
+            background: #FFFFFF;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #F4F4F4;
+            border-radius: 10px;
+            padding: 9px 12px;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            color: #9E9E9E;
+            outline: none;
+            min-width: 0;
+            pointer-events: none;
+        }
+
+        .search-bar input::placeholder {
+            color: #9E9E9E;
+        }
+
+        /* ===== CATEGORIES ===== */
+        .categories-section {
+            padding: 12px 0 12px 16px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-rows: auto auto;
+            grid-auto-flow: column;
+            grid-auto-columns: calc((100vw - 54px) / 3.15);
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-right: 16px;
+        }
+
+        .categories-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .category-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .category-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            color: #1A1A1A;
+            line-height: 1.25;
+        }
+
+        /* ===== STORIES ===== */
+        .stories-section {
+            padding: 4px 0 12px 16px;
+        }
+
+        .stories-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-right: 16px;
+        }
+
+        .stories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            width: 84px;
+        }
+
+        .story-avatar {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .story-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            color: #1A1A1A;
+            text-align: center;
+            line-height: 1.25;
+            width: 100%;
+        }
+
+        /* ===== SECTIONS TABS ===== */
+        .sections-block {
+            display: flex;
+            gap: 14px;
+            padding: 8px 16px 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            align-items: baseline;
+        }
+
+        .sections-block::-webkit-scrollbar {
+            display: none;
+        }
+
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 31px;
+            line-height: 1.1;
+            white-space: nowrap;
+            flex-shrink: 0;
+            color: #1A1A1A;
+        }
+
+        .section-title.inactive {
+            color: #C4C4C4;
+        }
+
+        /* ===== ADS ===== */
+        .ads-section {
+            padding: 0 16px 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .ad-card {
+            background: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #F0F0F0;
+        }
+
+        .ad-image-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .ad-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .ad-heart {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: block;
+        }
+
+        .ad-content {
+            padding: 6px 8px 10px;
+        }
+
+        .ad-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: #1A1A1A;
+            line-height: 1.35;
+            margin-bottom: 3px;
+        }
+
+        .ad-price {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            color: #1A1A1A;
+            margin-bottom: 2px;
+        }
+
+        .ad-meta {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ad-location {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 11px;
+            color: #9E9E9E;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #FFFFFF;
+            border-top: 1px solid #EBEBEB;
+            display: flex;
+            padding: 9px 0 14px;
+            z-index: 100;
+        }
+
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            cursor: default;
+        }
+
+        .footer-item.clickable {
+            cursor: pointer;
+        }
+
+        .footer-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            color: #B8B8B8;
+        }
+
+        .footer-item.clickable .footer-label {
+            color: #B8B8B8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="search-bar">
+            <img src="icons header/search.svg" width="20" height="20" alt="">
+            <input type="text" placeholder="Поиск в Москве" readonly>
+            <img src="icons header/filters.svg" width="24" height="24" alt="">
+        </div>
+        <img src="icons header/cart.svg" width="24" height="24" alt="">
+    </header>
+
+    <!-- CATEGORIES -->
+    <section class="categories-section">
+        <div class="categories-grid">
+            <div class="category-item">
+                <img src="categories photos/auto.png" class="category-img" alt="Авто">
+                <span class="category-name">Авто</span>
+            </div>
+            <div class="category-item">
+                <img src="categories photos/services.png" class="category-img" alt="Услуги">
+                <span class="category-name">Услуги</span>
+            </div>
+
+            <div class="category-item">
+                <img src="categories photos/estate.png" class="category-img" alt="Недвижимость">
+                <span class="category-name">Недвижимость</span>
+            </div>
+            <div class="category-item">
+                <img src="categories photos/electronics.png" class="category-img" alt="Электроника">
+                <span class="category-name">Электро­ника</span>
+            </div>
+
+            <div class="category-item">
+                <img src="categories photos/work.png" class="category-img" alt="Работа">
+                <span class="category-name">Работа</span>
+            </div>
+            <div class="category-item">
+                <img src="categories photos/for home.png" class="category-img" alt="Для дома и дачи">
+                <span class="category-name">Для дома и дачи</span>
+            </div>
+
+            <div class="category-item">
+                <img src="categories photos/auto parts.png" class="category-img" alt="Автозапчасти">
+                <span class="category-name">Авто­запчасти</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORIES -->
+    <section class="stories-section">
+        <div class="stories-scroll">
+            <div class="story-item">
+                <img src="stories/Group 1597880710.png" class="story-avatar" alt="">
+                <span class="story-text">Зелень для дома</span>
+            </div>
+            <div class="story-item">
+                <img src="stories/Group 1597880711.png" class="story-avatar" alt="">
+                <span class="story-text">Акцент в интерьере</span>
+            </div>
+            <div class="story-item">
+                <img src="stories/Group 1597880712.png" class="story-avatar" alt="">
+                <span class="story-text">Аренда авто посуточно</span>
+            </div>
+            <div class="story-item">
+                <img src="stories/Mask group.png" class="story-avatar" alt="">
+                <span class="story-text">Выход за город</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTIONS TABS -->
+    <div class="sections-block">
+        <span class="section-title">Рекомендации</span>
+        <span class="section-title inactive">Свежие</span>
+        <span class="section-title inactive">Рядом с</span>
+    </div>
+
+    <!-- ADS -->
+    <section class="ads-section">
+        <div class="ad-card">
+            <div class="ad-image-wrapper">
+                <img src="ads/ad 1.png" class="ad-img" alt="">
+                <img src="icons header/Favorites.svg" width="20" height="20" class="ad-heart" alt="">
+            </div>
+            <div class="ad-content">
+                <p class="ad-title">1-к. квартира, 32,1 м², 1/9 эт.</p>
+                <p class="ad-price">12 000 000 ₽</p>
+                <div class="ad-meta">
+                    <span class="ad-location">Москва, Тульская</span>
+                </div>
+            </div>
+        </div>
+        <div class="ad-card">
+            <div class="ad-image-wrapper">
+                <img src="ads/ad 2.png" class="ad-img" alt="">
+                <img src="icons header/Favorites.svg" width="20" height="20" class="ad-heart" alt="">
+            </div>
+            <div class="ad-content">
+                <p class="ad-title">Смарт-часы «Экобьюти»</p>
+                <p class="ad-price">5 490 ₽</p>
+                <div class="ad-meta">
+                    <span class="ad-location">Москва, Ш.миш...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-item">
+            <img src="icons footer/Main.svg" width="24" height="24" alt="">
+            <span class="footer-label">Главная</span>
+        </div>
+        <div class="footer-item">
+            <img src="icons footer/Favorites.svg" width="24" height="24" alt="">
+            <span class="footer-label">Избранное</span>
+        </div>
+        <a href="ads.html" class="footer-item clickable">
+            <img src="icons footer/Ads.svg" width="24" height="24" alt="">
+            <span class="footer-label">Объявления</span>
+        </a>
+        <div class="footer-item">
+            <img src="icons footer/Chat.svg" width="24" height="24" alt="">
+            <span class="footer-label">Чат</span>
+        </div>
+        <div class="footer-item">
+            <img src="icons footer/User.svg" width="24" height="24" alt="">
+            <span class="footer-label">Профиль</span>
+        </div>
+    </footer>
+
+</body>
+</html>
