@@ -37,15 +37,13 @@
         .save-exit {
             font-size: 15px;
             font-weight: 400;
-            color: #9E9E9E;
+            color: #1A1A1A;
             cursor: default;
         }
 
         /* Текстовой блок внутри градиента */
         .hero-content {
             padding: 8px 16px 0;
-            /* right padding leaves room for the hero image */
-            padding-right: 190px;
         }
 
         .hero-title {
@@ -53,6 +51,7 @@
             font-size: 31px;
             color: #1A1A1A;
             line-height: 1.1;
+            white-space: nowrap;
         }
 
         .hero-subtitle {
@@ -61,6 +60,7 @@
             font-weight: 400;
             color: #1A1A1A;
             line-height: 1.45;
+            padding-right: 190px;
         }
 
         /* Белая кнопка «Изменить сбор» */
@@ -233,6 +233,9 @@
             font-weight: 400;
             color: #1A1A1A;
             min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .title-clear-btn {
@@ -310,7 +313,7 @@
         <!-- Заголовок, подзаголовок, кнопка — всё в градиенте -->
         <div class="hero-content">
             <h1 class="hero-title">Помощь семьям</h1>
-            <p class="hero-subtitle">Собираем вещи на помощь малообеспеченным многодетным семьям</p>
+            <p class="hero-subtitle">Собираем вещи на&nbsp;помощь многодетным семьям</p>
             <button class="change-btn">Изменить сбор</button>
         </div>
 
@@ -345,7 +348,7 @@
         <div class="section">
             <div class="section-title">Фотографии</div>
             <div class="photos-row" onclick="openPhotoEdit()">
-                <img class="photos-thumb" src="step 5 materials/Img 3.png" alt="">
+                <img class="photos-thumb" src="step 5 materials/Img 3.png" width="54" height="48" alt="">
                 <div>
                     <div class="photos-edit" id="photos-edit-text">Редактировать 0 фото ›</div>
                     <div class="photos-hint">Если хотите их поменять</div>
