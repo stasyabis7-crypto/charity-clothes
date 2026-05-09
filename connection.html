@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Как с вами связаться</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px 8px 8px;
+        }
+
+        .save-exit {
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+        }
+
+        /* ── PAGE TITLE ── */
+        .page-title {
+            margin-top: 8px;
+            padding: 0 16px;
+            font-weight: 800;
+            font-size: 31px;
+            color: #1A1A1A;
+            line-height: 1.1;
+        }
+
+        /* ── USER CARD ── */
+        .user-card {
+            margin: 20px 16px 0;
+            background: #F4F4F4;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .user-name {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        /* ── SECTION LABEL ── */
+        .section-label {
+            margin-top: 24px;
+            padding: 0 16px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+
+        /* ── SECTION DESC ── */
+        .section-desc {
+            margin-top: 6px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.5;
+        }
+
+        .section-desc a {
+            color: #9E9E9E;
+            text-decoration: underline;
+        }
+
+        /* ── PHONE FIELD ── */
+        .phone-field {
+            margin: 12px 16px 0;
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 14px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 50px;
+        }
+
+        .phone-value {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .phone-clear {
+            flex-shrink: 0;
+            color: #9E9E9E;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* ── RADIO ROWS ── */
+        .radio-list {
+            margin-top: 12px;
+            padding: 0 16px;
+        }
+
+        .radio-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #EBEBEB;
+        }
+
+        .radio-row:first-child {
+            border-top: 1px solid #EBEBEB;
+        }
+
+        .radio-label {
+            font-size: 16px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .radio-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .radio-off {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #EBEBEB;
+            flex-shrink: 0;
+        }
+
+        /* ── DROPDOWN ── */
+        .dropdown-field {
+            margin: 12px 16px 0;
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 14px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            min-height: 50px;
+        }
+
+        .dropdown-value {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .chevron {
+            flex-shrink: 0;
+            color: #9E9E9E;
+        }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+        }
+
+        .publish-btn {
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="javascript:history.back()">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit">Сохранить и выйти</span>
+    </header>
+
+    <!-- PAGE TITLE -->
+    <h1 class="page-title">Как с вами связаться</h1>
+
+    <!-- USER CARD -->
+    <div class="user-card">
+        <span class="user-name">Анастасия</span>
+        <img src="connection materials/Avatar.png" class="user-avatar" alt="">
+    </div>
+
+    <!-- SECTION: ТЕЛЕФОН -->
+    <div class="section-label">Телефон</div>
+    <p class="section-desc">
+        Другие пользователи не увидят ваш настоящий телефон и не смогут написать сообщение вне Авито. Эту защиту нельзя отключить. <a href="#">Подробнее</a>
+    </p>
+
+    <!-- PHONE FIELD -->
+    <div class="phone-field">
+        <span class="phone-value">+7 985 922 64 74</span>
+        <span class="phone-clear">✕</span>
+    </div>
+
+    <!-- SECTION: СПОСОБ СВЯЗИ -->
+    <div class="section-label">Способ связи</div>
+
+    <div class="radio-list">
+        <div class="radio-row">
+            <span class="radio-label">Звонки и сообщения</span>
+            <img src="crisis help/Radio on.png" class="radio-icon" alt="">
+        </div>
+        <div class="radio-row">
+            <span class="radio-label">Только звонки</span>
+            <div class="radio-off"></div>
+        </div>
+        <div class="radio-row">
+            <span class="radio-label">Только сообщения</span>
+            <div class="radio-off"></div>
+        </div>
+    </div>
+
+    <!-- SECTION: ГДЕ ПРИНИМАТЬ ЗВОНКИ -->
+    <div class="section-label">Где принимать звонки</div>
+
+    <!-- DROPDOWN -->
+    <div class="dropdown-field">
+        <span class="dropdown-value">iPhone 13 Pro Max</span>
+        <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <button class="publish-btn" onclick="window.location.href='ads.html'">Разместить объявление</button>
+    </div>
+
+</body>
+</html>
