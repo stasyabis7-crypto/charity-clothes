@@ -152,7 +152,7 @@
                 type="text"
                 id="title-input"
                 class="title-input"
-                placeholder="Начните вводить категорию"
+                placeholder="Введите значение"
                 autocomplete="off"
                 autocorrect="off"
                 autocapitalize="sentences"
@@ -267,7 +267,7 @@
 
         function goNext() {
             save();
-            // navigate to next step when ready
+            window.location.href = 'step4.html';
         }
 
         input.addEventListener('input', () => { save(); updateUI(); });
@@ -276,6 +276,18 @@
         const saved = sessionStorage.getItem('adTitle');
         if (saved) { input.value = saved; }
         updateUI();
+
+        // Stick bottom bar to top of keyboard
+        function pinToKeyboard() {
+            const bar = document.getElementById('bottom-bar');
+            if (!bar) return;
+            const kb = window.innerHeight - window.visualViewport.height;
+            bar.style.bottom = Math.max(0, kb) + 'px';
+        }
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', pinToKeyboard);
+            window.visualViewport.addEventListener('scroll', pinToKeyboard);
+        }
     </script>
 
 </body>
