@@ -61,7 +61,8 @@
 
         /* ===== CATEGORIES ===== */
         .categories-section {
-            padding: 12px 0 12px 16px;
+            margin-top: 24px;
+            padding: 0 0 0 16px;
         }
 
         .categories-grid {
@@ -69,7 +70,7 @@
             grid-template-rows: auto auto;
             grid-auto-flow: column;
             grid-auto-columns: calc((100vw - 54px) / 3.15);
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
             scrollbar-width: none;
             padding-right: 16px;
@@ -80,10 +81,8 @@
         }
 
         .category-item {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
+            position: relative;
+            display: block;
         }
 
         .category-img {
@@ -95,21 +94,28 @@
         }
 
         .category-name {
+            position: absolute;
+            top: 10px;
+            left: 10px;
             font-family: 'Inter', sans-serif;
-            font-weight: 500;
+            font-weight: 400;
             font-size: 13px;
-            color: #1A1A1A;
+            color: #FFFFFF;
             line-height: 1.25;
+            hyphens: auto;
+            max-width: calc(100% - 20px);
+            word-break: break-word;
         }
 
         /* ===== STORIES ===== */
         .stories-section {
-            padding: 4px 0 12px 16px;
+            margin-top: 24px;
+            padding: 0 0 0 16px;
         }
 
         .stories-scroll {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             overflow-x: auto;
             scrollbar-width: none;
             padding-right: 16px;
@@ -138,7 +144,7 @@
 
         .story-text {
             font-family: 'Inter', sans-serif;
-            font-weight: 500;
+            font-weight: 400;
             font-size: 13px;
             color: #1A1A1A;
             text-align: center;
@@ -148,9 +154,10 @@
 
         /* ===== SECTIONS TABS ===== */
         .sections-block {
+            margin-top: 24px;
             display: flex;
             gap: 14px;
-            padding: 8px 16px 10px;
+            padding: 0 16px;
             overflow-x: auto;
             scrollbar-width: none;
             align-items: baseline;
@@ -162,7 +169,7 @@
 
         .section-title {
             font-family: 'Inter', sans-serif;
-            font-weight: 800;
+            font-weight: 500;
             font-size: 31px;
             line-height: 1.1;
             white-space: nowrap;
@@ -176,17 +183,17 @@
 
         /* ===== ADS ===== */
         .ads-section {
+            margin-top: 24px;
             padding: 0 16px 16px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 12px;
         }
 
         .ad-card {
             background: #FFFFFF;
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #F0F0F0;
         }
 
         .ad-image-wrapper {
@@ -201,30 +208,37 @@
             object-fit: cover;
         }
 
-        .ad-heart {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            display: block;
-        }
-
         .ad-content {
             padding: 6px 8px 10px;
+        }
+
+        .ad-title-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 4px;
+            margin-bottom: 3px;
         }
 
         .ad-title {
             font-family: 'Inter', sans-serif;
             font-weight: 400;
-            font-size: 13px;
+            font-size: 15px;
             color: #1A1A1A;
             line-height: 1.35;
-            margin-bottom: 3px;
+            flex: 1;
+        }
+
+        .ad-heart {
+            flex-shrink: 0;
+            display: block;
+            margin-top: 2px;
         }
 
         .ad-price {
             font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 500;
+            font-size: 16px;
             color: #1A1A1A;
             margin-bottom: 2px;
         }
@@ -238,7 +252,7 @@
         .ad-location {
             font-family: 'Inter', sans-serif;
             font-weight: 400;
-            font-size: 11px;
+            font-size: 13px;
             color: #9E9E9E;
         }
 
@@ -309,11 +323,11 @@
 
             <div class="category-item">
                 <img src="categories photos/estate.png" class="category-img" alt="Недвижимость">
-                <span class="category-name">Недвижимость</span>
+                <span class="category-name">Недви­жи­мость</span>
             </div>
             <div class="category-item">
                 <img src="categories photos/electronics.png" class="category-img" alt="Электроника">
-                <span class="category-name">Электро­ника</span>
+                <span class="category-name">Элек­тро­ника</span>
             </div>
 
             <div class="category-item">
@@ -327,7 +341,7 @@
 
             <div class="category-item">
                 <img src="categories photos/auto parts.png" class="category-img" alt="Автозапчасти">
-                <span class="category-name">Авто­запчасти</span>
+                <span class="category-name">Авто­зап­части</span>
             </div>
         </div>
     </section>
@@ -366,10 +380,12 @@
         <div class="ad-card">
             <div class="ad-image-wrapper">
                 <img src="ads/ad 1.png" class="ad-img" alt="">
-                <img src="icons header/Favorites.svg" width="20" height="20" class="ad-heart" alt="">
             </div>
             <div class="ad-content">
-                <p class="ad-title">1-к. квартира, 32,1 м², 1/9 эт.</p>
+                <div class="ad-title-row">
+                    <p class="ad-title">1-к. квартира, 32,1 м², 1/9 эт.</p>
+                    <img src="icons header/Favorites.svg" width="20" height="20" class="ad-heart" alt="">
+                </div>
                 <p class="ad-price">12 000 000 ₽</p>
                 <div class="ad-meta">
                     <span class="ad-location">Москва, Тульская</span>
@@ -379,10 +395,12 @@
         <div class="ad-card">
             <div class="ad-image-wrapper">
                 <img src="ads/ad 2.png" class="ad-img" alt="">
-                <img src="icons header/Favorites.svg" width="20" height="20" class="ad-heart" alt="">
             </div>
             <div class="ad-content">
-                <p class="ad-title">Смарт-часы «Экобьюти»</p>
+                <div class="ad-title-row">
+                    <p class="ad-title">Смарт-часы «Экобьюти»</p>
+                    <img src="icons header/Favorites.svg" width="20" height="20" class="ad-heart" alt="">
+                </div>
                 <p class="ad-price">5 490 ₽</p>
                 <div class="ad-meta">
                     <span class="ad-location">Москва, Ш.миш...</span>
