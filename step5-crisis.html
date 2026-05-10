@@ -21,7 +21,7 @@
         .gradient-area {
             background: linear-gradient(to bottom, #E3F7FF, #FFEBEC);
             position: relative;
-            overflow: hidden;
+            overflow: clip;
             padding-bottom: 40px;
         }
 
@@ -30,7 +30,13 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: background 0.2s, box-shadow 0.2s;
         }
+
+        .header.scrolled { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .save-exit {
             font-size: 15px;
@@ -86,7 +92,7 @@
 
         .white-block {
             background: #fff;
-            border-radius: 28px 28px 0 0;
+            border-radius: 40px 40px 0 0;
             position: relative;
             z-index: 10;
             padding: 20px 16px 0;
@@ -521,6 +527,8 @@
             background: #fff;
             padding: 12px 16px 28px;
             z-index: 100;
+            border-radius: 40px 40px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
         .continue-btn {
@@ -894,6 +902,10 @@
         updatePhotosCount();
         loadTitle();
         updateCategorySection();
+
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 
 </body>

@@ -24,7 +24,14 @@
             align-items: center;
             justify-content: space-between;
             padding: 8px 16px 8px 8px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #fff;
+            transition: box-shadow 0.2s;
         }
+
+        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .header-center {
             font-size: 17px;
@@ -144,9 +151,9 @@
         .btn-boost {
             display: block;
             width: 100%;
-            background: #fff;
+            background: #EBF4FF;
             color: #0077FF;
-            border: 1.5px solid #0077FF;
+            border: none;
             border-radius: 14px;
             padding: 14px;
             font-family: 'Inter', sans-serif;
@@ -194,7 +201,16 @@
             margin-top: 4px;
             font-size: 14px;
             font-weight: 400;
-            color: #9E9E9E;
+            color: #1A1A1A;
+        }
+
+        .ad-desc-block {
+            margin-top: 12px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.5;
+            white-space: pre-line;
         }
 
         /* ── ZNAK DOBRA ROW ── */
@@ -209,22 +225,28 @@
         }
 
         .znak-img {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             flex-shrink: 0;
         }
 
-        .znak-text {
-            flex: 1;
-            font-size: 14px;
-            font-weight: 400;
+        .znak-title {
+            font-size: 16px;
+            font-weight: 700;
             color: #1A1A1A;
         }
 
+        .znak-sub {
+            font-size: 13px;
+            font-weight: 400;
+            color: #1A1A1A;
+            margin-top: 2px;
+        }
+
         .znak-arrow {
-            color: #9E9E9E;
-            font-size: 16px;
+            color: #1A1A1A;
+            font-size: 18px;
         }
 
         /* ── DIVIDER ── */
@@ -404,7 +426,8 @@
         <div class="header-right">
             <div class="header-icon">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path d="M11 2L14.5 8.5H19.5L15.5 12.5L17 19L11 15.5L5 19L6.5 12.5L2.5 8.5H7.5L11 2Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M11 3V15M11 3L7 7M11 3L15 7" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 15V18C4 18.5523 4.44772 19 5 19H17C17.5523 19 18 18.5523 18 18V15" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
             </div>
             <div class="header-icon" onclick="openDotMenu()">
@@ -464,8 +487,11 @@
 
     <!-- ZNAK DOBRA -->
     <div class="znak-row">
-        <img src="success materials/banner znak dobra.png" class="znak-img" alt="">
-        <span class="znak-text">Знак добра<br><span style="font-size:12px;color:#9E9E9E;">За пожертвование в фонд</span></span>
+        <img src="Picture.png" class="znak-img" alt="">
+        <div style="flex:1;min-width:0;">
+            <div class="znak-title">Знак добра</div>
+            <div class="znak-sub">За пожертвование в фонд</div>
+        </div>
         <span class="znak-arrow">›</span>
     </div>
 
@@ -485,15 +511,7 @@
             <div class="detail-value">Бесплатно</div>
         </div>
         <div class="detail-row">
-            <div class="detail-label">Состояние:</div>
-            <div class="detail-value" id="ad-condition">Удовлетворительное</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Характеристики:</div>
-            <div class="detail-value" id="ad-chars">Хар-ка 1<br>Хар-ка 2<br>Хар-ка 3</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-value" id="ad-desc-display"></div>
+            <div class="ad-desc-block" id="ad-desc-display"></div>
         </div>
     </div>
 
@@ -590,6 +608,11 @@
             document.body.style.overflow = '';
             window.location.href = 'ads-archived.html';
         }
+    </script>
+    <script>
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 
 </body>

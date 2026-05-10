@@ -23,7 +23,14 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #fff;
+            transition: box-shadow 0.2s;
         }
+
+        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .header-right {
             font-size: 15px;
@@ -311,6 +318,8 @@
             gap: 10px;
             z-index: 100;
             will-change: transform;
+            border-radius: 40px 40px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
         .reset-btn {
@@ -771,6 +780,10 @@
         pinBar();
 
         render();
+
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 
 </body>

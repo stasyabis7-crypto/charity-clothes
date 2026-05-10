@@ -23,8 +23,14 @@
             align-items: center;
             justify-content: center;
             padding: 8px 16px 8px 8px;
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #FFFFFF;
+            transition: box-shadow 0.2s;
         }
+
+        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .header-back { position: absolute; left: 8px; }
 
@@ -133,6 +139,8 @@
             max-width: 430px;
             background: #FFFFFF;
             z-index: 100;
+            border-radius: 40px 40px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
         .place-btn {
@@ -235,7 +243,7 @@
     <div class="tab-pane" id="pane-waiting"></div>
 
     <div class="bottom-bar">
-        <a href="step1.html" class="place-btn">Разместить объявление</a>
+        <button class="place-btn" onclick="startNewAd()">Разместить объявление</button>
         <footer class="footer">
             <a href="main.html" class="footer-item search-item">
                 <img src="icons footer/Main.svg" width="24" height="24" alt="">
@@ -279,6 +287,15 @@
             const id = photos[0];
             document.getElementById('charity-photo').src = id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
         }
+
+        function startNewAd() {
+            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed'].forEach(k => sessionStorage.removeItem(k));
+            window.location.href = 'step1.html';
+        }
+
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 
 </body>
