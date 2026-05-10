@@ -104,7 +104,7 @@
 <body>
 
     <header class="header">
-        <a href="javascript:void(0)" onclick="history.back()">
+        <a href="javascript:void(0)" onclick="goBack()">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="save-exit">Сохранить и выйти</span>
@@ -149,8 +149,13 @@
             document.getElementById('bottom-bar').style.display = selected ? 'block' : 'none';
         }
 
+        function goBack() {
+            window.location.href = sessionStorage.getItem('prevPage') || 'main-condition.html';
+        }
+
         function goNext() {
             if (!selected) return;
+            sessionStorage.setItem('prevPage', 'main-adtype.html');
             window.location.href = 'main-specs.html';
         }
 

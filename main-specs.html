@@ -113,7 +113,7 @@
 <body>
 
     <header class="header">
-        <a href="javascript:void(0)" onclick="history.back()">
+        <a href="javascript:void(0)" onclick="goBack()">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="save-exit">Сохранить и выйти</span>
@@ -167,7 +167,12 @@
             `).join('');
         }
 
+        function goBack() {
+            window.location.href = sessionStorage.getItem('prevPage') || 'main-adtype.html';
+        }
+
         function goNext() {
+            sessionStorage.setItem('prevPage', 'main-specs.html');
             window.location.href = 'main-describe.html';
         }
 

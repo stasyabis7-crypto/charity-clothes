@@ -203,7 +203,12 @@
 
         function goNext() {
             if (!selectedCat) return;
-            window.location.href = selectedCat === 'charity' ? 'step5.html' : 'main-condition.html';
+            if (selectedCat === 'charity') {
+                window.location.href = 'step5.html';
+            } else {
+                sessionStorage.setItem('prevPage', 'step4.html');
+                window.location.href = 'main-condition.html';
+            }
         }
 
         render();
