@@ -289,7 +289,7 @@
         }
 
         function startNewAd() {
-            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed'].forEach(k => sessionStorage.removeItem(k));
+            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType'].forEach(k => sessionStorage.removeItem(k));
             window.location.href = 'step1.html';
         }
 

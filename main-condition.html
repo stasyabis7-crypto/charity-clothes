@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-    <title>Выберите категорию</title>
+    <title>Состояние</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -50,7 +50,6 @@
             line-height: 1.4;
         }
 
-        /* CATEGORY LIST */
         .category-list {
             margin-top: 24px;
             padding: 0 16px;
@@ -65,16 +64,7 @@
             justify-content: space-between;
             gap: 12px;
             padding: 16px 0;
-            cursor: default;
-        }
-
-        .category-item.clickable {
             cursor: pointer;
-        }
-
-        .category-text {
-            flex: 1;
-            min-width: 0;
         }
 
         .category-name {
@@ -84,21 +74,12 @@
             line-height: 1.3;
         }
 
-        .category-path {
-            margin-top: 4px;
-            font-weight: 400;
-            font-size: 13px;
-            color: #9E9E9E;
-            line-height: 1.4;
-        }
-
         .checkbox-img {
             width: 21px;
             height: 21px;
             flex-shrink: 0;
         }
 
-        /* BOTTOM BUTTON */
         .bottom-bar {
             display: none;
             position: fixed;
@@ -131,49 +112,32 @@
 <body>
 
     <header class="header">
-        <a href="step3.html">
+        <a href="step4.html">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="save-exit">Сохранить и выйти</span>
     </header>
 
-    <h1 class="page-title">Выберите категорию</h1>
-    <p class="page-subtitle">Важно выбрать верную категорию для вашего товара</p>
+    <h1 class="page-title">Состояние</h1>
+    <p class="page-subtitle">Выберите состояние вашего товара</p>
 
     <div class="category-list">
-
-        <div class="category-item clickable" onclick="selectCat('t-shirts')">
-            <div class="category-text">
-                <div class="category-name">Футболки и майки</div>
-                <div class="category-path">Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек</div>
-            </div>
-            <img class="checkbox-img" id="cb-t-shirts" src="step 4 materials/Checkmark off.png" alt="">
+        <div class="category-item" onclick="selectOption('new-tag')">
+            <span class="category-name">Новое, с биркой</span>
+            <img class="checkbox-img" id="cb-new-tag" src="step 4 materials/Checkmark off.png" alt="">
         </div>
-
-        <div class="category-item clickable" onclick="selectCat('homewear')">
-            <div class="category-text">
-                <div class="category-name">Домашняя одежда</div>
-                <div class="category-path">Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек&nbsp;• Бельё и домашняя одежда</div>
-            </div>
-            <img class="checkbox-img" id="cb-homewear" src="step 4 materials/Checkmark off.png" alt="">
+        <div class="category-item" onclick="selectOption('excellent')">
+            <span class="category-name">Отличное</span>
+            <img class="checkbox-img" id="cb-excellent" src="step 4 materials/Checkmark off.png" alt="">
         </div>
-
-        <div class="category-item clickable" onclick="selectCat('suits')">
-            <div class="category-text">
-                <div class="category-name">Пиджаки и костюмы</div>
-                <div class="category-path">Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек</div>
-            </div>
-            <img class="checkbox-img" id="cb-suits" src="step 4 materials/Checkmark off.png" alt="">
+        <div class="category-item" onclick="selectOption('good')">
+            <span class="category-name">Хорошее</span>
+            <img class="checkbox-img" id="cb-good" src="step 4 materials/Checkmark off.png" alt="">
         </div>
-
-        <div class="category-item clickable" onclick="selectCat('charity')">
-            <div class="category-text">
-                <div class="category-name">Благотворительные товары ❤️</div>
-                <div class="category-path">Сейчас идёт сбор вещей, ваши вещи подходят для передачи в фонды</div>
-            </div>
-            <img class="checkbox-img" id="cb-charity" src="step 4 materials/Checkmark off.png" alt="">
+        <div class="category-item" onclick="selectOption('fair')">
+            <span class="category-name">Удовлетворительное</span>
+            <img class="checkbox-img" id="cb-fair" src="step 4 materials/Checkmark off.png" alt="">
         </div>
-
     </div>
 
     <div class="bottom-bar" id="bottom-bar">
@@ -181,29 +145,29 @@
     </div>
 
     <script>
-        const CAT_IDS = ['t-shirts', 'homewear', 'suits', 'charity'];
-        let selectedCat = sessionStorage.getItem('mainCategory') || null;
+        const OPTIONS = ['new-tag', 'excellent', 'good', 'fair'];
+        let selected = sessionStorage.getItem('mainCondition') || null;
 
-        function selectCat(id) {
-            selectedCat = selectedCat === id ? null : id;
-            if (selectedCat) sessionStorage.setItem('mainCategory', selectedCat);
-            else sessionStorage.removeItem('mainCategory');
+        function selectOption(id) {
+            selected = selected === id ? null : id;
+            if (selected) sessionStorage.setItem('mainCondition', selected);
+            else sessionStorage.removeItem('mainCondition');
             render();
         }
 
         function render() {
-            CAT_IDS.forEach(id => {
+            OPTIONS.forEach(id => {
                 const cb = document.getElementById('cb-' + id);
-                if (cb) cb.src = selectedCat === id
+                if (cb) cb.src = selected === id
                     ? 'step 4 materials/Checkmark on.png'
                     : 'step 4 materials/Checkmark off.png';
             });
-            document.getElementById('bottom-bar').style.display = selectedCat ? 'block' : 'none';
+            document.getElementById('bottom-bar').style.display = selected ? 'block' : 'none';
         }
 
         function goNext() {
-            if (!selectedCat) return;
-            window.location.href = selectedCat === 'charity' ? 'step5.html' : 'main-condition.html';
+            if (!selected) return;
+            window.location.href = 'main-adtype.html';
         }
 
         render();
