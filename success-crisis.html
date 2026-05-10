@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Отлично!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        .check-wrap {
+            padding-top: 48px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .check-img {
+            width: 160px;
+            height: 140px;
+            object-fit: contain;
+        }
+
+        .page-title {
+            margin-top: 28px;
+            padding: 0 32px;
+            font-weight: 800;
+            font-size: 28px;
+            color: #1A1A1A;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .checklist {
+            margin-top: 28px;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .check-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .check-row img {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .check-text {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.45;
+        }
+
+        .check-text a {
+            color: #9E9E9E;
+            text-decoration: underline;
+        }
+
+        .banner {
+            margin: 24px 16px 0;
+            background: #F4F4F4;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .banner-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .banner-main {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.45;
+        }
+
+        .banner-link {
+            display: block;
+            margin-top: 6px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #9E9E9E;
+            text-decoration: underline;
+        }
+
+        .banner-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+        }
+
+        .my-ads-btn {
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="check-wrap">
+        <img src="success materials/success.png" class="check-img" alt="">
+    </div>
+
+    <h1 class="page-title">Отлично!<br>Всё получилось</h1>
+
+    <div class="checklist">
+        <div class="check-row">
+            <img src="success materials/check.svg" alt="">
+            <span class="check-text">Объявление <a href="#">«<span id="ad-title"></span>»</a> опубликовано в категории «Благотворительные товары» для региона ЧС</span>
+        </div>
+        <div class="check-row">
+            <img src="success materials/check.svg" alt="">
+            <span class="check-text">Получатели смогут оформить Авито Доставку за 1 ₽</span>
+        </div>
+        <div class="check-row">
+            <img src="success materials/check.svg" alt="">
+            <span class="check-text">Объявление бесплатное, лимит размещений не расходуется</span>
+        </div>
+    </div>
+
+    <div class="banner">
+        <div class="banner-text">
+            <div class="banner-main">Сделайте пожертвование в фонд от 100 ₽ и получите «Знак добра»</div>
+            <span class="banner-link">Узнать подробнее</span>
+        </div>
+        <img src="success materials/banner znak dobra.png" class="banner-img" alt="">
+    </div>
+
+    <div class="bottom-bar">
+        <button class="my-ads-btn" onclick="window.location.href='ads-2.html'">Мои объявления</button>
+    </div>
+
+    <script>
+        const title = sessionStorage.getItem('adTitle') || 'Без названия';
+        document.getElementById('ad-title').textContent = title;
+    </script>
+
+</body>
+</html>

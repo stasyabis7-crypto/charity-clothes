@@ -806,6 +806,7 @@
         function goToDelivery() {
             const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
             if (cats.length === 0) return;
+            sessionStorage.setItem('adCollection', 'regular');
             window.location.href = 'delivery.html';
         }
 

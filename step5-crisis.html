@@ -783,6 +783,7 @@
         function goToDelivery() {
             const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
             if (cats.length === 0) return;
+            sessionStorage.setItem('adCollection', 'crisis');
             window.location.href = 'delivery.html';
         }
 

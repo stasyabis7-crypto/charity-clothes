@@ -266,8 +266,15 @@
 
     <!-- BOTTOM BAR -->
     <div class="bottom-bar">
-        <button class="publish-btn" onclick="window.location.href='ads.html'">Разместить объявление</button>
+        <button class="publish-btn" onclick="publish()">Разместить объявление</button>
     </div>
+
+    <script>
+        function publish() {
+            const collection = sessionStorage.getItem('adCollection');
+            window.location.href = collection === 'crisis' ? 'success-crisis.html' : 'success.html';
+        }
+    </script>
 
 </body>
 </html>
