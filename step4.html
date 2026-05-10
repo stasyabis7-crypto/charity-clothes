@@ -23,7 +23,14 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #fff;
+            transition: box-shadow 0.2s;
         }
+
+        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .save-exit {
             font-size: 15px;
@@ -110,6 +117,8 @@
             background: #fff;
             padding: 12px 16px 28px;
             z-index: 100;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
         .continue-btn {
@@ -212,6 +221,10 @@
         }
 
         render();
+
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 
 </body>

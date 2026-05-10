@@ -633,8 +633,10 @@
 
         if (sessionStorage.getItem('showSavedToast') === '1') {
             sessionStorage.removeItem('showSavedToast');
-            const t = document.getElementById('saved-toast');
-            if (t) { t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 3000); }
+            setTimeout(() => {
+                const t = document.getElementById('saved-toast');
+                if (t) { t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 3000); }
+            }, 0);
         }
     </script>
 

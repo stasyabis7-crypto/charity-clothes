@@ -242,7 +242,7 @@
                 footer.style.display = 'flex';
                 document.getElementById('footer-count').textContent = selected.length + ' фото';
                 const last = selected[selected.length - 1];
-                document.getElementById('footer-thumb').src = `step 2 materials/pic ${last}.png`;
+                document.getElementById('footer-thumb').src = last <= 5 ? `step 2 materials/pic ${last}.png` : `crisis photos/pic ${last}.png`;
             } else {
                 footer.style.display = 'none';
             }
