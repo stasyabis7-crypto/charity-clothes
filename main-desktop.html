@@ -10,13 +10,13 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #F8F8F8;
+            background: #fff;
             min-width: 1060px;
             color: #1A1A1A;
         }
 
         /* ── TOP BAR ── */
-        .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .top-bar { background: #fff; }
         .top-bar-inner {
             max-width: 1260px;
             margin: 0 auto;
@@ -28,66 +28,86 @@
             gap: 16px;
         }
         .tb-links { display: flex; align-items: center; gap: 20px; }
-        .tb-link { font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .tb-link {
+            display: flex; align-items: center; gap: 3px;
+            font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap;
+        }
+        .tb-link img { opacity: 0.6; }
         .tb-actions { display: flex; align-items: center; gap: 14px; }
 
         .place-btn {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            background: #00AAFF;
-            color: #fff;
+            gap: 5px;
+            color: #1A1A1A;
             text-decoration: none;
-            border-radius: 8px;
-            padding: 7px 16px;
             font-size: 13px;
             font-weight: 500;
             font-family: 'Inter', sans-serif;
             white-space: nowrap;
-            transition: background 0.15s;
+            transition: opacity 0.15s;
         }
-        .place-btn:hover { background: #0093E0; }
+        .place-btn:hover { opacity: 0.65; }
 
         .tb-action { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap; }
-        .tb-icon { width: 18px; height: 18px; opacity: 0.55; flex-shrink: 0; }
-        .tb-badge { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; }
-        .badge-coin { width: 20px; height: 20px; background: #FFB800; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-        .tb-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #C8864A, #9B5C1F); flex-shrink: 0; }
+        .tb-icon { width: 20px; height: 20px; flex-shrink: 0; cursor: default; }
+        .tb-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
 
         /* ── MAIN HEADER ── */
-        .main-header { background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .main-header { background: #fff; padding: 10px 0 12px; }
         .main-header-inner {
             max-width: 1260px;
             margin: 0 auto;
-            padding: 10px 20px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        .logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; cursor: default; }
-        .logo-svg { width: 38px; height: 38px; }
-        .logo-text { font-size: 23px; font-weight: 800; color: #00AAFF; letter-spacing: -0.5px; }
+        .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
+        .logo img { height: 36px; width: auto; }
 
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
+
         .all-cat-btn {
             display: flex; align-items: center; gap: 7px;
-            background: #00AAFF; color: #fff; border: none; border-radius: 8px;
-            padding: 10px 16px; font-size: 14px; font-weight: 500;
-            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
+            background: #fff; border: 1.5px solid #D9D9D9; color: #1A1A1A;
+            border-radius: 8px; padding: 9px 14px;
+            font-size: 14px; font-weight: 500; font-family: 'Inter', sans-serif;
+            cursor: default; white-space: nowrap; flex-shrink: 0;
         }
-        .search-wrap { flex: 1; display: flex; border: 1.5px solid #C8C8C8; border-radius: 8px; overflow: hidden; }
+        .all-cat-btn img { width: 20px; height: 20px; }
+
+        .search-field {
+            flex: 1;
+            background: #F4F4F4;
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+        }
         .search-input {
-            flex: 1; border: none; outline: none; padding: 10px 14px;
+            flex: 1; border: none; outline: none; background: transparent;
             font-size: 15px; font-family: 'Inter', sans-serif; color: #9E9E9E; pointer-events: none;
         }
-        .search-btn {
-            background: #00AAFF; color: #fff; border: none; padding: 10px 26px;
-            font-size: 15px; font-weight: 500; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
+
+        .find-btn {
+            background: #1A1A1A; color: #fff; border: none; border-radius: 8px;
+            padding: 10px 26px; font-size: 15px; font-weight: 500;
+            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
         }
-        .location-btn { display: flex; align-items: center; gap: 5px; font-size: 14px; color: #1A1A1A; cursor: default; white-space: nowrap; flex-shrink: 0; }
+
+        .location-btn {
+            display: flex; align-items: center; gap: 6px;
+            cursor: default; white-space: nowrap; flex-shrink: 0;
+        }
+        .location-btn img { width: 14px; height: 14px; flex-shrink: 0; }
+        .loc-text { display: flex; flex-direction: column; }
+        .loc-city { font-size: 14px; color: #1A1A1A; line-height: 1.2; }
+        .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
+        .loc-chevron { width: 16px; height: 16px; opacity: 0.5; }
 
         /* ── CATEGORIES ── */
-        .cat-section { background: #fff; border-bottom: 1px solid #EBEBEB; padding: 12px 0; }
+        .cat-section { background: #fff; padding: 12px 0 16px; }
         .cat-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; }
         .cat-grid { display: flex; flex-direction: column; gap: 8px; }
         .cat-row { display: flex; gap: 8px; }
@@ -113,15 +133,10 @@
         .ad-card { background: #fff; border-radius: 10px; overflow: hidden; cursor: default; }
         .ad-img-wrap { position: relative; aspect-ratio: 1; background: #F0F0F0; overflow: hidden; }
         .ad-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .ad-photo-count {
-            position: absolute; bottom: 8px; left: 8px;
-            background: rgba(0,0,0,0.4); border-radius: 4px; padding: 2px 6px;
-            display: flex; align-items: center; gap: 3px; color: #fff; font-size: 12px;
-        }
         .ad-body { padding: 8px 10px 12px; }
         .ad-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 4px; margin-bottom: 2px; }
         .ad-title { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.35; flex: 1; }
-        .ad-heart { width: 20px; height: 20px; flex-shrink: 0; opacity: 0.45; }
+        .ad-heart { width: 20px; height: 20px; flex-shrink: 0; filter: brightness(0); }
         .ad-price { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
         .ad-meta { display: flex; align-items: center; justify-content: space-between; }
         .ad-location { font-size: 12px; color: #9E9E9E; }
@@ -130,12 +145,13 @@
         /* ── SIDEBAR ── */
         .sidebar { width: 278px; flex-shrink: 0; }
         .sb-box { background: #fff; border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+        .sb-box.biz-box { border-radius: 28px; }
         .sb-title { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
         .sb-desc { font-size: 13px; color: #9E9E9E; line-height: 1.4; margin-bottom: 14px; }
 
         .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
         .biz-item { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
-        .biz-thumb { width: 60px; height: 60px; border-radius: 10px; background: #F4F4F4; }
+        .biz-thumb { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
         .biz-label { font-size: 12px; line-height: 1.25; color: #1A1A1A; }
 
         .sb-btn {
@@ -149,7 +165,7 @@
         .fav-info { flex: 1; min-width: 0; }
         .fav-name { font-size: 13px; color: #0077FF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
         .fav-price { font-size: 14px; font-weight: 600; }
-        .fav-heart { color: #FF4D4F; font-size: 16px; flex-shrink: 0; }
+        .fav-heart-svg { flex-shrink: 0; display: block; }
     </style>
 </head>
 <body>
@@ -158,24 +174,27 @@
 <div class="top-bar">
     <div class="top-bar-inner">
         <div class="tb-links">
-            <span class="tb-link">Для бизнеса ▾</span>
+            <span class="tb-link">Для бизнеса <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
             <span class="tb-link">Карьера в Авито</span>
             <span class="tb-link">Помощь</span>
-            <span class="tb-link">Каталоги ▾</span>
-            <span class="tb-link">#яПомогаю</span>
+            <span class="tb-link">Каталоги <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+            <span class="tb-link">Польза</span>
+            <span class="tb-link">Ещё <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
         </div>
         <div class="tb-actions">
-            <a href="step1.html" class="place-btn">+ Разместить объявление</a>
+            <a href="step1.html" class="place-btn">
+                <img src="desktop-header/Add.svg" width="16" height="16" alt="">
+                Разместить объявление
+            </a>
             <span class="tb-action">
-                <img src="icons footer/Ads.svg" class="tb-icon" alt="">
+                <img src="desktop-header/Items.svg" class="tb-icon" alt="">
                 Мои объявления
             </span>
-            <img src="icons header/Favorites.svg" class="tb-icon" alt="">
-            <svg class="tb-icon" viewBox="0 0 24 24" fill="none"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="#1A1A1A" opacity="0.55"/></svg>
-            <img src="icons footer/Chat.svg" class="tb-icon" alt="">
-            <img src="icons header/cart.svg" class="tb-icon" alt="">
-            <span class="tb-badge"><span class="badge-coin"></span> 25</span>
-            <div class="tb-avatar"></div>
+            <img src="desktop-header/favs.svg" class="tb-icon" alt="">
+            <img src="desktop-header/notifications.svg" class="tb-icon" alt="">
+            <img src="desktop-header/chats.svg" class="tb-icon" alt="">
+            <img src="desktop-header/cart.svg" class="tb-icon" alt="">
+            <img src="desktop-header/avatar.png" class="tb-avatar" alt="">
         </div>
     </div>
 </div>
@@ -184,34 +203,25 @@
 <header class="main-header">
     <div class="main-header-inner">
         <div class="logo">
-            <svg class="logo-svg" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10.5" cy="10.5" r="8.5" fill="#00AAFF"/>
-                <circle cx="27.5" cy="10.5" r="8.5" fill="#FF6600"/>
-                <circle cx="10.5" cy="27.5" r="8.5" fill="#00CC44"/>
-                <circle cx="27.5" cy="27.5" r="8.5" fill="#FFB800"/>
-            </svg>
-            <span class="logo-text">Авито</span>
+            <img src="desktop-header/Logotype Extension.svg" alt="Авито">
         </div>
         <div class="search-area">
             <button class="all-cat-btn">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <rect x="1" y="1" width="6" height="6" rx="1" fill="white"/>
-                    <rect x="9" y="1" width="6" height="6" rx="1" fill="white"/>
-                    <rect x="1" y="9" width="6" height="6" rx="1" fill="white"/>
-                    <rect x="9" y="9" width="6" height="6" rx="1" fill="white"/>
-                </svg>
+                <img src="desktop-header/Category.svg" alt="">
                 Все категории
             </button>
-            <div class="search-wrap">
+            <div class="search-field">
                 <input class="search-input" type="text" placeholder="Поиск по объявлениям" readonly>
-                <button class="search-btn">Найти</button>
             </div>
+            <button class="find-btn">Найти</button>
         </div>
         <div class="location-btn">
-            <svg width="12" height="16" viewBox="0 0 12 16" fill="none">
-                <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11c0-2.76-2.24-5-5-5zm0 6.5C5.17 6.5 4.5 5.83 4.5 5S5.17 3.5 6 3.5 7.5 4.17 7.5 5 6.83 6.5 6 6.5z" fill="#1A1A1A"/>
-            </svg>
-            Москва
+            <img src="desktop-header/Location.svg" alt="">
+            <div class="loc-text">
+                <span class="loc-city">Москва</span>
+                <span class="loc-sub">район, метро</span>
+            </div>
+            <img src="desktop-header/Expand More.svg" class="loc-chevron" alt="">
         </div>
     </div>
 </header>
@@ -249,17 +259,11 @@
         <div class="ads-grid">
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="step 2 materials/pic 1.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        3
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="step 2 materials/pic 1.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Пальто зимнее, размер M</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">2 500 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва</span><span class="ad-dots">···</span></div>
@@ -267,17 +271,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="step 2 materials/pic 2.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        5
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="step 2 materials/pic 2.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Куртка женская зимняя</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">1 800 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва</span><span class="ad-dots">···</span></div>
@@ -285,17 +283,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="step 2 materials/pic 3.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        2
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="step 2 materials/pic 3.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Платье летнее, новое с биркой</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">900 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва, Центр</span><span class="ad-dots">···</span></div>
@@ -303,17 +295,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="step 2 materials/pic 4.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        4
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="step 2 materials/pic 4.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Джинсы мужские Levi's 32/34</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">1 200 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва</span><span class="ad-dots">···</span></div>
@@ -321,17 +307,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="ads/ad 1.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        8
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="ads/ad 1.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">1-к. квартира, 32,1 м², 1/9 эт.</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">12 000 000 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва, Тульская</span><span class="ad-dots">···</span></div>
@@ -339,17 +319,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="ads/ad 2.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        6
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="ads/ad 2.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Смарт-часы «Экобьюти»</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">5 490 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва, Ш.миш...</span><span class="ad-dots">···</span></div>
@@ -357,17 +331,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="crisis photos/pic 6.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        2
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="crisis photos/pic 6.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Детский комбинезон, 6–12 мес</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">600 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва</span><span class="ad-dots">···</span></div>
@@ -375,17 +343,11 @@
             </div>
 
             <div class="ad-card">
-                <div class="ad-img-wrap">
-                    <img src="crisis photos/pic 7.png" class="ad-img" alt="">
-                    <div class="ad-photo-count">
-                        <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><path d="M11 2H9.5L8.5.5h-5L2.5 2H1C.45 2 0 2.45 0 3v5.5C0 9.05.45 9.5 1 9.5h10c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM6 8C4.62 8 3.5 6.88 3.5 5.5S4.62 3 6 3s2.5 1.12 2.5 2.5S7.38 8 6 8z"/></svg>
-                        3
-                    </div>
-                </div>
+                <div class="ad-img-wrap"><img src="crisis photos/pic 7.png" class="ad-img" alt=""></div>
                 <div class="ad-body">
                     <div class="ad-title-row">
                         <span class="ad-title">Sony a7 IV (a7m4) Body</span>
-                        <img src="icons header/Favorites.svg" class="ad-heart" alt="">
+                        <img src="desktop-header/favs.svg" class="ad-heart" alt="">
                     </div>
                     <div class="ad-price">24 990 ₽</div>
                     <div class="ad-meta"><span class="ad-location">Москва, Ленинский</span><span class="ad-dots">···</span></div>
@@ -396,16 +358,16 @@
     </main>
 
     <aside class="sidebar">
-        <div class="sb-box">
+        <div class="sb-box biz-box">
             <div class="sb-title">Всё для бизнеса</div>
             <div class="sb-desc">Миллионы предложений для разных задач в Авито Бизнес 360</div>
             <div class="biz-grid">
-                <div class="biz-item"><div class="biz-thumb"></div><span class="biz-label">Оборудо-<br>вание</span></div>
-                <div class="biz-item"><div class="biz-thumb"></div><span class="biz-label">Помещения</span></div>
-                <div class="biz-item"><div class="biz-thumb"></div><span class="biz-label">Товары</span></div>
-                <div class="biz-item"><div class="biz-thumb"></div><span class="biz-label">Транспорт</span></div>
-                <div class="biz-item"><div class="biz-thumb"></div><span class="biz-label">Услуги</span></div>
-                <div class="biz-item"><div class="biz-thumb"></div><span class="biz-label">Сотрудники</span></div>
+                <div class="biz-item"><img src="main-desktop/img 1.png" class="biz-thumb" alt=""><span class="biz-label">Оборудо-<br>вание</span></div>
+                <div class="biz-item"><img src="main-desktop/img 2.png" class="biz-thumb" alt=""><span class="biz-label">Помещения</span></div>
+                <div class="biz-item"><img src="main-desktop/img 3.png" class="biz-thumb" alt=""><span class="biz-label">Товары</span></div>
+                <div class="biz-item"><img src="main-desktop/img 4.png" class="biz-thumb" alt=""><span class="biz-label">Транспорт</span></div>
+                <div class="biz-item"><img src="main-desktop/img 5.png" class="biz-thumb" alt=""><span class="biz-label">Услуги</span></div>
+                <div class="biz-item"><img src="main-desktop/img 6.png" class="biz-thumb" alt=""><span class="biz-label">Сотрудники</span></div>
             </div>
             <button class="sb-btn">⊙ Искать в Бизнес 360</button>
         </div>
@@ -418,7 +380,7 @@
                     <div class="fav-name">Тюлень — игрушка-бр...</div>
                     <div class="fav-price">800 ₽</div>
                 </div>
-                <span class="fav-heart">♥</span>
+                <svg class="fav-heart-svg" width="20" height="20" viewBox="0 0 24 24" fill="#FF4D4F"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </div>
             <div class="fav-item">
                 <img src="ads/ad 1.png" class="fav-thumb" alt="">
@@ -426,7 +388,7 @@
                     <div class="fav-name">Личный шеф повар</div>
                     <div class="fav-price">от 1 000 ₽</div>
                 </div>
-                <span class="fav-heart">♥</span>
+                <svg class="fav-heart-svg" width="20" height="20" viewBox="0 0 24 24" fill="#FF4D4F"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </div>
             <div class="fav-item">
                 <img src="step 2 materials/pic 1.png" class="fav-thumb" alt="">
@@ -434,7 +396,7 @@
                     <div class="fav-name">Биозавивка Япония, ...</div>
                     <div class="fav-price">от 6 000 ₽</div>
                 </div>
-                <span class="fav-heart">♥</span>
+                <svg class="fav-heart-svg" width="20" height="20" viewBox="0 0 24 24" fill="#FF4D4F"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </div>
             <button class="sb-btn">Все избранные</button>
         </div>
