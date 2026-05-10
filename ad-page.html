@@ -151,10 +151,10 @@
         .btn-boost {
             display: block;
             width: 100%;
-            background: #EBF4FF;
-            color: #0077FF;
+            background: #00AAFF;
+            color: #fff;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 14px;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
@@ -166,10 +166,10 @@
         .btn-unpublish {
             display: block;
             width: 100%;
-            background: #F4F4F4;
-            color: #1A1A1A;
+            background: #CFEDFF;
+            color: #00AAFF;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 14px;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
@@ -413,6 +413,23 @@
             text-align: center;
             cursor: pointer;
         }
+
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1A1A1A;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 12px 20px;
+            border-radius: 12px;
+            white-space: nowrap;
+            z-index: 500;
+        }
+        .toast.visible { display: block; }
     </style>
 </head>
 <body>
@@ -524,7 +541,7 @@
     <!-- THREE-DOT POPUP -->
     <div class="dot-popup-overlay" id="dot-popup" onclick="closeDotIfOverlay(event)">
         <div class="dot-popup">
-            <div class="dot-popup-item" onclick="window.location.href='edit-ad.html'">Редактировать</div>
+            <div class="dot-popup-item" onclick="sessionStorage.setItem('editReturnPage','ad-page.html');window.location.href='edit-ad.html'">Редактировать</div>
         </div>
     </div>
 
@@ -613,7 +630,15 @@
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
         }, { passive: true });
+
+        if (sessionStorage.getItem('showSavedToast') === '1') {
+            sessionStorage.removeItem('showSavedToast');
+            const t = document.getElementById('saved-toast');
+            if (t) { t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 3000); }
+        }
     </script>
+
+    <div class="toast" id="saved-toast">Изменения успешно сохранены</div>
 
 </body>
 </html>

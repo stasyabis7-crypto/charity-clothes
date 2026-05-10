@@ -28,7 +28,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px 16px 8px 8px;
+            padding: 16px 16px 8px 8px;
             position: sticky;
             top: 0;
             z-index: 50;
@@ -229,7 +229,7 @@
             max-width: 430px;
             background: #FFFFFF;
             z-index: 100;
-            border-radius: 40px 40px 0 0;
+            border-radius: 24px 24px 0 0;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
@@ -276,6 +276,23 @@
         .footer-item.active .footer-label { color: #1A1A1A; }
         .footer-item.active img { filter: brightness(0); }
         .footer-item.search-item img { filter: none !important; }
+
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1A1A1A;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 12px 20px;
+            border-radius: 12px;
+            white-space: nowrap;
+            z-index: 500;
+        }
+        .toast.visible { display: block; }
     </style>
 </head>
 <body>
@@ -340,7 +357,7 @@
             <div class="ad-content">
                 <div class="ad-title-row">
                     <span class="ad-title" id="charity-title"></span>
-                    <a href="edit-ad.html">
+                    <a href="javascript:void(0)" onclick="sessionStorage.setItem('editReturnPage','ads-2.html');window.location.href='edit-ad.html'">
                         <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
                     </a>
                 </div>
@@ -412,7 +429,15 @@
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
         }, { passive: true });
+
+        if (sessionStorage.getItem('showSavedToast') === '1') {
+            sessionStorage.removeItem('showSavedToast');
+            const t = document.getElementById('saved-toast');
+            if (t) { t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 3000); }
+        }
     </script>
+
+    <div class="toast" id="saved-toast">Изменения успешно сохранены</div>
 
 </body>
 </html>

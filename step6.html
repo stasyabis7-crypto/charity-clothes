@@ -335,7 +335,7 @@
             gap: 10px;
             z-index: 100;
             will-change: transform;
-            border-radius: 40px 40px 0 0;
+            border-radius: 24px 24px 0 0;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
@@ -454,7 +454,7 @@
 <body>
 
     <header class="header">
-        <a href="step5.html">
+        <a href="javascript:void(0)" onclick="goBack()">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="header-right" onclick="openSheet()" style="cursor:pointer;">Как это работает?</span>
@@ -724,6 +724,10 @@
             state = {};
             closePopup();
             render();
+        }
+
+        function goBack() {
+            window.location.href = sessionStorage.getItem('categoriesReturnPage') || 'step5.html';
         }
 
         function saveAndReturn() {

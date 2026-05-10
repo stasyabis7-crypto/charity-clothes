@@ -330,7 +330,7 @@
             background: #fff;
             padding: 12px 16px 28px;
             z-index: 100;
-            border-radius: 40px 40px 0 0;
+            border-radius: 24px 24px 0 0;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
@@ -376,7 +376,7 @@
 
     <!-- HEADER -->
     <header class="header">
-        <span class="header-close" onclick="saveDone()">✕</span>
+        <span class="header-close" onclick="closeEdit()">✕</span>
         <span class="header-title">Редактирование</span>
     </header>
 
@@ -583,16 +583,20 @@
             window.location.href = col === 'crisis' ? 'step6-crisis.html' : 'step6.html';
         }
 
-        // ── Save & Done ──
+        // ── Save & Done (Готово button) ──
         function saveDone() {
             sessionStorage.setItem('adTitle', titleInput.value);
             sessionStorage.setItem('adDesc', ta.value);
-            const toast = document.getElementById('toast');
-            toast.classList.add('visible');
-            setTimeout(() => {
-                toast.classList.remove('visible');
-                window.location.href = 'ad-page.html';
-            }, 5000);
+            sessionStorage.setItem('showSavedToast', '1');
+            window.location.href = sessionStorage.getItem('editReturnPage') || 'ad-page.html';
+        }
+
+        // ── Close (X button) — saves and navigates back ──
+        function closeEdit() {
+            sessionStorage.setItem('adTitle', titleInput.value);
+            sessionStorage.setItem('adDesc', ta.value);
+            sessionStorage.setItem('showSavedToast', '1');
+            history.back();
         }
 
         window.addEventListener('scroll', function() {
