@@ -113,7 +113,7 @@
 <body>
 
     <header class="header">
-        <a href="main-specs.html">
+        <a href="javascript:void(0)" onclick="history.back()">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="save-exit">Сохранить и выйти</span>
@@ -199,8 +199,8 @@
         }
 
         function goNext() {
-            sessionStorage.setItem('adDesc', buildFullDescription());
-            window.location.href = 'ads-2.html';
+            sessionStorage.setItem('mainDesc', ta.value);
+            window.location.href = 'main-address.html';
         }
 
         const saved = sessionStorage.getItem('mainDesc');

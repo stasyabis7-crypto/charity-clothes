@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Условия продажи</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 120px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px;
+        }
+
+        .save-exit {
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            cursor: default;
+        }
+
+        .page-title {
+            margin-top: 12px;
+            padding: 0 16px;
+            font-weight: 800;
+            font-size: 31px;
+            color: #1A1A1A;
+            line-height: 1.1;
+        }
+
+        /* ── PRICE ── */
+        .price-wrap {
+            margin-top: 24px;
+            padding: 0 16px;
+        }
+
+        .price-field {
+            display: flex;
+            align-items: center;
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 13px 14px;
+            gap: 6px;
+            cursor: text;
+        }
+
+        .price-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            outline: none;
+            min-width: 0;
+        }
+
+        .price-clear {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #9E9E9E;
+            cursor: pointer;
+            flex-shrink: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .charity-hint {
+            display: none;
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #9E9E9E;
+            line-height: 1.5;
+        }
+
+        .charity-link {
+            color: #9E9E9E;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* ── TOGGLE ROW ── */
+        .toggle-section {
+            margin-top: 28px;
+            padding: 0 16px;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .toggle-label {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .toggle-off {
+            width: 40px;
+            height: 21px;
+            background: #E0E0E0;
+            border-radius: 11px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .toggle-off::after {
+            content: '';
+            width: 17px;
+            height: 17px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .toggle-sub {
+            margin-top: 4px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #9E9E9E;
+            text-decoration: underline;
+            cursor: default;
+        }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+        }
+
+        .continue-btn {
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: default;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="javascript:void(0)" onclick="history.back()">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit">Сохранить и выйти</span>
+    </header>
+
+    <h1 class="page-title">Условия продажи</h1>
+
+    <div class="price-wrap">
+        <div class="price-field" onclick="document.getElementById('price-input').focus()">
+            <input
+                type="tel"
+                id="price-input"
+                class="price-input"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder=""
+            >
+            <button class="price-clear" id="price-clear" onclick="clearPrice(event)">✕</button>
+        </div>
+        <div class="charity-hint" id="charity-hint">
+            Ваш товар подходит под активный благотворительный сбор для фонда ❤️.
+            <span class="charity-link" onclick="goToCharity()">Перейти</span>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-row">
+            <span class="toggle-label">Несколько штук в наличии</span>
+            <div class="toggle-off"></div>
+        </div>
+        <div class="toggle-sub">Как это работает</div>
+    </div>
+
+    <div class="bottom-bar">
+        <button class="continue-btn">Продолжить</button>
+    </div>
+
+    <script>
+        const priceInput = document.getElementById('price-input');
+        const priceClear = document.getElementById('price-clear');
+        const charityHint = document.getElementById('charity-hint');
+        let digits = '';
+
+        function updateDisplay() {
+            priceInput.value = digits ? digits + ' ₽' : '';
+            priceClear.style.display = digits ? 'block' : 'none';
+            const val = parseInt(digits) || 0;
+            charityHint.style.display = (digits !== '' && val < 100) ? 'block' : 'none';
+        }
+
+        priceInput.addEventListener('keydown', function(e) {
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+                digits += e.key;
+                updateDisplay();
+                requestAnimationFrame(() => this.setSelectionRange(digits.length, digits.length));
+            } else if (e.key === 'Backspace') {
+                e.preventDefault();
+                digits = digits.slice(0, -1);
+                updateDisplay();
+            }
+        });
+
+        priceInput.addEventListener('input', function() {
+            const raw = this.value.replace(/\D/g, '');
+            if (raw !== digits) {
+                digits = raw;
+                updateDisplay();
+                requestAnimationFrame(() => this.setSelectionRange(digits.length, digits.length));
+            }
+        });
+
+        function clearPrice(e) {
+            e.stopPropagation();
+            digits = '';
+            updateDisplay();
+            priceInput.focus();
+        }
+
+        const CONDITION_NAMES = {
+            'new-tag': 'Новое, с биркой',
+            'excellent': 'Отличное',
+            'good': 'Хорошее',
+            'fair': 'Удовлетворительное'
+        };
+
+        const SPECS_DATA = {
+            't-shirts':  { color: 'Белый',   forWhom: 'Для девочек', brand: 'H&M',        type: 'Футболка' },
+            'homewear':  { color: 'Розовый', forWhom: 'Для девочек', brand: 'Без бренда', type: 'Домашний комплект' },
+            'suits':     { color: 'Синий',   forWhom: 'Для девочек', brand: 'Zara Kids',  type: 'Пиджак' }
+        };
+
+        function buildFullDescription() {
+            const cat = sessionStorage.getItem('mainCategory') || '';
+            const condId = sessionStorage.getItem('mainCondition') || '';
+            const descText = sessionStorage.getItem('mainDesc') || '';
+            const specs = SPECS_DATA[cat];
+            const priceStr = digits ? digits + ' ₽' : '';
+
+            const parts = [];
+            if (condId && CONDITION_NAMES[condId]) parts.push('Состояние: ' + CONDITION_NAMES[condId]);
+            if (specs) parts.push(`Тип: ${specs.type}, Цвет: ${specs.color}, Для кого: ${specs.forWhom}, Бренд: ${specs.brand}`);
+            if (descText) parts.push(descText);
+            if (priceStr) parts.push('Цена: ' + priceStr);
+            return parts.join('\n\n');
+        }
+
+        function goToCharity() {
+            sessionStorage.setItem('adDesc', buildFullDescription());
+            sessionStorage.removeItem('adCategories');
+            window.location.href = 'step5.html';
+        }
+    </script>
+
+</body>
+</html>
