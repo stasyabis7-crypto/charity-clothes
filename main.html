@@ -64,29 +64,29 @@
         .categories-section {
             margin-top: 24px;
             padding: 0 0 0 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .categories-section::-webkit-scrollbar {
+            display: none;
         }
 
         .categories-grid {
             display: flex;
             flex-direction: column;
-            flex-wrap: wrap;
-            height: 202px; /* 96 + 10 + 96 */
             gap: 10px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scrollbar-width: none;
+            width: max-content;
             padding-right: 16px;
-            align-content: flex-start;
-            align-items: flex-start;
         }
 
-        .categories-grid::-webkit-scrollbar {
-            display: none;
+        .categories-row {
+            display: flex;
+            gap: 10px;
         }
 
         .category-item {
             position: relative;
-            display: block;
             height: 96px;
             overflow: hidden;
             border-radius: 10px;
@@ -321,36 +321,37 @@
     <!-- CATEGORIES -->
     <section class="categories-section">
         <div class="categories-grid">
-            <div class="category-item">
-                <img src="categories photos/auto.png" class="category-img" alt="Авто">
-                <span class="category-name">Авто</span>
+            <div class="categories-row">
+                <div class="category-item">
+                    <img src="categories photos/auto.png" class="category-img" alt="Авто">
+                    <span class="category-name">Авто</span>
+                </div>
+                <div class="category-item">
+                    <img src="categories photos/estate.png" class="category-img" alt="Недвижимость">
+                    <span class="category-name">Недви­жи­мость</span>
+                </div>
+                <div class="category-item">
+                    <img src="categories photos/work.png" class="category-img" alt="Работа">
+                    <span class="category-name">Работа</span>
+                </div>
+                <div class="category-item">
+                    <img src="categories photos/auto parts.png" class="category-img" alt="Автозапчасти">
+                    <span class="category-name">Авто­зап­части</span>
+                </div>
             </div>
-            <div class="category-item">
-                <img src="categories photos/services.png" class="category-img" alt="Услуги">
-                <span class="category-name">Услуги</span>
-            </div>
-
-            <div class="category-item">
-                <img src="categories photos/estate.png" class="category-img" alt="Недвижимость">
-                <span class="category-name">Недви­жи­мость</span>
-            </div>
-            <div class="category-item">
-                <img src="categories photos/electronics.png" class="category-img" alt="Электроника">
-                <span class="category-name">Элек­тро­ника</span>
-            </div>
-
-            <div class="category-item">
-                <img src="categories photos/work.png" class="category-img" alt="Работа">
-                <span class="category-name">Работа</span>
-            </div>
-            <div class="category-item">
-                <img src="categories photos/for home.png" class="category-img" alt="Для дома и дачи">
-                <span class="category-name">Для дома и дачи</span>
-            </div>
-
-            <div class="category-item">
-                <img src="categories photos/auto parts.png" class="category-img" alt="Автозапчасти">
-                <span class="category-name">Авто­зап­части</span>
+            <div class="categories-row">
+                <div class="category-item">
+                    <img src="categories photos/services.png" class="category-img" alt="Услуги">
+                    <span class="category-name">Услуги</span>
+                </div>
+                <div class="category-item">
+                    <img src="categories photos/electronics.png" class="category-img" alt="Электроника">
+                    <span class="category-name">Элек­тро­ника</span>
+                </div>
+                <div class="category-item">
+                    <img src="categories photos/for home.png" class="category-img" alt="Для дома и дачи">
+                    <span class="category-name">Для дома и дачи</span>
+                </div>
             </div>
         </div>
     </section>
