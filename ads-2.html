@@ -392,7 +392,8 @@
 
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {
-            document.getElementById('charity-photo').src = `step 2 materials/pic ${photos[0]}.png`;
+            const id = photos[0];
+            document.getElementById('charity-photo').src = id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
         }
     </script>
 

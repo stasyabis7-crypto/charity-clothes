@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Объявление</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 40px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px 8px 8px;
+        }
+
+        .header-center {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* ── YELLOW BANNER ── */
+        .status-banner {
+            margin: 0 16px 0;
+            background: #FFF8E0;
+            border-radius: 14px;
+            padding: 12px 14px;
+        }
+
+        .status-banner-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .status-banner-text {
+            margin-top: 4px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.45;
+        }
+
+        .status-banner-link {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #9E9E9E;
+            text-decoration: underline;
+        }
+
+        /* ── PHOTO ── */
+        .photo-wrap {
+            margin-top: 12px;
+            position: relative;
+        }
+
+        .ad-main-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-counter {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 400;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+        }
+
+        .stats-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: #9E9E9E;
+        }
+
+        .stats-link {
+            font-size: 14px;
+            font-weight: 400;
+            color: #0077FF;
+            text-decoration: none;
+        }
+
+        /* ── ACTION BUTTONS ── */
+        .action-btns {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-boost {
+            display: block;
+            width: 100%;
+            background: #fff;
+            color: #0077FF;
+            border: 1.5px solid #0077FF;
+            border-radius: 14px;
+            padding: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: default;
+        }
+
+        .btn-unpublish {
+            display: block;
+            width: 100%;
+            background: #F4F4F4;
+            color: #1A1A1A;
+            border: none;
+            border-radius: 14px;
+            padding: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* ── AD INFO ── */
+        .ad-info {
+            padding: 16px 16px 0;
+        }
+
+        .ad-title-text {
+            font-size: 17px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.3;
+        }
+
+        .ad-price-text {
+            margin-top: 4px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+
+        .ad-qty {
+            margin-top: 4px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #9E9E9E;
+        }
+
+        /* ── ZNAK DOBRA ROW ── */
+        .znak-row {
+            margin: 16px 16px 0;
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .znak-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .znak-text {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .znak-arrow {
+            color: #9E9E9E;
+            font-size: 16px;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: #EBEBEB;
+            margin: 16px 16px 0;
+        }
+
+        /* ── DETAILS ── */
+        .details {
+            padding: 16px 16px 0;
+        }
+
+        .detail-row {
+            margin-bottom: 12px;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #9E9E9E;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.45;
+        }
+
+        .detail-location {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            padding: 16px 16px 0;
+        }
+
+        /* ── SELLER CARD ── */
+        .seller-card {
+            margin: 16px 16px 0;
+            background: #F4F4F4;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .seller-name {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .seller-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* ── THREE-DOT POPUP ── */
+        .dot-popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 200;
+            align-items: flex-end;
+        }
+
+        .dot-popup-overlay.open { display: flex; }
+
+        .dot-popup {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            padding: 20px 16px 36px;
+        }
+
+        .dot-popup-item {
+            padding: 16px 0;
+            font-size: 16px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: pointer;
+            border-bottom: 1px solid #EBEBEB;
+        }
+
+        .dot-popup-item:last-child { border-bottom: none; }
+
+        /* ── UNPUBLISH SHEET ── */
+        .sheet-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 300;
+            align-items: flex-end;
+        }
+
+        .sheet-overlay.open { display: flex; }
+
+        .sheet-card {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            padding: 20px 16px 36px;
+        }
+
+        .sheet-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A1A;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .sheet-radio-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+        }
+
+        .sheet-radio-label {
+            font-size: 16px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .sheet-radio-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .radio-off {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #EBEBEB;
+            flex-shrink: 0;
+        }
+
+        .sheet-confirm-btn {
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="ads-2.html">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="header-center">Активно</span>
+        <div class="header-right">
+            <div class="header-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M11 2L14.5 8.5H19.5L15.5 12.5L17 19L11 15.5L5 19L6.5 12.5L2.5 8.5H7.5L11 2Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="header-icon" onclick="openDotMenu()">
+                <svg width="22" height="6" viewBox="0 0 22 6" fill="none">
+                    <circle cx="3" cy="3" r="2.5" fill="#1A1A1A"/>
+                    <circle cx="11" cy="3" r="2.5" fill="#1A1A1A"/>
+                    <circle cx="19" cy="3" r="2.5" fill="#1A1A1A"/>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- STATUS BANNER -->
+    <div class="status-banner">
+        <div class="status-banner-title">Ещё не опубликовано</div>
+        <div class="status-banner-text">Объявление появится на странице для фондов после проверки. Обычно нужно пару минут, изредка — до 2 дней.</div>
+        <span class="status-banner-link">Почему так?</span>
+    </div>
+
+    <!-- PHOTO -->
+    <div class="photo-wrap">
+        <img id="ad-main-photo" src="drafts materials/img drafts.png" class="ad-main-photo" alt="">
+        <span class="photo-counter" id="photo-counter">1/1</span>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+        <div class="stats-left">
+            <div class="stat-item">
+                <img src="step 0 icons/Visibility.svg" width="16" height="16" alt="">
+                0
+            </div>
+            <div class="stat-item">
+                <img src="step 0 icons/Person.svg" width="16" height="16" alt="">
+                0
+            </div>
+            <div class="stat-item">
+                <img src="step 0 icons/Favorite.svg" width="16" height="16" alt="">
+                0
+            </div>
+        </div>
+        <span class="stats-link">Статистика</span>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="action-btns">
+        <button class="btn-boost">Поднять просмотры</button>
+        <button class="btn-unpublish" onclick="openUnpublishSheet()">Снять с публикации</button>
+    </div>
+
+    <!-- AD INFO -->
+    <div class="ad-info">
+        <div class="ad-title-text" id="ad-title-display"></div>
+        <div class="ad-price-text">Бесплатно</div>
+        <div class="ad-qty">5 шт. в наличии</div>
+    </div>
+
+    <!-- ZNAK DOBRA -->
+    <div class="znak-row">
+        <img src="success materials/banner znak dobra.png" class="znak-img" alt="">
+        <span class="znak-text">Знак добра<br><span style="font-size:12px;color:#9E9E9E;">За пожертвование в фонд</span></span>
+        <span class="znak-arrow">›</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- LOCATION -->
+    <div class="detail-location">Нижегородская обл., Нижний Новгород, ул. Добролюбова, 56 ›</div>
+
+    <!-- DETAILS -->
+    <div class="details">
+        <div class="detail-row">
+            <div class="detail-label">Категория</div>
+            <div class="detail-value">Благотворительные товары</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Цена, ₽</div>
+            <div class="detail-value">Бесплатно</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Состояние:</div>
+            <div class="detail-value" id="ad-condition">Удовлетворительное</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Характеристики:</div>
+            <div class="detail-value" id="ad-chars">Хар-ка 1<br>Хар-ка 2<br>Хар-ка 3</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-value" id="ad-desc-display"></div>
+        </div>
+    </div>
+
+    <!-- SELLER CARD -->
+    <div class="seller-card">
+        <span class="seller-name">Анастасия</span>
+        <img src="connection materials/Avatar.png" class="seller-avatar" alt="">
+    </div>
+
+    <!-- THREE-DOT POPUP -->
+    <div class="dot-popup-overlay" id="dot-popup" onclick="closeDotIfOverlay(event)">
+        <div class="dot-popup">
+            <div class="dot-popup-item" onclick="window.location.href='edit-ad.html'">Редактировать</div>
+        </div>
+    </div>
+
+    <!-- UNPUBLISH SHEET -->
+    <div class="sheet-overlay" id="unpublish-sheet" onclick="closeSheetIfOverlay(event)">
+        <div class="sheet-card">
+            <div class="sheet-title">Укажите причину закрытия объявления</div>
+
+            <div class="sheet-radio-row" onclick="selectReason(0)">
+                <span class="sheet-radio-label">Фонды не заказали вещь</span>
+                <img id="reason-0" src="crisis help/Radio off.png" class="sheet-radio-icon" alt="">
+            </div>
+            <div class="sheet-radio-row" onclick="selectReason(1)">
+                <span class="sheet-radio-label">Сбор завершился</span>
+                <img id="reason-1" src="crisis help/Radio off.png" class="sheet-radio-icon" alt="">
+            </div>
+            <div class="sheet-radio-row" onclick="selectReason(2)">
+                <span class="sheet-radio-label">Передумал передавать на благотворительность</span>
+                <img id="reason-2" src="crisis help/Radio off.png" class="sheet-radio-icon" alt="">
+            </div>
+
+            <button class="sheet-confirm-btn" id="unpublish-confirm-btn" onclick="confirmUnpublish()">Снять с публикации</button>
+        </div>
+    </div>
+
+    <script>
+        function photoSrc(id) {
+            return id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+        }
+
+        const title = sessionStorage.getItem('adTitle') || 'Без названия';
+        document.getElementById('ad-title-display').textContent = title;
+
+        const desc = sessionStorage.getItem('adDesc') || '';
+        document.getElementById('ad-desc-display').textContent = desc;
+
+        const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+        if (photos.length > 0) {
+            document.getElementById('ad-main-photo').src = photoSrc(photos[0]);
+            document.getElementById('photo-counter').textContent = `1/${photos.length}`;
+        }
+
+        function openDotMenu() {
+            document.getElementById('dot-popup').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDotIfOverlay(e) {
+            if (e.target.id === 'dot-popup') {
+                document.getElementById('dot-popup').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function openUnpublishSheet() {
+            document.getElementById('unpublish-sheet').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheetIfOverlay(e) {
+            if (e.target.id === 'unpublish-sheet') {
+                document.getElementById('unpublish-sheet').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        let selectedReason = -1;
+
+        function selectReason(idx) {
+            selectedReason = idx;
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`reason-${i}`).src = i === idx
+                    ? 'crisis help/Radio on.png'
+                    : 'crisis help/Radio off.png';
+            }
+        }
+
+        function confirmUnpublish() {
+            if (selectedReason === -1) return;
+            sessionStorage.setItem('adArchived', '1');
+            document.body.style.overflow = '';
+            window.location.href = 'ads-archived.html';
+        }
+    </script>
+
+</body>
+</html>

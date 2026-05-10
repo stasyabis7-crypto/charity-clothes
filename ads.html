@@ -447,8 +447,9 @@
             }
             const title = sessionStorage.getItem('adTitle') || 'Без названия';
             const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            const firstId = photos[0];
             const photoSrc = photos.length > 0
-                ? `step 2 materials/pic ${photos[0]}.png`
+                ? (firstId <= 5 ? `step 2 materials/pic ${firstId}.png` : `crisis photos/pic ${firstId}.png`)
                 : 'drafts materials/img drafts.png';
 
             list.innerHTML = `

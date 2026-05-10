@@ -749,7 +749,9 @@
                 sessionStorage.setItem('adDesc', desc);
             }
 
-            window.location.href = 'step5-crisis.html';
+            const returnPage = sessionStorage.getItem('categoriesReturnPage') || 'step5-crisis.html';
+            sessionStorage.removeItem('categoriesReturnPage');
+            window.location.href = returnPage;
         }
 
         function pinBar() {

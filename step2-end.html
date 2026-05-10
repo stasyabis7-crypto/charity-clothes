@@ -242,12 +242,16 @@
             const grid = document.getElementById('photos-grid');
             grid.innerHTML = '';
 
-            photos.forEach((id, index) => {
+            function photoSrc(id) {
+            return id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+        }
+
+        photos.forEach((id, index) => {
                 const cell = document.createElement('div');
                 cell.className = 'photo-cell';
                 cell.innerHTML = `
                     ${index === 0 ? '<span class="main-tag">Главная</span>' : ''}
-                    <img src="step 2 materials/pic ${id}.png" class="photo-img" alt="">
+                    <img src="${photoSrc(id)}" class="photo-img" alt="">
                     <button class="delete-btn" onclick="deletePhoto(${id})">
                         <img src="step 2 materials/Icon delete.svg" width="24" height="24" alt="">
                     </button>

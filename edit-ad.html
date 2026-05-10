@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>Редактирование</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            position: relative;
+        }
+
+        .header-close {
+            position: absolute;
+            left: 16px;
+            font-size: 22px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: pointer;
+            line-height: 1;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        /* ── SECTION ── */
+        .section {
+            padding: 20px 16px 0;
+        }
+
+        .section-label {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 12px;
+        }
+
+        /* ── COLLECTION FIELD (inactive) ── */
+        .collection-field {
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .collection-field-value {
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+        }
+
+        .collection-chevron {
+            color: #9E9E9E;
+        }
+
+        /* ── CATEGORY ROWS ── */
+        .selected-cat-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .selected-cat-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .selected-cat-name {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .selected-cat-count {
+            font-size: 13px;
+            font-weight: 400;
+            color: #9E9E9E;
+            margin-top: 2px;
+        }
+
+        .edit-cat-btn {
+            display: block;
+            width: 100%;
+            background: #F4F4F4;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        /* ── TITLE FIELD ── */
+        .title-field {
+            display: flex;
+            align-items: center;
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 12px 14px;
+            gap: 8px;
+            min-height: 48px;
+        }
+
+        .title-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            outline: none;
+            min-width: 0;
+        }
+
+        .title-clear {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            flex-shrink: 0;
+            color: #1A1A1A;
+            font-size: 18px;
+            display: none;
+        }
+
+        /* ── DESC FIELD ── */
+        .desc-wrap {
+            position: relative;
+            margin-top: 0;
+        }
+
+        .desc-textarea {
+            display: block;
+            width: 100%;
+            min-height: 160px;
+            background: #F4F4F4;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            outline: none;
+            resize: none;
+            overflow: hidden;
+            line-height: 1.45;
+        }
+
+        .desc-textarea::placeholder { color: #9E9E9E; }
+
+        .desc-clear {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1A1A1A;
+            font-size: 18px;
+            display: none;
+        }
+
+        /* ── PHOTOS GRID ── */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .photo-cell {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+
+        .photo-cell img.photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .main-tag {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #1A1A1A;
+            z-index: 10;
+        }
+
+        .delete-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.92);
+            border: none;
+            border-radius: 16px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .add-cell {
+            background: #F4F4F4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            border-radius: 28px;
+        }
+
+        .add-cell span {
+            font-size: 13px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        /* ── STATIC INFO ── */
+        .info-field {
+            background: #F4F4F4;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-field-value {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
+        .info-field-clear {
+            color: #1A1A1A;
+            font-size: 18px;
+        }
+
+        .section-desc {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .section-desc a { color: #9E9E9E; text-decoration: underline; }
+
+        .radio-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+
+        .radio-label { font-size: 16px; font-weight: 400; color: #1A1A1A; }
+        .radio-off { width: 24px; height: 24px; border-radius: 50%; background: #EBEBEB; }
+
+        .autopub-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .autopub-text { flex: 1; }
+        .autopub-label { font-size: 16px; font-weight: 400; color: #1A1A1A; margin-bottom: 4px; }
+        .autopub-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.4; }
+        .autopub-sub a { color: #9E9E9E; text-decoration: underline; }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+        }
+
+        .done-btn {
+            display: block;
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: calc(430px - 32px);
+            background: #1A1A1A;
+            color: #fff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
+            z-index: 200;
+            text-align: center;
+        }
+
+        .toast.visible { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <span class="header-close" onclick="saveDone()">✕</span>
+        <span class="header-title">Редактирование</span>
+    </header>
+
+    <!-- СБОР -->
+    <div class="section">
+        <div class="section-label">Сбор</div>
+        <div class="collection-field">
+            <span class="collection-field-value" id="collection-name">Помощь семьям</span>
+            <svg class="collection-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ВЕЩИ ДЛЯ ПЕРЕДАЧИ -->
+    <div class="section">
+        <div class="section-label">Вещи, которые вы выбрали для передачи</div>
+        <div id="cat-content"></div>
+        <button class="edit-cat-btn" onclick="goToCategories()">Редактировать категории</button>
+    </div>
+
+    <!-- НАЗВАНИЕ -->
+    <div class="section">
+        <div class="section-label">Название объявления</div>
+        <div class="title-field">
+            <input type="text" class="title-input" id="title-input" placeholder="Название объявления">
+            <button class="title-clear" id="title-clear" onclick="clearTitle()">✕</button>
+        </div>
+    </div>
+
+    <!-- ОПИСАНИЕ -->
+    <div class="section">
+        <div class="section-label">Описание товаров</div>
+        <div class="desc-wrap">
+            <textarea class="desc-textarea" id="desc-textarea" placeholder="Описание"></textarea>
+            <button class="desc-clear" id="desc-clear" onclick="clearDesc()">✕</button>
+        </div>
+    </div>
+
+    <!-- ФОТОГРАФИИ -->
+    <div class="section">
+        <div class="section-label">Фотографии</div>
+        <div class="photos-grid" id="photos-grid"></div>
+    </div>
+
+    <!-- ТЕЛЕФОН -->
+    <div class="section">
+        <div class="section-label">Телефон</div>
+        <p class="section-desc">Другие пользователи не увидят ваш настоящий телефон и не смогут написать сообщение вне Авито. Эту защиту нельзя отключить. <a href="#">Подробнее</a></p>
+        <div class="info-field">
+            <span class="info-field-value">+7 985 922 64 74</span>
+            <span class="info-field-clear">✕</span>
+        </div>
+    </div>
+
+    <!-- СПОСОБ СВЯЗИ -->
+    <div class="section">
+        <div class="section-label">Способ связи</div>
+        <div class="radio-row">
+            <span class="radio-label">Звонки и сообщения</span>
+            <div class="radio-off"></div>
+        </div>
+        <div class="radio-row">
+            <span class="radio-label">Только звонки</span>
+            <div class="radio-off"></div>
+        </div>
+        <div class="radio-row">
+            <span class="radio-label">Только сообщения</span>
+            <img src="crisis help/Radio on.png" width="24" height="24" alt="">
+        </div>
+    </div>
+
+    <!-- АВТОПУБЛИКАЦИЯ -->
+    <div class="section">
+        <div class="section-label">Автопубликация</div>
+        <div class="autopub-row">
+            <div class="autopub-text">
+                <div class="autopub-label">Опубликовать заново, когда закончится срок размещения</div>
+                <div class="autopub-sub"><a href="#">Подробнее</a></div>
+            </div>
+            <img src="delivery materials/toggle.png" width="51" height="31" alt="">
+        </div>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <button class="done-btn" onclick="saveDone()">Готово</button>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">Изменения успешно сохранены</div>
+
+    <script>
+        function photoSrc(id) {
+            return id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+        }
+
+        function pluralItems(n) {
+            const m10 = n % 10, m100 = n % 100;
+            if (m100 >= 11 && m100 <= 14) return 'вещей';
+            if (m10 === 1) return 'вещь';
+            if (m10 >= 2 && m10 <= 4) return 'вещи';
+            return 'вещей';
+        }
+
+        // ── Collection name ──
+        const collection = sessionStorage.getItem('adCollection');
+        document.getElementById('collection-name').textContent =
+            collection === 'crisis' ? 'Помощь Дагестану' : 'Помощь семьям';
+
+        // ── Categories ──
+        function renderCategories() {
+            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+            const el = document.getElementById('cat-content');
+            el.innerHTML = cats.map(c => `
+                <div class="selected-cat-row">
+                    <img class="selected-cat-img" src="${c.image}" alt="">
+                    <div>
+                        <div class="selected-cat-name">${c.name}</div>
+                        <div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        renderCategories();
+
+        // ── Title ──
+        const titleInput = document.getElementById('title-input');
+        const titleClear = document.getElementById('title-clear');
+        titleInput.value = sessionStorage.getItem('adTitle') || '';
+        titleClear.style.display = titleInput.value ? 'block' : 'none';
+
+        titleInput.addEventListener('input', () => {
+            titleClear.style.display = titleInput.value ? 'block' : 'none';
+        });
+
+        function clearTitle() {
+            titleInput.value = '';
+            titleClear.style.display = 'none';
+            titleInput.focus();
+        }
+
+        // ── Description ──
+        const ta = document.getElementById('desc-textarea');
+        const descClear = document.getElementById('desc-clear');
+        ta.value = sessionStorage.getItem('adDesc') || '';
+        descClear.style.display = ta.value ? 'block' : 'none';
+
+        ta.addEventListener('input', () => {
+            ta.style.height = 'auto';
+            ta.style.height = ta.scrollHeight + 'px';
+            descClear.style.display = ta.value ? 'block' : 'none';
+        });
+        ta.style.height = ta.scrollHeight + 'px';
+
+        function clearDesc() {
+            ta.value = '';
+            descClear.style.display = 'none';
+            ta.focus();
+        }
+
+        // ── Photos ──
+        let photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+
+        function deletePhoto(id) {
+            photos = photos.filter(p => p !== id);
+            sessionStorage.setItem('selectedPhotos', JSON.stringify(photos));
+            renderPhotos();
+        }
+
+        function renderPhotos() {
+            const grid = document.getElementById('photos-grid');
+            grid.innerHTML = '';
+            photos.forEach((id, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'photo-cell';
+                cell.innerHTML = `
+                    ${index === 0 ? '<span class="main-tag">Главная</span>' : ''}
+                    <img src="${photoSrc(id)}" class="photo-img" alt="">
+                    <button class="delete-btn" onclick="deletePhoto(${id})">
+                        <img src="step 2 materials/Icon delete.svg" width="24" height="24" alt="">
+                    </button>
+                `;
+                grid.appendChild(cell);
+            });
+            const addCell = document.createElement('div');
+            addCell.className = 'photo-cell add-cell';
+            addCell.onclick = () => {
+                sessionStorage.setItem('photoReturnPage', 'edit-ad.html');
+                window.location.href = 'step2-choose.html';
+            };
+            addCell.innerHTML = `
+                <img src="step 2 materials/Camera.svg" width="24" height="24" alt="">
+                <span>Добавить</span>
+            `;
+            grid.appendChild(addCell);
+        }
+        renderPhotos();
+
+        // ── Categories navigation ──
+        function goToCategories() {
+            sessionStorage.setItem('categoriesReturnPage', 'edit-ad.html');
+            const col = sessionStorage.getItem('adCollection');
+            window.location.href = col === 'crisis' ? 'step6-crisis.html' : 'step6.html';
+        }
+
+        // ── Save & Done ──
+        function saveDone() {
+            sessionStorage.setItem('adTitle', titleInput.value);
+            sessionStorage.setItem('adDesc', ta.value);
+            const toast = document.getElementById('toast');
+            toast.classList.add('visible');
+            setTimeout(() => {
+                toast.classList.remove('visible');
+                window.location.href = 'ad-page.html';
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
