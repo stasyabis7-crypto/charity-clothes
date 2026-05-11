@@ -273,8 +273,8 @@
 
         /* How-it-works tabs */
         .modal-tabs { display: flex; border-bottom: 1px solid #EBEBEB; margin-bottom: 24px; }
-        .modal-tab { padding: 0 0 10px; margin-right: 24px; font-size: 15px; font-weight: 400; color: #9E9E9E; background: none; border: none; cursor: pointer; position: relative; white-space: nowrap; font-family: 'Inter', sans-serif; }
-        .modal-tab.active { color: #1A1A1A; font-weight: 700; }
+        .modal-tab { padding: 0 0 10px; margin-right: 24px; font-size: 15px; font-weight: 700; color: #9E9E9E; background: none; border: none; cursor: pointer; position: relative; white-space: nowrap; font-family: 'Inter', sans-serif; }
+        .modal-tab.active { color: #1A1A1A; }
         .modal-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #1A1A1A; border-radius: 2px 2px 0 0; }
         .modal-pane { display: none; }
         .modal-pane.active { display: block; }
@@ -571,16 +571,8 @@
             <button class="modal-tab active" id="htab-how" onclick="switchHowTab('how')">Как это работает</button>
             <button class="modal-tab" id="htab-benefits" onclick="switchHowTab('benefits')">Преимущества</button>
         </div>
-        <div class="modal-pane active" id="hpane-how">
-            <div class="modal-step"><img src="sheets materials/1.png" width="64" height="64" alt=""><div><div class="modal-step-title">Разместите бесплатное объявление</div><div class="modal-step-sub">Выберите категории вещей, которые нужны фондам</div></div></div>
-            <div class="modal-step"><img src="sheets materials/2.png" width="64" height="64" alt=""><div><div class="modal-step-title">Фонд напишет вам в чате</div><div class="modal-step-sub">Обычно это занимает несколько дней</div></div></div>
-            <div class="modal-step"><img src="sheets materials/3.png" width="64" height="64" alt=""><div><div class="modal-step-title">Передайте вещи Авито Доставкой</div><div class="modal-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div></div></div>
-        </div>
-        <div class="modal-pane" id="hpane-benefits">
-            <div class="modal-step"><img src="sheets materials/4.png" width="64" height="64" alt=""><div><div class="modal-step-title">Пишут только проверенные фонды</div><div class="modal-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div></div></div>
-            <div class="modal-step"><img src="sheets materials/5.png" width="64" height="64" alt=""><div><div class="modal-step-title">Передайте нужные вещи</div><div class="modal-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div></div></div>
-            <div class="modal-step"><img src="sheets materials/6.png" width="64" height="64" alt=""><div><div class="modal-step-title">Без затрат на размещение и доставку</div><div class="modal-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div></div></div>
-        </div>
+        <div class="modal-pane active" id="hpane-how"></div>
+        <div class="modal-pane" id="hpane-benefits"></div>
     </div>
 </div>
 
@@ -919,7 +911,43 @@
     }
 
     /* ═══════════ HOW POPUP ═══════════ */
+    const POPUP_CONTENT = {
+        family: {
+            how: [
+                { img: '1', title: 'Разместите бесплатное объявление', sub: 'Выберите категории вещей, которые нужны фондам' },
+                { img: '2', title: 'Фонд напишет вам в чате', sub: 'Обычно это занимает несколько дней' },
+                { img: '3', title: 'Передайте вещи Авито Доставкой', sub: 'Договоритесь с фондом и отправьте вещи напрямую' }
+            ],
+            benefits: [
+                { img: '4', title: 'Пишут только проверенные фонды', sub: 'Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели' },
+                { img: '5', title: 'Передайте нужные вещи', sub: 'Мы показываем вещи, которые сейчас действительно нужны фондам' },
+                { img: '6', title: 'Без затрат на размещение и доставку', sub: 'Бесплатные размещения не расходуются, доставку оплачивает фонд' }
+            ]
+        },
+        crisis: {
+            how: [
+                { img: '1', title: 'Разместите благотворительное объявление', sub: 'Выберите вещи, которые готовы передать пострадавшим' },
+                { img: '2', title: 'Объявление увидят люди и фонды', sub: 'Оно попадёт в специальный раздел помощи для региона ЧС' },
+                { img: '3', title: 'Отправьте вещи Авито Доставкой', sub: 'Получатель сможет оформить доставку всего за 1 ₽' }
+            ],
+            benefits: [
+                { img: '4', title: 'Помощь быстрее доходит до пострадавших', sub: 'Объявления показываются людям и фондам в регионе ЧС' },
+                { img: '5', title: 'Можно отдать вещи даром или за символическую цену', sub: 'Подойдут товары первой необходимости и гуманитарная помощь' },
+                { img: '6', title: 'Льготная доставка за счёт Авито', sub: 'Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽' }
+            ]
+        }
+    };
+
+    function renderPopupSteps(steps) {
+        return steps.map(s => `<div class="modal-step"><img src="sheets materials/${s.img}.png" width="64" height="64" alt=""><div><div class="modal-step-title">${s.title}</div><div class="modal-step-sub">${s.sub}</div></div></div>`).join('');
+    }
+
     function openHowPopup() {
+        const content = POPUP_CONTENT[currentCollection] || POPUP_CONTENT.family;
+        document.getElementById('hpane-how').innerHTML = renderPopupSteps(content.how);
+        document.getElementById('hpane-benefits').innerHTML = renderPopupSteps(content.benefits);
+        // reset to first tab
+        switchHowTab('how');
         document.getElementById('howPopup').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
