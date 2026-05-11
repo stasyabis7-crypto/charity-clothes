@@ -72,13 +72,15 @@
         .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
         .loc-chevron { width: 16px; height: 16px; opacity: 0.5; }
 
-        /* ── CATEGORIES + BIZ (same row) ── */
-        .cat-biz-wrapper { background: #fff; padding: 12px 0 0; }
-        .cat-biz-inner {
-            max-width: 1260px; margin: 0 auto; padding: 0 20px;
+        /* ── MAIN WRAPPER: left (cats + recs) | right (biz + favs) ── */
+        .main-wrapper {
+            max-width: 1260px; margin: 12px auto 40px; padding: 0 20px;
             display: flex; gap: 20px; align-items: flex-start;
         }
-        .cat-col { flex: 1; min-width: 0; overflow: hidden; }
+        .left-col { flex: 1; min-width: 0; overflow: hidden; }
+        .right-col { width: 278px; flex-shrink: 0; }
+
+        /* categories */
         .cat-grid { display: flex; flex-direction: column; gap: 8px; }
         .cat-row { display: flex; gap: 8px; }
         .cat-card {
@@ -91,11 +93,14 @@
         }
         .cat-img { position: absolute; right: 0; bottom: 0; height: 90%; width: auto; }
 
-        /* business block in same row */
-        .biz-col { width: 278px; flex-shrink: 0; }
+        /* recommendations section inside left col */
+        .recs-section { margin-top: 48px; }
+        .recs-title { font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+
+        /* business block */
         .biz-box {
             background: #fff; border-radius: 28px; padding: 18px;
-            box-shadow: 0 0 0 1.5px #EBEBEB;
+            box-shadow: 0 0 0 1.5px #EBEBEB; margin-bottom: 14px;
         }
         .sb-title { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
         .sb-desc { font-size: 13px; color: #9E9E9E; line-height: 1.4; margin-bottom: 14px; }
@@ -108,14 +113,6 @@
             border: 1.5px solid #EBEBEB; border-radius: 8px; padding: 10px;
             font-size: 13px; color: #1A1A1A; cursor: default; font-family: 'Inter', sans-serif;
         }
-
-        /* ── PAGE BODY ── */
-        .page-body {
-            max-width: 1260px; margin: 48px auto 20px; padding: 0 20px;
-            display: flex; gap: 20px; align-items: flex-start;
-        }
-        .main-col { flex: 1; min-width: 0; }
-        .recs-title { font-size: 22px; font-weight: 700; margin-bottom: 14px; }
 
         /* AD GRID */
         .ads-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
@@ -205,54 +202,36 @@
     </div>
 </header>
 
-<!-- CATEGORIES + BIZ (same row) -->
-<div class="cat-biz-wrapper">
-    <div class="cat-biz-inner">
-        <div class="cat-col">
-            <div class="cat-grid">
-                <div class="cat-row">
-                    <div class="cat-card"><span class="cat-label">Авто</span><img src="categories photos/auto.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Недвижи-<br>мость</span><img src="categories photos/estate.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Работа</span><img src="categories photos/work.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Одежда, обувь, аксессуары</span></div>
-                    <div class="cat-card"><span class="cat-label">Хобби и отдых</span></div>
-                    <div class="cat-card"><span class="cat-label">Животные</span></div>
-                    <div class="cat-card"><span class="cat-label">Готовый бизнес</span></div>
-                </div>
-                <div class="cat-row">
-                    <div class="cat-card"><span class="cat-label">Услуги</span><img src="categories photos/services.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Электро-<br>ника</span><img src="categories photos/electronics.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Для дома и дачи</span><img src="categories photos/for home.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Запчасти</span><img src="categories photos/auto parts.png" class="cat-img" alt=""></div>
-                    <div class="cat-card"><span class="cat-label">Товары для детей</span></div>
-                    <div class="cat-card"><span class="cat-label">Жильё для путешествия</span></div>
-                    <div class="cat-card"><span class="cat-label">Красота и здоровье</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="biz-col">
-            <div class="biz-box">
-                <div class="sb-title">Всё для бизнеса</div>
-                <div class="sb-desc">Миллионы предложений для разных задач в Авито Бизнес 360</div>
-                <div class="biz-grid">
-                    <div class="biz-item"><img src="main-desktop/img 1.png" class="biz-thumb" alt=""><span class="biz-label">Оборудо-<br>вание</span></div>
-                    <div class="biz-item"><img src="main-desktop/img 2.png" class="biz-thumb" alt=""><span class="biz-label">Помещения</span></div>
-                    <div class="biz-item"><img src="main-desktop/img 3.png" class="biz-thumb" alt=""><span class="biz-label">Товары</span></div>
-                    <div class="biz-item"><img src="main-desktop/img 4.png" class="biz-thumb" alt=""><span class="biz-label">Транспорт</span></div>
-                    <div class="biz-item"><img src="main-desktop/img 5.png" class="biz-thumb" alt=""><span class="biz-label">Услуги</span></div>
-                    <div class="biz-item"><img src="main-desktop/img 6.png" class="biz-thumb" alt=""><span class="biz-label">Сотрудники</span></div>
-                </div>
-                <button class="sb-btn">⊙ Искать в Бизнес 360</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
+    <div class="left-col">
 
-<!-- PAGE BODY -->
-<div class="page-body">
-    <main class="main-col">
-        <h2 class="recs-title">Рекомендации для вас</h2>
-        <div class="ads-grid">
+        <!-- CATEGORIES -->
+        <div class="cat-grid">
+            <div class="cat-row">
+                <div class="cat-card"><span class="cat-label">Авто</span><img src="categories photos/auto.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Недвижи-<br>мость</span><img src="categories photos/estate.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Работа</span><img src="categories photos/work.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Одежда, обувь, аксессуары</span></div>
+                <div class="cat-card"><span class="cat-label">Хобби и отдых</span></div>
+                <div class="cat-card"><span class="cat-label">Животные</span></div>
+                <div class="cat-card"><span class="cat-label">Готовый бизнес</span></div>
+            </div>
+            <div class="cat-row">
+                <div class="cat-card"><span class="cat-label">Услуги</span><img src="categories photos/services.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Электро-<br>ника</span><img src="categories photos/electronics.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Для дома и дачи</span><img src="categories photos/for home.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Запчасти</span><img src="categories photos/auto parts.png" class="cat-img" alt=""></div>
+                <div class="cat-card"><span class="cat-label">Товары для детей</span></div>
+                <div class="cat-card"><span class="cat-label">Жильё для путешествия</span></div>
+                <div class="cat-card"><span class="cat-label">Красота и здоровье</span></div>
+            </div>
+        </div>
+
+        <!-- RECOMMENDATIONS (48px below category cards) -->
+        <div class="recs-section">
+            <h2 class="recs-title">Рекомендации для вас</h2>
+            <div class="ads-grid">
 
             <div class="ad-card">
                 <div class="ad-img-wrap"><img src="desktop photos/pic 1.png" class="ad-img" alt=""></div>
@@ -374,10 +353,28 @@
                 </div>
             </div>
 
-        </div>
-    </main>
+            </div>
+        </div><!-- /recs-section -->
 
-    <aside class="sidebar">
+    </div><!-- /left-col -->
+
+    <div class="right-col">
+        <!-- BIZ BOX -->
+        <div class="biz-box">
+            <div class="sb-title">Всё для бизнеса</div>
+            <div class="sb-desc">Миллионы предложений для разных задач в Авито Бизнес 360</div>
+            <div class="biz-grid">
+                <div class="biz-item"><img src="main-desktop/img 1.png" class="biz-thumb" alt=""><span class="biz-label">Оборудо-<br>вание</span></div>
+                <div class="biz-item"><img src="main-desktop/img 2.png" class="biz-thumb" alt=""><span class="biz-label">Помещения</span></div>
+                <div class="biz-item"><img src="main-desktop/img 3.png" class="biz-thumb" alt=""><span class="biz-label">Товары</span></div>
+                <div class="biz-item"><img src="main-desktop/img 4.png" class="biz-thumb" alt=""><span class="biz-label">Транспорт</span></div>
+                <div class="biz-item"><img src="main-desktop/img 5.png" class="biz-thumb" alt=""><span class="biz-label">Услуги</span></div>
+                <div class="biz-item"><img src="main-desktop/img 6.png" class="biz-thumb" alt=""><span class="biz-label">Сотрудники</span></div>
+            </div>
+            <button class="sb-btn">⊙ Искать в Бизнес 360</button>
+        </div>
+
+        <!-- FAVORITES BOX -->
         <div class="fav-box">
             <div class="sb-title" style="margin-bottom:14px;">Избранное</div>
             <div class="fav-item">
@@ -406,8 +403,9 @@
             </div>
             <button class="sb-btn">Все избранные</button>
         </div>
-    </aside>
-</div>
+    </div><!-- /right-col -->
+
+</div><!-- /main-wrapper -->
 
 </body>
 </html>
