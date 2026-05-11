@@ -83,10 +83,10 @@
         .success-banner-text { flex: 1; min-width: 0; }
         .success-banner-main { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.45; }
         .success-banner-link { display: block; margin-top: 6px; font-size: 14px; font-weight: 400; color: #9E9E9E; text-decoration: underline; cursor: default; }
-        .success-banner-img { width: 100px; height: 100px; object-fit: contain; flex-shrink: 0; }
+        .success-banner-img { width: 150px; height: 150px; object-fit: contain; flex-shrink: 0; }
 
         /* Checkmark image */
-        .check-img { width: 340px; height: auto; object-fit: contain; }
+        .check-img { width: 520px; height: auto; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -150,7 +150,7 @@
 
         <div class="checklist" id="checklist"></div>
 
-        <button class="my-ads-btn" onclick="window.location.href='main-desktop.html'">Мои объявления</button>
+        <button class="my-ads-btn" onclick="window.location.href='my-ads-desktop.html'">Мои объявления</button>
 
         <div class="success-banner">
             <div class="success-banner-text">
@@ -172,12 +172,12 @@
 
     const ITEMS = {
         family: [
-            `Объявление <a href="#">«${title}»</a> бесплатно опубликуется после проверки в отдельном разделе для фондов. Обычно проверка занимает от 2 до 30 минут`,
+            `Объявление <a href="ad-page-desktop.html">«${title}»</a> бесплатно опубликуется после проверки в отдельном разделе для фондов. Обычно проверка занимает от 2 до 30 минут`,
             'Объявление бесплатное',
             'Лимит бесплатных размещений не расходуется'
         ],
         crisis: [
-            `Объявление <a href="#">«${title}»</a> опубликовано в категории «Благотворительные товары» для региона ЧС`,
+            `Объявление <a href="ad-page-desktop.html">«${title}»</a> опубликовано в категории «Благотворительные товары» для региона ЧС`,
             'Получатели смогут оформить Авито Доставку за 1 ₽',
             'Объявление бесплатное, лимит размещений не расходуется'
         ]

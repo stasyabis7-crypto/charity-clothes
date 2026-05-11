@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новое объявление — Авито</title>
+    <title>Редактирование объявления — Авито</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -366,7 +366,7 @@
 </div><!-- /sticky-shell -->
 
 <!-- ── FIXED BACK BUTTON (always visible on scroll) ── -->
-<a href="category-choose-desktop.html" class="back-btn" id="backBtn">
+<a href="ad-page-desktop.html" class="back-btn" id="backBtn">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M10 3L5 8L10 13" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -375,7 +375,7 @@
 <!-- ── PAGE TITLE (non-sticky, scrolls with page) ── -->
 <div class="page-section-title">
     <div class="page-section-title-inner">
-        <h1 class="page-title-text">Новое объявление</h1>
+        <h1 class="page-title-text">Редактирование объявления</h1>
         <div class="breadcrumbs" id="breadcrumbs">Личные вещи</div>
     </div>
 </div>
@@ -544,7 +544,7 @@
 
             <!-- FOOTER -->
             <div class="form-footer">
-                <button class="btn-primary" id="submitBtn" onclick="navigateToSuccess()" disabled>Разместить объявление</button>
+                <button class="btn-primary" id="submitBtn" onclick="navigateToAdPage()" disabled>Сохранить изменения</button>
                 <button class="btn-secondary">Сохранить и выйти</button>
             </div>
             <div class="legal-text">
@@ -1059,7 +1059,7 @@
         renderSelectedPhotos();
     }
 
-    function navigateToSuccess() {
+    function navigateToAdPage() {
         const btn = document.getElementById('submitBtn');
         if (btn && btn.disabled) return;
         const title = titleInput.value.trim() || 'Без названия';
@@ -1075,8 +1075,68 @@
             comment: catState[c.id].comment
         }));
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
-        window.location.href = 'success-desktop.html';
+        window.location.href = 'ad-page-desktop.html';
     }
+
+    /* ═══════════ PRE-FILL FROM SESSION (edit mode) ═══════════ */
+    function prefillFromSession() {
+        const title = sessionStorage.getItem('adTitle');
+        if (!title) return;
+
+        // Fill title
+        titleInput.value = title;
+        document.getElementById('titleClear').style.display = 'flex';
+        sectionCats.style.display = 'block';
+
+        // Show charity category as selected
+        document.getElementById('chipsWrap').style.display = 'none';
+        document.getElementById('catSelectWrap').style.display = 'block';
+        document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
+
+        // Show extra sections
+        extraSections.style.display = 'block';
+        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+
+        // Restore collection
+        const collection = sessionStorage.getItem('adCollection') || 'family';
+        currentCollection = collection;
+        const coll = COLLECTIONS[currentCollection];
+        document.getElementById('collectionTitle').textContent = coll.title;
+        document.getElementById('collectionSubtitle').textContent = coll.subtitle;
+
+        // Restore selected categories into catState
+        const savedCats = JSON.parse(sessionStorage.getItem('adSelectedCats') || '[]');
+        catState = {};
+        savedCats.forEach(c => {
+            catState[c.id] = { selected: true, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false };
+        });
+
+        renderDonationList();
+        updateSubmitBtn();
+
+        // Restore photos
+        const savedPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+        if (savedPhotos.length > 0) {
+            photoSelection = savedPhotos;
+            renderSelectedPhotos();
+        }
+
+        // Restore description
+        const desc = sessionStorage.getItem('adDesc');
+        if (desc) {
+            descTextarea.value = desc;
+            descTextarea.style.height = 'auto';
+            descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
+        }
+
+        // Restore banner dismissed state
+        if (sessionStorage.getItem('bannerClosed') === '1') {
+            bannerDismissed = true;
+            document.getElementById('infoBanner').style.display = 'none';
+        }
+    }
+
+    window.addEventListener('load', prefillFromSession);
 </script>
 
 </body>
