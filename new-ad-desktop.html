@@ -7,197 +7,248 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #fff; min-width: 1060px; color: #1A1A1A; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #fff;
-            min-width: 1060px;
-            color: #1A1A1A;
-        }
+        /* ═══════════════ STICKY SHELL ═══════════════ */
+        .sticky-shell { position: sticky; top: 0; z-index: 100; background: #fff; }
 
-        /* ── STICKY SHELL ── */
-        .sticky-shell {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: #fff;
-        }
-
-        /* ── TOP BAR ── */
-        .top-bar { background: #fff; }
+        /* ── TOP BAR (row 1) ── */
+        .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             height: 42px; display: flex; align-items: center;
             justify-content: space-between; gap: 16px;
         }
         .tb-links { display: flex; align-items: center; gap: 20px; }
-        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap; }
-        .tb-link img { opacity: 0.6; }
-        .tb-actions { display: flex; align-items: center; gap: 14px; }
-        .place-btn {
-            display: inline-flex; align-items: center; gap: 5px;
-            color: #1A1A1A; text-decoration: none; font-size: 13px; font-weight: 500;
-            font-family: 'Inter', sans-serif; white-space: nowrap; transition: opacity 0.15s;
+        .tb-link {
+            display: flex; align-items: center; gap: 3px;
+            font-size: 15px; font-weight: 400; color: #1A1A1A;
+            cursor: default; white-space: nowrap;
         }
-        .place-btn:hover { opacity: 0.6; }
-        .tb-action { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap; }
-        .tb-icon { width: 20px; height: 20px; flex-shrink: 0; cursor: default; }
-        .tb-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
+        .tb-link img { filter: brightness(0); }
+        .tb-actions { display: flex; align-items: center; gap: 16px; }
+        .place-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #1A1A1A; text-decoration: none;
+            font-size: 15px; font-weight: 400;
+            font-family: 'Inter', sans-serif; white-space: nowrap;
+            padding: 6px 12px; border-radius: 12px;
+            transition: background 0.15s;
+        }
+        .place-btn:hover { background: #F4F4F4; color: #1A1A1A; }
+        .tb-action {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 15px; font-weight: 400; color: #1A1A1A;
+            cursor: default; white-space: nowrap;
+        }
+        .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
+        .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
 
-        /* ── MAIN HEADER ── */
+        /* ── MAIN HEADER (row 2) ── */
         .main-header { background: #fff; padding: 10px 0 12px; }
         .main-header-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             display: flex; align-items: center; gap: 12px;
         }
         .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
-        .logo img { height: 36px; width: auto; }
+        .logo img { height: 26px; width: auto; }
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
         .all-cat-btn {
             display: flex; align-items: center; gap: 7px;
-            background: #fff; border: 1.5px solid #D9D9D9; color: #1A1A1A;
-            border-radius: 8px; padding: 9px 14px; font-size: 14px; font-weight: 500;
+            background: #F4F4F4; border: none; color: #1A1A1A;
+            border-radius: 16px; padding: 9px 16px;
+            font-size: 15px; font-weight: 400;
             font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
         }
         .all-cat-btn img { width: 20px; height: 20px; }
         .search-field {
-            flex: 1; background: #F4F4F4; border-radius: 8px;
+            flex: 1; background: #F4F4F4; border-radius: 16px;
             padding: 10px 14px; display: flex; align-items: center;
         }
         .search-input {
             flex: 1; border: none; outline: none; background: transparent;
-            font-size: 15px; font-family: 'Inter', sans-serif; color: #9E9E9E; pointer-events: none;
+            font-size: 15px; font-family: 'Inter', sans-serif;
+            font-weight: 400; color: #9E9E9E; pointer-events: none;
         }
         .find-btn {
             background: #1A1A1A; color: #fff; border: none; border-radius: 8px;
-            padding: 10px 26px; font-size: 15px; font-weight: 500;
+            padding: 10px 26px; font-size: 15px; font-weight: 400;
             font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
         }
-        .location-btn { display: flex; align-items: center; gap: 6px; cursor: default; white-space: nowrap; flex-shrink: 0; }
-        .location-btn > img { width: 14px; height: 14px; flex-shrink: 0; }
+        .location-btn { display: flex; align-items: center; gap: 4px; cursor: default; white-space: nowrap; flex-shrink: 0; }
         .loc-text { display: flex; flex-direction: column; }
-        .loc-city { font-size: 14px; color: #1A1A1A; line-height: 1.2; }
+        .loc-city { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.2; }
         .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
-        .loc-chevron { width: 16px; height: 16px; opacity: 0.5; }
 
         /* ── PAGE NAV ── */
-        .page-nav {
-            background: #fff;
-            padding: 16px 0 18px;
-            border-bottom: 1px solid #EBEBEB;
-        }
+        .page-nav { background: #fff; padding: 16px 0 18px; border-bottom: 1px solid #EBEBEB; }
         .page-nav-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             display: flex; align-items: center; gap: 16px;
         }
         .back-btn {
             width: 40px; height: 40px; border-radius: 50%;
-            background: #F4F4F4; border: none;
+            background: #fff; border: none;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.14);
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; flex-shrink: 0;
             text-decoration: none; color: #1A1A1A;
-            transition: background 0.15s;
+            transition: box-shadow 0.15s;
         }
-        .back-btn:hover { background: #EBEBEB; }
+        .back-btn:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
         .page-nav-titles { display: flex; flex-direction: column; gap: 3px; }
         .page-title-text { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
-        .breadcrumbs {
-            font-size: 13px; font-weight: 400; color: #9E9E9E;
-            display: none;
-        }
+        .breadcrumbs { font-size: 13px; font-weight: 400; color: #9E9E9E; }
 
-        /* ── FORM LAYOUT ── */
-        .form-outer {
-            max-width: 1260px; margin: 0 auto; padding: 0 20px 80px;
-        }
+        /* ═══════════════ FORM LAYOUT ═══════════════ */
+        .form-outer { max-width: 1260px; margin: 0 auto; padding: 0 20px 80px; }
         .form-inner { max-width: 636px; }
-
-        /* Section spacing (56px between sections per Figma) */
         .form-section { padding-top: 56px; }
 
-        /* ── FIELD LABEL ── */
+        /* ── TITLE INPUT ── */
         .field-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 12px; }
-
-        /* ── TEXT INPUT ── */
         .text-input {
             width: 100%; background: #F4F4F4; border: 2px solid transparent;
             border-radius: 12px; padding: 14px 16px;
-            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 500;
+            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400;
             color: #1A1A1A; outline: none; transition: border-color 0.15s;
         }
         .text-input:focus { border-color: #1A1A1A; background: #fff; }
         .text-input::placeholder { color: #9E9E9E; }
 
-        /* ── CHIPS ── */
+        /* Suggests */
+        .suggests { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .suggest-chip {
+            background: #F4F4F4; border: none; border-radius: 20px;
+            padding: 8px 14px; font-size: 15px; font-weight: 400;
+            color: #1A1A1A; cursor: pointer; white-space: nowrap;
+            font-family: 'Inter', sans-serif; transition: background 0.15s;
+        }
+        .suggest-chip:hover { background: #E8E7E6; }
+
+        /* ── CATEGORY CHIPS ── */
         .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
         .chip {
             display: inline-flex; align-items: center;
             background: #F2F1F0; color: #1A1A1A;
             border-radius: 16px; padding: 11px 16px;
-            font-size: 15px; font-weight: 500; cursor: pointer;
+            font-size: 15px; font-weight: 400; cursor: pointer;
             white-space: nowrap; transition: background 0.15s, color 0.15s;
-            border: none; font-family: 'Inter', sans-serif;
-            user-select: none;
+            border: none; font-family: 'Inter', sans-serif; user-select: none;
         }
         .chip:hover { background: #E5E4E3; }
         .chip.active { background: #1A1A1A; color: #fff; }
 
-        /* ── COLLECTION SECTION ── */
+        /* Category select (replaces chips after selection) */
+        .cat-select-wrap { position: relative; }
+        .cat-select-display {
+            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 44px 14px 16px;
+            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400;
+            color: #1A1A1A; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .cat-select-arrow { flex-shrink: 0; }
+
+        /* ═══════════════ EXTRA SECTIONS ═══════════════ */
+
+        /* ── COLLECTION ── */
         .collection-head {
             display: flex; align-items: flex-start;
-            justify-content: space-between; gap: 16px;
-            margin-bottom: 28px;
+            justify-content: space-between; gap: 16px; margin-bottom: 28px;
         }
         .collection-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
-        .collection-subtitle { font-size: 15px; font-weight: 500; color: #1A1A1A; margin-top: 4px; }
+        .collection-subtitle { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 4px; }
         .change-btn {
             background: #F2F1F0; border: none; border-radius: 16px;
-            padding: 14px 16px; font-size: 15px; font-weight: 500;
-            color: #1A1A1A; cursor: default; white-space: nowrap; flex-shrink: 0;
-            font-family: 'Inter', sans-serif;
+            padding: 14px 16px; font-size: 15px; font-weight: 400;
+            color: #1A1A1A; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+            font-family: 'Inter', sans-serif; transition: background 0.15s;
         }
+        .change-btn:hover { background: #E8E7E6; }
 
         /* Info banner */
         .info-banner {
             background: #F4F4F4; border-radius: 20px;
             display: flex; align-items: stretch; gap: 0;
-            overflow: hidden; margin-bottom: 28px; position: relative;
+            overflow: hidden; margin-bottom: 28px; position: relative; cursor: pointer;
         }
-        .banner-illu { width: 80px; object-fit: cover; flex-shrink: 0; display: block; }
-        .banner-content { flex: 1; padding: 16px 48px 20px 12px; }
+        .banner-illu-wrap {
+            width: 88px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; padding: 8px;
+        }
+        .banner-illu { width: 72px; height: 72px; object-fit: contain; display: block; }
+        .banner-content { flex: 1; padding: 16px 48px 16px 4px; }
         .banner-title { font-size: 14px; font-weight: 800; color: #1A1A1A; margin-bottom: 4px; }
-        .banner-desc { font-size: 13px; font-weight: 500; color: #1A1A1A; line-height: 1.4; margin-bottom: 4px; }
-        .banner-link { font-size: 13px; font-weight: 500; color: #1A1A1A; text-decoration: underline; cursor: default; }
+        .banner-desc { font-size: 13px; font-weight: 400; color: #1A1A1A; line-height: 1.4; margin-bottom: 4px; }
+        .banner-link { font-size: 13px; font-weight: 400; color: #1A1A1A; text-decoration: underline; }
         .banner-close {
             position: absolute; top: 12px; right: 14px;
             width: 20px; height: 20px; display: flex; align-items: center;
-            justify-content: center; cursor: default;
+            justify-content: center; cursor: pointer;
         }
 
         /* Donation list */
         .list-header-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 2px; }
-        .list-header-sub { font-size: 15px; font-weight: 500; color: #1A1A1A; margin-bottom: 8px; }
+        .list-header-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-bottom: 8px; }
         .list-items { display: flex; flex-direction: column; }
-        .list-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 11px 0; border-bottom: 1px solid #F4F4F4;
-        }
-        .list-item:last-child { border-bottom: none; }
+        .list-item { padding: 11px 0; }
+        .list-item-row { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .item-thumb {
             width: 48px; height: 48px; border-radius: 16px;
             object-fit: cover; flex-shrink: 0; background: #F4F4F4;
         }
         .item-info { flex: 1; min-width: 0; }
         .item-name { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.3; }
-        .item-count { font-size: 13px; font-weight: 500; color: #757575; margin-top: 2px; }
-        .item-checkbox {
-            width: 24px; height: 24px; border-radius: 6px;
-            border: 2px solid #D9D9D9; flex-shrink: 0; background: #fff;
+        .item-count { font-size: 13px; font-weight: 400; color: #757575; margin-top: 2px; }
+        .item-cb { width: 24px; height: 24px; flex-shrink: 0; }
+
+        /* Expanded category (qty + textarea + dropdown) */
+        .cat-expanded { margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
+
+        /* Qty stepper */
+        .qty-row {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #F4F4F4; border-radius: 12px; padding: 0 8px; height: 50px;
+        }
+        .qty-btn {
+            background: none; border: none; font-size: 24px; font-weight: 300;
+            color: #1A1A1A; cursor: pointer; width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .qty-value { font-size: 17px; font-weight: 400; color: #1A1A1A; min-width: 32px; text-align: center; }
+
+        /* Comment textarea */
+        .comment-wrap { position: relative; }
+        .comment-textarea {
+            width: 100%; min-height: 80px; background: #F4F4F4; border: none;
+            border-radius: 12px; padding: 12px 40px 12px 14px;
+            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
+            color: #1A1A1A; outline: none; resize: none; overflow: hidden;
+            line-height: 1.45; display: block;
+        }
+        .comment-textarea::placeholder { color: #9E9E9E; }
+        .comment-clear {
+            display: none; position: absolute; top: 12px; right: 12px;
+            background: none; border: none; cursor: pointer; padding: 0;
         }
 
-        /* ── SECTION TITLE (large) ── */
+        /* Dropdown (what to donate) */
+        .dropdown { background: #F4F4F4; border-radius: 12px; overflow: hidden; }
+        .dropdown-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px; cursor: pointer;
+        }
+        .dropdown-label { font-size: 15px; font-weight: 400; color: #1A1A1A; }
+        .dropdown-chevron { transition: transform 0.2s; flex-shrink: 0; }
+        .dropdown-chevron.rotated { transform: rotate(180deg); }
+        .dropdown-body { display: none; padding: 0 16px 14px; font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.7; white-space: pre-line; }
+        .dropdown-body.open { display: block; }
+
+        /* ── SECTION TITLE ── */
         .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
-        .section-sub { font-size: 15px; font-weight: 500; color: #9E9E9E; margin-top: 2px; margin-bottom: 16px; }
+        .section-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 2px; margin-bottom: 16px; }
 
         /* Photo uploader */
         .photo-uploader {
@@ -210,7 +261,7 @@
         .textarea-field {
             width: 100%; background: #F4F4F4; border: 2px solid transparent;
             border-radius: 12px; padding: 14px 16px;
-            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 500;
+            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400;
             color: #1A1A1A; outline: none; resize: none; min-height: 126px;
             transition: border-color 0.15s;
         }
@@ -222,65 +273,40 @@
         .location-input {
             width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
             padding: 14px 44px 14px 16px; font-size: 15px;
-            font-family: 'Inter', sans-serif; font-weight: 500; color: #1A1A1A; outline: none;
+            font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; outline: none;
         }
         .input-clear {
-            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-            color: #9E9E9E; font-size: 20px; line-height: 1; cursor: default;
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            cursor: default; line-height: 1; background: none; border: none; padding: 2px;
         }
         .location-hint { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-bottom: 14px; }
-
-        /* Map placeholder */
-        .map-box {
-            width: 100%; height: 360px; border-radius: 16px;
-            background: #E0E8D8; position: relative; overflow: hidden;
-        }
-        .map-label {
-            position: absolute; bottom: 10px; right: 10px;
-            background: rgba(255,255,255,0.88); border-radius: 4px;
-            padding: 2px 7px; font-size: 11px; color: #9E9E9E;
-        }
-        .map-controls {
-            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 1px;
-        }
-        .map-ctrl {
-            width: 30px; height: 30px; background: #fff;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; color: #1A1A1A; cursor: default;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-        }
-        .map-ctrl:first-child { border-radius: 8px 8px 0 0; }
-        .map-ctrl:last-child { border-radius: 0 0 8px 8px; }
+        .map-box { width: 100%; height: 360px; border-radius: 16px; overflow: hidden; }
+        .map-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* Delivery */
-        .delivery-desc {
-            font-size: 15px; font-weight: 500; color: #1A1A1A;
-            line-height: 1.55; margin: 12px 0 20px;
-        }
+        .delivery-desc { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.55; margin: 12px 0 20px; }
         .toggle-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
         .toggle-switch {
             width: 44px; height: 26px; background: #1A1A1A;
             border-radius: 13px; position: relative; flex-shrink: 0; cursor: default; margin-top: 1px;
         }
         .toggle-switch::after {
-            content: ''; position: absolute;
-            width: 20px; height: 20px; background: #fff;
-            border-radius: 50%; top: 3px; right: 3px;
+            content: ''; position: absolute; width: 20px; height: 20px;
+            background: #fff; border-radius: 50%; top: 3px; right: 3px;
         }
-        .toggle-name { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.35; }
+        .toggle-name { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.35; }
         .toggle-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 2px; }
 
         /* Contacts */
         .contact-group { margin-bottom: 28px; }
         .contact-group-title { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 8px; }
-        .contact-desc { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.5; margin-bottom: 14px; }
+        .contact-desc { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; margin-bottom: 14px; }
         .contact-desc u { cursor: default; }
         .phone-wrap { position: relative; }
         .phone-input {
             width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
             padding: 14px 44px 14px 16px; font-size: 15px;
-            font-family: 'Inter', sans-serif; font-weight: 500; color: #1A1A1A; outline: none;
+            font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; outline: none;
         }
         .radio-group { display: flex; flex-direction: column; gap: 16px; }
         .radio-item { display: flex; align-items: center; gap: 12px; cursor: default; }
@@ -290,44 +316,95 @@
             display: flex; align-items: center; justify-content: center;
         }
         .radio-dot.active { border-color: #1A1A1A; }
-        .radio-dot.active::after {
-            content: ''; width: 10px; height: 10px;
-            border-radius: 50%; background: #1A1A1A;
-        }
-        .radio-label { font-size: 15px; font-weight: 500; color: #1A1A1A; }
-
-        /* Select */
+        .radio-dot.active::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #1A1A1A; }
+        .radio-label { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .select-wrap { position: relative; }
         .select-field {
             width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
             padding: 14px 44px 14px 16px; font-size: 15px;
-            font-family: 'Inter', sans-serif; font-weight: 500; color: #1A1A1A;
+            font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A;
             appearance: none; outline: none; cursor: default;
         }
-        .select-chevron {
-            position: absolute; right: 14px; top: 50%;
-            transform: translateY(-50%); pointer-events: none;
-        }
+        .select-chevron { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
 
-        /* ── FORM FOOTER ── */
-        .form-footer {
-            padding-top: 56px; display: flex; align-items: center; gap: 8px;
-            margin-bottom: 20px;
-        }
+        /* Footer */
+        .form-footer { padding-top: 56px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
         .btn-primary {
             background: #1A1A1A; color: #fff; border: none; border-radius: 16px;
-            padding: 15px 30px; font-size: 15px; font-weight: 500;
+            padding: 15px 30px; font-size: 15px; font-weight: 400;
             font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
         }
         .btn-secondary {
-            background: transparent; color: #1A1A1A; border: none;
-            padding: 15px 20px; font-size: 15px; font-weight: 500;
+            background: #F4F4F4; color: #1A1A1A; border: none; border-radius: 16px;
+            padding: 15px 24px; font-size: 15px; font-weight: 400;
             font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
         }
-        .legal-text {
-            font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.55;
-        }
+        .legal-text { font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.55; }
         .legal-text a { color: #9E9E9E; text-decoration: underline; cursor: default; }
+
+        /* ═══════════════ MODALS ═══════════════ */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+            z-index: 500; display: none; align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-card {
+            background: #fff; border-radius: 20px; padding: 32px;
+            width: 520px; max-height: 90vh; overflow-y: auto; position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px; background: none;
+            border: none; cursor: pointer; padding: 4px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.2; margin-bottom: 20px; padding-right: 32px; }
+
+        /* How-it-works tabs */
+        .modal-tabs { display: flex; border-bottom: 1px solid #EBEBEB; margin-bottom: 24px; gap: 0; }
+        .modal-tab {
+            padding: 0 0 10px; margin-right: 24px;
+            font-size: 15px; font-weight: 400; color: #9E9E9E;
+            background: none; border: none; cursor: pointer;
+            position: relative; white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-tab.active { color: #1A1A1A; font-weight: 700; }
+        .modal-tab.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px; background: #1A1A1A; border-radius: 2px 2px 0 0;
+        }
+        .modal-pane { display: none; }
+        .modal-pane.active { display: block; }
+        .modal-step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+        .modal-step img { flex-shrink: 0; }
+        .modal-step-title { font-size: 16px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; line-height: 1.3; }
+        .modal-step-sub { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.4; }
+
+        /* Change collection popup */
+        .modal-desc { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; margin-bottom: 20px; }
+        .collection-option {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 0; cursor: pointer; border-bottom: 1px solid #F4F4F4;
+        }
+        .collection-option:last-of-type { border-bottom: none; }
+        .coll-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+        .coll-info { flex: 1; min-width: 0; }
+        .coll-name { font-size: 15px; font-weight: 500; color: #1A1A1A; }
+        .coll-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 2px; line-height: 1.3; }
+        .coll-radio { width: 24px; height: 24px; flex-shrink: 0; }
+        .modal-btn-primary {
+            display: block; width: 100%; background: #1A1A1A; color: #fff;
+            border: none; border-radius: 16px; padding: 16px;
+            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
+            cursor: pointer; margin-top: 16px; text-align: center;
+        }
+        .modal-btn-secondary {
+            display: block; width: 100%; background: #F4F4F4; color: #1A1A1A;
+            border: none; border-radius: 16px; padding: 16px;
+            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
+            cursor: pointer; margin-top: 10px; text-align: center;
+        }
+        .confirm-text { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -381,12 +458,10 @@
                 <button class="find-btn">Найти</button>
             </div>
             <div class="location-btn">
-                <img src="desktop-header/Location.svg" alt="">
                 <div class="loc-text">
                     <span class="loc-city">Москва</span>
                     <span class="loc-sub">район, метро</span>
                 </div>
-                <img src="desktop-header/Expand More.svg" class="loc-chevron" alt="">
             </div>
         </div>
     </header>
@@ -401,9 +476,7 @@
             </a>
             <div class="page-nav-titles">
                 <span class="page-title-text">Новое объявление</span>
-                <div class="breadcrumbs" id="breadcrumbs">
-                    Личные вещи&nbsp;›&nbsp;Одежда, обувь, аксессуары&nbsp;›&nbsp;Благотворительные товары
-                </div>
+                <div class="breadcrumbs" id="breadcrumbs">Личные вещи</div>
             </div>
         </div>
     </div>
@@ -415,100 +488,76 @@
 <div class="form-outer">
     <div class="form-inner">
 
-        <!-- 1 · TITLE (always visible) -->
-        <div class="form-section" id="sectionTitle">
+        <!-- 1 · TITLE -->
+        <div class="form-section">
             <div class="field-label">Название объявления</div>
-            <input
-                type="text"
-                class="text-input"
-                id="titleInput"
-                autocomplete="off"
-                placeholder=""
-            >
+            <input type="text" class="text-input" id="titleInput" autocomplete="off" placeholder="">
+            <div class="suggests" id="suggests" style="display:none"></div>
         </div>
 
-        <!-- 2 · CATEGORIES (appears after typing in title) -->
+        <!-- 2 · CATEGORIES -->
         <div class="form-section" id="sectionCats" style="display:none">
             <div class="field-label">Категория</div>
-            <div class="chips-wrap">
-                <span class="chip" onclick="selectCat(this,'tshirts')">Футболки и майки</span>
-                <span class="chip" onclick="selectCat(this,'homewear')">Домашняя одежда</span>
-                <span class="chip" onclick="selectCat(this,'suits')">Пиджаки и костюмы</span>
-                <span class="chip" onclick="selectCat(this,'charity')">Благотворительные товары ❤️</span>
+
+            <!-- Chips (hidden after selection) -->
+            <div class="chips-wrap" id="chipsWrap">
+                <span class="chip" onclick="selectCat(this,'tshirts','Футболки и майки')">Футболки и майки</span>
+                <span class="chip" onclick="selectCat(this,'homewear','Домашняя одежда')">Домашняя одежда</span>
+                <span class="chip" onclick="selectCat(this,'suits','Пиджаки и костюмы')">Пиджаки и костюмы</span>
+                <span class="chip" onclick="selectCat(this,'charity','Благотворительные товары ❤️')">Благотворительные товары ❤️</span>
+            </div>
+
+            <!-- Select (shown after chip selected) -->
+            <div class="cat-select-wrap" id="catSelectWrap" style="display:none">
+                <div class="cat-select-display" onclick="resetCat()">
+                    <span id="catSelectValue"></span>
+                    <svg class="cat-select-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
             </div>
         </div>
 
-        <!-- 3 · EXTRA SECTIONS (appear after "Благотворительные товары" selected) -->
+        <!-- 3 · EXTRA (charity only) -->
         <div id="extraSections" style="display:none">
 
-            <!-- ── COLLECTION ── -->
+            <!-- COLLECTION -->
             <div class="form-section">
                 <div class="collection-head">
                     <div>
-                        <div class="collection-title">Сбор "Помощь семьям"</div>
-                        <div class="collection-subtitle">Собираем вещи на помощь многодетным семьям</div>
+                        <div class="collection-title" id="collectionTitle">Сбор "Помощь семьям"</div>
+                        <div class="collection-subtitle" id="collectionSubtitle">Собираем вещи на помощь многодетным семьям</div>
                     </div>
-                    <button class="change-btn">Изменить сбор</button>
+                    <button class="change-btn" onclick="openChangeCollection()">Изменить сбор</button>
                 </div>
 
                 <!-- Info banner -->
-                <div class="info-banner">
-                    <img src="new-ad-desktop/banner-illu.png" class="banner-illu" alt="">
+                <div class="info-banner" onclick="openHowPopup()">
+                    <div class="banner-illu-wrap">
+                        <img src="new-ad-desktop/banner-illu.png" class="banner-illu" alt="">
+                    </div>
                     <div class="banner-content">
                         <div class="banner-title">Как это работает</div>
                         <div class="banner-desc">Кто заберёт вещи и что делать после размещения объявления</div>
                         <span class="banner-link">Узнать подробнее</span>
                     </div>
-                    <div class="banner-close">
+                    <div class="banner-close" onclick="event.stopPropagation()">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path d="M1 1L11 11M11 1L1 11" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </div>
                 </div>
 
-                <!-- What to donate -->
+                <!-- Donation list -->
                 <div class="list-header-label">Выберите, что готовы передать</div>
                 <div class="list-header-sub">Фонды увидят эти вещи в вашем объявлении</div>
-                <div class="list-items">
-                    <div class="list-item">
-                        <img src="new-ad-desktop/item-kids-clothes.png" class="item-thumb" alt="">
-                        <div class="item-info">
-                            <div class="item-name">Детская одежда и обувь</div>
-                            <div class="item-count">Осталось собрать 5 штук</div>
-                        </div>
-                        <div class="item-checkbox"></div>
-                    </div>
-                    <div class="list-item">
-                        <img src="new-ad-desktop/item-adult-clothes.png" class="item-thumb" alt="">
-                        <div class="item-info">
-                            <div class="item-name">Мужская и женская одежда</div>
-                            <div class="item-count">Осталось собрать 15 штук</div>
-                        </div>
-                        <div class="item-checkbox"></div>
-                    </div>
-                    <div class="list-item">
-                        <img src="new-ad-desktop/item-stroller.png" class="item-thumb" alt="">
-                        <div class="item-info">
-                            <div class="item-name">Детские коляски</div>
-                            <div class="item-count">Осталось собрать 3 штуки</div>
-                        </div>
-                        <div class="item-checkbox"></div>
-                    </div>
-                    <div class="list-item">
-                        <img src="new-ad-desktop/item-toys.png" class="item-thumb" alt="">
-                        <div class="item-info">
-                            <div class="item-name">Игрушки</div>
-                            <div class="item-count">Осталось собрать 100 штук</div>
-                        </div>
-                        <div class="item-checkbox"></div>
-                    </div>
-                </div>
+                <div class="list-items" id="donationList"></div>
             </div>
 
-            <!-- ── PHOTOS ── -->
+            <!-- PHOTOS -->
             <div class="form-section">
                 <div class="section-title">Фотографии</div>
-                <div class="section-sub">Не более 40</div>
+                <div class="section-sub" style="color:#1A1A1A;">Не более 40</div>
                 <div class="photo-uploader">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                         <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -517,32 +566,32 @@
                 </div>
             </div>
 
-            <!-- ── DESCRIPTION ── -->
+            <!-- DESCRIPTION -->
             <div class="form-section">
                 <div class="section-title">Описание товаров</div>
                 <div style="height:14px"></div>
                 <textarea class="textarea-field" placeholder="Введите текст"></textarea>
             </div>
 
-            <!-- ── LOCATION ── -->
+            <!-- LOCATION -->
             <div class="form-section">
                 <div class="section-title">Местоположение</div>
                 <div style="height:14px"></div>
                 <div class="location-input-wrap">
                     <input type="text" class="location-input" value="Москва, Чонгарский б-р, 7" readonly>
-                    <span class="input-clear">×</span>
+                    <button class="input-clear">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1" stroke-linecap="round"/>
+                        </svg>
+                    </button>
                 </div>
                 <div class="location-hint">Укажите реальный адрес, где покупатель может купить или получить товар</div>
                 <div class="map-box">
-                    <div class="map-controls">
-                        <div class="map-ctrl">+</div>
-                        <div class="map-ctrl">−</div>
-                    </div>
-                    <div class="map-label">© Яндекс</div>
+                    <img src="Map Input.png" alt="Карта">
                 </div>
             </div>
 
-            <!-- ── DELIVERY ── -->
+            <!-- DELIVERY -->
             <div class="form-section">
                 <div class="section-title">Авито Доставка</div>
                 <div class="delivery-desc">Выберите, как покупатели смогут заказать ваш товар. Это бесплатно и безопасно: вам не нужно платить за отправку, а если с посылкой что-то случится в пути, мы возместим ущерб.</div>
@@ -562,12 +611,10 @@
                 </div>
             </div>
 
-            <!-- ── CONTACTS ── -->
+            <!-- CONTACTS -->
             <div class="form-section">
                 <div class="section-title">Контакты</div>
                 <div style="height:28px"></div>
-
-                <!-- Phone -->
                 <div class="contact-group">
                     <div class="contact-group-title">Телефон</div>
                     <div class="contact-desc">
@@ -575,37 +622,26 @@
                     </div>
                     <div class="phone-wrap">
                         <input type="text" class="phone-input" value="8 200 614-53-63" readonly>
-                        <span class="input-clear">×</span>
+                        <button class="input-clear" style="right:12px;top:50%;transform:translateY(-50%);position:absolute;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-
-                <!-- Contact method -->
                 <div class="contact-group">
                     <div class="contact-group-title">Способ связи</div>
                     <div class="radio-group">
-                        <div class="radio-item">
-                            <div class="radio-dot active"></div>
-                            <span class="radio-label">Звонки и сообщения</span>
-                        </div>
-                        <div class="radio-item">
-                            <div class="radio-dot"></div>
-                            <span class="radio-label">Только звонки</span>
-                        </div>
-                        <div class="radio-item">
-                            <div class="radio-dot"></div>
-                            <span class="radio-label">Только сообщения</span>
-                        </div>
+                        <div class="radio-item"><div class="radio-dot active"></div><span class="radio-label">Звонки и сообщения</span></div>
+                        <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Только звонки</span></div>
+                        <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Только сообщения</span></div>
                     </div>
                 </div>
-
-                <!-- Device -->
                 <div class="contact-group" style="margin-bottom:0">
                     <div class="contact-group-title">Где принимать звонки через Авито</div>
                     <div style="height:10px"></div>
                     <div class="select-wrap">
-                        <select class="select-field">
-                            <option>iPhone 16 Pro</option>
-                        </select>
+                        <select class="select-field"><option>iPhone 16 Pro</option></select>
                         <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -613,57 +649,432 @@
                 </div>
             </div>
 
-            <!-- ── FOOTER BUTTONS ── -->
+            <!-- FOOTER BUTTONS -->
             <div class="form-footer">
                 <button class="btn-primary">Разместить объявление</button>
                 <button class="btn-secondary">Сохранить и выйти</button>
             </div>
-
-            <!-- Legal -->
             <div class="legal-text">
                 Вы публикуете объявление и данные в нём, чтобы его мог посмотреть кто угодно в интернете. Вы также соглашаетесь с <a href="#">правилами</a> и использованием фотографий в автокаталоге Авито и Автотеке.
             </div>
             <div style="height:60px"></div>
 
         </div><!-- /extraSections -->
-
     </div><!-- /form-inner -->
 </div><!-- /form-outer -->
 
 
-<script>
-    const titleInput   = document.getElementById('titleInput');
-    const sectionCats  = document.getElementById('sectionCats');
-    const extraSections= document.getElementById('extraSections');
-    const breadcrumbs  = document.getElementById('breadcrumbs');
+<!-- ═══════════════ POPUP: КАК ЭТО РАБОТАЕТ ═══════════════ -->
+<div class="modal-overlay" id="howPopup" onclick="closeHowPopup(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeHowPopup()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 4L16 16M16 4L4 16" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <h2 class="modal-title">Передача вещей<br>на благотворительность</h2>
+        <div class="modal-tabs">
+            <button class="modal-tab active" id="htab-how" onclick="switchHowTab('how')">Как это работает</button>
+            <button class="modal-tab" id="htab-benefits" onclick="switchHowTab('benefits')">Преимущества</button>
+        </div>
+        <div class="modal-pane active" id="hpane-how">
+            <div class="modal-step">
+                <img src="sheets materials/1.png" width="64" height="64" alt="">
+                <div><div class="modal-step-title">Разместите бесплатное объявление</div><div class="modal-step-sub">Выберите категории вещей, которые нужны фондам</div></div>
+            </div>
+            <div class="modal-step">
+                <img src="sheets materials/2.png" width="64" height="64" alt="">
+                <div><div class="modal-step-title">Фонд напишет вам в чате</div><div class="modal-step-sub">Обычно это занимает несколько дней</div></div>
+            </div>
+            <div class="modal-step">
+                <img src="sheets materials/3.png" width="64" height="64" alt="">
+                <div><div class="modal-step-title">Передайте вещи Авито Доставкой</div><div class="modal-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div></div>
+            </div>
+        </div>
+        <div class="modal-pane" id="hpane-benefits">
+            <div class="modal-step">
+                <img src="sheets materials/4.png" width="64" height="64" alt="">
+                <div><div class="modal-step-title">Пишут только проверенные фонды</div><div class="modal-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div></div>
+            </div>
+            <div class="modal-step">
+                <img src="sheets materials/5.png" width="64" height="64" alt="">
+                <div><div class="modal-step-title">Передайте нужные вещи</div><div class="modal-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div></div>
+            </div>
+            <div class="modal-step">
+                <img src="sheets materials/6.png" width="64" height="64" alt="">
+                <div><div class="modal-step-title">Без затрат на размещение и доставку</div><div class="modal-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    // Show categories once user starts typing
+<!-- ═══════════════ POPUP: ИЗМЕНИТЬ СБОР ═══════════════ -->
+<div class="modal-overlay" id="changeCollPopup" onclick="closeChangeCollPopup(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeChangeCollPopup()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 4L16 16M16 4L4 16" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <h2 class="modal-title">Выберите другой сбор</h2>
+        <p class="modal-desc">Сейчас в Авито запущено несколько активных сборов. Вы можете выбрать тот, в котором захотите поучаствовать.</p>
+        <div class="collection-option" onclick="selectCollectionOption('family')">
+            <img src="crisis help/сбор 1.png" class="coll-img" alt="">
+            <div class="coll-info">
+                <div class="coll-name">Помощь семьям</div>
+                <div class="coll-sub">Собираем вещи на помощь малообеспеченным многодетным семьям</div>
+            </div>
+            <img src="crisis help/Radio on.png" class="coll-radio" id="coll-radio-family" alt="">
+        </div>
+        <div class="collection-option" onclick="selectCollectionOption('crisis')">
+            <img src="crisis help/сбор 2.png" class="coll-img" alt="">
+            <div class="coll-info">
+                <div class="coll-name">Помощь в Дагестане ❤️</div>
+                <div class="coll-sub">Собираем вещи в помощь людям, пострадавшим от паводков</div>
+            </div>
+            <img src="crisis help/Radio off.png" class="coll-radio" id="coll-radio-crisis" alt="">
+        </div>
+        <button class="modal-btn-primary" onclick="confirmCollectionChoice()">Выбрать</button>
+    </div>
+</div>
+
+<!-- ═══════════════ POPUP: ПОДТВЕРЖДЕНИЕ СМЕНЫ СБОРА ═══════════════ -->
+<div class="modal-overlay" id="confirmSwitchPopup" onclick="closeConfirmSwitch(event)">
+    <div class="modal-card" onclick="event.stopPropagation()" style="width:440px">
+        <button class="modal-close" onclick="closeConfirmSwitch()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 4L16 16M16 4L4 16" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <h2 class="modal-title" style="font-size:20px;">Сменить сбор?</h2>
+        <p class="confirm-text">При смене сбора текущее объявление сохранится в черновиках, чтобы вы смогли продолжить создание</p>
+        <button class="modal-btn-primary" onclick="applyCollectionSwitch()">Поменять сбор</button>
+        <button class="modal-btn-secondary" onclick="closeConfirmSwitch()">Остаться</button>
+    </div>
+</div>
+
+
+<script>
+    /* ═══════════ DATA ═══════════ */
+    const COLLECTIONS = {
+        family: {
+            id: 'family',
+            title: 'Сбор "Помощь семьям"',
+            subtitle: 'Собираем вещи на помощь многодетным семьям',
+            categories: [
+                { id: 'kids-clothes', name: 'Детская одежда и обувь', subtitle: 'Осталось собрать 5 штук',
+                  image: 'step 6 materials/Детская одежда и обувь.png',
+                  what: '— Одежда для новорождённых (50–68);\n— Одежда для детей ясельного возраста (68–98);\n— Одежда для дошкольников (98–122);\n— Школьная форма и повседневная одежда (122+);\n— Верхняя одежда: куртки, пальто, комбинезоны;\n— Обувь для детей любого возраста;\n— Головные уборы, шарфы, варежки;\n— Принимаем чистые вещи без дыр и сильного износа.' },
+                { id: 'adult-clothes', name: 'Мужская и женская одежда', subtitle: 'Осталось собрать 15 штук',
+                  image: 'step 6 materials/Мужская и женская одежда.png',
+                  what: '— Одежда любого размера и сезона;\n— Верхняя одежда: куртки, пальто, шубы;\n— Обувь мужская и женская;\n— Головные уборы и аксессуары;\n— Принимаем чистые вещи в хорошем состоянии.' },
+                { id: 'strollers', name: 'Детские коляски', subtitle: 'Осталось собрать 3 штуки',
+                  image: 'step 6 materials/Детские коляски.png',
+                  what: '— Коляски-трансформеры;\n— Прогулочные коляски;\n— Коляски для новорождённых;\n— Принимаем в рабочем состоянии, без сильных повреждений.' },
+                { id: 'toys', name: 'Игрушки', subtitle: 'Осталось собрать 100 штук',
+                  image: 'step 6 materials/Игрушки.png',
+                  what: '— Мягкие игрушки;\n— Конструкторы и наборы;\n— Настольные и развивающие игры;\n— Куклы, машинки, музыкальные игрушки;\n— Принимаем чистые игрушки в рабочем состоянии.' }
+            ]
+        },
+        crisis: {
+            id: 'crisis',
+            title: 'Помощь в Дагестане ❤️',
+            subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+            categories: [
+                { id: 'clothes', name: 'Одежда', subtitle: 'Для взрослых и детей',
+                  image: 'crisis help/cat 1.png',
+                  what: '— Тёплая/демисезонная одежда и обувь;\n— Повседневная одежда для взрослых и детей;\n— Новое нижнее бельё.' },
+                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Товары первой необходимости',
+                  image: 'crisis help/cat 2.png',
+                  what: '— Зубная щётка и паста;\n— Шампунь, гель для душа;\n— Мыло, порошок стиральный;\n— Антисептик, маски;\n— Влажные салфетки;\n— Туалетная бумага;\n— Предметы женской гигиены.' },
+                { id: 'home', name: 'Домашняя утварь', subtitle: 'Только новые предметы',
+                  image: 'crisis help/cat 3.png',
+                  what: '— Столовые приборы;\n— Посуда (тарелка, кружка);\n— Кастрюля от 3 л.;\n— Полотенца;\n— Постельное бельё;\n— Одеяло;\n— Подушка.' },
+                { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Гигиена, игрушки, канцелярия',
+                  image: 'crisis help/cat 4.png',
+                  what: '— Детская гигиена (подгузники, пелёнки);\n— Детские игрушки;\n— Канцелярские принадлежности.' },
+                { id: 'appliances', name: 'Рабочая техника', subtitle: 'В хорошем состоянии',
+                  image: 'crisis help/cat 5.png',
+                  what: '— Микроволновки;\n— Чайники;\n— Утюги.' },
+                { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Для маломобильных граждан',
+                  image: 'crisis help/cat 6.png',
+                  what: '— Подгузники взрослые (большие размеры).' },
+                { id: 'water', name: 'Откачка воды и осушение', subtitle: 'Ликвидация последствий',
+                  image: 'crisis help/cat 7.png',
+                  what: '— Помпа для откачки воды;\n— Пушка для сушки;\n— Напорные пожарные рукава.' },
+                { id: 'tools', name: 'Инструменты для расчистки', subtitle: 'Ручной и моторизованный',
+                  image: 'crisis help/cat 8.png',
+                  what: '— Лопаты штыковые;\n— Лопаты шуфельные;\n— Бензиновые пилы.' },
+                { id: 'protection', name: 'Средства защиты и спецодежда', subtitle: 'Для волонтёров',
+                  image: 'crisis help/cat 9.png',
+                  what: '— Спецодежда для волонтёров;\n— Резиновые сапоги;\n— Защитные каски.' }
+            ]
+        }
+    };
+
+    const SUGGESTS = ['Пакет вещей', 'Детские вещи', 'Женская одежда', 'Пальто зимнее', 'Куртка', 'Игрушки'];
+    const SUGGEST_RULES = [
+        { match: ['дет','ребен','малыш'], suggest: ['Детские вещи','Детская одежда','Игрушки','Школьная форма'] },
+        { match: ['жен','платье','блуз'], suggest: ['Женская одежда','Платье','Блузка','Размер 42-44'] },
+        { match: ['муж','брюк','рубаш'], suggest: ['Мужская одежда','Рубашка','Джинсы','Размер M, L'] },
+        { match: ['зим','пальт','куртк'], suggest: ['Зимняя одежда','Пальто','Куртка','Б/у'] },
+        { match: ['игрушк','куклы','лего'], suggest: ['Игрушки','Конструктор','Мягкие игрушки','Б/у'] },
+    ];
+
+    let currentCollection = 'family';
+    let selectedCollectionInPopup = 'family';
+    let catState = {}; // per category: { selected, quantity, comment, dropdownOpen }
+
+    /* ═══════════ TITLE + SUGGESTS ═══════════ */
+    const titleInput = document.getElementById('titleInput');
+    const suggestsEl = document.getElementById('suggests');
+    const sectionCats = document.getElementById('sectionCats');
+    const extraSections = document.getElementById('extraSections');
+    const breadcrumbs = document.getElementById('breadcrumbs');
+
     titleInput.addEventListener('input', function () {
-        const hasText = this.value.trim().length > 0;
-        sectionCats.style.display = hasText ? 'block' : 'none';
-        if (!hasText) {
-            extraSections.style.display = 'none';
-            breadcrumbs.style.display = 'none';
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        const v = this.value.trim();
+        if (v.length > 0) {
+            sectionCats.style.display = 'block';
+            renderSuggests(v);
+        } else {
+            sectionCats.style.display = 'none';
+            suggestsEl.style.display = 'none';
+            resetCat();
         }
     });
 
-    function selectCat(el, cat) {
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-        el.classList.add('active');
+    function renderSuggests(text) {
+        const lower = text.toLowerCase();
+        const boosted = new Set();
+        SUGGEST_RULES.forEach(r => {
+            if (r.match.some(kw => lower.includes(kw))) r.suggest.forEach(s => boosted.add(s));
+        });
+        const base = SUGGESTS.filter(s => !lower.includes(s.toLowerCase()));
+        const all = [...boosted, ...base.filter(s => !boosted.has(s))].slice(0, 5);
+        if (all.length === 0) { suggestsEl.style.display = 'none'; return; }
+        suggestsEl.innerHTML = all.map(s =>
+            `<button class="suggest-chip" onclick="applySuggest('${s}')">${s}</button>`
+        ).join('');
+        suggestsEl.style.display = 'flex';
+    }
 
-        if (cat === 'charity') {
-            breadcrumbs.style.display = 'block';
+    function applySuggest(text) {
+        const cur = titleInput.value.trim();
+        titleInput.value = cur ? cur + ' · ' + text : text;
+        titleInput.dispatchEvent(new Event('input'));
+        titleInput.focus();
+    }
+
+    /* ═══════════ CATEGORY ═══════════ */
+    let selectedCatId = null;
+
+    function selectCat(el, id, label) {
+        selectedCatId = id;
+        // Hide chips, show select
+        document.getElementById('chipsWrap').style.display = 'none';
+        document.getElementById('catSelectWrap').style.display = 'block';
+        document.getElementById('catSelectValue').textContent = label;
+
+        if (id === 'charity') {
+            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
             extraSections.style.display = 'block';
-            // Smooth scroll to extra content
-            setTimeout(() => {
-                extraSections.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
+            renderCollection();
         } else {
-            breadcrumbs.style.display = 'none';
+            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › ' + label;
             extraSections.style.display = 'none';
         }
     }
+
+    function resetCat() {
+        selectedCatId = null;
+        document.getElementById('chipsWrap').style.display = 'flex';
+        document.getElementById('catSelectWrap').style.display = 'none';
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        extraSections.style.display = 'none';
+        breadcrumbs.textContent = 'Личные вещи';
+    }
+
+    /* ═══════════ COLLECTION RENDER ═══════════ */
+    function renderCollection() {
+        const coll = COLLECTIONS[currentCollection];
+        document.getElementById('collectionTitle').textContent = coll.title;
+        document.getElementById('collectionSubtitle').textContent = coll.subtitle;
+        catState = {};
+        renderDonationList();
+    }
+
+    function renderDonationList() {
+        const coll = COLLECTIONS[currentCollection];
+        const list = document.getElementById('donationList');
+        list.innerHTML = '';
+        coll.categories.forEach(cat => {
+            if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false };
+            const s = catState[cat.id];
+            const item = document.createElement('div');
+            item.className = 'list-item';
+            item.id = 'item-' + cat.id;
+
+            const cbSrc = s.selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png';
+            item.innerHTML = `
+                <div class="list-item-row" onclick="toggleDonation('${cat.id}')">
+                    <img src="${cat.image}" class="item-thumb" alt="">
+                    <div class="item-info">
+                        <div class="item-name">${cat.name}</div>
+                        <div class="item-count">${cat.subtitle}</div>
+                    </div>
+                    <img src="${cbSrc}" class="item-cb" alt="">
+                </div>
+                ${s.selected ? renderExpanded(cat, s) : ''}
+            `;
+            list.appendChild(item);
+
+            // Bind textarea auto-resize
+            if (s.selected) {
+                const ta = item.querySelector('.comment-textarea');
+                if (ta) {
+                    ta.value = s.comment;
+                    ta.addEventListener('input', function() {
+                        s.comment = this.value;
+                        this.style.height = 'auto';
+                        this.style.height = this.scrollHeight + 'px';
+                    });
+                    if (s.comment) { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
+                }
+            }
+        });
+    }
+
+    function renderExpanded(cat, s) {
+        const dd = s.dropdownOpen ? 'open' : '';
+        const rot = s.dropdownOpen ? 'rotated' : '';
+        return `
+            <div class="cat-expanded">
+                <div class="qty-row">
+                    <button class="qty-btn" onclick="changeQty('${cat.id}',-1,event)">−</button>
+                    <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
+                    <button class="qty-btn" onclick="changeQty('${cat.id}',1,event)">+</button>
+                </div>
+                <div class="comment-wrap">
+                    <textarea class="comment-textarea" placeholder="Уточните вещи для категории: бренд, размер, состояние"></textarea>
+                </div>
+                <div class="dropdown" id="dd-${cat.id}">
+                    <div class="dropdown-header" onclick="toggleDropdown('${cat.id}',event)">
+                        <span class="dropdown-label">Что нужно фондам</span>
+                        <svg class="dropdown-chevron ${rot}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="dropdown-body ${dd}">${cat.what}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function toggleDonation(id) {
+        const coll = COLLECTIONS[currentCollection];
+        const cat = coll.categories.find(c => c.id === id);
+        if (!catState[id]) catState[id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false };
+        catState[id].selected = !catState[id].selected;
+        renderDonationList();
+    }
+
+    function changeQty(id, delta, e) {
+        e.stopPropagation();
+        if (!catState[id]) return;
+        catState[id].quantity = Math.max(1, (catState[id].quantity || 1) + delta);
+        const el = document.getElementById('qty-' + id);
+        if (el) el.textContent = catState[id].quantity;
+    }
+
+    function toggleDropdown(id, e) {
+        e.stopPropagation();
+        if (!catState[id]) return;
+        catState[id].dropdownOpen = !catState[id].dropdownOpen;
+        const body = document.querySelector(`#dd-${id} .dropdown-body`);
+        const chevron = document.querySelector(`#dd-${id} .dropdown-chevron`);
+        if (body) body.classList.toggle('open');
+        if (chevron) chevron.classList.toggle('rotated');
+    }
+
+    /* ═══════════ HOW POPUP ═══════════ */
+    function openHowPopup() {
+        document.getElementById('howPopup').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeHowPopup(e) {
+        if (e && e.target !== document.getElementById('howPopup') && e.type !== 'click') return;
+        if (e && e.currentTarget === e.target || !e) {
+            document.getElementById('howPopup').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+    function switchHowTab(tab) {
+        document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.modal-pane').forEach(p => p.classList.remove('active'));
+        document.getElementById('htab-' + tab).classList.add('active');
+        document.getElementById('hpane-' + tab).classList.add('active');
+    }
+
+    /* ═══════════ CHANGE COLLECTION POPUP ═══════════ */
+    function openChangeCollection() {
+        selectedCollectionInPopup = currentCollection;
+        updateCollRadios();
+        document.getElementById('changeCollPopup').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeChangeCollPopup(e) {
+        if (!e || e.currentTarget === e.target) {
+            document.getElementById('changeCollPopup').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+    function selectCollectionOption(id) {
+        selectedCollectionInPopup = id;
+        updateCollRadios();
+    }
+    function updateCollRadios() {
+        document.getElementById('coll-radio-family').src = selectedCollectionInPopup === 'family' ? 'crisis help/Radio on.png' : 'crisis help/Radio off.png';
+        document.getElementById('coll-radio-crisis').src = selectedCollectionInPopup === 'crisis' ? 'crisis help/Radio on.png' : 'crisis help/Radio off.png';
+    }
+    function confirmCollectionChoice() {
+        if (selectedCollectionInPopup === currentCollection) {
+            closeChangeCollPopup();
+            return;
+        }
+        closeChangeCollPopup();
+        document.getElementById('confirmSwitchPopup').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    /* ═══════════ CONFIRM SWITCH ═══════════ */
+    function closeConfirmSwitch(e) {
+        if (!e || e.currentTarget === e.target) {
+            document.getElementById('confirmSwitchPopup').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+    function applyCollectionSwitch() {
+        currentCollection = selectedCollectionInPopup;
+        document.getElementById('confirmSwitchPopup').classList.remove('open');
+        document.body.style.overflow = '';
+        renderCollection();
+        // Update breadcrumbs
+        if (currentCollection === 'crisis') {
+            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+        }
+    }
+
+    /* ═══════════ OVERLAY CLOSE ═══════════ */
+    document.getElementById('howPopup').addEventListener('click', function(e) {
+        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+    });
+    document.getElementById('changeCollPopup').addEventListener('click', function(e) {
+        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+    });
+    document.getElementById('confirmSwitchPopup').addEventListener('click', function(e) {
+        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+    });
 </script>
 
 </body>
