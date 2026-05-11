@@ -16,15 +16,15 @@
         }
 
         /* ── TOP BAR ── */
-        .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .top-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             height: 42px; display: flex; align-items: center;
             justify-content: space-between; gap: 16px;
         }
         .tb-links { display: flex; align-items: center; gap: 20px; }
-        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
-        .tb-link img { filter: brightness(0); }
+        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #9E9E9E; cursor: default; white-space: nowrap; }
+        .tb-link img { opacity: 0.4; }
         .tb-actions { display: flex; align-items: center; gap: 16px; }
         .place-btn {
             display: inline-flex; align-items: center; gap: 6px;
@@ -34,6 +34,8 @@
         }
         .place-btn:hover { background: #F4F4F4; color: #1A1A1A; }
         .tb-action { display: flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .my-ads-btn { display: inline-flex; align-items: center; gap: 5px; color: #1A1A1A; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; white-space: nowrap; padding: 6px 12px; border-radius: 12px; background: none; border: none; cursor: pointer; transition: background 0.15s; }
+        .my-ads-btn:hover { background: #F4F4F4; }
         .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
 
@@ -100,18 +102,18 @@
 
         /* business block */
         .biz-box {
-            background: #fff; border-radius: 28px; padding: 18px;
-            box-shadow: 0 0 0 1.5px #EBEBEB; margin-bottom: 14px;
+            background: #F4F4F4; border-radius: 28px; padding: 18px;
+            margin-bottom: 14px;
         }
         .sb-title { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
-        .sb-desc { font-size: 13px; color: #9E9E9E; line-height: 1.4; margin-bottom: 14px; }
+        .sb-desc { font-size: 13px; color: #1A1A1A; font-weight: 400; line-height: 1.4; margin-bottom: 14px; }
         .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
         .biz-item { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
         .biz-thumb { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
         .biz-label { font-size: 12px; line-height: 1.25; color: #1A1A1A; }
         .sb-btn {
             display: block; width: 100%; text-align: center; background: #fff;
-            border: 1.5px solid #EBEBEB; border-radius: 8px; padding: 10px;
+            border: none; border-radius: 8px; padding: 10px;
             font-size: 13px; color: #1A1A1A; cursor: default; font-family: 'Inter', sans-serif;
         }
 
@@ -163,10 +165,10 @@
                 <img src="desktop-header/Add.svg" width="16" height="16" alt="">
                 Разместить объявление
             </a>
-            <span class="tb-action">
-                <img src="desktop-header/Items.svg" class="tb-icon" alt="">
+            <button class="my-ads-btn" onclick="window.location.href='my-ads-desktop.html'">
+                <img src="desktop-header/Items.svg" width="26" height="26" alt="">
                 Мои объявления
-            </span>
+            </button>
             <img src="desktop-header/favs.svg" class="tb-icon" alt="">
             <img src="desktop-header/notifications.svg" class="tb-icon" alt="">
             <img src="desktop-header/chats.svg" class="tb-icon" alt="">

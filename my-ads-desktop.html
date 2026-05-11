@@ -10,15 +10,17 @@
         body { font-family: 'Inter', sans-serif; background: #fff; min-width: 1060px; color: #1A1A1A; }
 
         /* ── STICKY HEADER ── */
-        .sticky-shell { position: sticky; top: 0; z-index: 100; background: #fff; }
-        .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .sticky-shell { background: #fff; }
+        .top-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; height: 42px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
         .tb-links { display: flex; align-items: center; gap: 20px; }
-        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
-        .tb-link img { filter: brightness(0); }
+        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #9E9E9E; cursor: default; white-space: nowrap; }
+        .tb-link img { opacity: 0.4; }
         .tb-actions { display: flex; align-items: center; gap: 16px; }
         .place-btn { display: inline-flex; align-items: center; gap: 6px; color: #1A1A1A; text-decoration: none; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; white-space: nowrap; padding: 6px 12px; border-radius: 12px; transition: background 0.15s; }
         .place-btn:hover { background: #F4F4F4; }
+        .my-ads-btn { display: inline-flex; align-items: center; gap: 5px; color: #1A1A1A; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; white-space: nowrap; padding: 6px 12px; border-radius: 12px; background: none; border: none; cursor: pointer; transition: background 0.15s; }
+        .my-ads-btn:hover { background: #F4F4F4; }
         .tb-action { display: flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
         .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
@@ -164,6 +166,26 @@
         /* ── EMPTY STATE ── */
         .empty-state { padding: 48px 0; color: #9E9E9E; font-size: 15px; }
 
+        /* ── DRAFT CARD ── */
+        .draft-card { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #F4F4F4; }
+        .draft-photo { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; flex-shrink: 0; background: #F4F4F4; }
+        .draft-info { flex: 1; min-width: 0; }
+        .draft-title { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-bottom: 4px; }
+        .draft-sub { font-size: 13px; color: #9E9E9E; }
+        .draft-actions { display: flex; align-items: center; }
+        .btn-pencil { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: #F4F4F4; border: none; cursor: pointer; transition: background 0.12s; }
+        .btn-pencil:hover { background: #EAEAEA; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: #1A1A1A; color: #fff; border-radius: 12px;
+            padding: 12px 20px; font-size: 14px; font-weight: 400;
+            opacity: 0; transition: opacity 0.25s, transform 0.25s;
+            pointer-events: none; white-space: nowrap; z-index: 9999;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
     </style>
 </head>
 <body>
@@ -185,10 +207,10 @@
                     <img src="desktop-header/Add.svg" width="16" height="16" alt="">
                     Разместить объявление
                 </a>
-                <span class="tb-action">
-                    <img src="desktop-header/Items.svg" class="tb-icon" alt="">
+                <button class="my-ads-btn" onclick="window.location.href='my-ads-desktop.html'">
+                    <img src="desktop-header/Items.svg" width="26" height="26" alt="">
                     Мои объявления
-                </span>
+                </button>
                 <img src="desktop-header/favs.svg" class="tb-icon" alt="">
                 <img src="desktop-header/notifications.svg" class="tb-icon" alt="">
                 <img src="desktop-header/chats.svg" class="tb-icon" alt="">
@@ -238,7 +260,7 @@
         <div class="tabs-row">
             <button class="tab-btn" onclick="switchTab('waiting')">Ждут действий<sup class="tab-count">25</sup></button>
             <button class="tab-btn active" onclick="switchTab('active')">Активные<sup class="tab-count">1</sup></button>
-            <button class="tab-btn" onclick="switchTab('drafts')">Черновики<sup class="tab-count">0</sup></button>
+            <button class="tab-btn" onclick="switchTab('drafts')">Черновики<sup class="tab-count" id="drafts-count">0</sup></button>
             <button class="tab-btn" onclick="switchTab('archive')">Архив</button>
         </div>
 
@@ -310,7 +332,7 @@
 
         <!-- TAB: DRAFTS -->
         <div id="panel-drafts" class="tab-panel">
-            <div class="empty-state">Нет черновиков</div>
+            <div id="drafts-content"></div>
         </div>
 
         <!-- TAB: ARCHIVE -->
@@ -322,6 +344,8 @@
 
 </div>
 
+<div class="toast" id="toast">Объявление сохранено в черновиках</div>
+
 <script>
     // Populate charity ad from sessionStorage
     const adTitle = sessionStorage.getItem('adTitle') || 'Без названия';
@@ -332,16 +356,70 @@
         document.getElementById('charity-photo').src = adPhotos[0];
     }
 
+    // Drafts rendering
+    function renderDrafts() {
+        const container = document.getElementById('drafts-content');
+        if (sessionStorage.getItem('hasDraft') !== '1') {
+            container.innerHTML = '<div class="empty-state">Нет черновиков</div>';
+            return;
+        }
+        const title = sessionStorage.getItem('adTitle') || 'Без названия';
+        const photos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+        const photoSrc = photos.length > 0 ? photos[0] : '';
+        const photoHtml = photoSrc
+            ? `<img src="${photoSrc}" class="draft-photo" alt="">`
+            : `<div class="draft-photo"></div>`;
+        container.innerHTML = `
+            <div class="draft-card">
+                ${photoHtml}
+                <div class="draft-info">
+                    <div class="draft-title">${title}</div>
+                    <div class="draft-sub">Черновик</div>
+                </div>
+                <div class="draft-actions">
+                    <button class="btn-pencil" onclick="window.location.href='new-ad-desktop.html'" title="Продолжить редактирование">
+                        <img src="step 0 icons/Edit.svg" width="18" height="18" alt="Редактировать">
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    function updateDraftsCount() {
+        const hasDraft = sessionStorage.getItem('hasDraft') === '1';
+        document.getElementById('drafts-count').textContent = hasDraft ? '1' : '0';
+    }
+
     // Tab switching
-    function switchTab(id) {
-        // Update panels
+    function switchTab(id, btn) {
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('visible'));
         document.getElementById('panel-' + id).classList.add('visible');
-
-        // Update tab buttons
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        (btn || event.currentTarget).classList.add('active');
+        if (id === 'drafts') renderDrafts();
     }
+
+    // Toast
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        if (msg) t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // Handle URL params on load
+    window.addEventListener('load', function() {
+        updateDraftsCount();
+        const params = new URLSearchParams(window.location.search);
+        const tab = params.get('tab');
+        if (tab) {
+            const btn = document.querySelector(`.tab-btn[onclick*="'${tab}'"]`);
+            if (btn) switchTab(tab, btn);
+        }
+        if (params.get('toast') === '1') {
+            showToast('Объявление сохранено в черновиках');
+        }
+    });
 </script>
 
 </body>

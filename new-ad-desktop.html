@@ -9,28 +9,36 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; min-width: 1060px; color: #1A1A1A; }
 
-        /* ═══════════════ STICKY SHELL (top-bar + main-header only) ═══════════════ */
-        .sticky-shell { position: sticky; top: 0; z-index: 100; background: #fff; }
+        /* ═══════════════ STICKY SHELL ═══════════════ */
+        .sticky-shell { background: #fff; }
 
         /* ── TOP BAR ── */
-        .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .top-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             height: 42px; display: flex; align-items: center;
             justify-content: space-between; gap: 16px;
         }
         .tb-links { display: flex; align-items: center; gap: 20px; }
-        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
-        .tb-link img { filter: brightness(0); }
+        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #9E9E9E; cursor: default; white-space: nowrap; }
+        .tb-link img { opacity: 0.4; }
         .tb-actions { display: flex; align-items: center; gap: 16px; }
         .place-btn {
             display: inline-flex; align-items: center; gap: 6px;
             color: #1A1A1A; text-decoration: none;
             font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
             white-space: nowrap; padding: 6px 12px; border-radius: 12px; transition: background 0.15s;
+            background: none; border: none; cursor: pointer;
         }
         .place-btn:hover { background: #F4F4F4; color: #1A1A1A; }
         .tb-action { display: flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .my-ads-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: #1A1A1A; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
+            white-space: nowrap; padding: 6px 12px; border-radius: 12px;
+            background: none; border: none; cursor: pointer; transition: background 0.15s;
+        }
+        .my-ads-btn:hover { background: #F4F4F4; }
         .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
 
@@ -326,14 +334,14 @@
                 <span class="tb-link">Ещё <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
             </div>
             <div class="tb-actions">
-                <a href="category-choose-desktop.html" class="place-btn">
+                <button class="place-btn" onclick="handleHeaderNav('category-choose-desktop.html')">
                     <img src="desktop-header/Add.svg" width="16" height="16" alt="">
                     Разместить объявление
-                </a>
-                <span class="tb-action">
-                    <img src="desktop-header/Items.svg" class="tb-icon" alt="">
+                </button>
+                <button class="my-ads-btn" onclick="handleHeaderNav('my-ads-desktop.html')">
+                    <img src="desktop-header/Items.svg" width="26" height="26" alt="">
                     Мои объявления
-                </span>
+                </button>
                 <img src="desktop-header/favs.svg" class="tb-icon" alt="">
                 <img src="desktop-header/notifications.svg" class="tb-icon" alt="">
                 <img src="desktop-header/chats.svg" class="tb-icon" alt="">
@@ -345,7 +353,7 @@
     <!-- MAIN HEADER -->
     <header class="main-header">
         <div class="main-header-inner">
-            <a href="main-desktop.html" class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></a>
+            <a href="#" onclick="handleHeaderNav('main-desktop.html'); return false;" class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></a>
             <div class="search-area">
                 <button class="all-cat-btn">
                     <img src="desktop-header/Category.svg" alt="">
@@ -537,23 +545,23 @@
                     <div class="select-wrap">
                         <select class="select-field"><option>iPhone 16 Pro</option></select>
                         <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
                 </div>
             </div>
 
+        </div><!-- /extraSections -->
+
             <!-- FOOTER -->
             <div class="form-footer">
                 <button class="btn-primary" id="submitBtn" onclick="navigateToSuccess()" disabled>Разместить объявление</button>
-                <button class="btn-secondary">Сохранить и выйти</button>
+                <button class="btn-secondary" onclick="openSaveDraftPopup()">Сохранить и выйти</button>
             </div>
             <div class="legal-text">
                 Вы публикуете объявление и данные в нём, чтобы его мог посмотреть кто угодно в интернете. Вы также соглашаетесь с <a href="#">правилами</a> и использованием фотографий в автокаталоге Авито и Автотеке.
             </div>
             <div style="height:60px"></div>
-
-        </div><!-- /extraSections -->
     </div><!-- /form-inner -->
 </div><!-- /form-outer -->
 
@@ -612,6 +620,21 @@
         <p class="confirm-text">При смене сбора текущее объявление сохранится в черновиках, чтобы вы смогли продолжить создание</p>
         <button class="modal-btn-primary" onclick="applyCollectionSwitch()">Поменять сбор</button>
         <button class="modal-btn-secondary" onclick="closeConfirmSwitch()">Остаться</button>
+    </div>
+</div>
+
+<!-- ═══════════════ POPUP: СОХРАНИТЬ В ЧЕРНОВИКИ ═══════════════ -->
+<div class="modal-overlay" id="saveDraftPopup">
+    <div class="modal-card" onclick="event.stopPropagation()" style="width:440px">
+        <button class="modal-close" onclick="closeSaveDraftPopup()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 4L16 16M16 4L4 16" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <h2 class="modal-title" style="font-size:20px;">Сохранить в черновики?</h2>
+        <p class="confirm-text">Объявление сохранится в черновиках, чтобы вы смогли продолжить создание позже</p>
+        <button class="modal-btn-primary" onclick="confirmSaveDraft()">Сохранить и выйти</button>
+        <button class="modal-btn-secondary" onclick="closeSaveDraftPopup()">Остаться</button>
     </div>
 </div>
 
@@ -685,6 +708,7 @@
     let selectedCollectionInPopup = 'family';
     let catState = {};
     let bannerDismissed = false;
+    let descUserEdited = false;
 
     /* ═══════════ BACK BUTTON POSITIONING ═══════════ */
     function positionBackBtn() {
@@ -720,6 +744,14 @@
             resetCat();
         }
     });
+
+    if (descTextarea) {
+        descTextarea.addEventListener('input', function() {
+            descUserEdited = true;
+            this.style.height = 'auto';
+            this.style.height = Math.max(126, this.scrollHeight) + 'px';
+        });
+    }
 
     function clearTitle() {
         titleInput.value = '';
@@ -781,6 +813,7 @@
         document.getElementById('collectionTitle').textContent = coll.title;
         document.getElementById('collectionSubtitle').textContent = coll.subtitle;
         catState = {};
+        descUserEdited = false;
         renderDonationList();
         updateDescription();
         updateSubmitBtn();
@@ -888,7 +921,7 @@
 
     /* ═══════════ DESCRIPTION AUTO-FILL ═══════════ */
     function updateDescription() {
-        if (!descTextarea) return;
+        if (!descTextarea || descUserEdited) return;
         const coll = COLLECTIONS[currentCollection];
         const lines = [];
         coll.categories.forEach(cat => {
@@ -994,14 +1027,14 @@
         document.body.style.overflow = '';
     }
     function applyCollectionSwitch() {
-        currentCollection = selectedCollectionInPopup;
+        saveDraftToSession();
         document.getElementById('confirmSwitchPopup').classList.remove('open');
         document.body.style.overflow = '';
-        renderCollection();
+        window.location.href = 'my-ads-desktop.html?tab=drafts&toast=1';
     }
 
     /* ═══════════ OVERLAY CLICK CLOSE ═══════════ */
-    ['howPopup','changeCollPopup','confirmSwitchPopup','photoModal'].forEach(id => {
+    ['howPopup','changeCollPopup','confirmSwitchPopup','saveDraftPopup','photoModal'].forEach(id => {
         document.getElementById(id).addEventListener('click', function(e) {
             if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
         });
@@ -1104,8 +1137,87 @@
             comment: catState[c.id].comment
         }));
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
+        sessionStorage.removeItem('hasDraft');
         window.location.href = 'success-desktop.html';
     }
+
+    /* ═══════════ HEADER NAVIGATION ═══════════ */
+    let pendingNavUrl = 'my-ads-desktop.html?tab=drafts&toast=1';
+    function handleHeaderNav(url) {
+        pendingNavUrl = url;
+        openSaveDraftPopup();
+    }
+
+    /* ═══════════ SAVE DRAFT POPUP ═══════════ */
+    function saveDraftToSession() {
+        const title = titleInput ? titleInput.value.trim() : '';
+        sessionStorage.setItem('hasDraft', '1');
+        sessionStorage.setItem('adCollection', currentCollection);
+        sessionStorage.setItem('adTitle', title || 'Без названия');
+        sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
+        sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
+        sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
+        const coll = COLLECTIONS[currentCollection];
+        const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
+            id: c.id, name: c.name,
+            quantity: catState[c.id].quantity,
+            comment: catState[c.id].comment
+        }));
+        sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
+    }
+    function openSaveDraftPopup() {
+        document.getElementById('saveDraftPopup').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeSaveDraftPopup() {
+        document.getElementById('saveDraftPopup').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    function confirmSaveDraft() {
+        saveDraftToSession();
+        const dest = pendingNavUrl || 'my-ads-desktop.html?tab=drafts&toast=1';
+        pendingNavUrl = 'my-ads-desktop.html?tab=drafts&toast=1';
+        window.location.href = dest;
+    }
+
+    /* ═══════════ PREFILL FROM DRAFT ═══════════ */
+    function prefillFromDraft() {
+        if (sessionStorage.getItem('hasDraft') !== '1') return;
+        const title = sessionStorage.getItem('adTitle');
+        if (!title) return;
+        titleInput.value = title;
+        document.getElementById('titleClear').style.display = 'flex';
+        sectionCats.style.display = 'block';
+        document.getElementById('chipsWrap').style.display = 'none';
+        document.getElementById('catSelectWrap').style.display = 'block';
+        document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
+        const catDisplay = document.querySelector('.cat-select-display');
+        catDisplay.removeAttribute('onclick');
+        catDisplay.style.cursor = 'default';
+        const catArrow = document.querySelector('.cat-select-arrow');
+        if (catArrow) catArrow.style.display = 'none';
+        extraSections.style.display = 'block';
+        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+        const collection = sessionStorage.getItem('adCollection') || 'family';
+        currentCollection = collection;
+        const coll = COLLECTIONS[currentCollection];
+        document.getElementById('collectionTitle').textContent = coll.title;
+        document.getElementById('collectionSubtitle').textContent = coll.subtitle;
+        const savedCats = JSON.parse(sessionStorage.getItem('adSelectedCats') || '[]');
+        catState = {};
+        savedCats.forEach(c => {
+            catState[c.id] = { selected: true, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false };
+        });
+        renderDonationList();
+        updateSubmitBtn();
+        const savedPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+        if (savedPhotos.length > 0) { photoSelection = savedPhotos; renderSelectedPhotos(); }
+        const desc = sessionStorage.getItem('adDesc');
+        if (desc) { descTextarea.value = desc; descTextarea.style.height = 'auto'; descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px'; descUserEdited = true; }
+        bannerDismissed = true;
+        document.getElementById('infoBanner').style.display = 'none';
+    }
+    window.addEventListener('load', prefillFromDraft);
 </script>
 
 </body>
