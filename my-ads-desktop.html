@@ -186,6 +186,59 @@
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+        /* ── POPOVER ── */
+        .btn-more-wrap { position: relative; }
+        .popover {
+            position: absolute; right: 0; bottom: calc(100% + 4px);
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 6px 0; min-width: 210px; z-index: 200; display: none;
+        }
+        .popover.open { display: block; }
+        .popover-item {
+            padding: 10px 16px; font-size: 15px; color: #1A1A1A;
+            cursor: pointer; white-space: nowrap;
+        }
+        .popover-item:hover { background: #F4F4F4; }
+
+        /* ── UNPUBLISH MODAL ── */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            display: none; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-card {
+            background: #fff; border-radius: 20px; padding: 28px 24px 24px;
+            width: 440px; position: relative;
+        }
+        .modal-title { font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 32px; height: 32px; border: none; background: #F4F4F4;
+            border-radius: 8px; cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; color: #9E9E9E;
+        }
+        .modal-close:hover { background: #EAEAEA; }
+        .reason-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0; cursor: pointer;
+        }
+        .reason-label { font-size: 15px; color: #1A1A1A; flex: 1; line-height: 1.4; }
+        .reason-radio {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 2px solid #C4C4C4; flex-shrink: 0; margin-left: 12px;
+            display: flex; align-items: center; justify-content: center; transition: border-color 0.12s;
+        }
+        .reason-radio.selected { border-color: #1A1A1A; }
+        .reason-radio.selected::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: #1A1A1A; }
+        .modal-confirm-btn {
+            width: 100%; background: #1A1A1A; color: #fff; border: none;
+            border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 400;
+            font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 8px; display: none;
+        }
+        .modal-confirm-btn.visible { display: block; }
+        .modal-confirm-btn:hover { opacity: 0.85; }
+
     </style>
 </head>
 <body>
@@ -323,7 +376,12 @@
                     </div>
                     <div class="ad-actions">
                         <button class="btn-edit" onclick="window.location.href='edit-ad-desktop.html'">Редактировать</button>
-                        <button class="btn-more">···</button>
+                        <div class="btn-more-wrap">
+                            <button class="btn-more" onclick="openPopover(this); event.stopPropagation()">···</button>
+                            <div class="popover">
+                                <div class="popover-item" onclick="openUnpublishModal(); closePopover()">Снять с публикации</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -336,12 +394,30 @@
         </div>
 
         <!-- TAB: ARCHIVE -->
-        <div id="panel-archive" class="tab-panel">
-            <div class="empty-state">Нет объявлений в архиве</div>
-        </div>
+        <div id="panel-archive" class="tab-panel"></div>
 
     </main>
 
+</div>
+
+<div class="modal-overlay" id="unpublishModal" onclick="closeUnpublishModal()">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeUnpublishModal()">✕</button>
+        <div class="modal-title">Причина снятия</div>
+        <div class="reason-item" onclick="selectReason(0)">
+            <span class="reason-label">Фонды не заказали вещь</span>
+            <div class="reason-radio"></div>
+        </div>
+        <div class="reason-item" onclick="selectReason(1)">
+            <span class="reason-label">Сбор завершился</span>
+            <div class="reason-radio"></div>
+        </div>
+        <div class="reason-item" onclick="selectReason(2)">
+            <span class="reason-label">Передумал передавать на благотворительность</span>
+            <div class="reason-radio"></div>
+        </div>
+        <button class="modal-confirm-btn" id="confirmUnpublishBtn" onclick="confirmUnpublish()">Выбрать</button>
+    </div>
 </div>
 
 <div class="toast" id="toast">Объявление сохранено в черновиках</div>
@@ -397,6 +473,80 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         (btn || event.currentTarget).classList.add('active');
         if (id === 'drafts') renderDrafts();
+        if (id === 'archive') renderArchive();
+    }
+
+    // Archive rendering
+    function renderArchive() {
+        const container = document.getElementById('panel-archive');
+        if (sessionStorage.getItem('adArchived') !== '1') {
+            container.innerHTML = '<div class="empty-state">Нет объявлений в архиве</div>';
+            return;
+        }
+        const title = sessionStorage.getItem('adTitle') || 'Без названия';
+        const photos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+        const photoSrc = photos.length > 0 ? photos[0] : '';
+        const photoHtml = photoSrc
+            ? `<img src="${photoSrc}" class="ad-photo" alt="">`
+            : `<div class="ad-photo"></div>`;
+        container.innerHTML = `
+            <div class="ad-card">
+                ${photoHtml}
+                <div class="ad-body">
+                    <div class="ad-top">
+                        <div class="ad-title-col">
+                            <span class="ad-title">${title}</span>
+                            <div class="ad-price">Бесплатно</div>
+                            <span class="charity-badge">Благотворительность</span>
+                        </div>
+                    </div>
+                    <div class="ad-stats">
+                        <span class="stat-item" style="color:#9E9E9E;font-size:13px">В архиве</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Popover
+    function openPopover(btn) {
+        const wrap = btn.closest('.btn-more-wrap');
+        const p = wrap.querySelector('.popover');
+        const isOpen = p.classList.contains('open');
+        closePopover();
+        if (!isOpen) p.classList.add('open');
+    }
+    function closePopover() {
+        document.querySelectorAll('.popover.open').forEach(p => p.classList.remove('open'));
+    }
+    document.addEventListener('click', function() { closePopover(); });
+
+    // Unpublish modal
+    let selectedReason = -1;
+    function openUnpublishModal() {
+        selectedReason = -1;
+        document.querySelectorAll('#unpublishModal .reason-radio').forEach(r => r.classList.remove('selected'));
+        document.getElementById('confirmUnpublishBtn').classList.remove('visible');
+        document.getElementById('unpublishModal').classList.add('open');
+    }
+    function closeUnpublishModal() {
+        document.getElementById('unpublishModal').classList.remove('open');
+    }
+    function selectReason(idx) {
+        selectedReason = idx;
+        document.querySelectorAll('#unpublishModal .reason-radio').forEach((r, i) => {
+            r.classList.toggle('selected', i === idx);
+        });
+        document.getElementById('confirmUnpublishBtn').classList.add('visible');
+    }
+    function confirmUnpublish() {
+        if (selectedReason === -1) return;
+        sessionStorage.setItem('adArchived', '1');
+        const card = document.getElementById('charity-card');
+        if (card) card.style.display = 'none';
+        closeUnpublishModal();
+        const archiveBtn = document.querySelector('.tab-btn[onclick*="\'archive\'"]');
+        switchTab('archive', archiveBtn);
     }
 
     // Toast
@@ -410,6 +560,10 @@
     // Handle URL params on load
     window.addEventListener('load', function() {
         updateDraftsCount();
+        if (sessionStorage.getItem('adArchived') === '1') {
+            const card = document.getElementById('charity-card');
+            if (card) card.style.display = 'none';
+        }
         const params = new URLSearchParams(window.location.search);
         const tab = params.get('tab');
         if (tab) {

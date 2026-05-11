@@ -145,6 +145,44 @@
         .seller-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .seller-name { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .seller-type { font-size: 13px; color: #9E9E9E; margin-top: 2px; }
+
+        /* ── UNPUBLISH MODAL ── */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            display: none; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-card {
+            background: #fff; border-radius: 20px; padding: 28px 24px 24px;
+            width: 440px; position: relative;
+        }
+        .modal-title { font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 32px; height: 32px; border: none; background: #F4F4F4;
+            border-radius: 8px; cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; color: #9E9E9E;
+        }
+        .modal-close:hover { background: #EAEAEA; }
+        .reason-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0; cursor: pointer;
+        }
+        .reason-label { font-size: 15px; color: #1A1A1A; flex: 1; line-height: 1.4; }
+        .reason-radio {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 2px solid #C4C4C4; flex-shrink: 0; margin-left: 12px;
+            display: flex; align-items: center; justify-content: center; transition: border-color 0.12s;
+        }
+        .reason-radio.selected { border-color: #1A1A1A; }
+        .reason-radio.selected::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: #1A1A1A; }
+        .modal-confirm-btn {
+            width: 100%; background: #1A1A1A; color: #fff; border: none;
+            border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 400;
+            font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 8px; display: none;
+        }
+        .modal-confirm-btn.visible { display: block; }
+        .modal-confirm-btn:hover { opacity: 0.85; }
     </style>
 </head>
 <body>
@@ -225,7 +263,7 @@
             <!-- Action Buttons -->
             <div class="action-btns">
                 <button class="btn-gray" onclick="window.location.href='edit-ad-desktop.html'">Редактировать</button>
-                <button class="btn-gray">Снять с публикации</button>
+                <button class="btn-gray" onclick="openUnpublishModal()">Снять с публикации</button>
             </div>
 
             <!-- Gallery -->
@@ -295,6 +333,26 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="unpublishModal" onclick="closeUnpublishModal()">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeUnpublishModal()">✕</button>
+        <div class="modal-title">Причина снятия</div>
+        <div class="reason-item" onclick="selectReason(0)">
+            <span class="reason-label">Фонды не заказали вещь</span>
+            <div class="reason-radio"></div>
+        </div>
+        <div class="reason-item" onclick="selectReason(1)">
+            <span class="reason-label">Сбор завершился</span>
+            <div class="reason-radio"></div>
+        </div>
+        <div class="reason-item" onclick="selectReason(2)">
+            <span class="reason-label">Передумал передавать на благотворительность</span>
+            <div class="reason-radio"></div>
+        </div>
+        <button class="modal-confirm-btn" id="confirmUnpublishBtn" onclick="confirmUnpublish()">Выбрать</button>
+    </div>
+</div>
+
 <script>
     // Pull data from sessionStorage
     const adTitle    = sessionStorage.getItem('adTitle')    || 'Без названия';
@@ -305,6 +363,30 @@
     document.getElementById('ad-title').textContent    = adTitle;
     document.getElementById('ad-location').textContent = adLocation;
     document.getElementById('ad-desc').textContent     = (adDesc && adDesc.trim()) ? adDesc : 'Описание отсутствует.';
+
+    // Unpublish modal
+    let selectedReason = -1;
+    function openUnpublishModal() {
+        selectedReason = -1;
+        document.querySelectorAll('#unpublishModal .reason-radio').forEach(r => r.classList.remove('selected'));
+        document.getElementById('confirmUnpublishBtn').classList.remove('visible');
+        document.getElementById('unpublishModal').classList.add('open');
+    }
+    function closeUnpublishModal() {
+        document.getElementById('unpublishModal').classList.remove('open');
+    }
+    function selectReason(idx) {
+        selectedReason = idx;
+        document.querySelectorAll('#unpublishModal .reason-radio').forEach((r, i) => {
+            r.classList.toggle('selected', i === idx);
+        });
+        document.getElementById('confirmUnpublishBtn').classList.add('visible');
+    }
+    function confirmUnpublish() {
+        if (selectedReason === -1) return;
+        sessionStorage.setItem('adArchived', '1');
+        window.location.href = 'my-ads-desktop.html?tab=archive';
+    }
 
     // Gallery
     if (adPhotos.length > 0) {
