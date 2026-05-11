@@ -9,10 +9,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; min-width: 1060px; color: #1A1A1A; }
 
-        /* ═══════════════ STICKY SHELL ═══════════════ */
+        /* ═══════════════ STICKY SHELL (top-bar + main-header only) ═══════════════ */
         .sticky-shell { position: sticky; top: 0; z-index: 100; background: #fff; }
 
-        /* ── TOP BAR (row 1) ── */
+        /* ── TOP BAR ── */
         .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
@@ -20,85 +20,58 @@
             justify-content: space-between; gap: 16px;
         }
         .tb-links { display: flex; align-items: center; gap: 20px; }
-        .tb-link {
-            display: flex; align-items: center; gap: 3px;
-            font-size: 15px; font-weight: 400; color: #1A1A1A;
-            cursor: default; white-space: nowrap;
-        }
+        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
         .tb-link img { filter: brightness(0); }
         .tb-actions { display: flex; align-items: center; gap: 16px; }
         .place-btn {
             display: inline-flex; align-items: center; gap: 6px;
             color: #1A1A1A; text-decoration: none;
-            font-size: 15px; font-weight: 400;
-            font-family: 'Inter', sans-serif; white-space: nowrap;
-            padding: 6px 12px; border-radius: 12px;
-            transition: background 0.15s;
+            font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
+            white-space: nowrap; padding: 6px 12px; border-radius: 12px; transition: background 0.15s;
         }
         .place-btn:hover { background: #F4F4F4; color: #1A1A1A; }
-        .tb-action {
-            display: flex; align-items: center; gap: 5px;
-            font-size: 15px; font-weight: 400; color: #1A1A1A;
-            cursor: default; white-space: nowrap;
-        }
+        .tb-action { display: flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
         .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
 
-        /* ── MAIN HEADER (row 2) ── */
+        /* ── MAIN HEADER ── */
         .main-header { background: #fff; padding: 10px 0 12px; }
-        .main-header-inner {
-            max-width: 1260px; margin: 0 auto; padding: 0 20px;
-            display: flex; align-items: center; gap: 12px;
-        }
+        .main-header-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 12px; }
         .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
         .logo img { height: 26px; width: auto; }
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
         .all-cat-btn {
             display: flex; align-items: center; gap: 7px;
-            background: #F4F4F4; border: none; color: #1A1A1A;
-            border-radius: 16px; padding: 9px 16px;
-            font-size: 15px; font-weight: 400;
+            background: #F4F4F4; border: none; color: #1A1A1A; border-radius: 16px;
+            padding: 9px 16px; font-size: 15px; font-weight: 400;
             font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
         }
         .all-cat-btn img { width: 20px; height: 20px; }
-        .search-field {
-            flex: 1; background: #F4F4F4; border-radius: 16px;
-            padding: 10px 14px; display: flex; align-items: center;
-        }
-        .search-input {
-            flex: 1; border: none; outline: none; background: transparent;
-            font-size: 15px; font-family: 'Inter', sans-serif;
-            font-weight: 400; color: #9E9E9E; pointer-events: none;
-        }
-        .find-btn {
-            background: #1A1A1A; color: #fff; border: none; border-radius: 8px;
-            padding: 10px 26px; font-size: 15px; font-weight: 400;
-            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
-        }
+        .search-field { flex: 1; background: #F4F4F4; border-radius: 16px; padding: 10px 14px; display: flex; align-items: center; }
+        .search-input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #9E9E9E; pointer-events: none; }
+        .find-btn { background: #1A1A1A; color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0; }
         .location-btn { display: flex; align-items: center; gap: 4px; cursor: default; white-space: nowrap; flex-shrink: 0; }
         .loc-text { display: flex; flex-direction: column; }
         .loc-city { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.2; }
         .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
 
-        /* ── PAGE NAV ── */
-        .page-nav { background: #fff; padding: 16px 0 18px; border-bottom: 1px solid #EBEBEB; }
-        .page-nav-inner {
-            max-width: 1260px; margin: 0 auto; padding: 0 20px;
-            display: flex; align-items: center; gap: 16px;
-        }
-        .back-btn {
+        /* ── FIXED BACK BUTTON ── */
+        #backBtn {
+            position: fixed; z-index: 200;
             width: 40px; height: 40px; border-radius: 50%;
             background: #fff; border: none;
             box-shadow: 0 1px 8px rgba(0,0,0,0.14);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; flex-shrink: 0;
-            text-decoration: none; color: #1A1A1A;
+            cursor: pointer; text-decoration: none; color: #1A1A1A;
             transition: box-shadow 0.15s;
         }
-        .back-btn:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
-        .page-nav-titles { display: flex; flex-direction: column; gap: 3px; }
+        #backBtn:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.20); }
+
+        /* ── PAGE TITLE (non-sticky, scrolls away) ── */
+        .page-section-title { padding: 24px 0 18px; }
+        .page-section-title-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; }
         .page-title-text { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
-        .breadcrumbs { font-size: 13px; font-weight: 400; color: #9E9E9E; }
+        .breadcrumbs { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 3px; }
 
         /* ═══════════════ FORM LAYOUT ═══════════════ */
         .form-outer { max-width: 1260px; margin: 0 auto; padding: 0 20px 80px; }
@@ -129,23 +102,20 @@
         /* ── CATEGORY CHIPS ── */
         .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
         .chip {
-            display: inline-flex; align-items: center;
-            background: #F2F1F0; color: #1A1A1A;
-            border-radius: 16px; padding: 11px 16px;
-            font-size: 15px; font-weight: 400; cursor: pointer;
-            white-space: nowrap; transition: background 0.15s, color 0.15s;
+            display: inline-flex; align-items: center; background: #F2F1F0; color: #1A1A1A;
+            border-radius: 16px; padding: 11px 16px; font-size: 15px; font-weight: 400;
+            cursor: pointer; white-space: nowrap; transition: background 0.15s, color 0.15s;
             border: none; font-family: 'Inter', sans-serif; user-select: none;
         }
         .chip:hover { background: #E5E4E3; }
         .chip.active { background: #1A1A1A; color: #fff; }
 
-        /* Category select (replaces chips after selection) */
+        /* Category select (replaces chips) */
         .cat-select-wrap { position: relative; }
         .cat-select-display {
             width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
-            padding: 14px 44px 14px 16px;
-            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400;
-            color: #1A1A1A; cursor: pointer;
+            padding: 14px 44px 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
+            font-weight: 400; color: #1A1A1A; cursor: pointer;
             display: flex; align-items: center; justify-content: space-between;
         }
         .cat-select-arrow { flex-shrink: 0; }
@@ -153,30 +123,23 @@
         /* ═══════════════ EXTRA SECTIONS ═══════════════ */
 
         /* ── COLLECTION ── */
-        .collection-head {
-            display: flex; align-items: flex-start;
-            justify-content: space-between; gap: 16px; margin-bottom: 28px;
-        }
+        .collection-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
         .collection-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
         .collection-subtitle { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 4px; }
         .change-btn {
-            background: #F2F1F0; border: none; border-radius: 16px;
-            padding: 14px 16px; font-size: 15px; font-weight: 400;
-            color: #1A1A1A; cursor: pointer; white-space: nowrap; flex-shrink: 0;
-            font-family: 'Inter', sans-serif; transition: background 0.15s;
+            background: #F2F1F0; border: none; border-radius: 16px; padding: 14px 16px;
+            font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: pointer;
+            white-space: nowrap; flex-shrink: 0; font-family: 'Inter', sans-serif; transition: background 0.15s;
         }
         .change-btn:hover { background: #E8E7E6; }
 
         /* Info banner */
         .info-banner {
             background: #F4F4F4; border-radius: 20px;
-            display: flex; align-items: stretch; gap: 0;
-            overflow: hidden; margin-bottom: 28px; position: relative; cursor: pointer;
+            display: flex; align-items: stretch; gap: 0; overflow: hidden;
+            margin-bottom: 28px; position: relative; cursor: pointer;
         }
-        .banner-illu-wrap {
-            width: 88px; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center; padding: 8px;
-        }
+        .banner-illu-wrap { width: 88px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; padding: 8px; }
         .banner-illu { width: 72px; height: 72px; object-fit: contain; display: block; }
         .banner-content { flex: 1; padding: 16px 48px 16px 4px; }
         .banner-title { font-size: 14px; font-weight: 800; color: #1A1A1A; margin-bottom: 4px; }
@@ -184,8 +147,7 @@
         .banner-link { font-size: 13px; font-weight: 400; color: #1A1A1A; text-decoration: underline; }
         .banner-close {
             position: absolute; top: 12px; right: 14px;
-            width: 20px; height: 20px; display: flex; align-items: center;
-            justify-content: center; cursor: pointer;
+            width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
         /* Donation list */
@@ -194,52 +156,22 @@
         .list-items { display: flex; flex-direction: column; }
         .list-item { padding: 11px 0; }
         .list-item-row { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .item-thumb {
-            width: 48px; height: 48px; border-radius: 16px;
-            object-fit: cover; flex-shrink: 0; background: #F4F4F4;
-        }
+        .item-thumb { width: 48px; height: 48px; border-radius: 16px; object-fit: cover; flex-shrink: 0; background: #F4F4F4; }
         .item-info { flex: 1; min-width: 0; }
         .item-name { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.3; }
         .item-count { font-size: 13px; font-weight: 400; color: #757575; margin-top: 2px; }
         .item-cb { width: 24px; height: 24px; flex-shrink: 0; }
 
-        /* Expanded category (qty + textarea + dropdown) */
+        /* Expanded */
         .cat-expanded { margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
-
-        /* Qty stepper */
-        .qty-row {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #F4F4F4; border-radius: 12px; padding: 0 8px; height: 50px;
-        }
-        .qty-btn {
-            background: none; border: none; font-size: 24px; font-weight: 300;
-            color: #1A1A1A; cursor: pointer; width: 44px; height: 44px;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Inter', sans-serif;
-        }
+        .qty-row { display: flex; align-items: center; justify-content: space-between; background: #F4F4F4; border-radius: 12px; padding: 0 8px; height: 50px; }
+        .qty-btn { background: none; border: none; font-size: 24px; font-weight: 300; color: #1A1A1A; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .qty-value { font-size: 17px; font-weight: 400; color: #1A1A1A; min-width: 32px; text-align: center; }
-
-        /* Comment textarea */
         .comment-wrap { position: relative; }
-        .comment-textarea {
-            width: 100%; min-height: 80px; background: #F4F4F4; border: none;
-            border-radius: 12px; padding: 12px 40px 12px 14px;
-            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
-            color: #1A1A1A; outline: none; resize: none; overflow: hidden;
-            line-height: 1.45; display: block;
-        }
+        .comment-textarea { width: 100%; min-height: 80px; background: #F4F4F4; border: none; border-radius: 12px; padding: 12px 40px 12px 14px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; color: #1A1A1A; outline: none; resize: none; overflow: hidden; line-height: 1.45; display: block; }
         .comment-textarea::placeholder { color: #9E9E9E; }
-        .comment-clear {
-            display: none; position: absolute; top: 12px; right: 12px;
-            background: none; border: none; cursor: pointer; padding: 0;
-        }
-
-        /* Dropdown (what to donate) */
         .dropdown { background: #F4F4F4; border-radius: 12px; overflow: hidden; }
-        .dropdown-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 16px; cursor: pointer;
-        }
+        .dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; }
         .dropdown-label { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .dropdown-chevron { transition: transform 0.2s; flex-shrink: 0; }
         .dropdown-chevron.rotated { transform: rotate(180deg); }
@@ -250,35 +182,29 @@
         .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
         .section-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 2px; margin-bottom: 16px; }
 
-        /* Photo uploader */
+        /* Photos */
+        .photos-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+        .selected-photo { width: 156px; height: 117px; object-fit: cover; border-radius: 16px; flex-shrink: 0; }
         .photo-uploader {
-            width: 156px; height: 117px; background: #F4F4F4;
-            border-radius: 16px; display: flex; align-items: center;
-            justify-content: center; cursor: default;
+            width: 156px; height: 117px; background: #F4F4F4; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0; transition: background 0.15s;
         }
+        .photo-uploader:hover { background: #EAEAEA; }
 
         /* Textarea */
         .textarea-field {
-            width: 100%; background: #F4F4F4; border: 2px solid transparent;
-            border-radius: 12px; padding: 14px 16px;
-            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400;
-            color: #1A1A1A; outline: none; resize: none; min-height: 126px;
-            transition: border-color 0.15s;
+            width: 100%; background: #F4F4F4; border: 2px solid transparent; border-radius: 12px;
+            padding: 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400;
+            color: #1A1A1A; outline: none; resize: none; min-height: 126px; transition: border-color 0.15s;
         }
         .textarea-field::placeholder { color: #9E9E9E; }
         .textarea-field:focus { border-color: #1A1A1A; background: #fff; }
 
         /* Location */
         .location-input-wrap { position: relative; margin-bottom: 8px; }
-        .location-input {
-            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
-            padding: 14px 44px 14px 16px; font-size: 15px;
-            font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; outline: none;
-        }
-        .input-clear {
-            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-            cursor: default; line-height: 1; background: none; border: none; padding: 2px;
-        }
+        .location-input { width: 100%; background: #F4F4F4; border: none; border-radius: 12px; padding: 14px 44px 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; outline: none; }
+        .input-clear { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: default; line-height: 1; background: none; border: none; padding: 2px; }
         .location-hint { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-bottom: 14px; }
         .map-box { width: 100%; height: 360px; border-radius: 16px; overflow: hidden; }
         .map-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -286,14 +212,8 @@
         /* Delivery */
         .delivery-desc { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.55; margin: 12px 0 20px; }
         .toggle-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
-        .toggle-switch {
-            width: 44px; height: 26px; background: #1A1A1A;
-            border-radius: 13px; position: relative; flex-shrink: 0; cursor: default; margin-top: 1px;
-        }
-        .toggle-switch::after {
-            content: ''; position: absolute; width: 20px; height: 20px;
-            background: #fff; border-radius: 50%; top: 3px; right: 3px;
-        }
+        .toggle-switch { width: 44px; height: 26px; background: #1A1A1A; border-radius: 13px; position: relative; flex-shrink: 0; cursor: default; margin-top: 1px; }
+        .toggle-switch::after { content: ''; position: absolute; width: 20px; height: 20px; background: #fff; border-radius: 50%; top: 3px; right: 3px; }
         .toggle-name { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.35; }
         .toggle-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 2px; }
 
@@ -303,76 +223,36 @@
         .contact-desc { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; margin-bottom: 14px; }
         .contact-desc u { cursor: default; }
         .phone-wrap { position: relative; }
-        .phone-input {
-            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
-            padding: 14px 44px 14px 16px; font-size: 15px;
-            font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; outline: none;
-        }
+        .phone-input { width: 100%; background: #F4F4F4; border: none; border-radius: 12px; padding: 14px 44px 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; outline: none; }
         .radio-group { display: flex; flex-direction: column; gap: 16px; }
         .radio-item { display: flex; align-items: center; gap: 12px; cursor: default; }
-        .radio-dot {
-            width: 22px; height: 22px; border-radius: 50%;
-            border: 2px solid #D9D9D9; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .radio-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #D9D9D9; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .radio-dot.active { border-color: #1A1A1A; }
         .radio-dot.active::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #1A1A1A; }
         .radio-label { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .select-wrap { position: relative; }
-        .select-field {
-            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
-            padding: 14px 44px 14px 16px; font-size: 15px;
-            font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A;
-            appearance: none; outline: none; cursor: default;
-        }
+        .select-field { width: 100%; background: #F4F4F4; border: none; border-radius: 12px; padding: 14px 44px 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; appearance: none; outline: none; cursor: default; }
         .select-chevron { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
 
         /* Footer */
         .form-footer { padding-top: 56px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-        .btn-primary {
-            background: #1A1A1A; color: #fff; border: none; border-radius: 16px;
-            padding: 15px 30px; font-size: 15px; font-weight: 400;
-            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
-        }
-        .btn-secondary {
-            background: #F4F4F4; color: #1A1A1A; border: none; border-radius: 16px;
-            padding: 15px 24px; font-size: 15px; font-weight: 400;
-            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
-        }
+        .btn-primary { background: #1A1A1A; color: #fff; border: none; border-radius: 16px; padding: 15px 30px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; }
+        .btn-secondary { background: #F4F4F4; color: #1A1A1A; border: none; border-radius: 16px; padding: 15px 24px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; }
         .legal-text { font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.55; }
         .legal-text a { color: #9E9E9E; text-decoration: underline; cursor: default; }
 
         /* ═══════════════ MODALS ═══════════════ */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-            z-index: 500; display: none; align-items: center; justify-content: center;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 500; display: none; align-items: center; justify-content: center; }
         .modal-overlay.open { display: flex; }
-        .modal-card {
-            background: #fff; border-radius: 20px; padding: 32px;
-            width: 520px; max-height: 90vh; overflow-y: auto; position: relative;
-        }
-        .modal-close {
-            position: absolute; top: 16px; right: 16px; background: none;
-            border: none; cursor: pointer; padding: 4px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .modal-card { background: #fff; border-radius: 20px; padding: 32px; width: 520px; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; }
         .modal-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.2; margin-bottom: 20px; padding-right: 32px; }
 
         /* How-it-works tabs */
-        .modal-tabs { display: flex; border-bottom: 1px solid #EBEBEB; margin-bottom: 24px; gap: 0; }
-        .modal-tab {
-            padding: 0 0 10px; margin-right: 24px;
-            font-size: 15px; font-weight: 400; color: #9E9E9E;
-            background: none; border: none; cursor: pointer;
-            position: relative; white-space: nowrap;
-            font-family: 'Inter', sans-serif;
-        }
+        .modal-tabs { display: flex; border-bottom: 1px solid #EBEBEB; margin-bottom: 24px; }
+        .modal-tab { padding: 0 0 10px; margin-right: 24px; font-size: 15px; font-weight: 400; color: #9E9E9E; background: none; border: none; cursor: pointer; position: relative; white-space: nowrap; font-family: 'Inter', sans-serif; }
         .modal-tab.active { color: #1A1A1A; font-weight: 700; }
-        .modal-tab.active::after {
-            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
-            height: 2px; background: #1A1A1A; border-radius: 2px 2px 0 0;
-        }
+        .modal-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #1A1A1A; border-radius: 2px 2px 0 0; }
         .modal-pane { display: none; }
         .modal-pane.active { display: block; }
         .modal-step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
@@ -382,36 +262,35 @@
 
         /* Change collection popup */
         .modal-desc { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; margin-bottom: 20px; }
-        .collection-option {
-            display: flex; align-items: center; gap: 12px;
-            padding: 14px 0; cursor: pointer; border-bottom: 1px solid #F4F4F4;
-        }
-        .collection-option:last-of-type { border-bottom: none; }
+        .collection-option { display: flex; align-items: center; gap: 12px; padding: 14px 0; cursor: pointer; }
         .coll-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
         .coll-info { flex: 1; min-width: 0; }
         .coll-name { font-size: 15px; font-weight: 500; color: #1A1A1A; }
         .coll-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 2px; line-height: 1.3; }
         .coll-radio { width: 24px; height: 24px; flex-shrink: 0; }
-        .modal-btn-primary {
-            display: block; width: 100%; background: #1A1A1A; color: #fff;
-            border: none; border-radius: 16px; padding: 16px;
-            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
-            cursor: pointer; margin-top: 16px; text-align: center;
-        }
-        .modal-btn-secondary {
-            display: block; width: 100%; background: #F4F4F4; color: #1A1A1A;
-            border: none; border-radius: 16px; padding: 16px;
-            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
-            cursor: pointer; margin-top: 10px; text-align: center;
-        }
-        .confirm-text { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; margin-bottom: 0; }
+        .modal-btn-primary { display: block; width: 100%; background: #1A1A1A; color: #fff; border: none; border-radius: 16px; padding: 16px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; cursor: pointer; margin-top: 16px; text-align: center; }
+        .modal-btn-secondary { display: block; width: 100%; background: #F4F4F4; color: #1A1A1A; border: none; border-radius: 16px; padding: 16px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; cursor: pointer; margin-top: 10px; text-align: center; }
+        .confirm-text { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.5; }
+
+        /* Photo picker modal */
+        .photo-modal-card { width: 440px; padding: 24px; }
+        .photo-modal-card .modal-title { font-size: 20px; }
+        .photo-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 16px; max-height: 480px; overflow-y: auto; }
+        .photo-pick-item { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 12px; cursor: pointer; }
+        .photo-pick-item.selected::after { content: ''; position: absolute; inset: 0; border: 3px solid #1A1A1A; border-radius: 12px; pointer-events: none; }
+        .photo-pick-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .photo-pick-badge { position: absolute; top: 6px; left: 6px; width: 24px; height: 24px; border-radius: 50%; background: #1A1A1A; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
+        .photo-pick-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F4F4F4; }
+        .photo-pick-count { display: flex; align-items: center; gap: 10px; min-height: 40px; }
+        #photoPickThumb { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+        #photoPickCountText { font-size: 15px; font-weight: 400; color: #1A1A1A; }
+        .photo-pick-done { background: #1A1A1A; color: #fff; border: none; border-radius: 12px; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; cursor: pointer; white-space: nowrap; }
     </style>
 </head>
 <body>
 
 <!-- ═══════════════ STICKY SHELL ═══════════════ -->
 <div class="sticky-shell">
-
     <!-- TOP BAR -->
     <div class="top-bar">
         <div class="top-bar-inner">
@@ -424,7 +303,7 @@
                 <span class="tb-link">Ещё <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
             </div>
             <div class="tb-actions">
-                <a href="new-ad-desktop.html" class="place-btn">
+                <a href="category-choose-desktop.html" class="place-btn">
                     <img src="desktop-header/Add.svg" width="16" height="16" alt="">
                     Разместить объявление
                 </a>
@@ -440,13 +319,10 @@
             </div>
         </div>
     </div>
-
     <!-- MAIN HEADER -->
     <header class="main-header">
         <div class="main-header-inner">
-            <div class="logo">
-                <img src="desktop-header/Logotype Extension.svg" alt="Авито">
-            </div>
+            <div class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></div>
             <div class="search-area">
                 <button class="all-cat-btn">
                     <img src="desktop-header/Category.svg" alt="">
@@ -465,31 +341,29 @@
             </div>
         </div>
     </header>
-
-    <!-- PAGE NAV -->
-    <div class="page-nav">
-        <div class="page-nav-inner">
-            <a href="main-desktop.html" class="back-btn">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M10 3L5 8L10 13" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-            <div class="page-nav-titles">
-                <span class="page-title-text">Новое объявление</span>
-                <div class="breadcrumbs" id="breadcrumbs">Личные вещи</div>
-            </div>
-        </div>
-    </div>
-
 </div><!-- /sticky-shell -->
 
+<!-- ── FIXED BACK BUTTON (always visible on scroll) ── -->
+<a href="category-choose-desktop.html" class="back-btn" id="backBtn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8L10 13" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+</a>
+
+<!-- ── PAGE TITLE (non-sticky, scrolls with page) ── -->
+<div class="page-section-title">
+    <div class="page-section-title-inner">
+        <h1 class="page-title-text">Новое объявление</h1>
+        <div class="breadcrumbs" id="breadcrumbs">Личные вещи</div>
+    </div>
+</div>
 
 <!-- ═══════════════ FORM CONTENT ═══════════════ -->
 <div class="form-outer">
     <div class="form-inner">
 
         <!-- 1 · TITLE -->
-        <div class="form-section">
+        <div class="form-section" style="padding-top:0">
             <div class="field-label">Название объявления</div>
             <input type="text" class="text-input" id="titleInput" autocomplete="off" placeholder="">
             <div class="suggests" id="suggests" style="display:none"></div>
@@ -498,16 +372,12 @@
         <!-- 2 · CATEGORIES -->
         <div class="form-section" id="sectionCats" style="display:none">
             <div class="field-label">Категория</div>
-
-            <!-- Chips (hidden after selection) -->
             <div class="chips-wrap" id="chipsWrap">
                 <span class="chip" onclick="selectCat(this,'tshirts','Футболки и майки')">Футболки и майки</span>
                 <span class="chip" onclick="selectCat(this,'homewear','Домашняя одежда')">Домашняя одежда</span>
                 <span class="chip" onclick="selectCat(this,'suits','Пиджаки и костюмы')">Пиджаки и костюмы</span>
                 <span class="chip" onclick="selectCat(this,'charity','Благотворительные товары ❤️')">Благотворительные товары ❤️</span>
             </div>
-
-            <!-- Select (shown after chip selected) -->
             <div class="cat-select-wrap" id="catSelectWrap" style="display:none">
                 <div class="cat-select-display" onclick="resetCat()">
                     <span id="catSelectValue"></span>
@@ -532,7 +402,7 @@
                 </div>
 
                 <!-- Info banner -->
-                <div class="info-banner" onclick="openHowPopup()">
+                <div class="info-banner" id="infoBanner" onclick="openHowPopup()">
                     <div class="banner-illu-wrap">
                         <img src="new-ad-desktop/banner-illu.png" class="banner-illu" alt="">
                     </div>
@@ -541,7 +411,7 @@
                         <div class="banner-desc">Кто заберёт вещи и что делать после размещения объявления</div>
                         <span class="banner-link">Узнать подробнее</span>
                     </div>
-                    <div class="banner-close" onclick="event.stopPropagation()">
+                    <div class="banner-close" onclick="dismissBanner(event)">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path d="M1 1L11 11M11 1L1 11" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
@@ -557,12 +427,14 @@
             <!-- PHOTOS -->
             <div class="form-section">
                 <div class="section-title">Фотографии</div>
-                <div class="section-sub" style="color:#1A1A1A;">Не более 40</div>
-                <div class="photo-uploader">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="12" cy="13" r="4" stroke="#1A1A1A" stroke-width="1.6"/>
-                    </svg>
+                <div class="section-sub">Не более 40</div>
+                <div class="photos-wrap" id="photoWrap">
+                    <div class="photo-uploader" id="photoUploader" onclick="openPhotoModal()">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="13" r="4" stroke="#1A1A1A" stroke-width="1.6"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
 
@@ -570,7 +442,7 @@
             <div class="form-section">
                 <div class="section-title">Описание товаров</div>
                 <div style="height:14px"></div>
-                <textarea class="textarea-field" placeholder="Введите текст"></textarea>
+                <textarea class="textarea-field" id="descTextarea" placeholder="Введите текст"></textarea>
             </div>
 
             <!-- LOCATION -->
@@ -597,17 +469,11 @@
                 <div class="delivery-desc">Выберите, как покупатели смогут заказать ваш товар. Это бесплатно и безопасно: вам не нужно платить за отправку, а если с посылкой что-то случится в пути, мы возместим ущерб.</div>
                 <div class="toggle-row">
                     <div class="toggle-switch"></div>
-                    <div>
-                        <div class="toggle-name">В постамат</div>
-                        <div class="toggle-sub">5Post</div>
-                    </div>
+                    <div><div class="toggle-name">В постамат</div><div class="toggle-sub">5Post</div></div>
                 </div>
                 <div class="toggle-row">
                     <div class="toggle-switch"></div>
-                    <div>
-                        <div class="toggle-name">В пункт выдачи</div>
-                        <div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div>
-                    </div>
+                    <div><div class="toggle-name">В пункт выдачи</div><div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div></div>
                 </div>
             </div>
 
@@ -617,9 +483,7 @@
                 <div style="height:28px"></div>
                 <div class="contact-group">
                     <div class="contact-group-title">Телефон</div>
-                    <div class="contact-desc">
-                        Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <u>Подробнее</u>
-                    </div>
+                    <div class="contact-desc">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <u>Подробнее</u></div>
                     <div class="phone-wrap">
                         <input type="text" class="phone-input" value="8 200 614-53-63" readonly>
                         <button class="input-clear" style="right:12px;top:50%;transform:translateY(-50%);position:absolute;">
@@ -649,7 +513,7 @@
                 </div>
             </div>
 
-            <!-- FOOTER BUTTONS -->
+            <!-- FOOTER -->
             <div class="form-footer">
                 <button class="btn-primary">Разместить объявление</button>
                 <button class="btn-secondary">Сохранить и выйти</button>
@@ -665,7 +529,7 @@
 
 
 <!-- ═══════════════ POPUP: КАК ЭТО РАБОТАЕТ ═══════════════ -->
-<div class="modal-overlay" id="howPopup" onclick="closeHowPopup(event)">
+<div class="modal-overlay" id="howPopup">
     <div class="modal-card" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeHowPopup()">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -678,38 +542,20 @@
             <button class="modal-tab" id="htab-benefits" onclick="switchHowTab('benefits')">Преимущества</button>
         </div>
         <div class="modal-pane active" id="hpane-how">
-            <div class="modal-step">
-                <img src="sheets materials/1.png" width="64" height="64" alt="">
-                <div><div class="modal-step-title">Разместите бесплатное объявление</div><div class="modal-step-sub">Выберите категории вещей, которые нужны фондам</div></div>
-            </div>
-            <div class="modal-step">
-                <img src="sheets materials/2.png" width="64" height="64" alt="">
-                <div><div class="modal-step-title">Фонд напишет вам в чате</div><div class="modal-step-sub">Обычно это занимает несколько дней</div></div>
-            </div>
-            <div class="modal-step">
-                <img src="sheets materials/3.png" width="64" height="64" alt="">
-                <div><div class="modal-step-title">Передайте вещи Авито Доставкой</div><div class="modal-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div></div>
-            </div>
+            <div class="modal-step"><img src="sheets materials/1.png" width="64" height="64" alt=""><div><div class="modal-step-title">Разместите бесплатное объявление</div><div class="modal-step-sub">Выберите категории вещей, которые нужны фондам</div></div></div>
+            <div class="modal-step"><img src="sheets materials/2.png" width="64" height="64" alt=""><div><div class="modal-step-title">Фонд напишет вам в чате</div><div class="modal-step-sub">Обычно это занимает несколько дней</div></div></div>
+            <div class="modal-step"><img src="sheets materials/3.png" width="64" height="64" alt=""><div><div class="modal-step-title">Передайте вещи Авито Доставкой</div><div class="modal-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div></div></div>
         </div>
         <div class="modal-pane" id="hpane-benefits">
-            <div class="modal-step">
-                <img src="sheets materials/4.png" width="64" height="64" alt="">
-                <div><div class="modal-step-title">Пишут только проверенные фонды</div><div class="modal-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div></div>
-            </div>
-            <div class="modal-step">
-                <img src="sheets materials/5.png" width="64" height="64" alt="">
-                <div><div class="modal-step-title">Передайте нужные вещи</div><div class="modal-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div></div>
-            </div>
-            <div class="modal-step">
-                <img src="sheets materials/6.png" width="64" height="64" alt="">
-                <div><div class="modal-step-title">Без затрат на размещение и доставку</div><div class="modal-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div></div>
-            </div>
+            <div class="modal-step"><img src="sheets materials/4.png" width="64" height="64" alt=""><div><div class="modal-step-title">Пишут только проверенные фонды</div><div class="modal-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div></div></div>
+            <div class="modal-step"><img src="sheets materials/5.png" width="64" height="64" alt=""><div><div class="modal-step-title">Передайте нужные вещи</div><div class="modal-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div></div></div>
+            <div class="modal-step"><img src="sheets materials/6.png" width="64" height="64" alt=""><div><div class="modal-step-title">Без затрат на размещение и доставку</div><div class="modal-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div></div></div>
         </div>
     </div>
 </div>
 
 <!-- ═══════════════ POPUP: ИЗМЕНИТЬ СБОР ═══════════════ -->
-<div class="modal-overlay" id="changeCollPopup" onclick="closeChangeCollPopup(event)">
+<div class="modal-overlay" id="changeCollPopup">
     <div class="modal-card" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeChangeCollPopup()">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -720,18 +566,12 @@
         <p class="modal-desc">Сейчас в Авито запущено несколько активных сборов. Вы можете выбрать тот, в котором захотите поучаствовать.</p>
         <div class="collection-option" onclick="selectCollectionOption('family')">
             <img src="crisis help/сбор 1.png" class="coll-img" alt="">
-            <div class="coll-info">
-                <div class="coll-name">Помощь семьям</div>
-                <div class="coll-sub">Собираем вещи на помощь малообеспеченным многодетным семьям</div>
-            </div>
+            <div class="coll-info"><div class="coll-name">Помощь семьям</div><div class="coll-sub">Собираем вещи на помощь малообеспеченным многодетным семьям</div></div>
             <img src="crisis help/Radio on.png" class="coll-radio" id="coll-radio-family" alt="">
         </div>
         <div class="collection-option" onclick="selectCollectionOption('crisis')">
             <img src="crisis help/сбор 2.png" class="coll-img" alt="">
-            <div class="coll-info">
-                <div class="coll-name">Помощь в Дагестане ❤️</div>
-                <div class="coll-sub">Собираем вещи в помощь людям, пострадавшим от паводков</div>
-            </div>
+            <div class="coll-info"><div class="coll-name">Помощь в Дагестане ❤️</div><div class="coll-sub">Собираем вещи в помощь людям, пострадавшим от паводков</div></div>
             <img src="crisis help/Radio off.png" class="coll-radio" id="coll-radio-crisis" alt="">
         </div>
         <button class="modal-btn-primary" onclick="confirmCollectionChoice()">Выбрать</button>
@@ -739,7 +579,7 @@
 </div>
 
 <!-- ═══════════════ POPUP: ПОДТВЕРЖДЕНИЕ СМЕНЫ СБОРА ═══════════════ -->
-<div class="modal-overlay" id="confirmSwitchPopup" onclick="closeConfirmSwitch(event)">
+<div class="modal-overlay" id="confirmSwitchPopup">
     <div class="modal-card" onclick="event.stopPropagation()" style="width:440px">
         <button class="modal-close" onclick="closeConfirmSwitch()">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -753,14 +593,32 @@
     </div>
 </div>
 
+<!-- ═══════════════ POPUP: ВЫБОР ФОТОГРАФИЙ ═══════════════ -->
+<div class="modal-overlay" id="photoModal">
+    <div class="modal-card photo-modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closePhotoModal()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 4L16 16M16 4L4 16" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <h2 class="modal-title">Выберите фотографии</h2>
+        <div class="photo-pick-grid" id="photoPickGrid"></div>
+        <div class="photo-pick-footer">
+            <div class="photo-pick-count">
+                <img id="photoPickThumb" src="" style="display:none" alt="">
+                <span id="photoPickCountText"></span>
+            </div>
+            <button class="photo-pick-done" onclick="confirmPhotos()">Готово</button>
+        </div>
+    </div>
+</div>
+
 
 <script>
     /* ═══════════ DATA ═══════════ */
     const COLLECTIONS = {
         family: {
-            id: 'family',
-            title: 'Сбор "Помощь семьям"',
-            subtitle: 'Собираем вещи на помощь многодетным семьям',
+            id: 'family', title: 'Сбор "Помощь семьям"', subtitle: 'Собираем вещи на помощь многодетным семьям',
             categories: [
                 { id: 'kids-clothes', name: 'Детская одежда и обувь', subtitle: 'Осталось собрать 5 штук',
                   image: 'step 6 materials/Детская одежда и обувь.png',
@@ -777,37 +635,17 @@
             ]
         },
         crisis: {
-            id: 'crisis',
-            title: 'Помощь в Дагестане ❤️',
-            subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+            id: 'crisis', title: 'Помощь в Дагестане ❤️', subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
             categories: [
-                { id: 'clothes', name: 'Одежда', subtitle: 'Для взрослых и детей',
-                  image: 'crisis help/cat 1.png',
-                  what: '— Тёплая/демисезонная одежда и обувь;\n— Повседневная одежда для взрослых и детей;\n— Новое нижнее бельё.' },
-                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Товары первой необходимости',
-                  image: 'crisis help/cat 2.png',
-                  what: '— Зубная щётка и паста;\n— Шампунь, гель для душа;\n— Мыло, порошок стиральный;\n— Антисептик, маски;\n— Влажные салфетки;\n— Туалетная бумага;\n— Предметы женской гигиены.' },
-                { id: 'home', name: 'Домашняя утварь', subtitle: 'Только новые предметы',
-                  image: 'crisis help/cat 3.png',
-                  what: '— Столовые приборы;\n— Посуда (тарелка, кружка);\n— Кастрюля от 3 л.;\n— Полотенца;\n— Постельное бельё;\n— Одеяло;\n— Подушка.' },
-                { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Гигиена, игрушки, канцелярия',
-                  image: 'crisis help/cat 4.png',
-                  what: '— Детская гигиена (подгузники, пелёнки);\n— Детские игрушки;\n— Канцелярские принадлежности.' },
-                { id: 'appliances', name: 'Рабочая техника', subtitle: 'В хорошем состоянии',
-                  image: 'crisis help/cat 5.png',
-                  what: '— Микроволновки;\n— Чайники;\n— Утюги.' },
-                { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Для маломобильных граждан',
-                  image: 'crisis help/cat 6.png',
-                  what: '— Подгузники взрослые (большие размеры).' },
-                { id: 'water', name: 'Откачка воды и осушение', subtitle: 'Ликвидация последствий',
-                  image: 'crisis help/cat 7.png',
-                  what: '— Помпа для откачки воды;\n— Пушка для сушки;\n— Напорные пожарные рукава.' },
-                { id: 'tools', name: 'Инструменты для расчистки', subtitle: 'Ручной и моторизованный',
-                  image: 'crisis help/cat 8.png',
-                  what: '— Лопаты штыковые;\n— Лопаты шуфельные;\n— Бензиновые пилы.' },
-                { id: 'protection', name: 'Средства защиты и спецодежда', subtitle: 'Для волонтёров',
-                  image: 'crisis help/cat 9.png',
-                  what: '— Спецодежда для волонтёров;\n— Резиновые сапоги;\n— Защитные каски.' }
+                { id: 'clothes', name: 'Одежда', subtitle: 'Для взрослых и детей', image: 'crisis help/cat 1.png', what: '— Тёплая/демисезонная одежда и обувь;\n— Повседневная одежда для взрослых и детей;\n— Новое нижнее бельё.' },
+                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Товары первой необходимости', image: 'crisis help/cat 2.png', what: '— Зубная щётка и паста;\n— Шампунь, гель для душа;\n— Мыло, порошок стиральный;\n— Антисептик, маски;\n— Влажные салфетки;\n— Туалетная бумага;\n— Предметы женской гигиены.' },
+                { id: 'home', name: 'Домашняя утварь', subtitle: 'Только новые предметы', image: 'crisis help/cat 3.png', what: '— Столовые приборы;\n— Посуда (тарелка, кружка);\n— Кастрюля от 3 л.;\n— Полотенца;\n— Постельное бельё;\n— Одеяло;\n— Подушка.' },
+                { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Гигиена, игрушки, канцелярия', image: 'crisis help/cat 4.png', what: '— Детская гигиена (подгузники, пелёнки);\n— Детские игрушки;\n— Канцелярские принадлежности.' },
+                { id: 'appliances', name: 'Рабочая техника', subtitle: 'В хорошем состоянии', image: 'crisis help/cat 5.png', what: '— Микроволновки;\n— Чайники;\n— Утюги.' },
+                { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Для маломобильных граждан', image: 'crisis help/cat 6.png', what: '— Подгузники взрослые (большие размеры).' },
+                { id: 'water', name: 'Откачка воды и осушение', subtitle: 'Ликвидация последствий', image: 'crisis help/cat 7.png', what: '— Помпа для откачки воды;\n— Пушка для сушки;\n— Напорные пожарные рукава.' },
+                { id: 'tools', name: 'Инструменты для расчистки', subtitle: 'Ручной и моторизованный', image: 'crisis help/cat 8.png', what: '— Лопаты штыковые;\n— Лопаты шуфельные;\n— Бензиновые пилы.' },
+                { id: 'protection', name: 'Средства защиты и спецодежда', subtitle: 'Для волонтёров', image: 'crisis help/cat 9.png', what: '— Спецодежда для волонтёров;\n— Резиновые сапоги;\n— Защитные каски.' }
             ]
         }
     };
@@ -823,7 +661,21 @@
 
     let currentCollection = 'family';
     let selectedCollectionInPopup = 'family';
-    let catState = {}; // per category: { selected, quantity, comment, dropdownOpen }
+    let catState = {};
+    let bannerDismissed = false;
+
+    /* ═══════════ BACK BUTTON POSITIONING ═══════════ */
+    function positionBackBtn() {
+        const shell = document.querySelector('.sticky-shell');
+        const formOuter = document.querySelector('.form-outer');
+        const btn = document.getElementById('backBtn');
+        const shellH = shell.offsetHeight;
+        const foLeft = formOuter.getBoundingClientRect().left;
+        btn.style.top = (shellH + 16) + 'px';
+        btn.style.left = Math.max(8, foLeft + 20 - 52) + 'px';
+    }
+    window.addEventListener('load', positionBackBtn);
+    window.addEventListener('resize', positionBackBtn);
 
     /* ═══════════ TITLE + SUGGESTS ═══════════ */
     const titleInput = document.getElementById('titleInput');
@@ -831,6 +683,7 @@
     const sectionCats = document.getElementById('sectionCats');
     const extraSections = document.getElementById('extraSections');
     const breadcrumbs = document.getElementById('breadcrumbs');
+    const descTextarea = document.getElementById('descTextarea');
 
     titleInput.addEventListener('input', function () {
         const v = this.value.trim();
@@ -847,15 +700,11 @@
     function renderSuggests(text) {
         const lower = text.toLowerCase();
         const boosted = new Set();
-        SUGGEST_RULES.forEach(r => {
-            if (r.match.some(kw => lower.includes(kw))) r.suggest.forEach(s => boosted.add(s));
-        });
+        SUGGEST_RULES.forEach(r => { if (r.match.some(kw => lower.includes(kw))) r.suggest.forEach(s => boosted.add(s)); });
         const base = SUGGESTS.filter(s => !lower.includes(s.toLowerCase()));
         const all = [...boosted, ...base.filter(s => !boosted.has(s))].slice(0, 5);
         if (all.length === 0) { suggestsEl.style.display = 'none'; return; }
-        suggestsEl.innerHTML = all.map(s =>
-            `<button class="suggest-chip" onclick="applySuggest('${s}')">${s}</button>`
-        ).join('');
+        suggestsEl.innerHTML = all.map(s => `<button class="suggest-chip" onclick="applySuggest('${s}')">${s}</button>`).join('');
         suggestsEl.style.display = 'flex';
     }
 
@@ -871,11 +720,9 @@
 
     function selectCat(el, id, label) {
         selectedCatId = id;
-        // Hide chips, show select
         document.getElementById('chipsWrap').style.display = 'none';
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = label;
-
         if (id === 'charity') {
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
             extraSections.style.display = 'block';
@@ -902,6 +749,7 @@
         document.getElementById('collectionSubtitle').textContent = coll.subtitle;
         catState = {};
         renderDonationList();
+        updateDescription();
     }
 
     function renderDonationList() {
@@ -914,7 +762,6 @@
             const item = document.createElement('div');
             item.className = 'list-item';
             item.id = 'item-' + cat.id;
-
             const cbSrc = s.selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png';
             item.innerHTML = `
                 <div class="list-item-row" onclick="toggleDonation('${cat.id}')">
@@ -928,8 +775,6 @@
                 ${s.selected ? renderExpanded(cat, s) : ''}
             `;
             list.appendChild(item);
-
-            // Bind textarea auto-resize
             if (s.selected) {
                 const ta = item.querySelector('.comment-textarea');
                 if (ta) {
@@ -938,6 +783,7 @@
                         s.comment = this.value;
                         this.style.height = 'auto';
                         this.style.height = this.scrollHeight + 'px';
+                        updateDescription();
                     });
                     if (s.comment) { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
                 }
@@ -972,11 +818,10 @@
     }
 
     function toggleDonation(id) {
-        const coll = COLLECTIONS[currentCollection];
-        const cat = coll.categories.find(c => c.id === id);
         if (!catState[id]) catState[id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false };
         catState[id].selected = !catState[id].selected;
         renderDonationList();
+        updateDescription();
     }
 
     function changeQty(id, delta, e) {
@@ -985,6 +830,7 @@
         catState[id].quantity = Math.max(1, (catState[id].quantity || 1) + delta);
         const el = document.getElementById('qty-' + id);
         if (el) el.textContent = catState[id].quantity;
+        updateDescription();
     }
 
     function toggleDropdown(id, e) {
@@ -997,17 +843,38 @@
         if (chevron) chevron.classList.toggle('rotated');
     }
 
+    /* ═══════════ DESCRIPTION AUTO-FILL ═══════════ */
+    function updateDescription() {
+        if (!descTextarea) return;
+        const coll = COLLECTIONS[currentCollection];
+        const lines = [];
+        coll.categories.forEach(cat => {
+            const s = catState[cat.id];
+            if (!s || !s.selected) return;
+            let line = cat.name + ', ' + s.quantity + ' шт.';
+            if (s.comment && s.comment.trim()) line += '\n' + s.comment.trim();
+            lines.push(line);
+        });
+        descTextarea.value = lines.join('\n\n');
+        descTextarea.style.height = 'auto';
+        descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
+    }
+
+    /* ═══════════ BANNER DISMISS ═══════════ */
+    function dismissBanner(e) {
+        e.stopPropagation();
+        bannerDismissed = true;
+        document.getElementById('infoBanner').style.display = 'none';
+    }
+
     /* ═══════════ HOW POPUP ═══════════ */
     function openHowPopup() {
         document.getElementById('howPopup').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
-    function closeHowPopup(e) {
-        if (e && e.target !== document.getElementById('howPopup') && e.type !== 'click') return;
-        if (e && e.currentTarget === e.target || !e) {
-            document.getElementById('howPopup').classList.remove('open');
-            document.body.style.overflow = '';
-        }
+    function closeHowPopup() {
+        document.getElementById('howPopup').classList.remove('open');
+        document.body.style.overflow = '';
     }
     function switchHowTab(tab) {
         document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
@@ -1023,11 +890,9 @@
         document.getElementById('changeCollPopup').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
-    function closeChangeCollPopup(e) {
-        if (!e || e.currentTarget === e.target) {
-            document.getElementById('changeCollPopup').classList.remove('open');
-            document.body.style.overflow = '';
-        }
+    function closeChangeCollPopup() {
+        document.getElementById('changeCollPopup').classList.remove('open');
+        document.body.style.overflow = '';
     }
     function selectCollectionOption(id) {
         selectedCollectionInPopup = id;
@@ -1038,43 +903,97 @@
         document.getElementById('coll-radio-crisis').src = selectedCollectionInPopup === 'crisis' ? 'crisis help/Radio on.png' : 'crisis help/Radio off.png';
     }
     function confirmCollectionChoice() {
-        if (selectedCollectionInPopup === currentCollection) {
-            closeChangeCollPopup();
-            return;
-        }
+        if (selectedCollectionInPopup === currentCollection) { closeChangeCollPopup(); return; }
         closeChangeCollPopup();
         document.getElementById('confirmSwitchPopup').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
 
     /* ═══════════ CONFIRM SWITCH ═══════════ */
-    function closeConfirmSwitch(e) {
-        if (!e || e.currentTarget === e.target) {
-            document.getElementById('confirmSwitchPopup').classList.remove('open');
-            document.body.style.overflow = '';
-        }
+    function closeConfirmSwitch() {
+        document.getElementById('confirmSwitchPopup').classList.remove('open');
+        document.body.style.overflow = '';
     }
     function applyCollectionSwitch() {
         currentCollection = selectedCollectionInPopup;
         document.getElementById('confirmSwitchPopup').classList.remove('open');
         document.body.style.overflow = '';
         renderCollection();
-        // Update breadcrumbs
-        if (currentCollection === 'crisis') {
-            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
-        }
     }
 
-    /* ═══════════ OVERLAY CLOSE ═══════════ */
-    document.getElementById('howPopup').addEventListener('click', function(e) {
-        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+    /* ═══════════ OVERLAY CLICK CLOSE ═══════════ */
+    ['howPopup','changeCollPopup','confirmSwitchPopup','photoModal'].forEach(id => {
+        document.getElementById(id).addEventListener('click', function(e) {
+            if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+        });
     });
-    document.getElementById('changeCollPopup').addEventListener('click', function(e) {
-        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
-    });
-    document.getElementById('confirmSwitchPopup').addEventListener('click', function(e) {
-        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
-    });
+
+    /* ═══════════ PHOTO PICKER ═══════════ */
+    const DESKTOP_PHOTOS = [
+        'desktop photos/pic 1.png','desktop photos/pic 2.png','desktop photos/pic 3.png',
+        'desktop photos/pic 4.png','desktop photos/pic 5.png','desktop photos/pic 6.png',
+        'desktop photos/pic 7.png','desktop photos/pic 8.png','desktop photos/pic 9.png',
+        'desktop photos/pic 10.png'
+    ];
+    let photoSelection = [];
+
+    function openPhotoModal() {
+        renderPhotoPickGrid();
+        document.getElementById('photoModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closePhotoModal() {
+        document.getElementById('photoModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    function renderPhotoPickGrid() {
+        const grid = document.getElementById('photoPickGrid');
+        grid.innerHTML = DESKTOP_PHOTOS.map(src => {
+            const selIdx = photoSelection.indexOf(src);
+            const selected = selIdx !== -1;
+            const safeId = src.replace(/[^a-z0-9]/gi, '_');
+            return `<div class="photo-pick-item ${selected ? 'selected' : ''}" onclick="togglePhotoSel('${src}')">
+                <img src="${src}" class="photo-pick-img" alt="">
+                ${selected ? `<div class="photo-pick-badge">${selIdx + 1}</div>` : ''}
+            </div>`;
+        }).join('');
+        updatePhotoFooter();
+    }
+    function togglePhotoSel(src) {
+        const idx = photoSelection.indexOf(src);
+        if (idx !== -1) photoSelection.splice(idx, 1);
+        else photoSelection.push(src);
+        renderPhotoPickGrid();
+    }
+    function updatePhotoFooter() {
+        const thumb = document.getElementById('photoPickThumb');
+        const countText = document.getElementById('photoPickCountText');
+        if (photoSelection.length > 0) {
+            thumb.src = photoSelection[0];
+            thumb.style.display = 'block';
+            countText.textContent = photoSelection.length + ' фото';
+        } else {
+            thumb.style.display = 'none';
+            countText.textContent = '';
+        }
+    }
+    function confirmPhotos() {
+        document.getElementById('photoModal').classList.remove('open');
+        document.body.style.overflow = '';
+        renderSelectedPhotos();
+    }
+    function renderSelectedPhotos() {
+        const wrap = document.getElementById('photoWrap');
+        const uploader = document.getElementById('photoUploader');
+        wrap.innerHTML = '';
+        photoSelection.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'selected-photo';
+            wrap.appendChild(img);
+        });
+        wrap.appendChild(uploader);
+    }
 </script>
 
 </body>

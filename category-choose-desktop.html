@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новое объявление — Авито</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #fff; min-width: 1060px; color: #1A1A1A; }
+
+        /* ── TOP BAR ── */
+        .sticky-shell { position: sticky; top: 0; z-index: 100; background: #fff; }
+        .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .top-bar-inner {
+            max-width: 1260px; margin: 0 auto; padding: 0 20px;
+            height: 42px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        }
+        .tb-links { display: flex; align-items: center; gap: 20px; }
+        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .tb-link img { filter: brightness(0); }
+        .tb-actions { display: flex; align-items: center; gap: 16px; }
+        .place-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #1A1A1A; text-decoration: none;
+            font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
+            white-space: nowrap; padding: 6px 12px; border-radius: 12px; transition: background 0.15s;
+        }
+        .place-btn:hover { background: #F4F4F4; color: #1A1A1A; }
+        .tb-action { display: flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
+        .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
+
+        /* ── MAIN HEADER ── */
+        .main-header { background: #fff; padding: 10px 0 12px; }
+        .main-header-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 12px; }
+        .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
+        .logo img { height: 26px; width: auto; }
+        .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
+        .all-cat-btn {
+            display: flex; align-items: center; gap: 7px;
+            background: #F4F4F4; border: none; color: #1A1A1A; border-radius: 16px;
+            padding: 9px 16px; font-size: 15px; font-weight: 400;
+            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
+        }
+        .all-cat-btn img { width: 20px; height: 20px; }
+        .search-field { flex: 1; background: #F4F4F4; border-radius: 16px; padding: 10px 14px; display: flex; align-items: center; }
+        .search-input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #9E9E9E; pointer-events: none; }
+        .find-btn { background: #1A1A1A; color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0; }
+        .location-btn { display: flex; align-items: center; gap: 4px; cursor: default; white-space: nowrap; flex-shrink: 0; }
+        .loc-text { display: flex; flex-direction: column; }
+        .loc-city { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.2; }
+        .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
+
+        /* ── PAGE CONTENT ── */
+        .page-content { max-width: 1260px; margin: 0 auto; padding: 40px 20px 80px; }
+        .page-title { font-size: 28px; font-weight: 800; color: #1A1A1A; margin-bottom: 32px; }
+
+        /* Category list */
+        .cat-list { max-width: 520px; }
+        .cat-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 0; border-bottom: 1px solid #F0F0F0;
+            text-decoration: none; color: #1A1A1A;
+        }
+        .cat-row:first-child { border-top: 1px solid #F0F0F0; }
+        .cat-row.clickable { cursor: pointer; }
+        .cat-row.clickable:hover .cat-row-name { color: #555; }
+        .cat-row-name { font-size: 17px; font-weight: 400; color: #1A1A1A; }
+        .cat-row-chevron { flex-shrink: 0; color: #9E9E9E; }
+    </style>
+</head>
+<body>
+
+<!-- STICKY SHELL -->
+<div class="sticky-shell">
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="tb-links">
+                <span class="tb-link">Для бизнеса <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+                <span class="tb-link">Карьера в Авито</span>
+                <span class="tb-link">Помощь</span>
+                <span class="tb-link">Каталоги <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+                <span class="tb-link">Польза</span>
+                <span class="tb-link">Ещё <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+            </div>
+            <div class="tb-actions">
+                <a href="category-choose-desktop.html" class="place-btn">
+                    <img src="desktop-header/Add.svg" width="16" height="16" alt="">
+                    Разместить объявление
+                </a>
+                <span class="tb-action">
+                    <img src="desktop-header/Items.svg" class="tb-icon" alt="">
+                    Мои объявления
+                </span>
+                <img src="desktop-header/favs.svg" class="tb-icon" alt="">
+                <img src="desktop-header/notifications.svg" class="tb-icon" alt="">
+                <img src="desktop-header/chats.svg" class="tb-icon" alt="">
+                <img src="desktop-header/cart.svg" class="tb-icon" alt="">
+                <img src="desktop-header/avatar.png" class="tb-avatar" alt="">
+            </div>
+        </div>
+    </div>
+    <header class="main-header">
+        <div class="main-header-inner">
+            <div class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></div>
+            <div class="search-area">
+                <button class="all-cat-btn">
+                    <img src="desktop-header/Category.svg" alt="">
+                    Все категории
+                </button>
+                <div class="search-field">
+                    <input class="search-input" type="text" placeholder="Поиск по объявлениям" readonly>
+                </div>
+                <button class="find-btn">Найти</button>
+            </div>
+            <div class="location-btn">
+                <div class="loc-text">
+                    <span class="loc-city">Москва</span>
+                    <span class="loc-sub">район, метро</span>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="page-content">
+    <h1 class="page-title">Новое объявление</h1>
+    <div class="cat-list">
+        <div class="cat-row"><span class="cat-row-name">Транспорт</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Недвижимость</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Работа</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Услуги</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <a class="cat-row clickable" href="new-ad-desktop.html"><span class="cat-row-name">Личные вещи</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="cat-row"><span class="cat-row-name">Для дома и дачи</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Электроника</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Хобби и отдых</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Животные</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cat-row"><span class="cat-row-name">Для бизнеса</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+</div>
+
+</body>
+</html>
