@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новое объявление — Авито</title>
+    <title>Отлично! — Авито</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; min-width: 1060px; color: #1A1A1A; }
 
-        /* ── TOP BAR ── */
+        /* ── STICKY HEADER ── */
         .sticky-shell { position: sticky; top: 0; z-index: 100; background: #fff; }
         .top-bar { background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner {
@@ -26,23 +26,16 @@
             font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
             white-space: nowrap; padding: 6px 12px; border-radius: 12px; transition: background 0.15s;
         }
-        .place-btn:hover { background: #F4F4F4; color: #1A1A1A; }
+        .place-btn:hover { background: #F4F4F4; }
         .tb-action { display: flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: default; white-space: nowrap; }
         .tb-icon { width: 26px; height: 26px; flex-shrink: 0; cursor: default; }
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
-
-        /* ── MAIN HEADER ── */
         .main-header { background: #fff; padding: 10px 0 12px; }
         .main-header-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 12px; }
         .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
         .logo img { height: 26px; width: auto; }
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
-        .all-cat-btn {
-            display: flex; align-items: center; gap: 7px;
-            background: #F4F4F4; border: none; color: #1A1A1A; border-radius: 16px;
-            padding: 9px 16px; font-size: 15px; font-weight: 400;
-            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
-        }
+        .all-cat-btn { display: flex; align-items: center; gap: 7px; background: #F4F4F4; border: none; color: #1A1A1A; border-radius: 16px; padding: 9px 16px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0; }
         .all-cat-btn img { width: 20px; height: 20px; }
         .search-field { flex: 1; background: #F4F4F4; border-radius: 16px; padding: 10px 14px; display: flex; align-items: center; }
         .search-input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #9E9E9E; pointer-events: none; }
@@ -52,29 +45,53 @@
         .loc-city { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.2; }
         .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
 
-        /* ── PAGE CONTENT ── */
-        .page-content { max-width: 1260px; margin: 0 auto; padding: 40px 20px 80px; }
-        .page-title { font-size: 28px; font-weight: 800; color: #1A1A1A; margin-bottom: 32px; }
-
-        /* Category list */
-        .cat-list { max-width: 520px; }
-        .cat-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 16px;
-            text-decoration: none; color: #1A1A1A;
-            border-radius: 12px;
-            transition: background 0.12s;
-            cursor: default;
+        /* ── SUCCESS LAYOUT ── */
+        .success-outer {
+            max-width: 1260px; margin: 0 auto; padding: 80px 20px 80px;
+            display: flex; align-items: center; gap: 80px;
         }
-        .cat-row:hover { background: #F4F4F4; }
-        .cat-row.clickable { cursor: pointer; }
-        .cat-row-name { font-size: 17px; font-weight: 400; color: #1A1A1A; }
-        .cat-row-chevron { flex-shrink: 0; }
+        .success-left { flex: 0 0 520px; }
+        .success-right { flex: 1; display: flex; align-items: center; justify-content: center; }
+
+        /* Title */
+        .success-title {
+            font-size: 40px; font-weight: 800; color: #1A1A1A;
+            line-height: 1.15; margin-bottom: 36px;
+        }
+
+        /* Checklist */
+        .checklist { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+        .check-row { display: flex; align-items: flex-start; gap: 12px; }
+        .check-row img { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+        .check-text { font-size: 16px; font-weight: 400; color: #1A1A1A; line-height: 1.5; }
+        .check-text a { color: #9E9E9E; text-decoration: underline; cursor: default; }
+
+        /* Button */
+        .my-ads-btn {
+            display: inline-block; background: #1A1A1A; color: #fff;
+            border: none; border-radius: 16px; padding: 16px 32px;
+            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
+            cursor: pointer; margin-bottom: 28px;
+        }
+
+        /* Banner */
+        .success-banner {
+            background: #F4F4F4; border-radius: 20px;
+            padding: 18px 20px; display: flex; align-items: center; gap: 16px;
+            max-width: 460px;
+        }
+        .success-banner-text { flex: 1; min-width: 0; }
+        .success-banner-main { font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.45; }
+        .success-banner-link { display: block; margin-top: 6px; font-size: 14px; font-weight: 400; color: #9E9E9E; text-decoration: underline; cursor: default; }
+        .success-banner-img { width: 100px; height: 100px; object-fit: contain; flex-shrink: 0; }
+
+        /* Checkmark image */
+        .check-img { width: 340px; height: auto; object-fit: contain; }
     </style>
 </head>
 <body>
 
-<!-- STICKY SHELL -->
+<!-- STICKY HEADER -->
 <div class="sticky-shell">
     <div class="top-bar">
         <div class="top-bar-inner">
@@ -126,22 +143,57 @@
     </header>
 </div>
 
-<!-- PAGE CONTENT -->
-<div class="page-content">
-    <h1 class="page-title">Новое объявление</h1>
-    <div class="cat-list">
-        <div class="cat-row"><span class="cat-row-name">Транспорт</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Недвижимость</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Работа</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Услуги</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <a class="cat-row clickable" href="new-ad-desktop.html"><span class="cat-row-name">Личные вещи</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <div class="cat-row"><span class="cat-row-name">Для дома и дачи</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Электроника</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Хобби и отдых</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Животные</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="cat-row"><span class="cat-row-name">Для бизнеса</span><svg class="cat-row-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#C4C4C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<!-- SUCCESS CONTENT -->
+<div class="success-outer">
+    <div class="success-left">
+        <h1 class="success-title">Отлично!<br>Всё получилось</h1>
+
+        <div class="checklist" id="checklist"></div>
+
+        <button class="my-ads-btn" onclick="window.location.href='main-desktop.html'">Мои объявления</button>
+
+        <div class="success-banner">
+            <div class="success-banner-text">
+                <div class="success-banner-main">Сделайте пожертвование в фонд от 100 ₽ и получите «Знак добра»</div>
+                <span class="success-banner-link">Узнать подробнее</span>
+            </div>
+            <img src="success materials/banner znak dobra.png" class="success-banner-img" alt="">
+        </div>
+    </div>
+
+    <div class="success-right">
+        <img src="success materials/success.png" class="check-img" alt="">
     </div>
 </div>
+
+<script>
+    const collection = sessionStorage.getItem('adCollection') || 'family';
+    const title = sessionStorage.getItem('adTitle') || 'Без названия';
+
+    const ITEMS = {
+        family: [
+            `Объявление <a href="#">«${title}»</a> бесплатно опубликуется после проверки в отдельном разделе для фондов. Обычно проверка занимает от 2 до 30 минут`,
+            'Объявление бесплатное',
+            'Лимит бесплатных размещений не расходуется'
+        ],
+        crisis: [
+            `Объявление <a href="#">«${title}»</a> опубликовано в категории «Благотворительные товары» для региона ЧС`,
+            'Получатели смогут оформить Авито Доставку за 1 ₽',
+            'Объявление бесплатное, лимит размещений не расходуется'
+        ]
+    };
+
+    const items = ITEMS[collection] || ITEMS.family;
+    const list = document.getElementById('checklist');
+    items.forEach(text => {
+        list.innerHTML += `
+            <div class="check-row">
+                <img src="success materials/check.svg" alt="">
+                <span class="check-text">${text}</span>
+            </div>
+        `;
+    });
+</script>
 
 </body>
 </html>
