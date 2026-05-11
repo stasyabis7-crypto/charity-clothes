@@ -99,8 +99,9 @@
         .znak-banner {
             margin-top: 24px; background: #F4F4F4; border-radius: 14px;
             padding: 14px 16px; display: flex; align-items: center; gap: 12px;
-            cursor: default;
+            cursor: pointer; transition: background 0.12s;
         }
+        .znak-banner:hover { background: #EAEAEA; }
         .znak-icon {
             width: 40px; height: 40px; object-fit: contain; flex-shrink: 0;
         }
@@ -133,8 +134,9 @@
             width: 100%; background: #F4F4F4; color: #1A1A1A; border: none;
             border-radius: 12px; padding: 14px; margin-top: 10px;
             font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
-            cursor: default;
+            cursor: pointer; transition: background 0.12s;
         }
+        .btn-send:hover { background: #EAEAEA; }
         .seller-block {
             display: flex; align-items: center; gap: 12px; margin-top: 24px;
         }
