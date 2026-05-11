@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новое объявление — Авито</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            min-width: 1060px;
+            color: #1A1A1A;
+        }
+
+        /* ── STICKY SHELL ── */
+        .sticky-shell {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #fff;
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar { background: #fff; }
+        .top-bar-inner {
+            max-width: 1260px; margin: 0 auto; padding: 0 20px;
+            height: 42px; display: flex; align-items: center;
+            justify-content: space-between; gap: 16px;
+        }
+        .tb-links { display: flex; align-items: center; gap: 20px; }
+        .tb-link { display: flex; align-items: center; gap: 3px; font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .tb-link img { opacity: 0.6; }
+        .tb-actions { display: flex; align-items: center; gap: 14px; }
+        .place-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: #1A1A1A; text-decoration: none; font-size: 13px; font-weight: 500;
+            font-family: 'Inter', sans-serif; white-space: nowrap; transition: opacity 0.15s;
+        }
+        .place-btn:hover { opacity: 0.6; }
+        .tb-action { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #1A1A1A; cursor: default; white-space: nowrap; }
+        .tb-icon { width: 20px; height: 20px; flex-shrink: 0; cursor: default; }
+        .tb-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
+
+        /* ── MAIN HEADER ── */
+        .main-header { background: #fff; padding: 10px 0 12px; }
+        .main-header-inner {
+            max-width: 1260px; margin: 0 auto; padding: 0 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
+        .logo img { height: 36px; width: auto; }
+        .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
+        .all-cat-btn {
+            display: flex; align-items: center; gap: 7px;
+            background: #fff; border: 1.5px solid #D9D9D9; color: #1A1A1A;
+            border-radius: 8px; padding: 9px 14px; font-size: 14px; font-weight: 500;
+            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
+        }
+        .all-cat-btn img { width: 20px; height: 20px; }
+        .search-field {
+            flex: 1; background: #F4F4F4; border-radius: 8px;
+            padding: 10px 14px; display: flex; align-items: center;
+        }
+        .search-input {
+            flex: 1; border: none; outline: none; background: transparent;
+            font-size: 15px; font-family: 'Inter', sans-serif; color: #9E9E9E; pointer-events: none;
+        }
+        .find-btn {
+            background: #1A1A1A; color: #fff; border: none; border-radius: 8px;
+            padding: 10px 26px; font-size: 15px; font-weight: 500;
+            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0;
+        }
+        .location-btn { display: flex; align-items: center; gap: 6px; cursor: default; white-space: nowrap; flex-shrink: 0; }
+        .location-btn > img { width: 14px; height: 14px; flex-shrink: 0; }
+        .loc-text { display: flex; flex-direction: column; }
+        .loc-city { font-size: 14px; color: #1A1A1A; line-height: 1.2; }
+        .loc-sub { font-size: 11px; color: #9E9E9E; line-height: 1.2; }
+        .loc-chevron { width: 16px; height: 16px; opacity: 0.5; }
+
+        /* ── PAGE NAV ── */
+        .page-nav {
+            background: #fff;
+            padding: 16px 0 18px;
+            border-bottom: 1px solid #EBEBEB;
+        }
+        .page-nav-inner {
+            max-width: 1260px; margin: 0 auto; padding: 0 20px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .back-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #F4F4F4; border: none;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0;
+            text-decoration: none; color: #1A1A1A;
+            transition: background 0.15s;
+        }
+        .back-btn:hover { background: #EBEBEB; }
+        .page-nav-titles { display: flex; flex-direction: column; gap: 3px; }
+        .page-title-text { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
+        .breadcrumbs {
+            font-size: 13px; font-weight: 400; color: #9E9E9E;
+            display: none;
+        }
+
+        /* ── FORM LAYOUT ── */
+        .form-outer {
+            max-width: 1260px; margin: 0 auto; padding: 0 20px 80px;
+        }
+        .form-inner { max-width: 636px; }
+
+        /* Section spacing (56px between sections per Figma) */
+        .form-section { padding-top: 56px; }
+
+        /* ── FIELD LABEL ── */
+        .field-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 12px; }
+
+        /* ── TEXT INPUT ── */
+        .text-input {
+            width: 100%; background: #F4F4F4; border: 2px solid transparent;
+            border-radius: 12px; padding: 14px 16px;
+            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 500;
+            color: #1A1A1A; outline: none; transition: border-color 0.15s;
+        }
+        .text-input:focus { border-color: #1A1A1A; background: #fff; }
+        .text-input::placeholder { color: #9E9E9E; }
+
+        /* ── CHIPS ── */
+        .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip {
+            display: inline-flex; align-items: center;
+            background: #F2F1F0; color: #1A1A1A;
+            border-radius: 16px; padding: 11px 16px;
+            font-size: 15px; font-weight: 500; cursor: pointer;
+            white-space: nowrap; transition: background 0.15s, color 0.15s;
+            border: none; font-family: 'Inter', sans-serif;
+            user-select: none;
+        }
+        .chip:hover { background: #E5E4E3; }
+        .chip.active { background: #1A1A1A; color: #fff; }
+
+        /* ── COLLECTION SECTION ── */
+        .collection-head {
+            display: flex; align-items: flex-start;
+            justify-content: space-between; gap: 16px;
+            margin-bottom: 28px;
+        }
+        .collection-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
+        .collection-subtitle { font-size: 15px; font-weight: 500; color: #1A1A1A; margin-top: 4px; }
+        .change-btn {
+            background: #F2F1F0; border: none; border-radius: 16px;
+            padding: 14px 16px; font-size: 15px; font-weight: 500;
+            color: #1A1A1A; cursor: default; white-space: nowrap; flex-shrink: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Info banner */
+        .info-banner {
+            background: #F4F4F4; border-radius: 20px;
+            display: flex; align-items: stretch; gap: 0;
+            overflow: hidden; margin-bottom: 28px; position: relative;
+        }
+        .banner-illu { width: 80px; object-fit: cover; flex-shrink: 0; display: block; }
+        .banner-content { flex: 1; padding: 16px 48px 20px 12px; }
+        .banner-title { font-size: 14px; font-weight: 800; color: #1A1A1A; margin-bottom: 4px; }
+        .banner-desc { font-size: 13px; font-weight: 500; color: #1A1A1A; line-height: 1.4; margin-bottom: 4px; }
+        .banner-link { font-size: 13px; font-weight: 500; color: #1A1A1A; text-decoration: underline; cursor: default; }
+        .banner-close {
+            position: absolute; top: 12px; right: 14px;
+            width: 20px; height: 20px; display: flex; align-items: center;
+            justify-content: center; cursor: default;
+        }
+
+        /* Donation list */
+        .list-header-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 2px; }
+        .list-header-sub { font-size: 15px; font-weight: 500; color: #1A1A1A; margin-bottom: 8px; }
+        .list-items { display: flex; flex-direction: column; }
+        .list-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 11px 0; border-bottom: 1px solid #F4F4F4;
+        }
+        .list-item:last-child { border-bottom: none; }
+        .item-thumb {
+            width: 48px; height: 48px; border-radius: 16px;
+            object-fit: cover; flex-shrink: 0; background: #F4F4F4;
+        }
+        .item-info { flex: 1; min-width: 0; }
+        .item-name { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.3; }
+        .item-count { font-size: 13px; font-weight: 500; color: #757575; margin-top: 2px; }
+        .item-checkbox {
+            width: 24px; height: 24px; border-radius: 6px;
+            border: 2px solid #D9D9D9; flex-shrink: 0; background: #fff;
+        }
+
+        /* ── SECTION TITLE (large) ── */
+        .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
+        .section-sub { font-size: 15px; font-weight: 500; color: #9E9E9E; margin-top: 2px; margin-bottom: 16px; }
+
+        /* Photo uploader */
+        .photo-uploader {
+            width: 156px; height: 117px; background: #F4F4F4;
+            border-radius: 16px; display: flex; align-items: center;
+            justify-content: center; cursor: default;
+        }
+
+        /* Textarea */
+        .textarea-field {
+            width: 100%; background: #F4F4F4; border: 2px solid transparent;
+            border-radius: 12px; padding: 14px 16px;
+            font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 500;
+            color: #1A1A1A; outline: none; resize: none; min-height: 126px;
+            transition: border-color 0.15s;
+        }
+        .textarea-field::placeholder { color: #9E9E9E; }
+        .textarea-field:focus { border-color: #1A1A1A; background: #fff; }
+
+        /* Location */
+        .location-input-wrap { position: relative; margin-bottom: 8px; }
+        .location-input {
+            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 44px 14px 16px; font-size: 15px;
+            font-family: 'Inter', sans-serif; font-weight: 500; color: #1A1A1A; outline: none;
+        }
+        .input-clear {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            color: #9E9E9E; font-size: 20px; line-height: 1; cursor: default;
+        }
+        .location-hint { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-bottom: 14px; }
+
+        /* Map placeholder */
+        .map-box {
+            width: 100%; height: 360px; border-radius: 16px;
+            background: #E0E8D8; position: relative; overflow: hidden;
+        }
+        .map-label {
+            position: absolute; bottom: 10px; right: 10px;
+            background: rgba(255,255,255,0.88); border-radius: 4px;
+            padding: 2px 7px; font-size: 11px; color: #9E9E9E;
+        }
+        .map-controls {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 1px;
+        }
+        .map-ctrl {
+            width: 30px; height: 30px; background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: #1A1A1A; cursor: default;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+        .map-ctrl:first-child { border-radius: 8px 8px 0 0; }
+        .map-ctrl:last-child { border-radius: 0 0 8px 8px; }
+
+        /* Delivery */
+        .delivery-desc {
+            font-size: 15px; font-weight: 500; color: #1A1A1A;
+            line-height: 1.55; margin: 12px 0 20px;
+        }
+        .toggle-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+        .toggle-switch {
+            width: 44px; height: 26px; background: #1A1A1A;
+            border-radius: 13px; position: relative; flex-shrink: 0; cursor: default; margin-top: 1px;
+        }
+        .toggle-switch::after {
+            content: ''; position: absolute;
+            width: 20px; height: 20px; background: #fff;
+            border-radius: 50%; top: 3px; right: 3px;
+        }
+        .toggle-name { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.35; }
+        .toggle-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 2px; }
+
+        /* Contacts */
+        .contact-group { margin-bottom: 28px; }
+        .contact-group-title { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 8px; }
+        .contact-desc { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.5; margin-bottom: 14px; }
+        .contact-desc u { cursor: default; }
+        .phone-wrap { position: relative; }
+        .phone-input {
+            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 44px 14px 16px; font-size: 15px;
+            font-family: 'Inter', sans-serif; font-weight: 500; color: #1A1A1A; outline: none;
+        }
+        .radio-group { display: flex; flex-direction: column; gap: 16px; }
+        .radio-item { display: flex; align-items: center; gap: 12px; cursor: default; }
+        .radio-dot {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 2px solid #D9D9D9; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .radio-dot.active { border-color: #1A1A1A; }
+        .radio-dot.active::after {
+            content: ''; width: 10px; height: 10px;
+            border-radius: 50%; background: #1A1A1A;
+        }
+        .radio-label { font-size: 15px; font-weight: 500; color: #1A1A1A; }
+
+        /* Select */
+        .select-wrap { position: relative; }
+        .select-field {
+            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 44px 14px 16px; font-size: 15px;
+            font-family: 'Inter', sans-serif; font-weight: 500; color: #1A1A1A;
+            appearance: none; outline: none; cursor: default;
+        }
+        .select-chevron {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%); pointer-events: none;
+        }
+
+        /* ── FORM FOOTER ── */
+        .form-footer {
+            padding-top: 56px; display: flex; align-items: center; gap: 8px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background: #1A1A1A; color: #fff; border: none; border-radius: 16px;
+            padding: 15px 30px; font-size: 15px; font-weight: 500;
+            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
+        }
+        .btn-secondary {
+            background: transparent; color: #1A1A1A; border: none;
+            padding: 15px 20px; font-size: 15px; font-weight: 500;
+            font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap;
+        }
+        .legal-text {
+            font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.55;
+        }
+        .legal-text a { color: #9E9E9E; text-decoration: underline; cursor: default; }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════ STICKY SHELL ═══════════════ -->
+<div class="sticky-shell">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="tb-links">
+                <span class="tb-link">Для бизнеса <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+                <span class="tb-link">Карьера в Авито</span>
+                <span class="tb-link">Помощь</span>
+                <span class="tb-link">Каталоги <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+                <span class="tb-link">Польза</span>
+                <span class="tb-link">Ещё <img src="desktop-header/Expand More.svg" width="14" height="14" alt=""></span>
+            </div>
+            <div class="tb-actions">
+                <a href="new-ad-desktop.html" class="place-btn">
+                    <img src="desktop-header/Add.svg" width="16" height="16" alt="">
+                    Разместить объявление
+                </a>
+                <span class="tb-action">
+                    <img src="desktop-header/Items.svg" class="tb-icon" alt="">
+                    Мои объявления
+                </span>
+                <img src="desktop-header/favs.svg" class="tb-icon" alt="">
+                <img src="desktop-header/notifications.svg" class="tb-icon" alt="">
+                <img src="desktop-header/chats.svg" class="tb-icon" alt="">
+                <img src="desktop-header/cart.svg" class="tb-icon" alt="">
+                <img src="desktop-header/avatar.png" class="tb-avatar" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="main-header-inner">
+            <div class="logo">
+                <img src="desktop-header/Logotype Extension.svg" alt="Авито">
+            </div>
+            <div class="search-area">
+                <button class="all-cat-btn">
+                    <img src="desktop-header/Category.svg" alt="">
+                    Все категории
+                </button>
+                <div class="search-field">
+                    <input class="search-input" type="text" placeholder="Поиск по объявлениям" readonly>
+                </div>
+                <button class="find-btn">Найти</button>
+            </div>
+            <div class="location-btn">
+                <img src="desktop-header/Location.svg" alt="">
+                <div class="loc-text">
+                    <span class="loc-city">Москва</span>
+                    <span class="loc-sub">район, метро</span>
+                </div>
+                <img src="desktop-header/Expand More.svg" class="loc-chevron" alt="">
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE NAV -->
+    <div class="page-nav">
+        <div class="page-nav-inner">
+            <a href="main-desktop.html" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M10 3L5 8L10 13" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <div class="page-nav-titles">
+                <span class="page-title-text">Новое объявление</span>
+                <div class="breadcrumbs" id="breadcrumbs">
+                    Личные вещи&nbsp;›&nbsp;Одежда, обувь, аксессуары&nbsp;›&nbsp;Благотворительные товары
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /sticky-shell -->
+
+
+<!-- ═══════════════ FORM CONTENT ═══════════════ -->
+<div class="form-outer">
+    <div class="form-inner">
+
+        <!-- 1 · TITLE (always visible) -->
+        <div class="form-section" id="sectionTitle">
+            <div class="field-label">Название объявления</div>
+            <input
+                type="text"
+                class="text-input"
+                id="titleInput"
+                autocomplete="off"
+                placeholder=""
+            >
+        </div>
+
+        <!-- 2 · CATEGORIES (appears after typing in title) -->
+        <div class="form-section" id="sectionCats" style="display:none">
+            <div class="field-label">Категория</div>
+            <div class="chips-wrap">
+                <span class="chip" onclick="selectCat(this,'tshirts')">Футболки и майки</span>
+                <span class="chip" onclick="selectCat(this,'homewear')">Домашняя одежда</span>
+                <span class="chip" onclick="selectCat(this,'suits')">Пиджаки и костюмы</span>
+                <span class="chip" onclick="selectCat(this,'charity')">Благотворительные товары ❤️</span>
+            </div>
+        </div>
+
+        <!-- 3 · EXTRA SECTIONS (appear after "Благотворительные товары" selected) -->
+        <div id="extraSections" style="display:none">
+
+            <!-- ── COLLECTION ── -->
+            <div class="form-section">
+                <div class="collection-head">
+                    <div>
+                        <div class="collection-title">Сбор "Помощь семьям"</div>
+                        <div class="collection-subtitle">Собираем вещи на помощь многодетным семьям</div>
+                    </div>
+                    <button class="change-btn">Изменить сбор</button>
+                </div>
+
+                <!-- Info banner -->
+                <div class="info-banner">
+                    <img src="new-ad-desktop/banner-illu.png" class="banner-illu" alt="">
+                    <div class="banner-content">
+                        <div class="banner-title">Как это работает</div>
+                        <div class="banner-desc">Кто заберёт вещи и что делать после размещения объявления</div>
+                        <span class="banner-link">Узнать подробнее</span>
+                    </div>
+                    <div class="banner-close">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M1 1L11 11M11 1L1 11" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- What to donate -->
+                <div class="list-header-label">Выберите, что готовы передать</div>
+                <div class="list-header-sub">Фонды увидят эти вещи в вашем объявлении</div>
+                <div class="list-items">
+                    <div class="list-item">
+                        <img src="new-ad-desktop/item-kids-clothes.png" class="item-thumb" alt="">
+                        <div class="item-info">
+                            <div class="item-name">Детская одежда и обувь</div>
+                            <div class="item-count">Осталось собрать 5 штук</div>
+                        </div>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="list-item">
+                        <img src="new-ad-desktop/item-adult-clothes.png" class="item-thumb" alt="">
+                        <div class="item-info">
+                            <div class="item-name">Мужская и женская одежда</div>
+                            <div class="item-count">Осталось собрать 15 штук</div>
+                        </div>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="list-item">
+                        <img src="new-ad-desktop/item-stroller.png" class="item-thumb" alt="">
+                        <div class="item-info">
+                            <div class="item-name">Детские коляски</div>
+                            <div class="item-count">Осталось собрать 3 штуки</div>
+                        </div>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="list-item">
+                        <img src="new-ad-desktop/item-toys.png" class="item-thumb" alt="">
+                        <div class="item-info">
+                            <div class="item-name">Игрушки</div>
+                            <div class="item-count">Осталось собрать 100 штук</div>
+                        </div>
+                        <div class="item-checkbox"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PHOTOS ── -->
+            <div class="form-section">
+                <div class="section-title">Фотографии</div>
+                <div class="section-sub">Не более 40</div>
+                <div class="photo-uploader">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="13" r="4" stroke="#1A1A1A" stroke-width="1.6"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- ── DESCRIPTION ── -->
+            <div class="form-section">
+                <div class="section-title">Описание товаров</div>
+                <div style="height:14px"></div>
+                <textarea class="textarea-field" placeholder="Введите текст"></textarea>
+            </div>
+
+            <!-- ── LOCATION ── -->
+            <div class="form-section">
+                <div class="section-title">Местоположение</div>
+                <div style="height:14px"></div>
+                <div class="location-input-wrap">
+                    <input type="text" class="location-input" value="Москва, Чонгарский б-р, 7" readonly>
+                    <span class="input-clear">×</span>
+                </div>
+                <div class="location-hint">Укажите реальный адрес, где покупатель может купить или получить товар</div>
+                <div class="map-box">
+                    <div class="map-controls">
+                        <div class="map-ctrl">+</div>
+                        <div class="map-ctrl">−</div>
+                    </div>
+                    <div class="map-label">© Яндекс</div>
+                </div>
+            </div>
+
+            <!-- ── DELIVERY ── -->
+            <div class="form-section">
+                <div class="section-title">Авито Доставка</div>
+                <div class="delivery-desc">Выберите, как покупатели смогут заказать ваш товар. Это бесплатно и безопасно: вам не нужно платить за отправку, а если с посылкой что-то случится в пути, мы возместим ущерб.</div>
+                <div class="toggle-row">
+                    <div class="toggle-switch"></div>
+                    <div>
+                        <div class="toggle-name">В постамат</div>
+                        <div class="toggle-sub">5Post</div>
+                    </div>
+                </div>
+                <div class="toggle-row">
+                    <div class="toggle-switch"></div>
+                    <div>
+                        <div class="toggle-name">В пункт выдачи</div>
+                        <div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── CONTACTS ── -->
+            <div class="form-section">
+                <div class="section-title">Контакты</div>
+                <div style="height:28px"></div>
+
+                <!-- Phone -->
+                <div class="contact-group">
+                    <div class="contact-group-title">Телефон</div>
+                    <div class="contact-desc">
+                        Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <u>Подробнее</u>
+                    </div>
+                    <div class="phone-wrap">
+                        <input type="text" class="phone-input" value="8 200 614-53-63" readonly>
+                        <span class="input-clear">×</span>
+                    </div>
+                </div>
+
+                <!-- Contact method -->
+                <div class="contact-group">
+                    <div class="contact-group-title">Способ связи</div>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <div class="radio-dot active"></div>
+                            <span class="radio-label">Звонки и сообщения</span>
+                        </div>
+                        <div class="radio-item">
+                            <div class="radio-dot"></div>
+                            <span class="radio-label">Только звонки</span>
+                        </div>
+                        <div class="radio-item">
+                            <div class="radio-dot"></div>
+                            <span class="radio-label">Только сообщения</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Device -->
+                <div class="contact-group" style="margin-bottom:0">
+                    <div class="contact-group-title">Где принимать звонки через Авито</div>
+                    <div style="height:10px"></div>
+                    <div class="select-wrap">
+                        <select class="select-field">
+                            <option>iPhone 16 Pro</option>
+                        </select>
+                        <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── FOOTER BUTTONS ── -->
+            <div class="form-footer">
+                <button class="btn-primary">Разместить объявление</button>
+                <button class="btn-secondary">Сохранить и выйти</button>
+            </div>
+
+            <!-- Legal -->
+            <div class="legal-text">
+                Вы публикуете объявление и данные в нём, чтобы его мог посмотреть кто угодно в интернете. Вы также соглашаетесь с <a href="#">правилами</a> и использованием фотографий в автокаталоге Авито и Автотеке.
+            </div>
+            <div style="height:60px"></div>
+
+        </div><!-- /extraSections -->
+
+    </div><!-- /form-inner -->
+</div><!-- /form-outer -->
+
+
+<script>
+    const titleInput   = document.getElementById('titleInput');
+    const sectionCats  = document.getElementById('sectionCats');
+    const extraSections= document.getElementById('extraSections');
+    const breadcrumbs  = document.getElementById('breadcrumbs');
+
+    // Show categories once user starts typing
+    titleInput.addEventListener('input', function () {
+        const hasText = this.value.trim().length > 0;
+        sectionCats.style.display = hasText ? 'block' : 'none';
+        if (!hasText) {
+            extraSections.style.display = 'none';
+            breadcrumbs.style.display = 'none';
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        }
+    });
+
+    function selectCat(el, cat) {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+
+        if (cat === 'charity') {
+            breadcrumbs.style.display = 'block';
+            extraSections.style.display = 'block';
+            // Smooth scroll to extra content
+            setTimeout(() => {
+                extraSections.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        } else {
+            breadcrumbs.style.display = 'none';
+            extraSections.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
