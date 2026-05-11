@@ -24,7 +24,8 @@
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
         .main-header { background: #fff; padding: 10px 0 12px; }
         .main-header-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 12px; }
-        .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
+        .logo { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; transition: opacity 0.15s; }
+        .logo:hover { opacity: 0.8; }
         .logo img { height: 26px; width: auto; }
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
         .all-cat-btn { display: flex; align-items: center; gap: 7px; background: #F4F4F4; border: none; color: #1A1A1A; border-radius: 16px; padding: 9px 16px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0; }
@@ -202,7 +203,7 @@
     </div>
     <header class="main-header">
         <div class="main-header-inner">
-            <div class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></div>
+            <a href="main-desktop.html" class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></a>
             <div class="search-area">
                 <button class="all-cat-btn"><img src="desktop-header/Category.svg" alt="">Все категории</button>
                 <div class="search-field"><input class="search-input" type="text" placeholder="Поиск по объявлениям" readonly></div>

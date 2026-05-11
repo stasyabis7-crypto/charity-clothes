@@ -24,7 +24,8 @@
         .tb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; cursor: default; }
         .main-header { background: #fff; padding: 10px 0 12px; }
         .main-header-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 12px; }
-        .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
+        .logo { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; transition: opacity 0.15s; }
+        .logo:hover { opacity: 0.8; }
         .logo img { height: 26px; width: auto; }
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
         .all-cat-btn { display: flex; align-items: center; gap: 7px; background: #F4F4F4; border: none; color: #1A1A1A; border-radius: 16px; padding: 9px 16px; font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif; cursor: default; white-space: nowrap; flex-shrink: 0; }
@@ -78,17 +79,12 @@
         .action-btns {
             display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
         }
-        .btn-primary {
-            background: #1A1A1A; color: #fff; border: none; border-radius: 10px;
+        .btn-gray {
+            background: #F4F4F4; color: #1A1A1A; border: none; border-radius: 10px;
             padding: 10px 18px; font-size: 14px; font-weight: 400;
-            font-family: 'Inter', sans-serif; cursor: pointer; transition: opacity 0.12s;
+            font-family: 'Inter', sans-serif; cursor: pointer; transition: background 0.12s;
         }
-        .btn-primary:hover { opacity: 0.85; }
-        .btn-outlined {
-            background: #fff; color: #1A1A1A; border: 1px solid #D9D9D9;
-            border-radius: 10px; padding: 10px 18px; font-size: 14px; font-weight: 400;
-            font-family: 'Inter', sans-serif; cursor: default;
-        }
+        .btn-gray:hover { background: #EAEAEA; }
 
         /* Gallery */
         .gallery { margin-top: 24px; }
@@ -182,7 +178,7 @@
     </div>
     <header class="main-header">
         <div class="main-header-inner">
-            <div class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></div>
+            <a href="main-desktop.html" class="logo"><img src="desktop-header/Logotype Extension.svg" alt="Авито"></a>
             <div class="search-area">
                 <button class="all-cat-btn"><img src="desktop-header/Category.svg" alt="">Все категории</button>
                 <div class="search-field"><input class="search-input" type="text" placeholder="Поиск по объявлениям" readonly></div>
@@ -226,8 +222,8 @@
 
             <!-- Action Buttons -->
             <div class="action-btns">
-                <button class="btn-primary" onclick="window.location.href='edit-ad-desktop.html'">Редактировать</button>
-                <button class="btn-outlined">Снять с публикации</button>
+                <button class="btn-gray" onclick="window.location.href='edit-ad-desktop.html'">Редактировать</button>
+                <button class="btn-gray">Снять с публикации</button>
             </div>
 
             <!-- Gallery -->

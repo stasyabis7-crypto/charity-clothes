@@ -43,7 +43,8 @@
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             display: flex; align-items: center; gap: 12px;
         }
-        .logo { display: flex; align-items: center; flex-shrink: 0; cursor: default; }
+        .logo { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; transition: opacity 0.15s; }
+        .logo:hover { opacity: 0.8; }
         .logo img { height: 26px; width: auto; }
         .search-area { flex: 1; display: flex; align-items: center; gap: 8px; }
         .all-cat-btn {
@@ -178,9 +179,9 @@
 <!-- MAIN HEADER -->
 <header class="main-header">
     <div class="main-header-inner">
-        <div class="logo">
+        <a href="main-desktop.html" class="logo">
             <img src="desktop-header/Logotype Extension.svg" alt="Авито">
-        </div>
+        </a>
         <div class="search-area">
             <button class="all-cat-btn">
                 <img src="desktop-header/Category.svg" alt="">
