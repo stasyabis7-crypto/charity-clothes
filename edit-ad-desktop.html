@@ -428,7 +428,6 @@
                         <div class="collection-title" id="collectionTitle">Сбор "Помощь семьям"</div>
                         <div class="collection-subtitle" id="collectionSubtitle">Собираем вещи на помощь многодетным семьям</div>
                     </div>
-                    <button class="change-btn" onclick="openChangeCollection()">Изменить сбор</button>
                 </div>
 
                 <!-- Info banner -->
@@ -546,7 +545,6 @@
             <!-- FOOTER -->
             <div class="form-footer">
                 <button class="btn-primary" id="submitBtn" onclick="navigateToAdPage()" disabled>Сохранить изменения</button>
-                <button class="btn-secondary">Сохранить и выйти</button>
             </div>
             <div class="legal-text">
                 Вы публикуете объявление и данные в нём, чтобы его мог посмотреть кто угодно в интернете. Вы также соглашаетесь с <a href="#">правилами</a> и использованием фотографий в автокаталоге Авито и Автотеке.
@@ -1089,10 +1087,15 @@
         document.getElementById('titleClear').style.display = 'flex';
         sectionCats.style.display = 'block';
 
-        // Show charity category as selected
+        // Show charity category as locked (non-editable in edit mode)
         document.getElementById('chipsWrap').style.display = 'none';
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
+        const catDisplay = document.querySelector('.cat-select-display');
+        catDisplay.removeAttribute('onclick');
+        catDisplay.style.cursor = 'default';
+        const catArrow = document.querySelector('.cat-select-arrow');
+        if (catArrow) catArrow.style.display = 'none';
 
         // Show extra sections
         extraSections.style.display = 'block';
@@ -1130,11 +1133,9 @@
             descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
         }
 
-        // Restore banner dismissed state
-        if (sessionStorage.getItem('bannerClosed') === '1') {
-            bannerDismissed = true;
-            document.getElementById('infoBanner').style.display = 'none';
-        }
+        // Always hide the info banner on edit page
+        bannerDismissed = true;
+        document.getElementById('infoBanner').style.display = 'none';
     }
 
     window.addEventListener('load', prefillFromSession);
