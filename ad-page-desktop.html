@@ -114,7 +114,7 @@
         /* Section headings */
         .section { margin-top: 32px; }
         .section h3 { font-size: 18px; font-weight: 700; color: #1A1A1A; margin-bottom: 10px; }
-        .section p { font-size: 15px; color: #1A1A1A; line-height: 1.6; }
+        .section p { font-size: 15px; color: #1A1A1A; line-height: 1.6; white-space: pre-line; }
 
         /* Characteristics table */
         .chars-table { display: flex; flex-direction: column; gap: 10px; }
@@ -297,12 +297,12 @@
     // Pull data from sessionStorage
     const adTitle    = sessionStorage.getItem('adTitle')    || 'Без названия';
     const adLocation = sessionStorage.getItem('adLocation') || 'Москва';
-    const adDesc     = sessionStorage.getItem('adDesc')     || 'Описание отсутствует.';
+    const adDesc     = sessionStorage.getItem('adDesc');
     const adPhotos   = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
 
     document.getElementById('ad-title').textContent    = adTitle;
     document.getElementById('ad-location').textContent = adLocation;
-    document.getElementById('ad-desc').textContent     = adDesc;
+    document.getElementById('ad-desc').textContent     = (adDesc && adDesc.trim()) ? adDesc : 'Описание отсутствует.';
 
     // Gallery
     if (adPhotos.length > 0) {
@@ -313,7 +313,7 @@
         main.style.display = 'block';
 
         const thumbsEl = document.getElementById('thumbnails');
-        adPhotos.slice(0, 4).forEach(src => {
+        adPhotos.forEach(src => {
             const img = document.createElement('img');
             img.src = src;
             img.className = 'thumb';
