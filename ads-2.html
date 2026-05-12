@@ -355,12 +355,12 @@
         </div>
 
         <!-- Ad 2: Charity (dynamic) -->
-        <div class="ad-item">
+        <div class="ad-item" onclick="window.location.href='ad-page.html'" style="cursor:pointer">
             <img id="charity-photo" src="drafts materials/img drafts.png" class="ad-photo" alt="">
             <div class="ad-content">
                 <div class="ad-title-row">
                     <span class="ad-title" id="charity-title"></span>
-                    <a href="javascript:void(0)" onclick="sessionStorage.setItem('editReturnPage','ads-2.html');window.location.href='edit-ad.html'">
+                    <a href="javascript:void(0)" onclick="event.stopPropagation();sessionStorage.setItem('editReturnPage','ads-2.html');window.location.href='edit-ad.html'">
                         <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
                     </a>
                 </div>
