@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-    <title>Помощь Дагестану</title>
+    <title>Добрые вещи</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -15,14 +15,8 @@
             max-width: 430px;
             margin: 0 auto;
             overflow-x: hidden;
-            padding-bottom: 100px;
-        }
-
-        .gradient-area {
-            background: linear-gradient(to bottom, #E3F7FF, #FFEBEC);
-            position: relative;
-            overflow: clip;
-            padding-bottom: 40px;
+            padding-bottom: 112px;
+            color: #000;
         }
 
         .header {
@@ -30,13 +24,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 16px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            transition: background 0.2s, box-shadow 0.2s;
+            background: #fff;
         }
-
-        .header.scrolled { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .save-exit {
             font-size: 15px;
@@ -45,58 +34,44 @@
             cursor: pointer;
         }
 
-        .hero-content { padding: 8px 16px 0; }
-
-        .hero-title {
-            font-weight: 800;
-            font-size: 31px;
-            color: #1A1A1A;
-            line-height: 1.1;
-            white-space: nowrap;
-        }
-
-        .hero-subtitle {
-            margin-top: 8px;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            line-height: 1.45;
-            padding-right: 180px;
-        }
-
-        .change-btn {
+        .intro {
             margin-top: 16px;
-            display: inline-flex;
-            align-items: center;
-            background: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 10px 18px;
-            font-family: 'Inter', sans-serif;
+            padding: 0 16px;
+            text-align: center;
+        }
+
+        .intro-title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        .intro-subtitle {
+            margin-top: 6px;
             font-size: 15px;
             font-weight: 400;
-            color: #1A1A1A;
-            cursor: pointer;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            line-height: 1.35;
         }
 
-        .hero-img {
-            position: absolute;
-            right: -25px;
-            bottom: 0;
-            width: 176px;
-            height: 166px;
-            object-fit: contain;
-            object-position: right bottom;
+        .content {
+            margin-top: 16px;
+            padding: 0 16px;
         }
 
-        .white-block {
-            background: #fff;
-            border-radius: 24px 24px 0 0;
-            position: relative;
-            z-index: 10;
-            padding: 20px 16px 0;
-            min-height: 60vh;
+        .section { margin-top: 24px; }
+        .section:first-child { margin-top: 0; }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .section-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.35;
         }
 
         .banner {
@@ -117,406 +92,343 @@
             flex-shrink: 0;
         }
 
-        .banner-text { flex: 1; min-width: 0; }
-
         .banner-title {
             font-size: 15px;
             font-weight: 700;
-            color: #1A1A1A;
         }
 
         .banner-sub {
             margin-top: 3px;
             font-size: 13px;
             font-weight: 400;
-            color: #1A1A1A;
             line-height: 1.35;
         }
 
-        .banner-close {
-            background: none;
+        .photos-grid {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .photo-cell {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #F4F4F4;
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .main-tag {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255,255,255,0.94);
+            border-radius: 8px;
+            padding: 5px 9px;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .delete-btn {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            width: 44px;
+            height: 44px;
             border: none;
-            padding: 4px;
+            border-radius: 14px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .add-cell {
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .field {
+            margin-top: 12px;
+            min-height: 56px;
+            border: none;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 0 16px;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: #000;
+            outline: none;
+        }
+
+        .field-row {
+            margin-top: 12px;
+            min-height: 56px;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #A3A3A3;
+        }
+
+        .field-row.dark { color: #000; }
+        .field-row.disabled { pointer-events: none; }
+
+        .clear-btn {
+            border: none;
+            background: transparent;
+            color: #000;
+            font-size: 26px;
+            line-height: 1;
             cursor: pointer;
             flex-shrink: 0;
-            align-self: flex-start;
         }
 
-        .section { margin-top: 24px; }
+        .collection-card {
+            margin-top: 12px;
+            border-radius: 24px;
+            background: #F4F4F4;
+            padding: 12px 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        .section-title {
+        .collection-img {
+            width: 76px;
+            height: 76px;
+            border-radius: 16px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #fff;
+        }
+
+        .collection-title {
+            font-size: 16px;
             font-weight: 700;
-            font-size: 17px;
-            color: #1A1A1A;
+            line-height: 1.2;
         }
 
-        .section-sub {
+        .collection-sub {
+            margin-top: 2px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.25;
+        }
+
+        .change-collection-btn {
+            margin-top: 6px;
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            background: #F4F4F4;
+            min-height: 56px;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .need-block { margin-top: 24px; }
+        .need-block:first-of-type { margin-top: 20px; }
+
+        .need-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .need-sub {
             margin-top: 4px;
             font-size: 15px;
             font-weight: 400;
-            color: #1A1A1A;
+            line-height: 1.35;
         }
 
-        .add-cat-btn {
-            margin-top: 16px;
-            display: block;
-            width: 100%;
-            background: #1A1A1A;
-            color: #fff;
+        .selector {
+            margin-top: 12px;
             border: none;
+            width: 100%;
+            min-height: 56px;
             border-radius: 16px;
-            padding: 14px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .selected-cat-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .selected-cat-img {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .selected-cat-name {
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-        }
-
-        .selected-cat-count {
-            margin-top: 2px;
-            font-size: 13px;
-            color: #9E9E9E;
-        }
-
-        .photos-row {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-
-        .photos-thumb {
-            width: 54px;
-            height: 48px;
-            border-radius: 10px;
-            object-fit: cover;
-            object-position: center;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        .photos-edit {
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-        }
-
-        .photos-hint {
-            margin-top: 2px;
-            font-size: 13px;
-            font-weight: 400;
-            color: #9E9E9E;
-        }
-
-        .title-field {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
             background: #F4F4F4;
-            border-radius: 12px;
-            padding: 12px 14px;
-            gap: 8px;
-            min-height: 48px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: #7D7D7D;
+            cursor: pointer;
         }
 
-        .title-field-input {
-            flex: 1;
+        .selector.selected { color: #000; }
+
+        .chevron {
+            width: 14px;
+            height: 14px;
+            border-right: 3px solid #000;
+            border-bottom: 3px solid #000;
+            transform: rotate(45deg);
+            margin-top: -6px;
+            flex-shrink: 0;
+        }
+
+        .tags {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 10px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            line-height: 1.2;
+        }
+
+        .tag button {
             border: none;
             background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            outline: none;
-            min-width: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .title-clear-btn {
-            display: none;
-            background: none;
-            border: none;
-            padding: 0;
+            font-size: 18px;
+            line-height: 1;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
         .desc-textarea {
             margin-top: 12px;
             display: block;
             width: 100%;
-            min-height: 100px;
-            background: #F4F4F4;
+            min-height: 112px;
             border: none;
-            border-radius: 12px;
-            padding: 12px 14px;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 16px;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
             font-weight: 400;
-            color: #1A1A1A;
-            outline: none;
+            color: #000;
+            line-height: 1.4;
             resize: none;
             overflow: hidden;
-            line-height: 1.45;
+            outline: none;
         }
 
-        .desc-textarea::placeholder { color: #9E9E9E; }
-
-        /* ── COLLECTION SHEET ── */
-        .collection-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 0;
-            cursor: pointer;
-        }
-        .collection-thumb {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-        .sheet-collection-sub {
-            font-size: 15px;
-            font-weight: 400;
-            color: #9E9E9E;
-            line-height: 1.45;
-            margin-top: -12px;
-            margin-bottom: 20px;
-        }
-        .collection-info { flex: 1; min-width: 0; }
-        .collection-name {
-            font-size: 15px;
-            font-weight: 500;
-            color: #1A1A1A;
-            line-height: 1.3;
-        }
-        .collection-sub {
-            margin-top: 3px;
+        .hint {
+            margin-top: 8px;
             font-size: 13px;
-            color: #9E9E9E;
+            font-weight: 400;
+            line-height: 1.35;
+            color: #767676;
+        }
+
+        .delivery-copy {
+            margin-top: 4px;
+            font-size: 17px;
+            font-weight: 400;
             line-height: 1.35;
         }
-        .collection-choose-btn {
+
+        .toggle-row {
             margin-top: 20px;
-            display: block;
-            width: 100%;
-            background: #1A1A1A;
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        /* ── SWITCH POPUP ── */
-        .switch-popup-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 400;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        .switch-popup-overlay.open { display: flex; }
-        .switch-popup-card {
-            background: #fff;
-            border-radius: 24px 24px 0 0;
-            padding: 24px 16px 40px;
-            width: 100%;
-            max-width: 430px;
-            position: relative;
-        }
-        .switch-popup-title {
-            font-weight: 700;
-            font-size: 20px;
-            color: #1A1A1A;
-            padding-right: 44px;
-            line-height: 1.2;
-            margin-bottom: 8px;
-        }
-        .switch-popup-text {
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            line-height: 1.45;
-        }
-        .switch-popup-confirm {
-            margin-top: 24px;
-            display: block;
-            width: 100%;
-            background: #1A1A1A;
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            cursor: pointer;
-        }
-        .switch-popup-cancel {
-            margin-top: 10px;
-            display: block;
-            width: 100%;
-            background: #F4F4F4;
-            color: #1A1A1A;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            cursor: pointer;
-        }
-
-        /* ── SHEET ── */
-        .sheet-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 300;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        .sheet-overlay.open { display: flex; }
-
-        .sheet-card {
-            background: #fff;
-            border-radius: 24px 24px 0 0;
-            width: 100%;
-            max-width: 430px;
-            padding: 12px 16px 44px;
-            max-height: 82vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .sheet-drag {
-            width: 40px;
-            height: 4px;
-            background: #E0E0E0;
-            border-radius: 2px;
-            margin: 0 auto 20px;
-        }
-
-        .sheet-close {
-            position: absolute;
-            top: 20px;
-            right: 16px;
-            background: #F4F4F4;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .sheet-title {
-            font-weight: 800;
-            font-size: 24px;
-            line-height: 1.15;
-            color: #1A1A1A;
-            margin-bottom: 20px;
-            padding-right: 44px;
-        }
-
-        .sheet-tabs {
-            display: flex;
-            border-bottom: 1px solid #EBEBEB;
-            margin-bottom: 24px;
-        }
-
-        .sheet-tab {
-            padding: 0 0 10px;
-            margin-right: 24px;
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #9E9E9E;
-            background: none;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .sheet-tab.active { color: #1A1A1A; }
-
-        .sheet-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #1A1A1A;
-            border-radius: 2px 2px 0 0;
-        }
-
-        .sheet-step {
             display: flex;
             align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 14px;
         }
 
-        .sheet-step img { flex-shrink: 0; }
-        .sheet-step-text { flex: 1; min-width: 0; }
+        .toggle-static {
+            width: 46px;
+            height: 26px;
+            border-radius: 14px;
+            background: #111;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
 
-        .sheet-step-title {
-            font-family: 'Inter', sans-serif;
+        .toggle-static::after {
+            content: '';
+            position: absolute;
+            right: 3px;
+            top: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .toggle-title {
             font-size: 17px;
-            font-weight: 700;
-            color: #1A1A1A;
-            line-height: 1.3;
-            margin-bottom: 4px;
+            font-weight: 400;
+            line-height: 1.25;
         }
 
-        .sheet-step-sub {
-            font-family: 'Inter', sans-serif;
+        .toggle-sub {
+            margin-top: 3px;
+            color: #767676;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+
+        .contacts-copy {
+            margin-top: 6px;
             font-size: 15px;
             font-weight: 400;
-            color: #1A1A1A;
             line-height: 1.4;
         }
 
-        /* ── BOTTOM BUTTON ── */
+        .radio-row {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        .radio {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #E0E0E0;
+            flex-shrink: 0;
+        }
+
+        .radio.active {
+            background: radial-gradient(circle at center, #fff 0 4px, #111 5px);
+        }
+
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -526,7 +438,7 @@
             max-width: 430px;
             background: #fff;
             padding: 12px 16px 28px;
-            z-index: 100;
+            z-index: 90;
             border-radius: 24px 24px 0 0;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
@@ -545,77 +457,412 @@
             text-align: center;
             cursor: default;
         }
+
+        .continue-btn.active {
+            background: #111;
+            cursor: pointer;
+        }
+
+        .sheet-overlay,
+        .switch-popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 200;
+            display: none;
+            align-items: flex-end;
+        }
+
+        .sheet-overlay.open,
+        .switch-popup-overlay.open { display: flex; }
+
+        .sheet-card {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            padding: 18px 16px 28px;
+            max-height: 88vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .sheet-drag {
+            width: 54px;
+            height: 5px;
+            border-radius: 999px;
+            background: #E7E7E7;
+            margin: 0 auto 22px;
+        }
+
+        .sheet-close {
+            position: absolute;
+            right: 16px;
+            top: 22px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .sheet-title {
+            padding-right: 42px;
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.08;
+        }
+
+        .sheet-subtitle {
+            margin-top: 10px;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .sheet-tabs {
+            margin-top: 18px;
+            display: flex;
+            padding: 3px;
+            border-radius: 14px;
+            background: #F4F4F4;
+        }
+
+        .sheet-tab {
+            flex: 1;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            padding: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .sheet-tab.active { background: #fff; }
+
+        .sheet-pane { margin-top: 20px; }
+
+        .sheet-step {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .sheet-step:first-child { margin-top: 0; }
+        .sheet-step img { flex-shrink: 0; }
+
+        .sheet-step-title {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .sheet-step-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .collection-sheet-sub {
+            margin-top: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .collection-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F0F0F0;
+            cursor: pointer;
+        }
+
+        .collection-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .collection-info { flex: 1; min-width: 0; }
+
+        .collection-name {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .collection-sheet-text {
+            margin-top: 3px;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .sheet-primary {
+            margin-top: 18px;
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            background: #111;
+            color: #fff;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .switch-popup-card {
+            width: calc(100% - 32px);
+            max-width: 398px;
+            margin: auto;
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px 16px 16px;
+            position: relative;
+        }
+
+        .switch-popup-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .switch-popup-text {
+            margin-top: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .switch-popup-confirm,
+        .switch-popup-cancel {
+            margin-top: 16px;
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            padding: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .switch-popup-confirm {
+            background: #111;
+            color: #fff;
+        }
+
+        .switch-popup-cancel {
+            margin-top: 8px;
+            background: #F4F4F4;
+            color: #000;
+        }
+
+        .need-row {
+            margin-top: 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .need-item-name {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .need-item-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            color: #767676;
+        }
+
+        .check-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 6px;
+            background: #E0E0E0;
+            flex-shrink: 0;
+            margin-top: 3px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 24px;
+        }
+
+        .check-btn.active { background: #111; }
+
+        .qty-picker {
+            margin-top: 14px;
+            border-radius: 16px;
+            background: #F4F4F4;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 20px;
+        }
+
+        .qty-picker button {
+            border: none;
+            background: transparent;
+            font-size: 28px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="gradient-area">
-        <header class="header">
-            <a href="step4.html">
-                <img src="step 2 materials/back.svg" width="48" height="48" alt="">
-            </a>
-            <span class="save-exit" onclick="saveAndExit()">Сохранить и выйти</span>
-        </header>
+    <header class="header">
+        <a href="step4.html">
+            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </a>
+        <span class="save-exit" onclick="saveAndExit()">Сохранить и выйти</span>
+    </header>
 
-        <div class="hero-content">
-            <h1 class="hero-title">Помощь Дагестану</h1>
-            <p class="hero-subtitle">С 1 апреля по 1 июня собираем<br>вещи пострадавшим от паводков</p>
-            <button class="change-btn" onclick="openChangeSheet()">Изменить сбор</button>
-        </div>
+    <section class="intro">
+        <h1 class="intro-title">Добрые вещи ❤️</h1>
+        <p class="intro-subtitle">Продолжим с уже заполненными данными объявления</p>
+    </section>
 
-        <img class="hero-img" src="crisis help/img 1.png" alt="">
-    </div>
-
-    <div class="white-block">
-
-        <div class="banner" id="banner" onclick="openSheet()">
-            <img class="banner-img" src="how it works.png" alt="">
-            <div class="banner-text">
-                <div class="banner-title">Как это работает</div>
-                <div class="banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title" id="cat-section-title">Выберите, что готовы передать</div>
-            <div class="section-sub">Фонды увидят эти вещи в вашем объявлении</div>
-            <div id="cat-content"></div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">Фотографии</div>
-            <div class="photos-row" onclick="openPhotoEdit()">
-                <img class="photos-thumb" src="step 5 materials/Img 3.png" width="54" height="48" alt="">
+    <main class="content">
+        <section class="section">
+            <div class="banner" id="banner" onclick="openSheet()">
+                <img class="banner-img" src="how it works.png" alt="">
                 <div>
-                    <div class="photos-edit" id="photos-edit-text">Редактировать 0 фото ›</div>
-                    <div class="photos-hint">Если хотите их поменять</div>
+                    <div class="banner-title">Как это работает</div>
+                    <div class="banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section">
-            <div class="section-title">Название объявления</div>
-            <div class="title-field">
-                <input type="text" class="title-field-input" id="title-display" autocomplete="off">
-                <button class="title-clear-btn" id="title-clear-btn" onclick="clearTitle()">
-                    <img src="step 3 materials/erase.svg" width="18" height="18" alt="">
-                </button>
+        <section class="section">
+            <h2 class="section-title">Фотографии</h2>
+            <div class="photos-grid" id="photos-grid"></div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Название объявления</h2>
+            <div class="field-row dark">
+                <input class="field" id="title-display" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
+                <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()">×</button>
             </div>
-        </div>
+        </section>
 
-        <div class="section" style="padding-bottom: 24px;">
-            <div class="section-title">Описание товаров</div>
-            <textarea class="desc-textarea" id="desc-textarea"
-                placeholder="Все уточнения по вещам категорий автоматически попадут сюда при выборе категорий"></textarea>
-        </div>
+        <section class="section">
+            <h2 class="section-title">Категория</h2>
+            <p class="section-sub">Выбирается автоматически для передачи вещей на благотворительность</p>
+            <div class="field-row disabled">
+                <span>Добрые вещи</span>
+                <span class="chevron" style="border-color:#A3A3A3;"></span>
+            </div>
+        </section>
 
-    </div>
+        <section class="section" id="condition-section" style="display:none;">
+            <h2 class="section-title">Состояние</h2>
+            <div class="field-row disabled">
+                <span id="condition-value">Хорошее</span>
+                <span class="chevron" style="border-color:#A3A3A3;"></span>
+            </div>
+        </section>
+
+        <section class="section" id="adtype-section" style="display:none;">
+            <h2 class="section-title">Тип объявления</h2>
+            <div class="field-row disabled">
+                <span id="adtype-value">Продаю своё</span>
+                <span class="chevron" style="border-color:#A3A3A3;"></span>
+            </div>
+        </section>
+
+        <section class="section" id="price-section" style="display:none;">
+            <h2 class="section-title">Условия продажи</h2>
+            <div class="field-row dark">
+                <input class="field" id="price-input" inputmode="numeric" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
+                <button class="clear-btn" onclick="clearPrice()">×</button>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Кому могут подойти ваши вещи</h2>
+            <div class="collection-card">
+                <img class="collection-img" id="collection-img" src="sbor 1 new.png" alt="">
+                <div>
+                    <div class="collection-title" id="collection-title">Для семей с детьми</div>
+                    <div class="collection-sub" id="collection-sub">Собираем вещи на помощь многодетным семьям</div>
+                </div>
+            </div>
+            <button class="change-collection-btn" onclick="openChangeSheet()">Поменять сбор вещей</button>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Что сейчас нужно</h2>
+            <p class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</p>
+            <div id="needs-container"></div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Описание товаров</h2>
+            <textarea class="desc-textarea" id="desc-textarea"></textarea>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Адрес</h2>
+            <div class="field-row dark">
+                <span>Москва, Чонгарский б-р, 7</span>
+                <span class="clear-btn">×</span>
+            </div>
+            <p class="hint">Укажите реальный адрес, откуда покупатель сможет оформить доставку</p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Авито Доставка</h2>
+            <p class="delivery-copy">Выберите, как покупатели смогут заказать ваши товары. Это бесплатно и безопасно: вам не нужно платить за отправку.</p>
+            <div class="toggle-row">
+                <div class="toggle-static"></div>
+                <div>
+                    <div class="toggle-title">В постамат</div>
+                    <div class="toggle-sub">5Post</div>
+                </div>
+            </div>
+            <div class="toggle-row">
+                <div class="toggle-static"></div>
+                <div>
+                    <div class="toggle-title">В пункт выдачи</div>
+                    <div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-bottom:24px;">
+            <h2 class="section-title">Контакты</h2>
+            <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявления с нужными им вещами, узнают подробности и договорятся о сделке</p>
+            <div class="section" style="margin-top:24px;">
+                <h2 class="section-title">Телефон</h2>
+                <p class="contacts-copy">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span style="color:#767676;text-decoration:underline;">Подробнее</span></p>
+                <div class="field-row dark">
+                    <span>8 200 614-53-63</span>
+                    <span class="clear-btn">×</span>
+                </div>
+            </div>
+            <div class="section" style="margin-top:24px;">
+                <h2 class="section-title">Способ связи</h2>
+                <div class="radio-row"><span class="radio active"></span><span>Звонки и сообщения</span></div>
+                <div class="radio-row"><span class="radio"></span><span>Только звонки</span></div>
+                <div class="radio-row"><span class="radio"></span><span>Только сообщения</span></div>
+            </div>
+        </section>
+    </main>
 
     <div class="bottom-bar">
         <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Продолжить</button>
     </div>
 
-    <!-- ШТОРКА: КАК ЭТО РАБОТАЕТ -->
     <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
@@ -626,82 +873,38 @@
                 <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Преимущества</button>
             </div>
             <div class="sheet-pane" id="spane-how">
-                <div class="sheet-step">
-                    <img src="sheets materials/1.png" width="64" height="64" alt="">
-                    <div class="sheet-step-text">
-                        <div class="sheet-step-title">Разместите благотворительное объявление</div>
-                        <div class="sheet-step-sub">Выберите вещи, которые готовы передать пострадавшим</div>
-                    </div>
-                </div>
-                <div class="sheet-step">
-                    <img src="sheets materials/2.png" width="64" height="64" alt="">
-                    <div class="sheet-step-text">
-                        <div class="sheet-step-title">Объявление увидят люди и фонды</div>
-                        <div class="sheet-step-sub">Оно попадёт в специальный раздел помощи для региона ЧС</div>
-                    </div>
-                </div>
-                <div class="sheet-step">
-                    <img src="sheets materials/3.png" width="64" height="64" alt="">
-                    <div class="sheet-step-text">
-                        <div class="sheet-step-title">Отправьте вещи Авито Доставкой</div>
-                        <div class="sheet-step-sub">Получатель сможет оформить доставку всего за 1 ₽</div>
-                    </div>
-                </div>
+                <div class="sheet-step"><img src="sheets materials/1.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Разместите бесплатное объявление</div><div class="sheet-step-sub">Выберите вещи, которые нужны фондам</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/2.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Фонд напишет вам в чате</div><div class="sheet-step-sub">Обычно это занимает несколько дней</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/3.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Передайте вещи Авито Доставкой</div><div class="sheet-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div></div></div>
             </div>
             <div class="sheet-pane" id="spane-benefits" style="display:none">
-                <div class="sheet-step">
-                    <img src="sheets materials/4.png" width="64" height="64" alt="">
-                    <div class="sheet-step-text">
-                        <div class="sheet-step-title">Помощь быстрее доходит до пострадавших</div>
-                        <div class="sheet-step-sub">Объявления показываются людям и фондам в регионе ЧС</div>
-                    </div>
-                </div>
-                <div class="sheet-step">
-                    <img src="sheets materials/5.png" width="64" height="64" alt="">
-                    <div class="sheet-step-text">
-                        <div class="sheet-step-title">Можно отдать вещи даром или за символическую цену</div>
-                        <div class="sheet-step-sub">Подойдут товары первой необходимости и гуманитарная помощь</div>
-                    </div>
-                </div>
-                <div class="sheet-step">
-                    <img src="sheets materials/6.png" width="64" height="64" alt="">
-                    <div class="sheet-step-text">
-                        <div class="sheet-step-title">Льготная доставка за счёт Авито</div>
-                        <div class="sheet-step-sub">Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽</div>
-                    </div>
-                </div>
+                <div class="sheet-step"><img src="sheets materials/4.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Пишут только проверенные фонды</div><div class="sheet-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/5.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Передайте нужные вещи</div><div class="sheet-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/6.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Без затрат на размещение и доставку</div><div class="sheet-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div></div></div>
             </div>
         </div>
     </div>
 
-    <!-- ШТОРКА: ВЫБОР СБОРА -->
     <div class="sheet-overlay" id="collection-sheet" onclick="closeChangeSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
             <button class="sheet-close" onclick="closeChangeSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
-            <h2 class="sheet-title" style="margin-bottom:8px;">Выберите другой сбор</h2>
-            <p class="sheet-collection-sub">Сейчас в Авито запущено несколько активных сборов, Вы можете выбрать тот, в котором захотите поучаствовать.</p>
+            <h2 class="sheet-title">Выберите другой сбор</h2>
+            <p class="collection-sheet-sub">Сейчас в Авито запущено несколько активных сборов, вы можете выбрать тот, в котором захотите поучаствовать.</p>
             <div class="collection-item" onclick="selectCollection(0)">
                 <img src="crisis help/сбор 1.png" class="collection-thumb" alt="">
-                <div class="collection-info">
-                    <div class="collection-name">Помощь семьям</div>
-                    <div class="collection-sub">Собираем вещи на помощь малообеспеченным многодетным семьям</div>
-                </div>
-                <img src="crisis help/Radio off.png" width="24" height="24" id="radio-0" alt="">
+                <div class="collection-info"><div class="collection-name">Помощь семьям</div><div class="collection-sheet-text">Собираем вещи на помощь малообеспеченным многодетным семьям</div></div>
+                <img src="crisis help/Radio on.png" width="24" height="24" id="radio-0" alt="">
             </div>
             <div class="collection-item" onclick="selectCollection(1)" style="border-bottom:none;">
                 <img src="crisis help/сбор 2.png" class="collection-thumb" alt="">
-                <div class="collection-info">
-                    <div class="collection-name">Помощь в Дагестане ❤️</div>
-                    <div class="collection-sub">Собираем вещи в помощь людям, пострадавшим от паводков</div>
-                </div>
-                <img src="crisis help/Radio on.png" width="24" height="24" id="radio-1" alt="">
+                <div class="collection-info"><div class="collection-name">Помощь в Дагестане ❤️</div><div class="collection-sheet-text">Собираем вещи в помощь людям, пострадавшим от паводков</div></div>
+                <img src="crisis help/Radio off.png" width="24" height="24" id="radio-1" alt="">
             </div>
-            <button class="collection-choose-btn" onclick="confirmCollection()">Выбрать</button>
+            <button class="sheet-primary" onclick="confirmCollection()">Выбрать</button>
         </div>
     </div>
 
-    <!-- ПОПАП: СМЕНА СБОРА -->
     <div class="switch-popup-overlay" id="switch-popup" onclick="closeSwitchPopup()">
         <div class="switch-popup-card" onclick="event.stopPropagation()">
             <button class="sheet-close" onclick="closeSwitchPopup()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
@@ -712,12 +915,214 @@
         </div>
     </div>
 
+    <div class="sheet-overlay" id="need-sheet" onclick="closeNeedSheet()">
+        <div class="sheet-card" onclick="event.stopPropagation()">
+            <div class="sheet-drag"></div>
+            <button class="sheet-close" onclick="closeNeedSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
+            <h2 class="sheet-title">Выберите, что готовы передать</h2>
+            <p class="sheet-subtitle" id="need-sheet-sub"></p>
+            <div id="need-sheet-list"></div>
+            <button class="sheet-primary" onclick="applyNeedSelection()">Выбрать</button>
+        </div>
+    </div>
+
     <script>
-        // ── COLLECTION SHEET ──
-        let selectedCollection = 1;
+        const IS_CRISIS_PAGE = location.pathname.includes('step5-crisis');
+        const CURRENT_PAGE = IS_CRISIS_PAGE ? 'step5-crisis.html' : 'step5.html';
+        const CURRENT_COLLECTION = IS_CRISIS_PAGE ? 'crisis' : 'family';
+        let currentCollection = CURRENT_COLLECTION;
+        let selectedCollection = 0;
+        let activeNeedId = null;
+        let draftSelections = {};
+        let manualDesc = false;
+
+        const COLLECTIONS = {
+            family: {
+                route: 'step5.html',
+                title: 'Для семей с детьми',
+                sub: 'Собираем вещи на помощь многодетным семьям',
+                image: 'sbor 1 new.png',
+                storage: 'regular',
+                needs: [
+                    { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
+                        { id: 'men-jeans', name: 'Мужские джинсы, размер 48–54', needed: 5 },
+                        { id: 'women-sweaters', name: 'Женские теплые кофты, размер S–L', needed: 6 },
+                        { id: 'jackets', name: 'Демисезонные куртки', needed: 8 },
+                        { id: 'shoes', name: 'Обувь для взрослых', needed: 7 },
+                        { id: 'hats', name: 'Шапки и шарфы', needed: 4 }
+                    ] },
+                    { id: 'kids', title: 'Детские вещи', countable: true, items: [
+                        { id: 'kids-pants', name: 'Детские брюки и джинсы', needed: 5 },
+                        { id: 'kids-hoodies', name: 'Толстовки и свитшоты', needed: 6 },
+                        { id: 'kids-dresses', name: 'Платья и сарафаны', needed: 4 },
+                        { id: 'kids-shoes', name: 'Детская обувь', needed: 5 },
+                        { id: 'kids-outerwear', name: 'Куртки для детей', needed: 3 }
+                    ] },
+                    { id: 'toys', title: 'Детские игрушки', countable: false, items: [
+                        { id: 'constructors', name: 'Конструкторы' },
+                        { id: 'dolls', name: 'Куклы и аксессуары' },
+                        { id: 'cars', name: 'Машинки' },
+                        { id: 'books', name: 'Детские книги' },
+                        { id: 'board-games', name: 'Настольные игры' }
+                    ] }
+                ]
+            },
+            crisis: {
+                route: 'step5-crisis.html',
+                title: 'Помощь Дагестану',
+                sub: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+                image: 'crisis help/сбор 2.png',
+                storage: 'crisis',
+                needs: [
+                    { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
+                        { id: 'warm-clothes', name: 'Теплая одежда для взрослых', needed: 8 },
+                        { id: 'kids-warm', name: 'Теплая одежда для детей', needed: 7 },
+                        { id: 'raincoats', name: 'Дождевики', needed: 5 },
+                        { id: 'boots', name: 'Резиновые сапоги', needed: 6 }
+                    ] },
+                    { id: 'home', title: 'Домашняя утварь', countable: true, items: [
+                        { id: 'bedding', name: 'Постельное белье', needed: 6 },
+                        { id: 'blankets', name: 'Одеяла и пледы', needed: 5 },
+                        { id: 'towels', name: 'Полотенца', needed: 8 },
+                        { id: 'dishes', name: 'Посуда', needed: 7 }
+                    ] },
+                    { id: 'hygiene', title: 'Средства гигиены', countable: false, items: [
+                        { id: 'toothpaste', name: 'Зубная паста и щетки' },
+                        { id: 'shampoo', name: 'Шампунь и гель для душа' },
+                        { id: 'soap', name: 'Мыло' },
+                        { id: 'wipes', name: 'Влажные салфетки' },
+                        { id: 'powder', name: 'Стиральный порошок' }
+                    ] }
+                ]
+            }
+        };
+
+        const CONDITION_NAMES = {
+            'new-tag': 'Новое, с биркой',
+            excellent: 'Отличное',
+            good: 'Хорошее',
+            fair: 'Удовлетворительное'
+        };
+
+        const ADTYPE_NAMES = { own: 'Продаю своё' };
+
+        function saveAndExit() {
+            persistAll();
+            sessionStorage.setItem('hasDraft', '1');
+            window.location.href = 'ads.html?tab=drafts&toast=1';
+        }
+
+        function photoSrc(id) {
+            return Number(id) <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+        }
+
+        function renderPhotos() {
+            const grid = document.getElementById('photos-grid');
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            grid.innerHTML = '';
+
+            photos.forEach((id, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'photo-cell';
+                cell.innerHTML = `
+                    ${index === 0 ? '<span class="main-tag">Главная</span>' : ''}
+                    <img src="${photoSrc(id)}" class="photo-img" alt="">
+                    <button class="delete-btn" onclick="deletePhoto(${id})">
+                        <img src="step 2 materials/Icon delete.svg" width="24" height="24" alt="">
+                    </button>
+                `;
+                grid.appendChild(cell);
+            });
+
+            const addCell = document.createElement('button');
+            addCell.className = 'photo-cell add-cell';
+            addCell.onclick = openPhotoEdit;
+            addCell.innerHTML = `<img src="step 2 materials/Camera.svg" width="32" height="32" alt=""><span>Добавить</span>`;
+            grid.appendChild(addCell);
+        }
+
+        function deletePhoto(id) {
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]').filter(p => Number(p) !== Number(id));
+            sessionStorage.setItem('selectedPhotos', JSON.stringify(photos));
+            renderPhotos();
+        }
+
+        function openPhotoEdit() {
+            sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
+            window.location.href = 'step2-choose.html';
+        }
+
+        function clearTitle() {
+            const input = document.getElementById('title-display');
+            input.value = '';
+            sessionStorage.removeItem('adTitle');
+            document.getElementById('title-clear-btn').style.display = 'none';
+            input.focus();
+        }
+
+        function clearPrice() {
+            const input = document.getElementById('price-input');
+            input.value = '';
+            sessionStorage.removeItem('mainPrice');
+            input.focus();
+        }
+
+        function setupMainFields() {
+            const titleInput = document.getElementById('title-display');
+            const savedTitle = sessionStorage.getItem('adTitle') || '';
+            titleInput.value = savedTitle;
+            document.getElementById('title-clear-btn').style.display = savedTitle ? 'block' : 'none';
+            titleInput.addEventListener('input', () => {
+                sessionStorage.setItem('adTitle', titleInput.value);
+                document.getElementById('title-clear-btn').style.display = titleInput.value ? 'block' : 'none';
+            });
+
+            const condition = sessionStorage.getItem('mainCondition');
+            if (condition && CONDITION_NAMES[condition]) {
+                document.getElementById('condition-section').style.display = 'block';
+                document.getElementById('condition-value').textContent = CONDITION_NAMES[condition];
+            }
+
+            const adtype = sessionStorage.getItem('mainAdType');
+            if (adtype && ADTYPE_NAMES[adtype]) {
+                document.getElementById('adtype-section').style.display = 'block';
+                document.getElementById('adtype-value').textContent = ADTYPE_NAMES[adtype];
+            }
+
+            let price = sessionStorage.getItem('mainPrice') || '';
+            const descPrice = (sessionStorage.getItem('adDesc') || '').match(/Цена:\s*([0-9\s]+) ₽/);
+            if (!price && descPrice) price = descPrice[1].replace(/\s/g, '');
+            if (price) {
+                document.getElementById('price-section').style.display = 'block';
+                document.getElementById('price-input').value = price + ' ₽';
+            }
+            document.getElementById('price-input').addEventListener('input', function () {
+                const digits = this.value.replace(/\D/g, '');
+                this.value = digits ? digits + ' ₽' : '';
+                if (digits) sessionStorage.setItem('mainPrice', digits);
+                else sessionStorage.removeItem('mainPrice');
+            });
+        }
+
+        function openSheet() {
+            document.getElementById('sheet-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheet() {
+            document.getElementById('sheet-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function switchSheetTab(tab) {
+            document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
+            document.getElementById('stab-' + tab).classList.add('active');
+            document.getElementById('spane-' + tab).style.display = 'block';
+        }
 
         function openChangeSheet() {
-            selectedCollection = 1;
+            selectedCollection = currentCollection === 'family' ? 0 : 1;
             updateRadios();
             document.getElementById('collection-sheet').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -739,13 +1144,14 @@
         }
 
         function confirmCollection() {
-            if (selectedCollection === 1) {
+            const next = selectedCollection === 0 ? 'family' : 'crisis';
+            if (next === currentCollection) {
                 closeChangeSheet();
-            } else {
-                closeChangeSheet();
-                document.getElementById('switch-popup').classList.add('open');
-                document.body.style.overflow = 'hidden';
+                return;
             }
+            closeChangeSheet();
+            document.getElementById('switch-popup').classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeSwitchPopup() {
@@ -754,72 +1160,150 @@
         }
 
         function changeCollection() {
+            persistAll();
             sessionStorage.setItem('hasDraft', '1');
             sessionStorage.removeItem('adCategories');
-            sessionStorage.removeItem('adDesc');
-            window.location.href = 'step5.html';
+            sessionStorage.removeItem('charityNeedSelections');
+            window.location.href = selectedCollection === 0 ? 'step5.html' : 'step5-crisis.html';
         }
 
-        // ── HOW IT WORKS SHEET ──
-        function openSheet() {
-            document.getElementById('sheet-overlay').classList.add('open');
+        function loadSelections() {
+            return JSON.parse(sessionStorage.getItem('charityNeedSelections') || '{}');
+        }
+
+        function saveSelections(selections) {
+            sessionStorage.setItem('charityNeedSelections', JSON.stringify(selections));
+        }
+
+        function getNeed(needId) {
+            return COLLECTIONS[currentCollection].needs.find(n => n.id === needId);
+        }
+
+        function renderCollection() {
+            const data = COLLECTIONS[currentCollection];
+            document.getElementById('collection-img').src = data.image;
+            document.getElementById('collection-title').textContent = data.title;
+            document.getElementById('collection-sub').textContent = data.sub;
+        }
+
+        function renderNeeds() {
+            const container = document.getElementById('needs-container');
+            const selections = loadSelections();
+            container.innerHTML = '';
+            COLLECTIONS[currentCollection].needs.forEach(need => {
+                const selectedItems = selections[need.id] || {};
+                const selectedCount = Object.keys(selectedItems).length;
+                const total = need.countable ? need.items.reduce((sum, item) => sum + item.needed, 0) : 0;
+                const block = document.createElement('div');
+                block.className = 'need-block';
+                block.innerHTML = `
+                    <div class="need-title">${need.title}</div>
+                    <div class="need-sub">${need.countable ? `Осталось собрать ${total} ${pluralItems(total)}` : 'Выберите подходящие вещи'}</div>
+                    <button class="selector ${selectedCount ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
+                        <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
+                        <span class="chevron"></span>
+                    </button>
+                    <div class="tags" id="tags-${need.id}"></div>
+                `;
+                container.appendChild(block);
+                renderTags(need.id);
+            });
+            updateContinueState();
+            autoBuildDescription();
+        }
+
+        function renderTags(needId) {
+            const tags = document.getElementById('tags-' + needId);
+            if (!tags) return;
+            const need = getNeed(needId);
+            const selections = loadSelections();
+            const selectedItems = selections[needId] || {};
+            tags.innerHTML = '';
+            Object.keys(selectedItems).forEach(itemId => {
+                const item = need.items.find(i => i.id === itemId);
+                if (!item) return;
+                const qty = selectedItems[itemId];
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.innerHTML = `${item.name}${need.countable ? `, ${qty} шт.` : ''}<button onclick="removeNeedItem('${needId}','${itemId}')">×</button>`;
+                tags.appendChild(tag);
+            });
+        }
+
+        function removeNeedItem(needId, itemId) {
+            const selections = loadSelections();
+            if (selections[needId]) {
+                delete selections[needId][itemId];
+                if (Object.keys(selections[needId]).length === 0) delete selections[needId];
+            }
+            saveSelections(selections);
+            renderNeeds();
+        }
+
+        function openNeedSheet(needId) {
+            activeNeedId = needId;
+            draftSelections = JSON.parse(JSON.stringify(loadSelections()[needId] || {}));
+            const need = getNeed(needId);
+            document.getElementById('need-sheet-sub').textContent = `В категории “${need.title}”`;
+            renderNeedSheetList();
+            document.getElementById('need-sheet').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeSheet() {
-            document.getElementById('sheet-overlay').classList.remove('open');
+        function closeNeedSheet() {
+            document.getElementById('need-sheet').classList.remove('open');
             document.body.style.overflow = '';
         }
 
-        function switchSheetTab(tab) {
-            document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
-            document.getElementById('stab-' + tab).classList.add('active');
-            document.getElementById('spane-' + tab).style.display = 'block';
+        function renderNeedSheetList() {
+            const need = getNeed(activeNeedId);
+            const list = document.getElementById('need-sheet-list');
+            list.innerHTML = '';
+            need.items.forEach(item => {
+                const selected = Object.prototype.hasOwnProperty.call(draftSelections, item.id);
+                const qty = draftSelections[item.id] || 1;
+                const row = document.createElement('div');
+                row.className = 'need-row';
+                row.innerHTML = `
+                    <div style="flex:1;min-width:0;">
+                        <div class="need-item-name">${item.name}</div>
+                        ${need.countable ? `<div class="need-item-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                        ${selected && need.countable ? `
+                            <div class="qty-picker">
+                                <button onclick="changeDraftQty('${item.id}', -1)">−</button>
+                                <span>${qty}</span>
+                                <button onclick="changeDraftQty('${item.id}', 1)">+</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <button class="check-btn ${selected ? 'active' : ''}" onclick="toggleDraftItem('${item.id}')">${selected ? '✓' : ''}</button>
+                `;
+                list.appendChild(row);
+            });
         }
 
-        // ── MAIN PAGE ──
-        function saveAndExit() {
-            sessionStorage.setItem('hasDraft', '1');
-            window.location.href = 'ads.html?tab=drafts&toast=1';
+        function toggleDraftItem(itemId) {
+            if (Object.prototype.hasOwnProperty.call(draftSelections, itemId)) delete draftSelections[itemId];
+            else draftSelections[itemId] = 1;
+            renderNeedSheetList();
         }
 
-        function goToDelivery() {
-            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
-            if (cats.length === 0) return;
-            sessionStorage.setItem('adCollection', 'crisis');
-            window.location.href = 'delivery.html';
+        function changeDraftQty(itemId, delta) {
+            const need = getNeed(activeNeedId);
+            const item = need.items.find(i => i.id === itemId);
+            const max = item?.needed || 99;
+            draftSelections[itemId] = Math.max(1, Math.min(max, (draftSelections[itemId] || 1) + delta));
+            renderNeedSheetList();
         }
 
-        function openPhotoEdit() {
-            sessionStorage.setItem('photoReturnPage', 'step5-crisis.html');
-            window.location.href = 'step2-choose.html';
+        function applyNeedSelection() {
+            const selections = loadSelections();
+            if (Object.keys(draftSelections).length) selections[activeNeedId] = draftSelections;
+            else delete selections[activeNeedId];
+            saveSelections(selections);
+            closeNeedSheet();
+            renderNeeds();
         }
-
-        function updatePhotosCount() {
-            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
-            document.getElementById('photos-edit-text').textContent = `Редактировать ${photos.length} фото ›`;
-        }
-
-        function loadTitle() {
-            const title = sessionStorage.getItem('adTitle') || '';
-            const input = document.getElementById('title-display');
-            input.value = title;
-            document.getElementById('title-clear-btn').style.display = title ? 'inline-flex' : 'none';
-        }
-
-        function clearTitle() {
-            const input = document.getElementById('title-display');
-            input.value = '';
-            sessionStorage.removeItem('adTitle');
-            document.getElementById('title-clear-btn').style.display = 'none';
-            input.focus();
-        }
-
-        document.getElementById('title-display').addEventListener('input', function () {
-            sessionStorage.setItem('adTitle', this.value);
-            document.getElementById('title-clear-btn').style.display = this.value ? 'inline-flex' : 'none';
-        });
 
         function pluralItems(n) {
             const m10 = n % 10, m100 = n % 100;
@@ -829,71 +1313,90 @@
             return 'вещей';
         }
 
-        function updateCategorySection() {
-            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
-            const titleEl = document.getElementById('cat-section-title');
-            const contentEl = document.getElementById('cat-content');
-            const continueBtn = document.getElementById('continue-btn');
-
-            if (cats.length > 0) {
-                titleEl.textContent = 'Вещи, которые вы выбрали для передачи';
-                contentEl.innerHTML = cats.map(c => `
-                    <div class="selected-cat-row">
-                        <img class="selected-cat-img" src="${c.image}" width="44" height="44" alt="">
-                        <div>
-                            <div class="selected-cat-name">${c.name}</div>
-                            ${c.countable === false ? '' : `<div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>`}
-                        </div>
-                    </div>
-                `).join('') + `
-                    <button class="add-cat-btn" onclick="window.location.href='step6-crisis.html'">Редактировать категории</button>
-                `;
-                continueBtn.style.background = '#1A1A1A';
-                continueBtn.style.cursor = 'pointer';
-            } else {
-                titleEl.textContent = 'Выберите, что готовы передать';
-                contentEl.innerHTML = `
-                    <button class="add-cat-btn" onclick="window.location.href='step6-crisis.html'">Выбрать категории</button>
-                `;
-                continueBtn.style.background = '#C4C4C4';
-                continueBtn.style.cursor = 'default';
-            }
+        function selectedLines() {
+            const selections = loadSelections();
+            const lines = [];
+            COLLECTIONS[currentCollection].needs.forEach(need => {
+                const group = selections[need.id] || {};
+                Object.keys(group).forEach(itemId => {
+                    const item = need.items.find(i => i.id === itemId);
+                    if (!item) return;
+                    lines.push(need.countable ? `${item.name} — ${group[itemId]} шт.` : item.name);
+                });
+            });
+            return lines;
         }
 
-        const ta = document.getElementById('desc-textarea');
-
-        function syncCommentToCategories(text) {
-            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
-            if (cats.length === 0) return;
-            const cat = cats[0];
-            const header = cat.countable === false ? cat.name : `${cat.name}, ${cat.quantity} ${pluralItems(cat.quantity)}`;
-            if (text.startsWith(header)) {
-                cat.comment = text.slice(header.length).replace(/^\n+/, '');
-                sessionStorage.setItem('adCategories', JSON.stringify(cats));
-            }
+        function autoBuildDescription() {
+            const ta = document.getElementById('desc-textarea');
+            if (manualDesc) return;
+            const base = sessionStorage.getItem('mainDesc') || sessionStorage.getItem('adDesc') || '';
+            const lines = selectedLines();
+            const generated = lines.length ? `Готовы передать:\n${lines.join('\n')}` : '';
+            ta.value = [base, generated].filter(Boolean).join('\n\n');
+            resizeTextarea();
+            persistCategories();
         }
 
-        ta.addEventListener('input', () => {
+        function resizeTextarea() {
+            const ta = document.getElementById('desc-textarea');
             ta.style.height = 'auto';
             ta.style.height = ta.scrollHeight + 'px';
-            sessionStorage.setItem('adDesc', ta.value);
-            syncCommentToCategories(ta.value);
-        });
-
-        const savedDesc = sessionStorage.getItem('adDesc');
-        if (savedDesc) {
-            ta.value = savedDesc;
-            ta.style.height = ta.scrollHeight + 'px';
         }
 
-        updatePhotosCount();
-        loadTitle();
-        updateCategorySection();
+        function persistCategories() {
+            const selections = loadSelections();
+            const categories = [];
+            COLLECTIONS[currentCollection].needs.forEach(need => {
+                const group = selections[need.id] || {};
+                const ids = Object.keys(group);
+                if (!ids.length) return;
+                categories.push({
+                    id: need.id,
+                    name: need.title,
+                    quantity: need.countable ? ids.reduce((sum, id) => sum + Number(group[id] || 0), 0) : ids.length,
+                    countable: need.countable,
+                    image: currentCollection === 'crisis' ? 'crisis help/cat 1.png' : 'crisis help/cat 3.png',
+                    comment: ids.map(id => {
+                        const item = need.items.find(i => i.id === id);
+                        return item ? (need.countable ? `${item.name} — ${group[id]} шт.` : item.name) : '';
+                    }).filter(Boolean).join('\n')
+                });
+            });
+            sessionStorage.setItem('adCategories', JSON.stringify(categories));
+            sessionStorage.setItem('adCollection', COLLECTIONS[currentCollection].storage);
+            sessionStorage.setItem('adDesc', document.getElementById('desc-textarea').value);
+        }
 
-        window.addEventListener('scroll', function() {
-            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
-        }, { passive: true });
+        function persistAll() {
+            persistCategories();
+            sessionStorage.setItem('adTitle', document.getElementById('title-display').value);
+            sessionStorage.setItem('adDesc', document.getElementById('desc-textarea').value);
+        }
+
+        function updateContinueState() {
+            const hasSelections = Object.keys(loadSelections()).length > 0;
+            document.getElementById('continue-btn').classList.toggle('active', hasSelections);
+        }
+
+        function goToDelivery() {
+            if (!Object.keys(loadSelections()).length) return;
+            persistAll();
+            window.location.href = 'delivery.html';
+        }
+
+        const descTextarea = document.getElementById('desc-textarea');
+        descTextarea.addEventListener('input', () => {
+            manualDesc = true;
+            resizeTextarea();
+            persistCategories();
+        });
+
+        currentCollection = CURRENT_COLLECTION;
+        renderPhotos();
+        setupMainFields();
+        renderCollection();
+        renderNeeds();
     </script>
-
 </body>
 </html>
