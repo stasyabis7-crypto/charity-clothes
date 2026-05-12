@@ -185,6 +185,32 @@
         .dropdown-body.open { display: block; }
         .dropdown-list { margin: 0; padding-left: 20px; }
 
+        /* Regular listing flow */
+        .option-list { display: flex; flex-direction: column; gap: 0; }
+        .option-row {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            padding: 14px 0; cursor: pointer;
+        }
+        .option-label { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.35; }
+        .option-check { width: 21px; height: 21px; flex-shrink: 0; }
+        .spec-list { display: flex; flex-direction: column; gap: 20px; }
+        .spec-block { display: flex; flex-direction: column; gap: 8px; }
+        .spec-label { font-size: 15px; font-weight: 800; color: #1A1A1A; }
+        .spec-field {
+            width: 100%; background: #F4F4F4; border-radius: 12px; padding: 14px 16px;
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        }
+        .spec-value { font-size: 15px; font-weight: 400; color: #1A1A1A; }
+        .spec-helper { font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.4; }
+        .charity-hint {
+            display: none; margin-top: 8px; font-size: 13px; font-weight: 400;
+            color: #9E9E9E; line-height: 1.5;
+        }
+        .charity-hint.visible { display: block; }
+        .charity-link { color: #9E9E9E; text-decoration: underline; cursor: pointer; }
+        .price-input-wrap { position: relative; }
+        .price-input { padding-right: 44px; }
+
         /* ── SECTION TITLE ── */
         .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
         .section-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 2px; margin-bottom: 16px; }
@@ -546,6 +572,119 @@
 
         </div><!-- /extraSections -->
 
+        <!-- 3 · REGULAR LISTING FLOW -->
+        <div id="regularSections" style="display:none">
+
+            <div class="form-section">
+                <div class="section-title">Состояние</div>
+                <div class="section-sub">Выберите состояние вашего товара</div>
+                <div class="option-list" id="conditionOptions"></div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Тип объявления</div>
+                <div style="height:12px"></div>
+                <div class="option-list" id="adTypeOptions"></div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Характеристики</div>
+                <div style="height:18px"></div>
+                <div class="spec-list" id="regularSpecs"></div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Описание товара</div>
+                <div style="height:14px"></div>
+                <textarea class="textarea-field" id="regularDescTextarea" placeholder="Опишите ваш товар подробнее"></textarea>
+                <div class="charity-hint" id="descCharityHint">
+                    Ваш товар подходит для благотворительного сбора вещей ❤️.
+                    <span class="charity-link" onclick="switchToCharityFlow()">Передать через фонд</span>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Местоположение</div>
+                <div style="height:14px"></div>
+                <div class="location-input-wrap">
+                    <input type="text" class="location-input" value="Москва, Лесная ул., 7" readonly>
+                    <button class="input-clear">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="location-hint">Укажите реальный адрес, где покупатель может купить или получить товар</div>
+                <div class="map-box">
+                    <img src="Map Input.png" alt="Карта">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Условия продажи</div>
+                <div style="height:14px"></div>
+                <div class="price-input-wrap">
+                    <input type="text" class="text-input price-input" id="regularPriceInput" inputmode="numeric" autocomplete="off">
+                    <button class="title-clear" id="regularPriceClear" onclick="clearRegularPrice(event)">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 3L13 13M13 3L3 13" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="charity-hint" id="priceCharityHint">
+                    Ваш товар подходит под активный благотворительный сбор для фонда ❤️.
+                    <span class="charity-link" onclick="switchToCharityFlow()">Перейти</span>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Фотографии</div>
+                <div class="section-sub">Не более 40</div>
+                <div class="photos-wrap" id="regularPhotoWrap">
+                    <div class="photo-uploader" onclick="openPhotoModal()">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="13" r="4" stroke="#1A1A1A" stroke-width="1.6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Авито Доставка</div>
+                <div class="delivery-desc">Выберите, как покупатели смогут заказать ваш товар. Это бесплатно и безопасно: вам не нужно платить за отправку, а если с посылкой что-то случится в пути, мы возместим ущерб.</div>
+                <div class="toggle-row">
+                    <div class="toggle-switch"></div>
+                    <div><div class="toggle-name">В постамат</div><div class="toggle-sub">5Post</div></div>
+                </div>
+                <div class="toggle-row">
+                    <div class="toggle-switch"></div>
+                    <div><div class="toggle-name">В пункт выдачи</div><div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div></div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Контакты</div>
+                <div style="height:28px"></div>
+                <div class="contact-group">
+                    <div class="contact-group-title">Телефон</div>
+                    <div class="contact-desc">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <u>Подробнее</u></div>
+                    <div class="phone-wrap">
+                        <input type="text" class="phone-input" value="8 200 614-53-63" readonly>
+                    </div>
+                </div>
+                <div class="contact-group" style="margin-bottom:0">
+                    <div class="contact-group-title">Способ связи</div>
+                    <div class="radio-group">
+                        <div class="radio-item"><div class="radio-dot active"></div><span class="radio-label">Звонки и сообщения</span></div>
+                        <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Только звонки</span></div>
+                        <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Только сообщения</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /regularSections -->
+
             <!-- FOOTER -->
             <div class="form-footer">
                 <button class="btn-primary" id="submitBtn" onclick="navigateToSuccess()" disabled>Разместить объявление</button>
@@ -703,11 +842,48 @@
         { match: ['игрушк','куклы','лего'], suggest: ['Игрушки','Конструктор','Мягкие игрушки','Б/у'] },
     ];
 
+    const CHECK_ON = 'step 4 materials/Checkmark on.png';
+    const CHECK_OFF = 'step 4 materials/Checkmark off.png';
+    const REGULAR_CONDITIONS = [
+        { id: 'new-tag', label: 'Новое, с биркой' },
+        { id: 'excellent', label: 'Отличное' },
+        { id: 'good', label: 'Хорошее' },
+        { id: 'fair', label: 'Удовлетворительное' }
+    ];
+    const REGULAR_AD_TYPES = [
+        { id: 'own', label: 'Продаю своё' },
+        { id: 'other', label: 'Продаю чужое', disabled: true },
+        { id: 'rent', label: 'Сдаю в аренду', disabled: true }
+    ];
+    const REGULAR_SPECS = {
+        tshirts: [
+            { label: 'Тип одежды', value: 'Футболка' },
+            { label: 'Бренд', value: 'H&M', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
+            { label: 'Цвет', value: 'Белый' },
+            { label: 'Для кого', value: 'Для девочек' }
+        ],
+        homewear: [
+            { label: 'Тип одежды', value: 'Домашний комплект' },
+            { label: 'Бренд', value: 'Без бренда', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
+            { label: 'Цвет', value: 'Розовый' },
+            { label: 'Для кого', value: 'Для девочек' }
+        ],
+        suits: [
+            { label: 'Тип одежды', value: 'Пиджак' },
+            { label: 'Бренд', value: 'Zara Kids', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
+            { label: 'Цвет', value: 'Синий' },
+            { label: 'Для кого', value: 'Для девочек' }
+        ]
+    };
+
     let currentCollection = 'family';
     let selectedCollectionInPopup = 'family';
     let catState = {};
     let bannerDismissed = false;
     let descUserEdited = false;
+    let regularCondition = 'good';
+    let regularAdType = 'own';
+    let regularPriceDigits = '';
 
     function isCountable(cat) {
         return cat.countable !== false;
@@ -744,8 +920,12 @@
     const suggestsEl = document.getElementById('suggests');
     const sectionCats = document.getElementById('sectionCats');
     const extraSections = document.getElementById('extraSections');
+    const regularSections = document.getElementById('regularSections');
     const breadcrumbs = document.getElementById('breadcrumbs');
     const descTextarea = document.getElementById('descTextarea');
+    const regularDescTextarea = document.getElementById('regularDescTextarea');
+    const regularPriceInput = document.getElementById('regularPriceInput');
+    const regularPriceClear = document.getElementById('regularPriceClear');
 
     titleInput.addEventListener('input', function () {
         const v = this.value.trim();
@@ -759,6 +939,7 @@
             suggestsEl.style.display = 'none';
             resetCat();
         }
+        updateSubmitBtn();
     });
 
     if (descTextarea) {
@@ -769,12 +950,40 @@
         });
     }
 
+    if (regularDescTextarea) {
+        regularDescTextarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.max(126, this.scrollHeight) + 'px';
+            document.getElementById('descCharityHint').classList.toggle('visible', this.value.trim().length > 0);
+            sessionStorage.setItem('mainDesc', this.value);
+        });
+    }
+
+    if (regularPriceInput) {
+        regularPriceInput.addEventListener('keydown', function(e) {
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+                regularPriceDigits += e.key;
+                updateRegularPrice();
+            } else if (e.key === 'Backspace') {
+                e.preventDefault();
+                regularPriceDigits = regularPriceDigits.slice(0, -1);
+                updateRegularPrice();
+            }
+        });
+        regularPriceInput.addEventListener('input', function() {
+            regularPriceDigits = this.value.replace(/\D/g, '');
+            updateRegularPrice();
+        });
+    }
+
     function clearTitle() {
         titleInput.value = '';
         document.getElementById('titleClear').style.display = 'none';
         sectionCats.style.display = 'none';
         suggestsEl.style.display = 'none';
         resetCat();
+        updateSubmitBtn();
         titleInput.focus();
     }
 
@@ -807,11 +1016,15 @@
         if (id === 'charity') {
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
             extraSections.style.display = 'block';
+            regularSections.style.display = 'none';
             renderCollection();
         } else {
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › ' + label;
             extraSections.style.display = 'none';
+            regularSections.style.display = 'block';
+            renderRegularFlow();
         }
+        updateSubmitBtn();
     }
 
     function resetCat() {
@@ -820,7 +1033,108 @@
         document.getElementById('catSelectWrap').style.display = 'none';
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
         extraSections.style.display = 'none';
+        regularSections.style.display = 'none';
         breadcrumbs.textContent = 'Личные вещи';
+        updateSubmitBtn();
+    }
+
+    /* ═══════════ REGULAR FLOW ═══════════ */
+    function renderRegularFlow() {
+        renderRegularOptions();
+        renderRegularSpecs();
+        updateRegularPrice();
+    }
+
+    function renderRegularOptions() {
+        const conditionsEl = document.getElementById('conditionOptions');
+        conditionsEl.innerHTML = REGULAR_CONDITIONS.map(o => `
+            <div class="option-row" onclick="selectRegularCondition('${o.id}')">
+                <span class="option-label">${o.label}</span>
+                <img class="option-check" src="${regularCondition === o.id ? CHECK_ON : CHECK_OFF}" alt="">
+            </div>
+        `).join('');
+
+        const adTypeEl = document.getElementById('adTypeOptions');
+        adTypeEl.innerHTML = REGULAR_AD_TYPES.map(o => `
+            <div class="option-row" ${o.disabled ? '' : `onclick="selectRegularAdType('${o.id}')"`}>
+                <span class="option-label">${o.label}</span>
+                <img class="option-check" src="${regularAdType === o.id ? CHECK_ON : CHECK_OFF}" alt="">
+            </div>
+        `).join('');
+    }
+
+    function selectRegularCondition(id) {
+        regularCondition = id;
+        sessionStorage.setItem('mainCondition', id);
+        renderRegularOptions();
+    }
+
+    function selectRegularAdType(id) {
+        regularAdType = id;
+        sessionStorage.setItem('mainAdType', id);
+        renderRegularOptions();
+    }
+
+    function renderRegularSpecs() {
+        const specs = REGULAR_SPECS[selectedCatId] || REGULAR_SPECS.tshirts;
+        document.getElementById('regularSpecs').innerHTML = specs.map(s => `
+            <div class="spec-block">
+                <div class="spec-label">${s.label}</div>
+                <div class="spec-field">
+                    <span class="spec-value">${s.value}</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                ${s.helper ? `<div class="spec-helper">${s.helper}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function updateRegularPrice() {
+        if (!regularPriceInput) return;
+        regularPriceInput.value = regularPriceDigits ? regularPriceDigits + ' ₽' : '';
+        regularPriceClear.style.display = regularPriceDigits ? 'flex' : 'none';
+        document.getElementById('priceCharityHint').classList.toggle('visible', regularPriceDigits !== '');
+        updateSubmitBtn();
+    }
+
+    function clearRegularPrice(e) {
+        e.stopPropagation();
+        regularPriceDigits = '';
+        updateRegularPrice();
+        regularPriceInput.focus();
+    }
+
+    function buildRegularDescription() {
+        const condition = REGULAR_CONDITIONS.find(o => o.id === regularCondition)?.label;
+        const specs = REGULAR_SPECS[selectedCatId] || REGULAR_SPECS.tshirts;
+        const descText = regularDescTextarea ? regularDescTextarea.value.trim() : '';
+        const parts = [];
+        if (condition) parts.push('Состояние: ' + condition);
+        parts.push(specs.map(s => `${s.label}: ${s.value}`).join(', '));
+        if (descText) parts.push(descText);
+        if (regularPriceDigits) parts.push('Цена: ' + regularPriceDigits + ' ₽');
+        return parts.join('\n\n');
+    }
+
+    function switchToCharityFlow() {
+        descUserEdited = true;
+        sessionStorage.setItem('adDesc', buildRegularDescription());
+        selectedCatId = 'charity';
+        document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
+        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+        regularSections.style.display = 'none';
+        extraSections.style.display = 'block';
+        renderCollection();
+        const savedDesc = sessionStorage.getItem('adDesc');
+        if (savedDesc && descTextarea) {
+            descTextarea.value = savedDesc;
+            descTextarea.style.height = 'auto';
+            descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
+            descUserEdited = true;
+        }
+        document.getElementById('extraSections').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     /* ═══════════ COLLECTION RENDER ═══════════ */
@@ -914,6 +1228,12 @@
     function updateSubmitBtn() {
         const btn = document.getElementById('submitBtn');
         if (!btn) return;
+        if (selectedCatId && selectedCatId !== 'charity') {
+            btn.textContent = 'Разместить объявление';
+            btn.disabled = !regularPriceDigits;
+            return;
+        }
+        btn.textContent = 'Разместить объявление';
         const coll = COLLECTIONS[currentCollection];
         const anySelected = coll.categories.some(c => catState[c.id]?.selected);
         btn.disabled = !anySelected;
@@ -1107,8 +1427,14 @@
         renderSelectedPhotos();
     }
     function renderSelectedPhotos() {
-        const wrap = document.getElementById('photoWrap');
-        const uploader = document.getElementById('photoUploader');
+        renderPhotosInto('photoWrap', 'photoUploader');
+        renderPhotosInto('regularPhotoWrap', null);
+    }
+
+    function renderPhotosInto(wrapId, uploaderId) {
+        const wrap = document.getElementById(wrapId);
+        if (!wrap) return;
+        const uploader = uploaderId ? document.getElementById(uploaderId) : wrap.querySelector('.photo-uploader');
         wrap.innerHTML = '';
         photoSelection.forEach(src => {
             const item = document.createElement('div');
@@ -1124,7 +1450,7 @@
             `;
             wrap.appendChild(item);
         });
-        wrap.appendChild(uploader);
+        if (uploader) wrap.appendChild(uploader);
     }
 
     function deletePhoto(src) {
@@ -1137,6 +1463,20 @@
         const btn = document.getElementById('submitBtn');
         if (btn && btn.disabled) return;
         const title = titleInput.value.trim() || 'Без названия';
+        if (selectedCatId && selectedCatId !== 'charity') {
+            sessionStorage.setItem('mainCategory', selectedCatId);
+            sessionStorage.setItem('mainCondition', regularCondition);
+            sessionStorage.setItem('mainAdType', regularAdType);
+            sessionStorage.setItem('mainDesc', regularDescTextarea ? regularDescTextarea.value : '');
+            sessionStorage.setItem('mainPrice', regularPriceDigits);
+            sessionStorage.setItem('adTitle', title);
+            sessionStorage.setItem('adDesc', buildRegularDescription());
+            sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
+            sessionStorage.setItem('adLocation', 'Москва, Лесная ул., 7');
+            sessionStorage.removeItem('hasDraft');
+            window.location.href = 'my-ads-desktop.html';
+            return;
+        }
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
@@ -1165,6 +1505,18 @@
     function saveDraftToSession() {
         const title = titleInput ? titleInput.value.trim() : '';
         sessionStorage.setItem('hasDraft', '1');
+        if (selectedCatId && selectedCatId !== 'charity') {
+            sessionStorage.setItem('mainCategory', selectedCatId);
+            sessionStorage.setItem('mainCondition', regularCondition);
+            sessionStorage.setItem('mainAdType', regularAdType);
+            sessionStorage.setItem('mainDesc', regularDescTextarea ? regularDescTextarea.value : '');
+            sessionStorage.setItem('mainPrice', regularPriceDigits);
+            sessionStorage.setItem('adTitle', title || 'Без названия');
+            sessionStorage.setItem('adDesc', buildRegularDescription());
+            sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
+            sessionStorage.setItem('adLocation', 'Москва, Лесная ул., 7');
+            return;
+        }
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title || 'Без названия');
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
