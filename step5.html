@@ -25,7 +25,13 @@
             justify-content: space-between;
             padding: 16px 16px;
             background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 80;
+            transition: box-shadow 0.2s;
         }
+
+        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .save-exit {
             font-size: 15px;
@@ -62,7 +68,7 @@
         .section:first-child { margin-top: 0; }
 
         .section-title {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: 700;
             line-height: 1.25;
         }
@@ -202,11 +208,13 @@
         .clear-btn {
             border: none;
             background: transparent;
-            color: #000;
-            font-size: 26px;
-            line-height: 1;
             cursor: pointer;
             flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .collection-card {
@@ -258,7 +266,7 @@
         .need-block:first-of-type { margin-top: 20px; }
 
         .need-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             line-height: 1.25;
         }
@@ -290,15 +298,14 @@
 
         .selector.selected { color: #000; }
 
-        .chevron {
+        .arrow-icon {
             width: 14px;
             height: 14px;
-            border-right: 3px solid #000;
-            border-bottom: 3px solid #000;
-            transform: rotate(45deg);
-            margin-top: -6px;
+            object-fit: contain;
             flex-shrink: 0;
         }
+
+        .arrow-icon.gray { opacity: 0.35; }
 
         .tags {
             margin-top: 8px;
@@ -321,8 +328,11 @@
         .tag button {
             border: none;
             background: transparent;
-            font-size: 18px;
-            line-height: 1;
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
         }
 
@@ -406,6 +416,12 @@
             font-size: 15px;
             font-weight: 400;
             line-height: 1.4;
+        }
+
+        .minor-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.25;
         }
 
         .radio-row {
@@ -503,6 +519,11 @@
             border: none;
             background: transparent;
             cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .sheet-title {
@@ -562,6 +583,13 @@
             font-size: 15px;
             font-weight: 400;
             line-height: 1.4;
+        }
+
+        .sheet-section-heading {
+            margin-bottom: 18px;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
         }
 
         .collection-sheet-sub {
@@ -751,7 +779,7 @@
             <h2 class="section-title">Название объявления</h2>
             <div class="field-row dark">
                 <input class="field" id="title-display" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
-                <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()">×</button>
+                <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
             </div>
         </section>
 
@@ -760,7 +788,7 @@
             <p class="section-sub">Выбирается автоматически для передачи вещей на благотворительность</p>
             <div class="field-row disabled">
                 <span>Добрые вещи</span>
-                <span class="chevron" style="border-color:#A3A3A3;"></span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
             </div>
         </section>
 
@@ -768,7 +796,7 @@
             <h2 class="section-title">Состояние</h2>
             <div class="field-row disabled">
                 <span id="condition-value">Хорошее</span>
-                <span class="chevron" style="border-color:#A3A3A3;"></span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
             </div>
         </section>
 
@@ -776,7 +804,7 @@
             <h2 class="section-title">Тип объявления</h2>
             <div class="field-row disabled">
                 <span id="adtype-value">Продаю своё</span>
-                <span class="chevron" style="border-color:#A3A3A3;"></span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
             </div>
         </section>
 
@@ -784,7 +812,7 @@
             <h2 class="section-title">Условия продажи</h2>
             <div class="field-row dark">
                 <input class="field" id="price-input" inputmode="numeric" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
-                <button class="clear-btn" onclick="clearPrice()">×</button>
+                <button class="clear-btn" onclick="clearPrice()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
             </div>
         </section>
 
@@ -815,7 +843,7 @@
             <h2 class="section-title">Адрес</h2>
             <div class="field-row dark">
                 <span>Москва, Чонгарский б-р, 7</span>
-                <span class="clear-btn">×</span>
+                <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></span>
             </div>
             <p class="hint">Укажите реальный адрес, откуда покупатель сможет оформить доставку</p>
         </section>
@@ -843,15 +871,15 @@
             <h2 class="section-title">Контакты</h2>
             <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявления с нужными им вещами, узнают подробности и договорятся о сделке</p>
             <div class="section" style="margin-top:24px;">
-                <h2 class="section-title">Телефон</h2>
+                <h2 class="minor-title">Телефон</h2>
                 <p class="contacts-copy">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span style="color:#767676;text-decoration:underline;">Подробнее</span></p>
                 <div class="field-row dark">
                     <span>8 200 614-53-63</span>
-                    <span class="clear-btn">×</span>
+                    <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></span>
                 </div>
             </div>
             <div class="section" style="margin-top:24px;">
-                <h2 class="section-title">Способ связи</h2>
+                <h2 class="minor-title">Способ связи</h2>
                 <div class="radio-row"><span class="radio active"></span><span>Звонки и сообщения</span></div>
                 <div class="radio-row"><span class="radio"></span><span>Только звонки</span></div>
                 <div class="radio-row"><span class="radio"></span><span>Только сообщения</span></div>
@@ -860,35 +888,27 @@
     </main>
 
     <div class="bottom-bar">
-        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Продолжить</button>
+        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Разместить объявление</button>
     </div>
 
     <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
-            <button class="sheet-close" onclick="closeSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
-            <h2 class="sheet-title">Передача вещей на благотворительность</h2>
+            <button class="sheet-close" onclick="closeSheet()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            <h2 class="sheet-title" id="info-sheet-title">Передача вещей на благотворительность</h2>
             <div class="sheet-tabs">
                 <button class="sheet-tab active" id="stab-how" onclick="switchSheetTab('how')">Как это работает</button>
-                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Преимущества</button>
+                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Почему это удобно</button>
             </div>
-            <div class="sheet-pane" id="spane-how">
-                <div class="sheet-step"><img src="sheets materials/1.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Разместите бесплатное объявление</div><div class="sheet-step-sub">Выберите вещи, которые нужны фондам</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/2.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Фонд напишет вам в чате</div><div class="sheet-step-sub">Обычно это занимает несколько дней</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/3.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Передайте вещи Авито Доставкой</div><div class="sheet-step-sub">Договоритесь с фондом и отправьте вещи напрямую</div></div></div>
-            </div>
-            <div class="sheet-pane" id="spane-benefits" style="display:none">
-                <div class="sheet-step"><img src="sheets materials/4.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Пишут только проверенные фонды</div><div class="sheet-step-sub">Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/5.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Передайте нужные вещи</div><div class="sheet-step-sub">Мы показываем вещи, которые сейчас действительно нужны фондам</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/6.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Без затрат на размещение и доставку</div><div class="sheet-step-sub">Бесплатные размещения не расходуются, доставку оплачивает фонд</div></div></div>
-            </div>
+            <div class="sheet-pane" id="spane-how"></div>
+            <div class="sheet-pane" id="spane-benefits" style="display:none"></div>
         </div>
     </div>
 
     <div class="sheet-overlay" id="collection-sheet" onclick="closeChangeSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
-            <button class="sheet-close" onclick="closeChangeSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
+            <button class="sheet-close" onclick="closeChangeSheet()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
             <h2 class="sheet-title">Выберите другой сбор</h2>
             <p class="collection-sheet-sub">Сейчас в Авито запущено несколько активных сборов, вы можете выбрать тот, в котором захотите поучаствовать.</p>
             <div class="collection-item" onclick="selectCollection(0)">
@@ -897,7 +917,7 @@
                 <img src="crisis help/Radio on.png" width="24" height="24" id="radio-0" alt="">
             </div>
             <div class="collection-item" onclick="selectCollection(1)" style="border-bottom:none;">
-                <img src="crisis help/сбор 2.png" class="collection-thumb" alt="">
+                <img src="sbor 2 new.png" class="collection-thumb" alt="">
                 <div class="collection-info"><div class="collection-name">Помощь в Дагестане ❤️</div><div class="collection-sheet-text">Собираем вещи в помощь людям, пострадавшим от паводков</div></div>
                 <img src="crisis help/Radio off.png" width="24" height="24" id="radio-1" alt="">
             </div>
@@ -907,7 +927,7 @@
 
     <div class="switch-popup-overlay" id="switch-popup" onclick="closeSwitchPopup()">
         <div class="switch-popup-card" onclick="event.stopPropagation()">
-            <button class="sheet-close" onclick="closeSwitchPopup()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
+            <button class="sheet-close" onclick="closeSwitchPopup()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
             <p class="switch-popup-title">Сменить сбор?</p>
             <p class="switch-popup-text">При смене сбора текущее объявление сохранится в черновиках, чтобы вы смогли продолжить создание</p>
             <button class="switch-popup-confirm" onclick="changeCollection()">Поменять сбор</button>
@@ -918,7 +938,7 @@
     <div class="sheet-overlay" id="need-sheet" onclick="closeNeedSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
-            <button class="sheet-close" onclick="closeNeedSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
+            <button class="sheet-close" onclick="closeNeedSheet()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
             <h2 class="sheet-title">Выберите, что готовы передать</h2>
             <p class="sheet-subtitle" id="need-sheet-sub"></p>
             <div id="need-sheet-list"></div>
@@ -971,7 +991,7 @@
                 route: 'step5-crisis.html',
                 title: 'Помощь Дагестану',
                 sub: 'Собираем вещи в помощь людям, пострадавшим от паводков',
-                image: 'crisis help/сбор 2.png',
+                image: 'sbor 2 new.png',
                 storage: 'crisis',
                 needs: [
                     { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
@@ -1005,6 +1025,37 @@
         };
 
         const ADTYPE_NAMES = { own: 'Продаю своё' };
+
+        const INFO_SHEETS = {
+            family: {
+                title: 'Как работают Добрые вещи',
+                benefitsTitle: 'Почему это удобно',
+                how: [
+                    { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно фондам. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                    { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные из обычной подачи сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                    { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят только проверенные фонды. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
+                ],
+                benefits: [
+                    { img: '4', title: 'Понятно, какие вещи сейчас нужны', sub: 'В списке будут конкретные позиции: например, куртки нужного размера, книги для определенного возраста или рюкзаки в хорошем состоянии.' },
+                    { img: '5', title: 'Можно передать несколько вещей сразу', sub: 'Если у вас пакет вещей, отметьте все подходящие позиции в одном объявлении.' },
+                    { img: '6', title: 'Бесплатные размещения сохранятся', sub: 'Объявление в «Добрых вещах» не тратит лимит бесплатных размещений на Авито.' }
+                ]
+            },
+            crisis: {
+                title: 'Как работает помощь при ЧС',
+                benefitsTitle: 'Почему это удобно',
+                how: [
+                    { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно пострадавшим. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                    { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                    { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
+                ],
+                benefits: [
+                    { img: '4', title: 'Понятно, что именно сейчас нужно', sub: 'В списке будут конкретные позиции: например, резиновые сапоги нужного размера, помпы для воды или закрытые средства гигиены.' },
+                    { img: '5', title: 'Можно добавить вещи к объявлению', sub: 'Если кроме основной вещи у вас есть что-то еще из списка, отметьте это в объявлении.' },
+                    { img: '6', title: 'Доставка для пострадавших — 1 ₽', sub: 'Люди из зоны ЧС смогут оформить Авито Доставку за 1 ₽ на товары из «Добрых вещей».' }
+                ]
+            }
+        };
 
         function saveAndExit() {
             persistAll();
@@ -1105,6 +1156,7 @@
         }
 
         function openSheet() {
+            renderInfoSheet();
             document.getElementById('sheet-overlay').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
@@ -1119,6 +1171,27 @@
             document.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
             document.getElementById('stab-' + tab).classList.add('active');
             document.getElementById('spane-' + tab).style.display = 'block';
+        }
+
+        function renderInfoSheet() {
+            const data = INFO_SHEETS[currentCollection];
+            document.getElementById('info-sheet-title').textContent = data.title;
+            document.getElementById('stab-benefits').textContent = 'Почему это удобно';
+            document.getElementById('spane-how').innerHTML = renderSheetSteps(data.how);
+            document.getElementById('spane-benefits').innerHTML = `<div class="sheet-section-heading">${data.benefitsTitle}</div>` + renderSheetSteps(data.benefits);
+            switchSheetTab('how');
+        }
+
+        function renderSheetSteps(steps) {
+            return steps.map(step => `
+                <div class="sheet-step">
+                    <img src="sheets materials/${step.img}.png" width="64" height="64" alt="">
+                    <div>
+                        <div class="sheet-step-title">${step.title}</div>
+                        <div class="sheet-step-sub">${step.sub}</div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function openChangeSheet() {
@@ -1198,10 +1271,10 @@
                 block.className = 'need-block';
                 block.innerHTML = `
                     <div class="need-title">${need.title}</div>
-                    <div class="need-sub">${need.countable ? `Осталось собрать ${total} ${pluralItems(total)}` : 'Выберите подходящие вещи'}</div>
+                    <div class="need-sub">${need.countable ? `Осталось собрать ${total} ${pluralItems(total)}` : 'Нужны всегда в неограниченном количестве'}</div>
                     <button class="selector ${selectedCount ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
                         <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
-                        <span class="chevron"></span>
+                        <img class="arrow-icon" src="arrow down.svg" alt="">
                     </button>
                     <div class="tags" id="tags-${need.id}"></div>
                 `;
@@ -1225,7 +1298,7 @@
                 const qty = selectedItems[itemId];
                 const tag = document.createElement('span');
                 tag.className = 'tag';
-                tag.innerHTML = `${item.name}${need.countable ? `, ${qty} шт.` : ''}<button onclick="removeNeedItem('${needId}','${itemId}')">×</button>`;
+                tag.innerHTML = `${item.name}${need.countable ? `, ${qty} шт.` : ''}<button onclick="removeNeedItem('${needId}','${itemId}')"><img src="sheets materials/CloseButton.svg" width="10" height="10" alt=""></button>`;
                 tags.appendChild(tag);
             });
         }
@@ -1237,6 +1310,7 @@
                 if (Object.keys(selections[needId]).length === 0) delete selections[needId];
             }
             saveSelections(selections);
+            manualDesc = false;
             renderNeeds();
         }
 
@@ -1301,6 +1375,7 @@
             if (Object.keys(draftSelections).length) selections[activeNeedId] = draftSelections;
             else delete selections[activeNeedId];
             saveSelections(selections);
+            manualDesc = false;
             closeNeedSheet();
             renderNeeds();
         }
@@ -1330,7 +1405,8 @@
         function autoBuildDescription() {
             const ta = document.getElementById('desc-textarea');
             if (manualDesc) return;
-            const base = sessionStorage.getItem('mainDesc') || sessionStorage.getItem('adDesc') || '';
+            const savedDesc = sessionStorage.getItem('adDesc') || '';
+            const base = sessionStorage.getItem('mainDesc') || savedDesc.split(/\n\nГотовы передать:\n/)[0] || '';
             const lines = selectedLines();
             const generated = lines.length ? `Готовы передать:\n${lines.join('\n')}` : '';
             ta.value = [base, generated].filter(Boolean).join('\n\n');
@@ -1382,7 +1458,7 @@
         function goToDelivery() {
             if (!Object.keys(loadSelections()).length) return;
             persistAll();
-            window.location.href = 'delivery.html';
+            window.location.href = currentCollection === 'crisis' ? 'success-crisis.html' : 'success.html';
         }
 
         const descTextarea = document.getElementById('desc-textarea');
@@ -1397,6 +1473,9 @@
         setupMainFields();
         renderCollection();
         renderNeeds();
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 </body>
 </html>

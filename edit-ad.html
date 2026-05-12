@@ -15,75 +15,91 @@
             max-width: 430px;
             margin: 0 auto;
             overflow-x: hidden;
-            padding-bottom: 100px;
+            padding-bottom: 112px;
+            color: #000;
         }
 
-        /* ── HEADER ── */
         .header {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 16px 16px;
+            background: #fff;
             position: sticky;
             top: 0;
-            z-index: 50;
-            background: #fff;
+            z-index: 80;
             transition: box-shadow 0.2s;
         }
 
         .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
-        .header-close {
-            position: absolute;
-            left: 16px;
-            font-size: 22px;
+        .save-exit {
+            font-size: 15px;
             font-weight: 400;
             color: #1A1A1A;
             cursor: pointer;
-            line-height: 1;
-            text-decoration: none;
+        }
+
+        .edit-close {
+            position: absolute;
+            left: 16px;
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
 
         .header-title {
             font-size: 17px;
             font-weight: 600;
-            color: #1A1A1A;
+            line-height: 1.2;
         }
 
-        /* ── SECTION ── */
-        .section {
-            padding: 20px 16px 0;
+        .intro {
+            margin-top: 16px;
+            padding: 0 16px;
+            text-align: center;
         }
 
-        .section-label {
-            font-size: 17px;
+        .intro-title {
+            font-size: 24px;
             font-weight: 700;
-            color: #1A1A1A;
-            margin-bottom: 12px;
+            line-height: 1.15;
         }
 
-        /* ── COLLECTION FIELD (inactive) ── */
-        .collection-field {
-            background: #F4F4F4;
-            border-radius: 12px;
-            padding: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .collection-field-value {
+        .intro-subtitle {
+            margin-top: 6px;
             font-size: 15px;
             font-weight: 400;
-            color: #9E9E9E;
+            line-height: 1.35;
         }
 
-        .collection-chevron {
-            color: #9E9E9E;
+        .content {
+            margin-top: 16px;
+            padding: 0 16px;
         }
 
-        .how-banner {
-            margin: 12px 16px 0;
+        .section { margin-top: 24px; }
+        .section:first-child { margin-top: 0; }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .section-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.35;
+        }
+
+        .banner {
             background: linear-gradient(90deg, #D7F1FF 0%, #E4F8FF 100%);
             border-radius: 16px;
             padding: 14px 14px 14px 16px;
@@ -92,131 +108,29 @@
             gap: 12px;
             cursor: pointer;
         }
-        .how-banner-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
-        .how-banner-text { flex: 1; min-width: 0; }
-        .how-banner-title { font-size: 15px; font-weight: 700; color: #1A1A1A; }
-        .how-banner-sub { margin-top: 3px; font-size: 13px; color: #1A1A1A; line-height: 1.35; }
-        .collection-section { padding-top: 24px; }
 
-        /* ── CATEGORY ROWS ── */
-        .selected-cat-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .selected-cat-img {
-            width: 44px;
-            height: 44px;
+        .banner-img {
+            width: 60px;
+            height: 60px;
             border-radius: 10px;
             object-fit: cover;
             flex-shrink: 0;
         }
 
-        .selected-cat-name {
+        .banner-title {
             font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
+            font-weight: 700;
         }
 
-        .selected-cat-count {
+        .banner-sub {
+            margin-top: 3px;
             font-size: 13px;
             font-weight: 400;
-            color: #9E9E9E;
-            margin-top: 2px;
+            line-height: 1.35;
         }
 
-        .edit-cat-btn {
-            display: block;
-            width: 100%;
-            background: #F4F4F4;
-            border: none;
-            border-radius: 12px;
-            padding: 14px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            text-align: center;
-            cursor: pointer;
-            margin-top: 16px;
-        }
-
-        /* ── TITLE FIELD ── */
-        .title-field {
-            display: flex;
-            align-items: center;
-            background: #F4F4F4;
-            border-radius: 12px;
-            padding: 12px 14px;
-            gap: 8px;
-            min-height: 48px;
-        }
-
-        .title-input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            outline: none;
-            min-width: 0;
-        }
-
-        .title-clear {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            flex-shrink: 0;
-            color: #1A1A1A;
-            font-size: 18px;
-            display: none;
-        }
-
-        /* ── DESC FIELD ── */
-        .desc-wrap {
-            position: relative;
-            margin-top: 0;
-        }
-
-        .desc-textarea {
-            display: block;
-            width: 100%;
-            min-height: 160px;
-            background: #F4F4F4;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 14px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            outline: none;
-            resize: none;
-            overflow: hidden;
-            line-height: 1.45;
-        }
-
-        .desc-textarea::placeholder { color: #9E9E9E; }
-
-        .desc-clear {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #1A1A1A;
-            font-size: 18px;
-            display: none;
-        }
-
-        /* ── PHOTOS GRID ── */
         .photos-grid {
+            margin-top: 12px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
@@ -225,11 +139,12 @@
         .photo-cell {
             position: relative;
             aspect-ratio: 1;
-            border-radius: 28px;
+            border-radius: 20px;
             overflow: hidden;
+            background: #F4F4F4;
         }
 
-        .photo-cell img.photo-img {
+        .photo-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -240,102 +155,315 @@
             position: absolute;
             top: 8px;
             left: 8px;
-            background: rgba(255,255,255,0.92);
-            border-radius: 6px;
-            padding: 3px 8px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #1A1A1A;
-            z-index: 10;
+            background: rgba(255,255,255,0.94);
+            border-radius: 8px;
+            padding: 5px 9px;
+            font-size: 13px;
+            font-weight: 400;
         }
 
         .delete-btn {
             position: absolute;
-            bottom: 12px;
             right: 12px;
-            background: rgba(255,255,255,0.92);
+            bottom: 12px;
+            width: 44px;
+            height: 44px;
             border: none;
-            border-radius: 16px;
-            width: 32px;
-            height: 32px;
+            border-radius: 14px;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 10;
         }
 
         .add-cell {
-            background: #F4F4F4;
+            border: none;
+            font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #000;
             cursor: pointer;
-            border-radius: 28px;
         }
 
-        .add-cell span {
-            font-size: 13px;
-            font-weight: 400;
-            color: #1A1A1A;
-        }
-
-        /* ── STATIC INFO ── */
-        .info-field {
+        .field {
+            margin-top: 12px;
+            min-height: 56px;
+            border: none;
+            border-radius: 16px;
             background: #F4F4F4;
-            border-radius: 12px;
-            padding: 14px;
+            padding: 0 16px;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: #000;
+            outline: none;
+        }
+
+        .field-row {
+            margin-top: 12px;
+            min-height: 56px;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 0 16px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-
-        .info-field-value {
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-        }
-
-        .info-field-clear {
-            color: #1A1A1A;
-            font-size: 18px;
-        }
-
-        .section-desc {
-            font-size: 14px;
-            font-weight: 400;
-            color: #1A1A1A;
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
-
-        .section-desc a { color: #9E9E9E; text-decoration: underline; }
-
-        .radio-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-        }
-
-        .radio-label { font-size: 16px; font-weight: 400; color: #1A1A1A; }
-        .radio-off { width: 24px; height: 24px; border-radius: 50%; background: #EBEBEB; }
-
-        .autopub-row {
-            display: flex;
-            align-items: flex-start;
             justify-content: space-between;
             gap: 12px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #A3A3A3;
         }
 
-        .autopub-text { flex: 1; }
-        .autopub-label { font-size: 16px; font-weight: 400; color: #1A1A1A; margin-bottom: 4px; }
-        .autopub-sub { font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.4; }
-        .autopub-sub a { color: #9E9E9E; text-decoration: underline; }
+        .field-row.dark { color: #000; }
+        .field-row.disabled { pointer-events: none; }
 
-        /* ── BOTTOM BAR ── */
+        .clear-btn {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .collection-card {
+            margin-top: 12px;
+            border-radius: 24px;
+            background: #F4F4F4;
+            padding: 12px 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .collection-img {
+            width: 76px;
+            height: 76px;
+            border-radius: 16px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #fff;
+        }
+
+        .collection-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .collection-sub {
+            margin-top: 2px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.25;
+        }
+
+        .change-collection-btn {
+            margin-top: 6px;
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            background: #F4F4F4;
+            min-height: 56px;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .need-block { margin-top: 24px; }
+        .need-block:first-of-type { margin-top: 20px; }
+
+        .need-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .need-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.35;
+        }
+
+        .selector {
+            margin-top: 12px;
+            border: none;
+            width: 100%;
+            min-height: 56px;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: #7D7D7D;
+            cursor: pointer;
+        }
+
+        .selector.selected { color: #000; }
+
+        .arrow-icon {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .arrow-icon.gray { opacity: 0.35; }
+
+        .tags {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 10px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            line-height: 1.2;
+        }
+
+        .tag button {
+            border: none;
+            background: transparent;
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .desc-textarea {
+            margin-top: 12px;
+            display: block;
+            width: 100%;
+            min-height: 112px;
+            border: none;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #000;
+            line-height: 1.4;
+            resize: none;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .hint {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.35;
+            color: #767676;
+        }
+
+        .delivery-copy {
+            margin-top: 4px;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.35;
+        }
+
+        .toggle-row {
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .toggle-static {
+            width: 46px;
+            height: 26px;
+            border-radius: 14px;
+            background: #111;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .toggle-static::after {
+            content: '';
+            position: absolute;
+            right: 3px;
+            top: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .toggle-title {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.25;
+        }
+
+        .toggle-sub {
+            margin-top: 3px;
+            color: #767676;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+
+        .contacts-copy {
+            margin-top: 6px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .minor-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .radio-row {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        .radio {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #E0E0E0;
+            flex-shrink: 0;
+        }
+
+        .radio.active {
+            background: radial-gradient(circle at center, #fff 0 4px, #111 5px);
+        }
+
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -345,15 +473,15 @@
             max-width: 430px;
             background: #fff;
             padding: 12px 16px 28px;
-            z-index: 100;
+            z-index: 90;
             border-radius: 24px 24px 0 0;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
 
-        .done-btn {
+        .continue-btn {
             display: block;
             width: 100%;
-            background: #1A1A1A;
+            background: #C4C4C4;
             color: #fff;
             border: none;
             border-radius: 16px;
@@ -362,291 +490,601 @@
             font-size: 15px;
             font-weight: 400;
             text-align: center;
+            cursor: default;
+        }
+
+        .continue-btn.active {
+            background: #111;
             cursor: pointer;
         }
 
-        /* ── TOAST ── */
-        .toast {
-            display: none;
+        .sheet-overlay,
+        .switch-popup-overlay {
             position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: calc(430px - 32px);
-            background: #1A1A1A;
-            color: #fff;
-            border-radius: 16px;
-            padding: 14px 16px;
-            font-size: 15px;
-            font-weight: 400;
-            line-height: 1.5;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
             z-index: 200;
-            text-align: center;
+            display: none;
+            align-items: flex-end;
         }
 
-        .toast.visible { display: block; }
+        .sheet-overlay.open,
+        .switch-popup-overlay.open { display: flex; }
 
-        .sheet-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 300; align-items: flex-end; }
-        .sheet-overlay.open { display: flex; }
-        .sheet-card { width: 100%; max-width: 430px; margin: 0 auto; background: #fff; border-radius: 24px 24px 0 0; padding: 8px 16px 32px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .sheet-drag { width: 36px; height: 4px; border-radius: 4px; background: #D9D9D9; margin: 8px auto 20px; }
-        .sheet-close { position: absolute; right: 12px; top: 12px; background: none; border: none; padding: 0; cursor: pointer; }
-        .sheet-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.15; margin-bottom: 18px; padding-right: 36px; }
-        .sheet-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-        .sheet-tab { flex: 1; border: none; border-radius: 12px; background: #F4F4F4; padding: 10px 8px; font-family: 'Inter', sans-serif; font-size: 14px; color: #1A1A1A; cursor: pointer; }
-        .sheet-tab.active { background: #1A1A1A; color: #fff; }
-        .how-step { display: flex; gap: 12px; margin-bottom: 18px; }
-        .how-step img { flex-shrink: 0; }
-        .how-step-title { font-size: 17px; font-weight: 700; color: #1A1A1A; line-height: 1.3; margin-bottom: 4px; }
-        .how-step-sub { font-size: 15px; color: #1A1A1A; line-height: 1.4; }
+        .sheet-card {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            padding: 18px 16px 28px;
+            max-height: 88vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .sheet-drag {
+            width: 54px;
+            height: 5px;
+            border-radius: 999px;
+            background: #E7E7E7;
+            margin: 0 auto 22px;
+        }
+
+        .sheet-close {
+            position: absolute;
+            right: 16px;
+            top: 22px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sheet-title {
+            padding-right: 42px;
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.08;
+        }
+
+        .sheet-subtitle {
+            margin-top: 10px;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .sheet-tabs {
+            margin-top: 18px;
+            display: flex;
+            padding: 3px;
+            border-radius: 14px;
+            background: #F4F4F4;
+        }
+
+        .sheet-tab {
+            flex: 1;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            padding: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .sheet-tab.active { background: #fff; }
+
+        .sheet-pane { margin-top: 20px; }
+
+        .sheet-step {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .sheet-step:first-child { margin-top: 0; }
+        .sheet-step img { flex-shrink: 0; }
+
+        .sheet-step-title {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .sheet-step-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .sheet-section-heading {
+            margin-bottom: 18px;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .collection-sheet-sub {
+            margin-top: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .collection-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F0F0F0;
+            cursor: pointer;
+        }
+
+        .collection-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .collection-info { flex: 1; min-width: 0; }
+
+        .collection-name {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .collection-sheet-text {
+            margin-top: 3px;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .sheet-primary {
+            margin-top: 18px;
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            background: #111;
+            color: #fff;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .switch-popup-card {
+            width: calc(100% - 32px);
+            max-width: 398px;
+            margin: auto;
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px 16px 16px;
+            position: relative;
+        }
+
+        .switch-popup-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .switch-popup-text {
+            margin-top: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .switch-popup-confirm,
+        .switch-popup-cancel {
+            margin-top: 16px;
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            padding: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .switch-popup-confirm {
+            background: #111;
+            color: #fff;
+        }
+
+        .switch-popup-cancel {
+            margin-top: 8px;
+            background: #F4F4F4;
+            color: #000;
+        }
+
+        .need-row {
+            margin-top: 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .need-item-name {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .need-item-sub {
+            margin-top: 4px;
+            font-size: 15px;
+            color: #767676;
+        }
+
+        .check-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 6px;
+            background: #E0E0E0;
+            flex-shrink: 0;
+            margin-top: 3px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 24px;
+        }
+
+        .check-btn.active { background: #111; }
+
+        .qty-picker {
+            margin-top: 14px;
+            border-radius: 16px;
+            background: #F4F4F4;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 20px;
+        }
+
+        .qty-picker button {
+            border: none;
+            background: transparent;
+            font-size: 28px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
-        <span class="header-close" onclick="closeEdit()">✕</span>
+        <button class="edit-close" onclick="closeEdit()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
         <span class="header-title">Редактирование</span>
     </header>
 
-    <div class="how-banner" onclick="openHowSheet()">
-        <img class="how-banner-img" src="how it works.png" alt="">
-        <div class="how-banner-text">
-            <div class="how-banner-title">Как это работает</div>
-            <div class="how-banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
-        </div>
-    </div>
+    <section class="intro" style="display:none;">
+        <h1 class="intro-title">Добрые вещи ❤️</h1>
+        <p class="intro-subtitle">Продолжим с уже заполненными данными объявления</p>
+    </section>
 
-    <!-- СБОР -->
-    <div class="section collection-section">
-        <div class="section-label">Сбор</div>
-        <div class="collection-field">
-            <span class="collection-field-value" id="collection-name">Помощь семьям</span>
-            <svg class="collection-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M5 7.5L10 12.5L15 7.5" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-    </div>
-
-    <!-- ВЕЩИ ДЛЯ ПЕРЕДАЧИ -->
-    <div class="section">
-        <div class="section-label">Вещи, которые вы выбрали для передачи</div>
-        <div id="cat-content"></div>
-        <button class="edit-cat-btn" onclick="goToCategories()">Редактировать категории</button>
-    </div>
-
-    <!-- НАЗВАНИЕ -->
-    <div class="section">
-        <div class="section-label">Название объявления</div>
-        <div class="title-field">
-            <input type="text" class="title-input" id="title-input" placeholder="Название объявления">
-            <button class="title-clear" id="title-clear" onclick="clearTitle()">✕</button>
-        </div>
-    </div>
-
-    <!-- ОПИСАНИЕ -->
-    <div class="section">
-        <div class="section-label">Описание товаров</div>
-        <div class="desc-wrap">
-            <textarea class="desc-textarea" id="desc-textarea" placeholder="Описание"></textarea>
-            <button class="desc-clear" id="desc-clear" onclick="clearDesc()">✕</button>
-        </div>
-    </div>
-
-    <!-- ФОТОГРАФИИ -->
-    <div class="section">
-        <div class="section-label">Фотографии</div>
-        <div class="photos-grid" id="photos-grid"></div>
-    </div>
-
-    <!-- ТЕЛЕФОН -->
-    <div class="section">
-        <div class="section-label">Телефон</div>
-        <p class="section-desc">Другие пользователи не увидят ваш настоящий телефон и не смогут написать сообщение вне Авито. Эту защиту нельзя отключить. <a href="#">Подробнее</a></p>
-        <div class="info-field">
-            <span class="info-field-value">+7 985 922 64 74</span>
-            <span class="info-field-clear">✕</span>
-        </div>
-    </div>
-
-    <!-- СПОСОБ СВЯЗИ -->
-    <div class="section">
-        <div class="section-label">Способ связи</div>
-        <div class="radio-row">
-            <span class="radio-label">Звонки и сообщения</span>
-            <div class="radio-off"></div>
-        </div>
-        <div class="radio-row">
-            <span class="radio-label">Только звонки</span>
-            <div class="radio-off"></div>
-        </div>
-        <div class="radio-row">
-            <span class="radio-label">Только сообщения</span>
-            <img src="crisis help/Radio on.png" width="24" height="24" alt="">
-        </div>
-    </div>
-
-    <!-- АВТОПУБЛИКАЦИЯ -->
-    <div class="section">
-        <div class="section-label">Автопубликация</div>
-        <div class="autopub-row">
-            <div class="autopub-text">
-                <div class="autopub-label">Опубликовать заново, когда закончится срок размещения</div>
-                <div class="autopub-sub"><a href="#">Подробнее</a></div>
+    <main class="content">
+        <section class="section">
+            <div class="banner" id="banner" onclick="openSheet()">
+                <img class="banner-img" src="how it works.png" alt="">
+                <div>
+                    <div class="banner-title">Как это работает</div>
+                    <div class="banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
+                </div>
             </div>
-            <img src="delivery materials/toggle.png" width="51" height="31" alt="">
-        </div>
-    </div>
+        </section>
 
-    <!-- BOTTOM BAR -->
+        <section class="section">
+            <h2 class="section-title">Фотографии</h2>
+            <div class="photos-grid" id="photos-grid"></div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Название объявления</h2>
+            <div class="field-row dark">
+                <input class="field" id="title-display" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
+                <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Категория</h2>
+            <p class="section-sub">Выбирается автоматически для передачи вещей на благотворительность</p>
+            <div class="field-row disabled">
+                <span>Добрые вещи</span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
+            </div>
+        </section>
+
+        <section class="section" id="condition-section" style="display:none;">
+            <h2 class="section-title">Состояние</h2>
+            <div class="field-row disabled">
+                <span id="condition-value">Хорошее</span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
+            </div>
+        </section>
+
+        <section class="section" id="adtype-section" style="display:none;">
+            <h2 class="section-title">Тип объявления</h2>
+            <div class="field-row disabled">
+                <span id="adtype-value">Продаю своё</span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
+            </div>
+        </section>
+
+        <section class="section" id="price-section" style="display:none;">
+            <h2 class="section-title">Условия продажи</h2>
+            <div class="field-row dark">
+                <input class="field" id="price-input" inputmode="numeric" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
+                <button class="clear-btn" onclick="clearPrice()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Сбор</h2>
+            <div class="field-row disabled" style="color:#A3A3A3;">
+                <span id="collection-title">Для семей с детьми</span>
+                <img class="arrow-icon gray" src="arrow down.svg" alt="">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Что сейчас нужно</h2>
+            <p class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</p>
+            <div id="needs-container"></div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Описание товаров</h2>
+            <textarea class="desc-textarea" id="desc-textarea"></textarea>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Адрес</h2>
+            <div class="field-row dark">
+                <span>Москва, Чонгарский б-р, 7</span>
+                <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></span>
+            </div>
+            <p class="hint">Укажите реальный адрес, откуда покупатель сможет оформить доставку</p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Авито Доставка</h2>
+            <p class="delivery-copy">Выберите, как покупатели смогут заказать ваши товары. Это бесплатно и безопасно: вам не нужно платить за отправку.</p>
+            <div class="toggle-row">
+                <div class="toggle-static"></div>
+                <div>
+                    <div class="toggle-title">В постамат</div>
+                    <div class="toggle-sub">5Post</div>
+                </div>
+            </div>
+            <div class="toggle-row">
+                <div class="toggle-static"></div>
+                <div>
+                    <div class="toggle-title">В пункт выдачи</div>
+                    <div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-bottom:24px;">
+            <h2 class="section-title">Контакты</h2>
+            <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявления с нужными им вещами, узнают подробности и договорятся о сделке</p>
+            <div class="section" style="margin-top:24px;">
+                <h2 class="minor-title">Телефон</h2>
+                <p class="contacts-copy">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span style="color:#767676;text-decoration:underline;">Подробнее</span></p>
+                <div class="field-row dark">
+                    <span>8 200 614-53-63</span>
+                    <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></span>
+                </div>
+            </div>
+            <div class="section" style="margin-top:24px;">
+                <h2 class="minor-title">Способ связи</h2>
+                <div class="radio-row"><span class="radio active"></span><span>Звонки и сообщения</span></div>
+                <div class="radio-row"><span class="radio"></span><span>Только звонки</span></div>
+                <div class="radio-row"><span class="radio"></span><span>Только сообщения</span></div>
+            </div>
+        </section>
+    </main>
+
     <div class="bottom-bar">
-        <button class="done-btn" onclick="saveDone()">Готово</button>
+        <button class="continue-btn active" id="continue-btn" onclick="saveDone()">Готово</button>
     </div>
 
-    <!-- TOAST -->
-    <div class="toast" id="toast">Изменения успешно сохранены</div>
-
-    <div class="sheet-overlay" id="how-sheet" onclick="closeHowSheet()">
+    <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()">
         <div class="sheet-card" onclick="event.stopPropagation()">
             <div class="sheet-drag"></div>
-            <button class="sheet-close" onclick="closeHowSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
-            <h2 class="sheet-title">Передача вещей<br>на благотворительность</h2>
+            <button class="sheet-close" onclick="closeSheet()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            <h2 class="sheet-title" id="info-sheet-title">Передача вещей на благотворительность</h2>
             <div class="sheet-tabs">
-                <button class="sheet-tab active" id="how-tab-how" onclick="switchHowSheetTab('how')">Как это работает</button>
-                <button class="sheet-tab" id="how-tab-benefits" onclick="switchHowSheetTab('benefits')">Преимущества</button>
+                <button class="sheet-tab active" id="stab-how" onclick="switchSheetTab('how')">Как это работает</button>
+                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Почему это удобно</button>
             </div>
-            <div class="sheet-pane" id="how-pane-how"></div>
-            <div class="sheet-pane" id="how-pane-benefits" style="display:none"></div>
+            <div class="sheet-pane" id="spane-how"></div>
+            <div class="sheet-pane" id="spane-benefits" style="display:none"></div>
+        </div>
+    </div>
+
+    <div class="sheet-overlay" id="collection-sheet" onclick="closeChangeSheet()">
+        <div class="sheet-card" onclick="event.stopPropagation()">
+            <div class="sheet-drag"></div>
+            <button class="sheet-close" onclick="closeChangeSheet()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            <h2 class="sheet-title">Выберите другой сбор</h2>
+            <p class="collection-sheet-sub">Сейчас в Авито запущено несколько активных сборов, вы можете выбрать тот, в котором захотите поучаствовать.</p>
+            <div class="collection-item" onclick="selectCollection(0)">
+                <img src="crisis help/сбор 1.png" class="collection-thumb" alt="">
+                <div class="collection-info"><div class="collection-name">Помощь семьям</div><div class="collection-sheet-text">Собираем вещи на помощь малообеспеченным многодетным семьям</div></div>
+                <img src="crisis help/Radio on.png" width="24" height="24" id="radio-0" alt="">
+            </div>
+            <div class="collection-item" onclick="selectCollection(1)" style="border-bottom:none;">
+                <img src="sbor 2 new.png" class="collection-thumb" alt="">
+                <div class="collection-info"><div class="collection-name">Помощь в Дагестане ❤️</div><div class="collection-sheet-text">Собираем вещи в помощь людям, пострадавшим от паводков</div></div>
+                <img src="crisis help/Radio off.png" width="24" height="24" id="radio-1" alt="">
+            </div>
+            <button class="sheet-primary" onclick="confirmCollection()">Выбрать</button>
+        </div>
+    </div>
+
+    <div class="switch-popup-overlay" id="switch-popup" onclick="closeSwitchPopup()">
+        <div class="switch-popup-card" onclick="event.stopPropagation()">
+            <button class="sheet-close" onclick="closeSwitchPopup()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            <p class="switch-popup-title">Сменить сбор?</p>
+            <p class="switch-popup-text">При смене сбора текущее объявление сохранится в черновиках, чтобы вы смогли продолжить создание</p>
+            <button class="switch-popup-confirm" onclick="changeCollection()">Поменять сбор</button>
+            <button class="switch-popup-cancel" onclick="closeSwitchPopup()">Остаться</button>
+        </div>
+    </div>
+
+    <div class="sheet-overlay" id="need-sheet" onclick="closeNeedSheet()">
+        <div class="sheet-card" onclick="event.stopPropagation()">
+            <div class="sheet-drag"></div>
+            <button class="sheet-close" onclick="closeNeedSheet()"><img src="sheets materials/CloseButton.svg" width="14" height="14" alt=""></button>
+            <h2 class="sheet-title">Выберите, что готовы передать</h2>
+            <p class="sheet-subtitle" id="need-sheet-sub"></p>
+            <div id="need-sheet-list"></div>
+            <button class="sheet-primary" onclick="applyNeedSelection()">Выбрать</button>
         </div>
     </div>
 
     <script>
-        function photoSrc(id) {
-            return id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
-        }
+        const IS_CRISIS_PAGE = sessionStorage.getItem('adCollection') === 'crisis';
+        const CURRENT_PAGE = 'edit-ad.html';
+        const CURRENT_COLLECTION = IS_CRISIS_PAGE ? 'crisis' : 'family';
+        let currentCollection = CURRENT_COLLECTION;
+        let selectedCollection = 0;
+        let activeNeedId = null;
+        let draftSelections = {};
+        let manualDesc = false;
 
-        function pluralItems(n) {
-            const m10 = n % 10, m100 = n % 100;
-            if (m100 >= 11 && m100 <= 14) return 'вещей';
-            if (m10 === 1) return 'вещь';
-            if (m10 >= 2 && m10 <= 4) return 'вещи';
-            return 'вещей';
-        }
-
-        // ── Collection name ──
-        const collection = sessionStorage.getItem('adCollection');
-        document.getElementById('collection-name').textContent =
-            collection === 'crisis' ? 'Помощь Дагестану' : 'Помощь семьям';
-
-        const HOW_CONTENT = {
+        const COLLECTIONS = {
             family: {
-                how: [
-                    { img: '1', title: 'Разместите бесплатное объявление', sub: 'Выберите категории вещей, которые нужны фондам' },
-                    { img: '2', title: 'Фонд напишет вам в чате', sub: 'Обычно это занимает несколько дней' },
-                    { img: '3', title: 'Передайте вещи Авито Доставкой', sub: 'Договоритесь с фондом и отправьте вещи напрямую' }
-                ],
-                benefits: [
-                    { img: '4', title: 'Пишут только проверенные фонды', sub: 'Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели' },
-                    { img: '5', title: 'Передайте нужные вещи', sub: 'Мы показываем вещи, которые сейчас действительно нужны фондам' },
-                    { img: '6', title: 'Без затрат на размещение и доставку', sub: 'Бесплатные размещения не расходуются, доставку оплачивает фонд' }
+                route: 'step5.html',
+                title: 'Для семей с детьми',
+                sub: 'Собираем вещи на помощь многодетным семьям',
+                image: 'sbor 1 new.png',
+                storage: 'regular',
+                needs: [
+                    { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
+                        { id: 'men-jeans', name: 'Мужские джинсы, размер 48–54', needed: 5 },
+                        { id: 'women-sweaters', name: 'Женские теплые кофты, размер S–L', needed: 6 },
+                        { id: 'jackets', name: 'Демисезонные куртки', needed: 8 },
+                        { id: 'shoes', name: 'Обувь для взрослых', needed: 7 },
+                        { id: 'hats', name: 'Шапки и шарфы', needed: 4 }
+                    ] },
+                    { id: 'kids', title: 'Детские вещи', countable: true, items: [
+                        { id: 'kids-pants', name: 'Детские брюки и джинсы', needed: 5 },
+                        { id: 'kids-hoodies', name: 'Толстовки и свитшоты', needed: 6 },
+                        { id: 'kids-dresses', name: 'Платья и сарафаны', needed: 4 },
+                        { id: 'kids-shoes', name: 'Детская обувь', needed: 5 },
+                        { id: 'kids-outerwear', name: 'Куртки для детей', needed: 3 }
+                    ] },
+                    { id: 'toys', title: 'Детские игрушки', countable: false, items: [
+                        { id: 'constructors', name: 'Конструкторы' },
+                        { id: 'dolls', name: 'Куклы и аксессуары' },
+                        { id: 'cars', name: 'Машинки' },
+                        { id: 'books', name: 'Детские книги' },
+                        { id: 'board-games', name: 'Настольные игры' }
+                    ] }
                 ]
             },
             crisis: {
-                how: [
-                    { img: '1', title: 'Разместите благотворительное объявление', sub: 'Выберите вещи, которые готовы передать пострадавшим' },
-                    { img: '2', title: 'Объявление увидят люди и фонды', sub: 'Оно попадёт в специальный раздел помощи для региона ЧС' },
-                    { img: '3', title: 'Отправьте вещи Авито Доставкой', sub: 'Получатель сможет оформить доставку всего за 1 ₽' }
-                ],
-                benefits: [
-                    { img: '4', title: 'Помощь быстрее доходит до пострадавших', sub: 'Объявления показываются людям и фондам в регионе ЧС' },
-                    { img: '5', title: 'Можно отдать вещи даром или за символическую цену', sub: 'Подойдут товары первой необходимости и гуманитарная помощь' },
-                    { img: '6', title: 'Льготная доставка за счёт Авито', sub: 'Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽' }
+                route: 'step5-crisis.html',
+                title: 'Помощь Дагестану',
+                sub: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+                image: 'sbor 2 new.png',
+                storage: 'crisis',
+                needs: [
+                    { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
+                        { id: 'warm-clothes', name: 'Теплая одежда для взрослых', needed: 8 },
+                        { id: 'kids-warm', name: 'Теплая одежда для детей', needed: 7 },
+                        { id: 'raincoats', name: 'Дождевики', needed: 5 },
+                        { id: 'boots', name: 'Резиновые сапоги', needed: 6 }
+                    ] },
+                    { id: 'home', title: 'Домашняя утварь', countable: true, items: [
+                        { id: 'bedding', name: 'Постельное белье', needed: 6 },
+                        { id: 'blankets', name: 'Одеяла и пледы', needed: 5 },
+                        { id: 'towels', name: 'Полотенца', needed: 8 },
+                        { id: 'dishes', name: 'Посуда', needed: 7 }
+                    ] },
+                    { id: 'hygiene', title: 'Средства гигиены', countable: false, items: [
+                        { id: 'toothpaste', name: 'Зубная паста и щетки' },
+                        { id: 'shampoo', name: 'Шампунь и гель для душа' },
+                        { id: 'soap', name: 'Мыло' },
+                        { id: 'wipes', name: 'Влажные салфетки' },
+                        { id: 'powder', name: 'Стиральный порошок' }
+                    ] }
                 ]
             }
         };
-        function renderHowSteps(steps) {
-            return steps.map(s => `<div class="how-step"><img src="sheets materials/${s.img}.png" width="64" height="64" alt=""><div><div class="how-step-title">${s.title}</div><div class="how-step-sub">${s.sub}</div></div></div>`).join('');
-        }
-        function openHowSheet() {
-            const content = HOW_CONTENT[collection || 'family'] || HOW_CONTENT.family;
-            document.getElementById('how-pane-how').innerHTML = renderHowSteps(content.how);
-            document.getElementById('how-pane-benefits').innerHTML = renderHowSteps(content.benefits);
-            switchHowSheetTab('how');
-            document.getElementById('how-sheet').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeHowSheet() { document.getElementById('how-sheet').classList.remove('open'); document.body.style.overflow = ''; }
-        function switchHowSheetTab(tab) {
-            document.querySelectorAll('#how-sheet .sheet-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('#how-sheet .sheet-pane').forEach(p => p.style.display = 'none');
-            document.getElementById('how-tab-' + tab).classList.add('active');
-            document.getElementById('how-pane-' + tab).style.display = 'block';
-        }
 
-        // ── Categories ──
-        function renderCategories() {
-            const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
-            const el = document.getElementById('cat-content');
-            el.innerHTML = cats.map(c => `
-                <div class="selected-cat-row">
-                    <img class="selected-cat-img" src="${c.image}" alt="">
-                    <div>
-                        <div class="selected-cat-name">${c.name}</div>
-                        ${c.countable === false ? '' : `<div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>`}
-                    </div>
-                </div>
-            `).join('');
-        }
-        renderCategories();
+        const CONDITION_NAMES = {
+            'new-tag': 'Новое, с биркой',
+            excellent: 'Отличное',
+            good: 'Хорошее',
+            fair: 'Удовлетворительное'
+        };
 
-        // ── Title ──
-        const titleInput = document.getElementById('title-input');
-        const titleClear = document.getElementById('title-clear');
-        titleInput.value = sessionStorage.getItem('adTitle') || '';
-        titleClear.style.display = titleInput.value ? 'block' : 'none';
+        const ADTYPE_NAMES = { own: 'Продаю своё' };
 
-        titleInput.addEventListener('input', () => {
-            titleClear.style.display = titleInput.value ? 'block' : 'none';
-        });
+        const INFO_SHEETS = {
+            family: {
+                title: 'Как работают Добрые вещи',
+                benefitsTitle: 'Почему это удобно',
+                how: [
+                    { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно фондам. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                    { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные из обычной подачи сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                    { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят только проверенные фонды. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
+                ],
+                benefits: [
+                    { img: '4', title: 'Понятно, какие вещи сейчас нужны', sub: 'В списке будут конкретные позиции: например, куртки нужного размера, книги для определенного возраста или рюкзаки в хорошем состоянии.' },
+                    { img: '5', title: 'Можно передать несколько вещей сразу', sub: 'Если у вас пакет вещей, отметьте все подходящие позиции в одном объявлении.' },
+                    { img: '6', title: 'Бесплатные размещения сохранятся', sub: 'Объявление в «Добрых вещах» не тратит лимит бесплатных размещений на Авито.' }
+                ]
+            },
+            crisis: {
+                title: 'Как работает помощь при ЧС',
+                benefitsTitle: 'Почему это удобно',
+                how: [
+                    { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно пострадавшим. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                    { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                    { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
+                ],
+                benefits: [
+                    { img: '4', title: 'Понятно, что именно сейчас нужно', sub: 'В списке будут конкретные позиции: например, резиновые сапоги нужного размера, помпы для воды или закрытые средства гигиены.' },
+                    { img: '5', title: 'Можно добавить вещи к объявлению', sub: 'Если кроме основной вещи у вас есть что-то еще из списка, отметьте это в объявлении.' },
+                    { img: '6', title: 'Доставка для пострадавших — 1 ₽', sub: 'Люди из зоны ЧС смогут оформить Авито Доставку за 1 ₽ на товары из «Добрых вещей».' }
+                ]
+            }
+        };
 
-        function clearTitle() {
-            titleInput.value = '';
-            titleClear.style.display = 'none';
-            titleInput.focus();
+        function saveAndExit() {
+            persistAll();
+            sessionStorage.setItem('hasDraft', '1');
+            window.location.href = 'ads.html?tab=drafts&toast=1';
         }
 
-        // ── Description ──
-        const ta = document.getElementById('desc-textarea');
-        const descClear = document.getElementById('desc-clear');
-        ta.value = sessionStorage.getItem('adDesc') || '';
-        descClear.style.display = ta.value ? 'block' : 'none';
-
-        ta.addEventListener('input', () => {
-            ta.style.height = 'auto';
-            ta.style.height = ta.scrollHeight + 'px';
-            descClear.style.display = ta.value ? 'block' : 'none';
-        });
-        ta.style.height = ta.scrollHeight + 'px';
-
-        function clearDesc() {
-            ta.value = '';
-            descClear.style.display = 'none';
-            ta.focus();
-        }
-
-        // ── Photos ──
-        let photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
-
-        function deletePhoto(id) {
-            photos = photos.filter(p => p !== id);
-            sessionStorage.setItem('selectedPhotos', JSON.stringify(photos));
-            renderPhotos();
+        function photoSrc(id) {
+            return Number(id) <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
         }
 
         function renderPhotos() {
             const grid = document.getElementById('photos-grid');
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
             grid.innerHTML = '';
+
             photos.forEach((id, index) => {
                 const cell = document.createElement('div');
                 cell.className = 'photo-cell';
@@ -659,47 +1097,406 @@
                 `;
                 grid.appendChild(cell);
             });
-            const addCell = document.createElement('div');
+
+            const addCell = document.createElement('button');
             addCell.className = 'photo-cell add-cell';
-            addCell.onclick = () => {
-                sessionStorage.setItem('photoReturnPage', 'edit-ad.html');
-                window.location.href = 'step2-choose.html';
-            };
-            addCell.innerHTML = `
-                <img src="step 2 materials/Camera.svg" width="24" height="24" alt="">
-                <span>Добавить</span>
-            `;
+            addCell.onclick = openPhotoEdit;
+            addCell.innerHTML = `<img src="step 2 materials/Camera.svg" width="32" height="32" alt=""><span>Добавить</span>`;
             grid.appendChild(addCell);
         }
-        renderPhotos();
 
-        // ── Categories navigation ──
-        function goToCategories() {
-            sessionStorage.setItem('categoriesReturnPage', 'edit-ad.html');
-            const col = sessionStorage.getItem('adCollection');
-            window.location.href = col === 'crisis' ? 'step6-crisis.html' : 'step6.html';
+        function deletePhoto(id) {
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]').filter(p => Number(p) !== Number(id));
+            sessionStorage.setItem('selectedPhotos', JSON.stringify(photos));
+            renderPhotos();
         }
 
-        // ── Save & Done (Готово button) ──
+        function openPhotoEdit() {
+            sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
+            window.location.href = 'step2-choose.html';
+        }
+
+        function clearTitle() {
+            const input = document.getElementById('title-display');
+            input.value = '';
+            sessionStorage.removeItem('adTitle');
+            document.getElementById('title-clear-btn').style.display = 'none';
+            input.focus();
+        }
+
+        function clearPrice() {
+            const input = document.getElementById('price-input');
+            input.value = '';
+            sessionStorage.removeItem('mainPrice');
+            input.focus();
+        }
+
+        function setupMainFields() {
+            const titleInput = document.getElementById('title-display');
+            const savedTitle = sessionStorage.getItem('adTitle') || '';
+            titleInput.value = savedTitle;
+            document.getElementById('title-clear-btn').style.display = savedTitle ? 'block' : 'none';
+            titleInput.addEventListener('input', () => {
+                sessionStorage.setItem('adTitle', titleInput.value);
+                document.getElementById('title-clear-btn').style.display = titleInput.value ? 'block' : 'none';
+            });
+
+            const condition = sessionStorage.getItem('mainCondition');
+            if (condition && CONDITION_NAMES[condition]) {
+                document.getElementById('condition-section').style.display = 'block';
+                document.getElementById('condition-value').textContent = CONDITION_NAMES[condition];
+            }
+
+            const adtype = sessionStorage.getItem('mainAdType');
+            if (adtype && ADTYPE_NAMES[adtype]) {
+                document.getElementById('adtype-section').style.display = 'block';
+                document.getElementById('adtype-value').textContent = ADTYPE_NAMES[adtype];
+            }
+
+            let price = sessionStorage.getItem('mainPrice') || '';
+            const descPrice = (sessionStorage.getItem('adDesc') || '').match(/Цена:\s*([0-9\s]+) ₽/);
+            if (!price && descPrice) price = descPrice[1].replace(/\s/g, '');
+            if (price) {
+                document.getElementById('price-section').style.display = 'block';
+                document.getElementById('price-input').value = price + ' ₽';
+            }
+            document.getElementById('price-input').addEventListener('input', function () {
+                const digits = this.value.replace(/\D/g, '');
+                this.value = digits ? digits + ' ₽' : '';
+                if (digits) sessionStorage.setItem('mainPrice', digits);
+                else sessionStorage.removeItem('mainPrice');
+            });
+        }
+
+        function openSheet() {
+            renderInfoSheet();
+            document.getElementById('sheet-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheet() {
+            document.getElementById('sheet-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function switchSheetTab(tab) {
+            document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
+            document.getElementById('stab-' + tab).classList.add('active');
+            document.getElementById('spane-' + tab).style.display = 'block';
+        }
+
+        function renderInfoSheet() {
+            const data = INFO_SHEETS[currentCollection];
+            document.getElementById('info-sheet-title').textContent = data.title;
+            document.getElementById('stab-benefits').textContent = 'Почему это удобно';
+            document.getElementById('spane-how').innerHTML = renderSheetSteps(data.how);
+            document.getElementById('spane-benefits').innerHTML = `<div class="sheet-section-heading">${data.benefitsTitle}</div>` + renderSheetSteps(data.benefits);
+            switchSheetTab('how');
+        }
+
+        function renderSheetSteps(steps) {
+            return steps.map(step => `
+                <div class="sheet-step">
+                    <img src="sheets materials/${step.img}.png" width="64" height="64" alt="">
+                    <div>
+                        <div class="sheet-step-title">${step.title}</div>
+                        <div class="sheet-step-sub">${step.sub}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openChangeSheet() {
+            selectedCollection = currentCollection === 'family' ? 0 : 1;
+            updateRadios();
+            document.getElementById('collection-sheet').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeChangeSheet() {
+            document.getElementById('collection-sheet').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function selectCollection(idx) {
+            selectedCollection = idx;
+            updateRadios();
+        }
+
+        function updateRadios() {
+            document.getElementById('radio-0').src = selectedCollection === 0 ? 'crisis help/Radio on.png' : 'crisis help/Radio off.png';
+            document.getElementById('radio-1').src = selectedCollection === 1 ? 'crisis help/Radio on.png' : 'crisis help/Radio off.png';
+        }
+
+        function confirmCollection() {
+            const next = selectedCollection === 0 ? 'family' : 'crisis';
+            if (next === currentCollection) {
+                closeChangeSheet();
+                return;
+            }
+            closeChangeSheet();
+            document.getElementById('switch-popup').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSwitchPopup() {
+            document.getElementById('switch-popup').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function changeCollection() {
+            persistAll();
+            sessionStorage.setItem('hasDraft', '1');
+            sessionStorage.removeItem('adCategories');
+            sessionStorage.removeItem('charityNeedSelections');
+            window.location.href = selectedCollection === 0 ? 'step5.html' : 'step5-crisis.html';
+        }
+
+        function loadSelections() {
+            return JSON.parse(sessionStorage.getItem('charityNeedSelections') || '{}');
+        }
+
+        function saveSelections(selections) {
+            sessionStorage.setItem('charityNeedSelections', JSON.stringify(selections));
+        }
+
+        function getNeed(needId) {
+            return COLLECTIONS[currentCollection].needs.find(n => n.id === needId);
+        }
+
+        function renderCollection() {
+            const data = COLLECTIONS[currentCollection];
+            document.getElementById('collection-title').textContent = data.title;
+        }
+
+        function renderNeeds() {
+            const container = document.getElementById('needs-container');
+            const selections = loadSelections();
+            container.innerHTML = '';
+            COLLECTIONS[currentCollection].needs.forEach(need => {
+                const selectedItems = selections[need.id] || {};
+                const selectedCount = Object.keys(selectedItems).length;
+                const total = need.countable ? need.items.reduce((sum, item) => sum + item.needed, 0) : 0;
+                const block = document.createElement('div');
+                block.className = 'need-block';
+                block.innerHTML = `
+                    <div class="need-title">${need.title}</div>
+                    <div class="need-sub">${need.countable ? `Осталось собрать ${total} ${pluralItems(total)}` : 'Нужны всегда в неограниченном количестве'}</div>
+                    <button class="selector ${selectedCount ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
+                        <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
+                        <img class="arrow-icon" src="arrow down.svg" alt="">
+                    </button>
+                    <div class="tags" id="tags-${need.id}"></div>
+                `;
+                container.appendChild(block);
+                renderTags(need.id);
+            });
+            updateContinueState();
+            autoBuildDescription();
+        }
+
+        function renderTags(needId) {
+            const tags = document.getElementById('tags-' + needId);
+            if (!tags) return;
+            const need = getNeed(needId);
+            const selections = loadSelections();
+            const selectedItems = selections[needId] || {};
+            tags.innerHTML = '';
+            Object.keys(selectedItems).forEach(itemId => {
+                const item = need.items.find(i => i.id === itemId);
+                if (!item) return;
+                const qty = selectedItems[itemId];
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.innerHTML = `${item.name}${need.countable ? `, ${qty} шт.` : ''}<button onclick="removeNeedItem('${needId}','${itemId}')"><img src="sheets materials/CloseButton.svg" width="10" height="10" alt=""></button>`;
+                tags.appendChild(tag);
+            });
+        }
+
+        function removeNeedItem(needId, itemId) {
+            const selections = loadSelections();
+            if (selections[needId]) {
+                delete selections[needId][itemId];
+                if (Object.keys(selections[needId]).length === 0) delete selections[needId];
+            }
+            saveSelections(selections);
+            manualDesc = false;
+            renderNeeds();
+        }
+
+        function openNeedSheet(needId) {
+            activeNeedId = needId;
+            draftSelections = JSON.parse(JSON.stringify(loadSelections()[needId] || {}));
+            const need = getNeed(needId);
+            document.getElementById('need-sheet-sub').textContent = `В категории “${need.title}”`;
+            renderNeedSheetList();
+            document.getElementById('need-sheet').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNeedSheet() {
+            document.getElementById('need-sheet').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function renderNeedSheetList() {
+            const need = getNeed(activeNeedId);
+            const list = document.getElementById('need-sheet-list');
+            list.innerHTML = '';
+            need.items.forEach(item => {
+                const selected = Object.prototype.hasOwnProperty.call(draftSelections, item.id);
+                const qty = draftSelections[item.id] || 1;
+                const row = document.createElement('div');
+                row.className = 'need-row';
+                row.innerHTML = `
+                    <div style="flex:1;min-width:0;">
+                        <div class="need-item-name">${item.name}</div>
+                        ${need.countable ? `<div class="need-item-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                        ${selected && need.countable ? `
+                            <div class="qty-picker">
+                                <button onclick="changeDraftQty('${item.id}', -1)">−</button>
+                                <span>${qty}</span>
+                                <button onclick="changeDraftQty('${item.id}', 1)">+</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <button class="check-btn ${selected ? 'active' : ''}" onclick="toggleDraftItem('${item.id}')">${selected ? '✓' : ''}</button>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function toggleDraftItem(itemId) {
+            if (Object.prototype.hasOwnProperty.call(draftSelections, itemId)) delete draftSelections[itemId];
+            else draftSelections[itemId] = 1;
+            renderNeedSheetList();
+        }
+
+        function changeDraftQty(itemId, delta) {
+            const need = getNeed(activeNeedId);
+            const item = need.items.find(i => i.id === itemId);
+            const max = item?.needed || 99;
+            draftSelections[itemId] = Math.max(1, Math.min(max, (draftSelections[itemId] || 1) + delta));
+            renderNeedSheetList();
+        }
+
+        function applyNeedSelection() {
+            const selections = loadSelections();
+            if (Object.keys(draftSelections).length) selections[activeNeedId] = draftSelections;
+            else delete selections[activeNeedId];
+            saveSelections(selections);
+            manualDesc = false;
+            closeNeedSheet();
+            renderNeeds();
+        }
+
+        function pluralItems(n) {
+            const m10 = n % 10, m100 = n % 100;
+            if (m100 >= 11 && m100 <= 14) return 'вещей';
+            if (m10 === 1) return 'вещь';
+            if (m10 >= 2 && m10 <= 4) return 'вещи';
+            return 'вещей';
+        }
+
+        function selectedLines() {
+            const selections = loadSelections();
+            const lines = [];
+            COLLECTIONS[currentCollection].needs.forEach(need => {
+                const group = selections[need.id] || {};
+                Object.keys(group).forEach(itemId => {
+                    const item = need.items.find(i => i.id === itemId);
+                    if (!item) return;
+                    lines.push(need.countable ? `${item.name} — ${group[itemId]} шт.` : item.name);
+                });
+            });
+            return lines;
+        }
+
+        function autoBuildDescription() {
+            const ta = document.getElementById('desc-textarea');
+            if (manualDesc) return;
+            const savedDesc = sessionStorage.getItem('adDesc') || '';
+            const base = sessionStorage.getItem('mainDesc') || savedDesc.split(/\n\nГотовы передать:\n/)[0] || '';
+            const lines = selectedLines();
+            const generated = lines.length ? `Готовы передать:\n${lines.join('\n')}` : '';
+            ta.value = [base, generated].filter(Boolean).join('\n\n');
+            resizeTextarea();
+            persistCategories();
+        }
+
+        function resizeTextarea() {
+            const ta = document.getElementById('desc-textarea');
+            ta.style.height = 'auto';
+            ta.style.height = ta.scrollHeight + 'px';
+        }
+
+        function persistCategories() {
+            const selections = loadSelections();
+            const categories = [];
+            COLLECTIONS[currentCollection].needs.forEach(need => {
+                const group = selections[need.id] || {};
+                const ids = Object.keys(group);
+                if (!ids.length) return;
+                categories.push({
+                    id: need.id,
+                    name: need.title,
+                    quantity: need.countable ? ids.reduce((sum, id) => sum + Number(group[id] || 0), 0) : ids.length,
+                    countable: need.countable,
+                    image: currentCollection === 'crisis' ? 'crisis help/cat 1.png' : 'crisis help/cat 3.png',
+                    comment: ids.map(id => {
+                        const item = need.items.find(i => i.id === id);
+                        return item ? (need.countable ? `${item.name} — ${group[id]} шт.` : item.name) : '';
+                    }).filter(Boolean).join('\n')
+                });
+            });
+            sessionStorage.setItem('adCategories', JSON.stringify(categories));
+            sessionStorage.setItem('adCollection', COLLECTIONS[currentCollection].storage);
+            sessionStorage.setItem('adDesc', document.getElementById('desc-textarea').value);
+        }
+
+        function persistAll() {
+            persistCategories();
+            sessionStorage.setItem('adTitle', document.getElementById('title-display').value);
+            sessionStorage.setItem('adDesc', document.getElementById('desc-textarea').value);
+        }
+
+        function updateContinueState() {
+            document.getElementById('continue-btn').classList.add('active');
+        }
+
+        function goToDelivery() {
+            if (!Object.keys(loadSelections()).length) return;
+            persistAll();
+            saveDone();
+        }
+
         function saveDone() {
-            sessionStorage.setItem('adTitle', titleInput.value);
-            sessionStorage.setItem('adDesc', ta.value);
+            persistAll();
             sessionStorage.setItem('showSavedToast', '1');
             window.location.href = sessionStorage.getItem('editReturnPage') || 'ad-page.html';
         }
 
-        // ── Close (X button) — saves and navigates back ──
         function closeEdit() {
-            sessionStorage.setItem('adTitle', titleInput.value);
-            sessionStorage.setItem('adDesc', ta.value);
-            sessionStorage.setItem('showSavedToast', '1');
+            persistAll();
             history.back();
         }
 
+        const descTextarea = document.getElementById('desc-textarea');
+        descTextarea.addEventListener('input', () => {
+            manualDesc = true;
+            resizeTextarea();
+            persistCategories();
+        });
+
+        currentCollection = CURRENT_COLLECTION;
+        renderPhotos();
+        setupMainFields();
+        renderCollection();
+        renderNeeds();
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
         }, { passive: true });
     </script>
-
 </body>
 </html>
