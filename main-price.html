@@ -161,7 +161,7 @@
         .continue-btn {
             display: block;
             width: 100%;
-            background: #1A1A1A;
+            background: #C4C4C4;
             color: #fff;
             border: none;
             border-radius: 16px;
@@ -172,6 +172,12 @@
             text-align: center;
             cursor: default;
             pointer-events: none;
+            transition: background 0.15s;
+        }
+        .continue-btn.active {
+            background: #1A1A1A;
+            cursor: pointer;
+            pointer-events: auto;
         }
     </style>
 </head>
@@ -213,7 +219,7 @@
     </div>
 
     <div class="bottom-bar">
-        <button class="continue-btn">Продолжить</button>
+        <button class="continue-btn" id="continue-btn" onclick="goNext()">Продолжить</button>
     </div>
 
     <script>
@@ -222,11 +228,13 @@
         const charityHint = document.getElementById('charity-hint');
         let digits = '';
 
+        const continueBtn = document.getElementById('continue-btn');
+
         function updateDisplay() {
             priceInput.value = digits ? digits + ' ₽' : '';
             priceClear.style.display = digits ? 'block' : 'none';
-            const val = parseInt(digits) || 0;
-            charityHint.style.display = (digits !== '' && val < 100) ? 'block' : 'none';
+            charityHint.style.display = digits !== '' ? 'block' : 'none';
+            continueBtn.classList.toggle('active', digits !== '');
         }
 
         priceInput.addEventListener('keydown', function(e) {
@@ -288,6 +296,13 @@
 
         function goBack() {
             window.location.href = sessionStorage.getItem('prevPage') || 'main-address.html';
+        }
+
+        function goNext() {
+            if (!digits) return;
+            sessionStorage.setItem('mainPrice', digits);
+            sessionStorage.setItem('prevPage', 'main-price.html');
+            window.location.href = 'delivery.html';
         }
 
         function goToCharity() {

@@ -168,9 +168,7 @@
         });
 
         function checkTrigger() {
-            const lower = ta.value.toLowerCase();
-            const triggered = TRIGGER_WORDS.some(w => lower.includes(w));
-            hint.classList.toggle('visible', triggered);
+            hint.classList.toggle('visible', ta.value.trim().length > 0);
         }
 
         function buildFullDescription() {
