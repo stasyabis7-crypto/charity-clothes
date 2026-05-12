@@ -111,7 +111,7 @@
         /* ── AD CARD ── */
         .ad-card {
             display: flex; align-items: flex-start; gap: 16px;
-            padding: 20px 0;
+            padding: 20px 0; cursor: pointer;
         }
         .ad-photo {
             width: 120px; height: 120px; border-radius: 12px;
@@ -332,12 +332,12 @@
         <div id="panel-active" class="tab-panel visible">
 
             <!-- Ad 1: Sony -->
-            <div class="ad-card">
+            <div class="ad-card" onclick="window.location.href='ad-page-desktop.html'">
                 <img src="step 0 photo/Elements/Картинка.png" class="ad-photo" alt="Sony a7 IV">
                 <div class="ad-body">
                     <div class="ad-top">
                         <div class="ad-title-col">
-                            <a href="ad-page-desktop.html" class="ad-title">Sony a7 IV (a7m4) Body</a>
+                            <span class="ad-title">Sony a7 IV (a7m4) Body</span>
                             <div class="ad-price">189 900 ₽</div>
                         </div>
                     </div>
@@ -352,19 +352,19 @@
                         <span class="stat-item"><img src="icons footer/Chat.svg" width="16" height="16" alt=""> 1</span>
                     </div>
                     <div class="ad-actions">
-                        <button class="btn-edit">Редактировать</button>
-                        <button class="btn-more">···</button>
+                        <button class="btn-edit" onclick="event.stopPropagation()">Редактировать</button>
+                        <button class="btn-more" onclick="event.stopPropagation()">···</button>
                     </div>
                 </div>
             </div>
 
             <!-- Ad 2: Charity (from sessionStorage) -->
-            <div class="ad-card" id="charity-card">
+            <div class="ad-card" id="charity-card" onclick="window.location.href='ad-page-desktop.html'">
                 <img id="charity-photo" class="ad-photo" src="new-ad-desktop/banner-illu.png" alt="Фото объявления">
                 <div class="ad-body">
                     <div class="ad-top">
                         <div class="ad-title-col">
-                            <a href="ad-page-desktop.html" class="ad-title" id="charity-title">Без названия</a>
+                            <span class="ad-title" id="charity-title">Без названия</span>
                             <div class="ad-price">Бесплатно</div>
                             <span class="charity-badge">Благотворительность</span>
                         </div>
@@ -375,7 +375,7 @@
                         <span class="stat-item"><img src="step 0 icons/Favorite.svg" width="16" height="16" alt=""> 0 <span class="stat-plus">+0</span></span>
                     </div>
                     <div class="ad-actions">
-                        <button class="btn-edit" onclick="window.location.href='edit-ad-desktop.html'">Редактировать</button>
+                        <button class="btn-edit" onclick="event.stopPropagation(); window.location.href='edit-ad-desktop.html'">Редактировать</button>
                         <div class="btn-more-wrap">
                             <button class="btn-more" onclick="openPopover(this); event.stopPropagation()">···</button>
                             <div class="popover">
