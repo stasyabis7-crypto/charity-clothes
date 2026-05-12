@@ -82,6 +82,22 @@
             color: #9E9E9E;
         }
 
+        .how-banner {
+            margin: 12px 16px 0;
+            background: linear-gradient(90deg, #D7F1FF 0%, #E4F8FF 100%);
+            border-radius: 16px;
+            padding: 14px 14px 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .how-banner-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+        .how-banner-text { flex: 1; min-width: 0; }
+        .how-banner-title { font-size: 15px; font-weight: 700; color: #1A1A1A; }
+        .how-banner-sub { margin-top: 3px; font-size: 13px; color: #1A1A1A; line-height: 1.35; }
+        .collection-section { padding-top: 24px; }
+
         /* ── CATEGORY ROWS ── */
         .selected-cat-row {
             display: flex;
@@ -370,6 +386,20 @@
         }
 
         .toast.visible { display: block; }
+
+        .sheet-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 300; align-items: flex-end; }
+        .sheet-overlay.open { display: flex; }
+        .sheet-card { width: 100%; max-width: 430px; margin: 0 auto; background: #fff; border-radius: 24px 24px 0 0; padding: 8px 16px 32px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .sheet-drag { width: 36px; height: 4px; border-radius: 4px; background: #D9D9D9; margin: 8px auto 20px; }
+        .sheet-close { position: absolute; right: 12px; top: 12px; background: none; border: none; padding: 0; cursor: pointer; }
+        .sheet-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.15; margin-bottom: 18px; padding-right: 36px; }
+        .sheet-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .sheet-tab { flex: 1; border: none; border-radius: 12px; background: #F4F4F4; padding: 10px 8px; font-family: 'Inter', sans-serif; font-size: 14px; color: #1A1A1A; cursor: pointer; }
+        .sheet-tab.active { background: #1A1A1A; color: #fff; }
+        .how-step { display: flex; gap: 12px; margin-bottom: 18px; }
+        .how-step img { flex-shrink: 0; }
+        .how-step-title { font-size: 17px; font-weight: 700; color: #1A1A1A; line-height: 1.3; margin-bottom: 4px; }
+        .how-step-sub { font-size: 15px; color: #1A1A1A; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -380,8 +410,16 @@
         <span class="header-title">Редактирование</span>
     </header>
 
+    <div class="how-banner" onclick="openHowSheet()">
+        <img class="how-banner-img" src="how it works.png" alt="">
+        <div class="how-banner-text">
+            <div class="how-banner-title">Как это работает</div>
+            <div class="how-banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
+        </div>
+    </div>
+
     <!-- СБОР -->
-    <div class="section">
+    <div class="section collection-section">
         <div class="section-label">Сбор</div>
         <div class="collection-field">
             <span class="collection-field-value" id="collection-name">Помощь семьям</span>
@@ -469,6 +507,20 @@
     <!-- TOAST -->
     <div class="toast" id="toast">Изменения успешно сохранены</div>
 
+    <div class="sheet-overlay" id="how-sheet" onclick="closeHowSheet()">
+        <div class="sheet-card" onclick="event.stopPropagation()">
+            <div class="sheet-drag"></div>
+            <button class="sheet-close" onclick="closeHowSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
+            <h2 class="sheet-title">Передача вещей<br>на благотворительность</h2>
+            <div class="sheet-tabs">
+                <button class="sheet-tab active" id="how-tab-how" onclick="switchHowSheetTab('how')">Как это работает</button>
+                <button class="sheet-tab" id="how-tab-benefits" onclick="switchHowSheetTab('benefits')">Преимущества</button>
+            </div>
+            <div class="sheet-pane" id="how-pane-how"></div>
+            <div class="sheet-pane" id="how-pane-benefits" style="display:none"></div>
+        </div>
+    </div>
+
     <script>
         function photoSrc(id) {
             return id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
@@ -486,6 +538,51 @@
         const collection = sessionStorage.getItem('adCollection');
         document.getElementById('collection-name').textContent =
             collection === 'crisis' ? 'Помощь Дагестану' : 'Помощь семьям';
+
+        const HOW_CONTENT = {
+            family: {
+                how: [
+                    { img: '1', title: 'Разместите бесплатное объявление', sub: 'Выберите категории вещей, которые нужны фондам' },
+                    { img: '2', title: 'Фонд напишет вам в чате', sub: 'Обычно это занимает несколько дней' },
+                    { img: '3', title: 'Передайте вещи Авито Доставкой', sub: 'Договоритесь с фондом и отправьте вещи напрямую' }
+                ],
+                benefits: [
+                    { img: '4', title: 'Пишут только проверенные фонды', sub: 'Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели' },
+                    { img: '5', title: 'Передайте нужные вещи', sub: 'Мы показываем вещи, которые сейчас действительно нужны фондам' },
+                    { img: '6', title: 'Без затрат на размещение и доставку', sub: 'Бесплатные размещения не расходуются, доставку оплачивает фонд' }
+                ]
+            },
+            crisis: {
+                how: [
+                    { img: '1', title: 'Разместите благотворительное объявление', sub: 'Выберите вещи, которые готовы передать пострадавшим' },
+                    { img: '2', title: 'Объявление увидят люди и фонды', sub: 'Оно попадёт в специальный раздел помощи для региона ЧС' },
+                    { img: '3', title: 'Отправьте вещи Авито Доставкой', sub: 'Получатель сможет оформить доставку всего за 1 ₽' }
+                ],
+                benefits: [
+                    { img: '4', title: 'Помощь быстрее доходит до пострадавших', sub: 'Объявления показываются людям и фондам в регионе ЧС' },
+                    { img: '5', title: 'Можно отдать вещи даром или за символическую цену', sub: 'Подойдут товары первой необходимости и гуманитарная помощь' },
+                    { img: '6', title: 'Льготная доставка за счёт Авито', sub: 'Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽' }
+                ]
+            }
+        };
+        function renderHowSteps(steps) {
+            return steps.map(s => `<div class="how-step"><img src="sheets materials/${s.img}.png" width="64" height="64" alt=""><div><div class="how-step-title">${s.title}</div><div class="how-step-sub">${s.sub}</div></div></div>`).join('');
+        }
+        function openHowSheet() {
+            const content = HOW_CONTENT[collection || 'family'] || HOW_CONTENT.family;
+            document.getElementById('how-pane-how').innerHTML = renderHowSteps(content.how);
+            document.getElementById('how-pane-benefits').innerHTML = renderHowSteps(content.benefits);
+            switchHowSheetTab('how');
+            document.getElementById('how-sheet').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeHowSheet() { document.getElementById('how-sheet').classList.remove('open'); document.body.style.overflow = ''; }
+        function switchHowSheetTab(tab) {
+            document.querySelectorAll('#how-sheet .sheet-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#how-sheet .sheet-pane').forEach(p => p.style.display = 'none');
+            document.getElementById('how-tab-' + tab).classList.add('active');
+            document.getElementById('how-pane-' + tab).style.display = 'block';
+        }
 
         // ── Categories ──
         function renderCategories() {

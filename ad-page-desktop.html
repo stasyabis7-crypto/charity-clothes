@@ -112,6 +112,16 @@
         .znak-sub { font-size: 13px; color: #9E9E9E; margin-top: 2px; }
         .znak-chevron { flex-shrink: 0; color: #9E9E9E; }
 
+        .how-banner {
+            margin-top: 10px; background: linear-gradient(90deg, #D7F1FF 0%, #E4F8FF 100%);
+            border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer;
+        }
+        .how-banner-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+        .how-banner-text { flex: 1; min-width: 0; }
+        .how-banner-title { font-size: 14px; font-weight: 800; color: #1A1A1A; margin-bottom: 4px; }
+        .how-banner-sub { font-size: 13px; color: #1A1A1A; line-height: 1.4; }
+
         /* Section headings */
         .section { margin-top: 32px; }
         .section h3 { font-size: 18px; font-weight: 700; color: #1A1A1A; margin-bottom: 10px; }
@@ -183,6 +193,16 @@
         }
         .modal-confirm-btn.visible { display: block; }
         .modal-confirm-btn:hover { opacity: 0.85; }
+        .how-modal .modal-card { width: 520px; }
+        .how-modal-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.15; margin-bottom: 18px; padding-right: 40px; }
+        .how-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .how-tab { flex: 1; border: none; border-radius: 12px; background: #F4F4F4; padding: 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: #1A1A1A; cursor: pointer; }
+        .how-tab.active { background: #1A1A1A; color: #fff; }
+        .how-pane { display: none; }
+        .how-pane.active { display: block; }
+        .how-step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+        .how-step-title { font-size: 17px; font-weight: 700; color: #1A1A1A; line-height: 1.3; margin-bottom: 4px; }
+        .how-step-sub { font-size: 15px; color: #1A1A1A; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -287,6 +307,14 @@
                 </div>
             </div>
 
+            <div class="how-banner" onclick="openHowPopup()">
+                <img src="how it works.png" class="how-banner-img" alt="">
+                <div class="how-banner-text">
+                    <div class="how-banner-title">Как это работает</div>
+                    <div class="how-banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
+                </div>
+            </div>
+
             <!-- Location -->
             <div class="section">
                 <h3>Расположение</h3>
@@ -333,6 +361,19 @@
     </div>
 </div>
 
+<div class="modal-overlay how-modal" id="howPopup" onclick="closeHowPopup()">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeHowPopup()">✕</button>
+        <h2 class="how-modal-title">Передача вещей<br>на благотворительность</h2>
+        <div class="how-tabs">
+            <button class="how-tab active" id="how-tab-how" onclick="switchHowTab('how')">Как это работает</button>
+            <button class="how-tab" id="how-tab-benefits" onclick="switchHowTab('benefits')">Преимущества</button>
+        </div>
+        <div class="how-pane active" id="how-pane-how"></div>
+        <div class="how-pane" id="how-pane-benefits"></div>
+    </div>
+</div>
+
 <div class="modal-overlay" id="unpublishModal" onclick="closeUnpublishModal()">
     <div class="modal-card" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeUnpublishModal()">✕</button>
@@ -359,6 +400,7 @@
     const adLocation = sessionStorage.getItem('adLocation') || 'Москва';
     const adDesc     = sessionStorage.getItem('adDesc');
     const adPhotos   = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+    const collection = sessionStorage.getItem('adCollection') || 'family';
 
     document.getElementById('ad-title').textContent    = adTitle;
     document.getElementById('ad-location').textContent = adLocation;
@@ -386,6 +428,50 @@
         if (selectedReason === -1) return;
         sessionStorage.setItem('adArchived', '1');
         window.location.href = 'my-ads-desktop.html?tab=archive';
+    }
+
+    const HOW_CONTENT = {
+        family: {
+            how: [
+                { img: '1', title: 'Разместите бесплатное объявление', sub: 'Выберите категории вещей, которые нужны фондам' },
+                { img: '2', title: 'Фонд напишет вам в чате', sub: 'Обычно это занимает несколько дней' },
+                { img: '3', title: 'Передайте вещи Авито Доставкой', sub: 'Договоритесь с фондом и отправьте вещи напрямую' }
+            ],
+            benefits: [
+                { img: '4', title: 'Пишут только проверенные фонды', sub: 'Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели' },
+                { img: '5', title: 'Передайте нужные вещи', sub: 'Мы показываем вещи, которые сейчас действительно нужны фондам' },
+                { img: '6', title: 'Без затрат на размещение и доставку', sub: 'Бесплатные размещения не расходуются, доставку оплачивает фонд' }
+            ]
+        },
+        crisis: {
+            how: [
+                { img: '1', title: 'Разместите благотворительное объявление', sub: 'Выберите вещи, которые готовы передать пострадавшим' },
+                { img: '2', title: 'Объявление увидят люди и фонды', sub: 'Оно попадёт в специальный раздел помощи для региона ЧС' },
+                { img: '3', title: 'Отправьте вещи Авито Доставкой', sub: 'Получатель сможет оформить доставку всего за 1 ₽' }
+            ],
+            benefits: [
+                { img: '4', title: 'Помощь быстрее доходит до пострадавших', sub: 'Объявления показываются людям и фондам в регионе ЧС' },
+                { img: '5', title: 'Можно отдать вещи даром или за символическую цену', sub: 'Подойдут товары первой необходимости и гуманитарная помощь' },
+                { img: '6', title: 'Льготная доставка за счёт Авито', sub: 'Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽' }
+            ]
+        }
+    };
+    function renderHowSteps(steps) {
+        return steps.map(s => `<div class="how-step"><img src="sheets materials/${s.img}.png" width="64" height="64" alt=""><div><div class="how-step-title">${s.title}</div><div class="how-step-sub">${s.sub}</div></div></div>`).join('');
+    }
+    function openHowPopup() {
+        const content = HOW_CONTENT[collection] || HOW_CONTENT.family;
+        document.getElementById('how-pane-how').innerHTML = renderHowSteps(content.how);
+        document.getElementById('how-pane-benefits').innerHTML = renderHowSteps(content.benefits);
+        switchHowTab('how');
+        document.getElementById('howPopup').classList.add('open');
+    }
+    function closeHowPopup() { document.getElementById('howPopup').classList.remove('open'); }
+    function switchHowTab(tab) {
+        document.querySelectorAll('#howPopup .how-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('#howPopup .how-pane').forEach(p => p.classList.remove('active'));
+        document.getElementById('how-tab-' + tab).classList.add('active');
+        document.getElementById('how-pane-' + tab).classList.add('active');
     }
 
     // Gallery
