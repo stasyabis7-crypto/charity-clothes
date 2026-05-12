@@ -1003,9 +1003,11 @@
 
     /* ═══════════ CATEGORY ═══════════ */
     let selectedCatId = null;
+    let selectedCatLabel = '';
 
     function selectCat(el, id, label) {
         selectedCatId = id;
+        selectedCatLabel = label;
         document.getElementById('chipsWrap').style.display = 'none';
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = label;
@@ -1025,6 +1027,7 @@
 
     function resetCat() {
         selectedCatId = null;
+        selectedCatLabel = '';
         document.getElementById('chipsWrap').style.display = 'flex';
         document.getElementById('catSelectWrap').style.display = 'none';
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -1464,19 +1467,28 @@
         if (btn && btn.disabled) return;
         const title = titleInput.value.trim() || 'Без названия';
         if (selectedCatId && selectedCatId !== 'charity') {
+            const categoryLabel = selectedCatLabel || 'Личные вещи';
             sessionStorage.setItem('mainCategory', selectedCatId);
             sessionStorage.setItem('mainCondition', regularCondition);
             sessionStorage.setItem('mainAdType', regularAdType);
             sessionStorage.setItem('mainDesc', regularDescTextarea ? regularDescTextarea.value : '');
             sessionStorage.setItem('mainPrice', regularPriceDigits);
+            sessionStorage.setItem('adFlow', 'regular');
+            sessionStorage.setItem('adCategoryLabel', categoryLabel);
+            sessionStorage.setItem('adPrice', regularPriceDigits ? regularPriceDigits + ' ₽' : '');
             sessionStorage.setItem('adTitle', title);
             sessionStorage.setItem('adDesc', buildRegularDescription());
             sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
             sessionStorage.setItem('adLocation', 'Москва, Лесная ул., 7');
+            sessionStorage.removeItem('adCollection');
+            sessionStorage.removeItem('adSelectedCats');
             sessionStorage.removeItem('hasDraft');
             window.location.href = 'my-ads-desktop.html';
             return;
         }
+        sessionStorage.setItem('adFlow', 'charity');
+        sessionStorage.setItem('adCategoryLabel', 'Благотворительные товары');
+        sessionStorage.setItem('adPrice', 'Бесплатно');
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
@@ -1506,17 +1518,26 @@
         const title = titleInput ? titleInput.value.trim() : '';
         sessionStorage.setItem('hasDraft', '1');
         if (selectedCatId && selectedCatId !== 'charity') {
+            const categoryLabel = selectedCatLabel || 'Личные вещи';
             sessionStorage.setItem('mainCategory', selectedCatId);
             sessionStorage.setItem('mainCondition', regularCondition);
             sessionStorage.setItem('mainAdType', regularAdType);
             sessionStorage.setItem('mainDesc', regularDescTextarea ? regularDescTextarea.value : '');
             sessionStorage.setItem('mainPrice', regularPriceDigits);
+            sessionStorage.setItem('adFlow', 'regular');
+            sessionStorage.setItem('adCategoryLabel', categoryLabel);
+            sessionStorage.setItem('adPrice', regularPriceDigits ? regularPriceDigits + ' ₽' : '');
             sessionStorage.setItem('adTitle', title || 'Без названия');
             sessionStorage.setItem('adDesc', buildRegularDescription());
             sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
             sessionStorage.setItem('adLocation', 'Москва, Лесная ул., 7');
+            sessionStorage.removeItem('adCollection');
+            sessionStorage.removeItem('adSelectedCats');
             return;
         }
+        sessionStorage.setItem('adFlow', 'charity');
+        sessionStorage.setItem('adCategoryLabel', 'Благотворительные товары');
+        sessionStorage.setItem('adPrice', 'Бесплатно');
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title || 'Без названия');
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');

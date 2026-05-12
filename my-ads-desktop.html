@@ -365,8 +365,8 @@
                     <div class="ad-top">
                         <div class="ad-title-col">
                             <span class="ad-title" id="charity-title">Без названия</span>
-                            <div class="ad-price">Бесплатно</div>
-                            <span class="charity-badge">Благотворительность</span>
+                            <div class="ad-price" id="charity-price">Бесплатно</div>
+                            <span class="charity-badge" id="charity-badge">Благотворительность</span>
                         </div>
                     </div>
                     <div class="ad-stats">
@@ -426,8 +426,13 @@
     // Populate charity ad from sessionStorage
     const adTitle = sessionStorage.getItem('adTitle') || 'Без названия';
     const adPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+    const adFlow = sessionStorage.getItem('adFlow') || (sessionStorage.getItem('mainCategory') ? 'regular' : 'charity');
+    const legacyPrice = sessionStorage.getItem('mainPrice');
+    const adPrice = sessionStorage.getItem('adPrice') || (legacyPrice ? legacyPrice + ' ₽' : (adFlow === 'regular' ? 'Цена не указана' : 'Бесплатно'));
 
     document.getElementById('charity-title').textContent = adTitle;
+    document.getElementById('charity-price').textContent = adPrice;
+    document.getElementById('charity-badge').style.display = adFlow === 'charity' ? 'inline-block' : 'none';
     if (adPhotos.length > 0) {
         document.getElementById('charity-photo').src = adPhotos[0];
     }

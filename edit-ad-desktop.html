@@ -155,6 +155,25 @@
         .banner-desc { font-size: 13px; font-weight: 400; color: #1A1A1A; line-height: 1.4; margin-bottom: 4px; }
         .banner-link { font-size: 13px; font-weight: 400; color: #1A1A1A; text-decoration: underline; }
 
+        .edit-summary { display: none; }
+        .collection-field {
+            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
+            font-weight: 400; color: #9E9E9E; display: flex; align-items: center;
+            justify-content: space-between;
+        }
+        .selected-cat-summary { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
+        .selected-cat-row { display: flex; align-items: center; gap: 12px; }
+        .selected-cat-img { width: 48px; height: 48px; border-radius: 14px; object-fit: cover; flex-shrink: 0; background: #F4F4F4; }
+        .selected-cat-name { font-size: 15px; font-weight: 500; color: #1A1A1A; line-height: 1.3; }
+        .selected-cat-count { font-size: 13px; font-weight: 400; color: #757575; margin-top: 2px; }
+        .edit-cat-btn {
+            margin-top: 18px; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 18px; font-family: 'Inter', sans-serif; font-size: 15px;
+            font-weight: 400; color: #1A1A1A; cursor: pointer;
+        }
+        .edit-cat-btn:hover { background: #EAEAEA; }
+
         /* Donation list */
         .list-header-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 2px; }
         .list-header-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-bottom: 8px; }
@@ -258,6 +277,9 @@
         .radio-dot.active::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #1A1A1A; }
         .radio-label { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .select-wrap { position: relative; }
+        .autopub-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+        .autopub-label { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.45; }
+        .autopub-sub { font-size: 13px; color: #9E9E9E; margin-top: 4px; text-decoration: underline; }
         .select-field { width: 100%; background: #F4F4F4; border: none; border-radius: 12px; padding: 14px 44px 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 400; color: #1A1A1A; appearance: none; outline: none; cursor: default; }
         .select-chevron { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
 
@@ -391,8 +413,33 @@
 <div class="form-outer">
     <div class="form-inner">
 
+        <div class="edit-summary" id="editSummary">
+            <div class="info-banner" onclick="openHowPopup()">
+                <div class="banner-illu-wrap">
+                    <img src="how it works.png" class="banner-illu" alt="">
+                </div>
+                <div class="banner-content">
+                    <div class="banner-title">Как это работает</div>
+                    <div class="banner-desc">Кто заберёт вещи и что делать после размещения объявления</div>
+                    <span class="banner-link">Узнать подробнее</span>
+                </div>
+            </div>
+
+            <div class="form-section" style="padding-top:0">
+                <div class="section-title">Сбор</div>
+                <div style="height:14px"></div>
+                <div class="collection-field">
+                    <span id="editCollectionName">Помощь семьям</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+
         <!-- 1 · TITLE -->
-        <div class="form-section" style="padding-top:0">
+        <div class="form-section">
             <div class="field-label">Название объявления</div>
             <div class="title-input-wrap">
                 <input type="text" class="text-input" id="titleInput" autocomplete="off" placeholder="" style="padding-right:44px;">
@@ -428,9 +475,9 @@
         <div id="extraSections" style="display:none">
 
             <!-- COLLECTION -->
-            <div class="form-section">
+            <div class="form-section" id="donationEditSection">
                 <!-- Info banner -->
-                <div class="info-banner" id="infoBanner" onclick="openHowPopup()">
+                <div class="info-banner" id="infoBanner" onclick="openHowPopup()" style="display:none">
                     <div class="banner-illu-wrap">
                         <img src="how it works.png" class="banner-illu" alt="">
                     </div>
@@ -454,6 +501,13 @@
                 <div class="list-items" id="donationList"></div>
             </div>
 
+            <!-- DESCRIPTION -->
+            <div class="form-section">
+                <div class="section-title">Описание товаров</div>
+                <div style="height:14px"></div>
+                <textarea class="textarea-field" id="descTextarea" placeholder="Введите текст"></textarea>
+            </div>
+
             <!-- PHOTOS -->
             <div class="form-section">
                 <div class="section-title">Фотографии</div>
@@ -468,15 +522,8 @@
                 </div>
             </div>
 
-            <!-- DESCRIPTION -->
-            <div class="form-section">
-                <div class="section-title">Описание товаров</div>
-                <div style="height:14px"></div>
-                <textarea class="textarea-field" id="descTextarea" placeholder="Введите текст"></textarea>
-            </div>
-
             <!-- LOCATION -->
-            <div class="form-section">
+            <div class="form-section" id="locationSection" style="display:none">
                 <div class="section-title">Местоположение</div>
                 <div style="height:14px"></div>
                 <div class="location-input-wrap">
@@ -494,7 +541,7 @@
             </div>
 
             <!-- DELIVERY -->
-            <div class="form-section">
+            <div class="form-section" id="deliverySection" style="display:none">
                 <div class="section-title">Авито Доставка</div>
                 <div class="delivery-desc">Выберите, как покупатели смогут заказать ваш товар. Это бесплатно и безопасно: вам не нужно платить за отправку, а если с посылкой что-то случится в пути, мы возместим ущерб.</div>
                 <div class="toggle-row">
@@ -515,7 +562,7 @@
                     <div class="contact-group-title">Телефон</div>
                     <div class="contact-desc">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <u>Подробнее</u></div>
                     <div class="phone-wrap">
-                        <input type="text" class="phone-input" value="8 200 614-53-63" readonly>
+                        <input type="text" class="phone-input" value="+7 985 922 64 74" readonly>
                         <button class="input-clear" style="right:12px;top:50%;transform:translateY(-50%);position:absolute;">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1" stroke-linecap="round"/>
@@ -526,12 +573,12 @@
                 <div class="contact-group">
                     <div class="contact-group-title">Способ связи</div>
                     <div class="radio-group">
-                        <div class="radio-item"><div class="radio-dot active"></div><span class="radio-label">Звонки и сообщения</span></div>
+                        <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Звонки и сообщения</span></div>
                         <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Только звонки</span></div>
-                        <div class="radio-item"><div class="radio-dot"></div><span class="radio-label">Только сообщения</span></div>
+                        <div class="radio-item"><div class="radio-dot active"></div><span class="radio-label">Только сообщения</span></div>
                     </div>
                 </div>
-                <div class="contact-group" style="margin-bottom:0">
+                <div class="contact-group" style="margin-bottom:0; display:none">
                     <div class="contact-group-title">Где принимать звонки через Авито</div>
                     <div style="height:10px"></div>
                     <div class="select-wrap">
@@ -544,6 +591,18 @@
             </div>
 
             <!-- FOOTER -->
+            <div class="form-section">
+                <div class="section-title">Автопубликация</div>
+                <div style="height:18px"></div>
+                <div class="autopub-row">
+                    <div>
+                        <div class="autopub-label">Опубликовать заново, когда закончится срок размещения</div>
+                        <div class="autopub-sub">Подробнее</div>
+                    </div>
+                    <div class="toggle-switch"></div>
+                </div>
+            </div>
+
             <div class="form-footer">
                 <button class="btn-primary" id="submitBtn" onclick="navigateToAdPage()" disabled>Сохранить изменения</button>
             </div>
@@ -732,6 +791,47 @@
         return 'вещей';
     }
 
+    function mobilePhotoSrc(id) {
+        return Number(id) <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+    }
+
+    function allCategoriesById() {
+        const result = {};
+        Object.values(COLLECTIONS).forEach(collection => {
+            collection.categories.forEach(cat => { result[cat.id] = cat; });
+        });
+        return result;
+    }
+
+    function selectedCatsFromState() {
+        const coll = COLLECTIONS[currentCollection];
+        return coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
+            id: c.id,
+            name: c.name,
+            image: c.image,
+            quantity: isCountable(c) ? catState[c.id].quantity : null,
+            countable: isCountable(c),
+            comment: catState[c.id].comment
+        }));
+    }
+
+    function getSavedCategories() {
+        const byId = allCategoriesById();
+        const savedSelected = JSON.parse(sessionStorage.getItem('adSelectedCats') || '[]');
+        if (savedSelected.length) {
+            return savedSelected.map(c => {
+                const source = byId[c.id] || {};
+                return {
+                    ...c,
+                    name: c.name || source.name,
+                    image: c.image || source.image,
+                    countable: c.countable !== false && source.countable !== false
+                };
+            });
+        }
+        return JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+    }
+
     /* ═══════════ BACK BUTTON POSITIONING ═══════════ */
     function positionBackBtn() {
         const shell = document.querySelector('.sticky-shell');
@@ -757,6 +857,7 @@
         const v = this.value.trim();
         const clearBtn = document.getElementById('titleClear');
         clearBtn.style.display = this.value.length > 0 ? 'flex' : 'none';
+        if (document.getElementById('editSummary')?.style.display === 'block') return;
         if (v.length > 0) {
             sectionCats.style.display = 'block';
             renderSuggests(v);
@@ -778,6 +879,10 @@
     function clearTitle() {
         titleInput.value = '';
         document.getElementById('titleClear').style.display = 'none';
+        if (document.getElementById('editSummary')?.style.display === 'block') {
+            titleInput.focus();
+            return;
+        }
         sectionCats.style.display = 'none';
         suggestsEl.style.display = 'none';
         resetCat();
@@ -1103,75 +1208,70 @@
         renderSelectedPhotos();
     }
 
-    function navigateToAdPage() {
-        const btn = document.getElementById('submitBtn');
-        if (btn && btn.disabled) return;
-        const title = titleInput.value.trim() || 'Без названия';
+    function persistEditedAd(title) {
+        sessionStorage.setItem('adFlow', 'charity');
+        sessionStorage.setItem('adCategoryLabel', 'Благотворительные товары');
+        sessionStorage.setItem('adPrice', 'Бесплатно');
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
         sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
         sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
-        const coll = COLLECTIONS[currentCollection];
-        const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
-            id: c.id, name: c.name,
-            quantity: isCountable(c) ? catState[c.id].quantity : null,
-            countable: isCountable(c),
-            comment: catState[c.id].comment
-        }));
+        const selectedCats = selectedCatsFromState();
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
+        sessionStorage.setItem('adCategories', JSON.stringify(selectedCats));
+    }
+
+    function navigateToAdPage() {
+        const btn = document.getElementById('submitBtn');
+        if (btn && btn.disabled) return;
+        const title = titleInput.value.trim() || 'Без названия';
+        persistEditedAd(title);
         window.location.href = 'ad-page-desktop.html';
     }
 
     /* ═══════════ PRE-FILL FROM SESSION (edit mode) ═══════════ */
     function prefillFromSession() {
-        const title = sessionStorage.getItem('adTitle');
-        if (!title) return;
+        const title = sessionStorage.getItem('adTitle') || '';
 
-        // Fill title
         titleInput.value = title;
-        document.getElementById('titleClear').style.display = 'flex';
-        sectionCats.style.display = 'block';
-
-        // Show charity category as locked (non-editable in edit mode)
-        document.getElementById('chipsWrap').style.display = 'none';
-        document.getElementById('catSelectWrap').style.display = 'block';
-        document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
-        const catDisplay = document.querySelector('.cat-select-display');
-        catDisplay.removeAttribute('onclick');
-        catDisplay.style.cursor = 'default';
-        const catArrow = document.querySelector('.cat-select-arrow');
-        if (catArrow) catArrow.style.display = 'none';
-
-        // Show extra sections
+        document.getElementById('titleClear').style.display = title ? 'flex' : 'none';
+        document.getElementById('editSummary').style.display = 'block';
+        sectionCats.style.display = 'none';
+        suggestsEl.style.display = 'none';
         extraSections.style.display = 'block';
         breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
 
-        // Restore collection
         const collection = sessionStorage.getItem('adCollection') || 'family';
         currentCollection = collection;
         const coll = COLLECTIONS[currentCollection];
         document.getElementById('collectionTitle').textContent = coll.title;
         document.getElementById('collectionSubtitle').textContent = coll.subtitle;
+        document.getElementById('editCollectionName').textContent = currentCollection === 'crisis' ? 'Помощь Дагестану' : 'Помощь семьям';
 
-        // Restore selected categories into catState
-        const savedCats = JSON.parse(sessionStorage.getItem('adSelectedCats') || '[]');
+        const savedCats = getSavedCategories();
         catState = {};
         savedCats.forEach(c => {
-            catState[c.id] = { selected: true, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false };
+            if (!c.id) return;
+            catState[c.id] = {
+                selected: true,
+                quantity: c.quantity || 1,
+                comment: c.comment || '',
+                dropdownOpen: false
+            };
         });
 
         renderDonationList();
         updateSubmitBtn();
 
-        // Restore photos
-        const savedPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+        const savedDesktopPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
+        const savedMobilePhotos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+        const savedPhotos = savedDesktopPhotos.length ? savedDesktopPhotos : savedMobilePhotos.map(mobilePhotoSrc);
         if (savedPhotos.length > 0) {
             photoSelection = savedPhotos;
             renderSelectedPhotos();
         }
 
-        // Restore description
         const desc = sessionStorage.getItem('adDesc');
         if (desc) {
             descTextarea.value = desc;
@@ -1181,7 +1281,6 @@
         }
 
         bannerDismissed = false;
-        document.getElementById('infoBanner').style.display = '';
     }
 
     window.addEventListener('load', prefillFromSession);
@@ -1202,16 +1301,7 @@
     }
     function confirmSaveChanges() {
         const title = titleInput.value.trim() || 'Без названия';
-        sessionStorage.setItem('adCollection', currentCollection);
-        sessionStorage.setItem('adTitle', title);
-        sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
-        sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
-        sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
-        const coll = COLLECTIONS[currentCollection];
-        const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
-            id: c.id, name: c.name, quantity: isCountable(c) ? catState[c.id].quantity : null, countable: isCountable(c), comment: catState[c.id].comment
-        }));
-        sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
+        persistEditedAd(title);
         window.location.href = pendingNavUrl || 'my-ads-desktop.html';
     }
 </script>
