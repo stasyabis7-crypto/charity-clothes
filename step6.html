@@ -92,6 +92,13 @@
             padding-bottom: 16px;
         }
 
+        .qty-label {
+            margin: 8px 0 6px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
         /* Quantity row */
         .qty-row {
             display: flex;
@@ -199,6 +206,11 @@
             font-size: 14px;
             color: #1A1A1A;
             line-height: 1.7;
+        }
+
+        .dropdown-list {
+            margin: 0;
+            padding-left: 20px;
         }
 
         .dropdown-body.open { display: block; }
@@ -543,30 +555,42 @@
             {
                 id: 'kids-clothes',
                 name: 'Детская одежда и обувь',
-                subtitle: 'Осталось собрать 5 штук',
+                subtitle: 'Осталось собрать 5 вещей',
+                remaining: 5,
                 image: 'step 6 materials/Детская одежда и обувь.png',
-                what: '— Одежда для новорождённых (размеры 50–68);\n— Одежда для детей ясельного возраста (68–98);\n— Одежда для дошкольников (98–122);\n— Школьная форма и повседневная одежда (122+);\n— Верхняя одежда: куртки, пальто, комбинезоны;\n— Обувь для детей любого возраста;\n— Головные уборы, шарфы, варежки;\n— Принимаем чистые вещи без дыр и сильного износа.'
+                what: ['Одежда для новорождённых (размеры 50–68)', 'Одежда для детей ясельного возраста (68–98)', 'Одежда для дошкольников (98–122)', 'Школьная форма и повседневная одежда (122+)', 'Верхняя одежда: куртки, пальто, комбинезоны', 'Обувь для детей любого возраста', 'Головные уборы, шарфы, варежки', 'Чистые вещи без дыр и сильного износа']
             },
             {
                 id: 'adult-clothes',
                 name: 'Мужская и женская одежда',
-                subtitle: 'Осталось собрать 15 штук',
+                subtitle: 'Осталось собрать 15 вещей',
+                remaining: 15,
                 image: 'step 6 materials/Мужская и женская одежда.png',
-                what: '— Одежда любого размера и сезона;\n— Верхняя одежда: куртки, пальто, шубы;\n— Обувь мужская и женская;\n— Головные уборы и аксессуары;\n— Принимаем чистые вещи в хорошем состоянии.'
+                what: ['Футболки и майки', 'Рубашки и блузки', 'Свитеры и толстовки', 'Брюки и джинсы', 'Платья и юбки', 'Верхняя одежда: куртки, пальто, шубы', 'Обувь мужская и женская', 'Головные уборы', 'Шарфы и аксессуары', 'Чистые вещи в хорошем состоянии']
             },
             {
                 id: 'strollers',
                 name: 'Детские коляски',
-                subtitle: 'Осталось собрать 3 штуки',
+                subtitle: 'Осталось собрать 3 вещей',
+                remaining: 3,
                 image: 'step 6 materials/Детские коляски.png',
-                what: '— Коляски-трансформеры;\n— Прогулочные коляски;\n— Коляски для новорождённых;\n— Принимаем в рабочем состоянии, без сильных повреждений.'
+                what: ['Коляски-трансформеры', 'Прогулочные коляски', 'Коляски для новорождённых', 'Коляски в рабочем состоянии, без сильных повреждений']
             },
             {
                 id: 'toys',
                 name: 'Игрушки',
-                subtitle: 'Осталось собрать 100 штук',
+                subtitle: 'Осталось собрать 100 вещей',
+                remaining: 100,
                 image: 'step 6 materials/Игрушки.png',
-                what: '— Мягкие игрушки;\n— Конструкторы и наборы;\n— Настольные и развивающие игры;\n— Куклы, машинки, музыкальные игрушки;\n— Принимаем чистые игрушки в рабочем состоянии.'
+                what: ['Мягкие игрушки', 'Конструкторы и наборы', 'Настольные игры', 'Развивающие игры', 'Куклы', 'Машинки', 'Музыкальные игрушки', 'Пазлы', 'Наборы для творчества', 'Чистые игрушки в рабочем состоянии']
+            },
+            {
+                id: 'home-essentials',
+                name: 'Домашняя утварь',
+                subtitle: 'Фондам постоянно нужно',
+                image: 'crisis help/cat 3.png',
+                countable: false,
+                what: ['Одеяла', 'Подушки', 'Игрушки', 'Носки', 'Постельное бельё', 'Полотенца', 'Пледы', 'Шапки и шарфы', 'Товары, которые сложно посчитать']
             }
         ];
 
@@ -586,6 +610,15 @@
             if (m10 === 1) return 'вещь';
             if (m10 >= 2 && m10 <= 4) return 'вещи';
             return 'вещей';
+        }
+
+        function isCountable(cat) {
+            return cat.countable !== false;
+        }
+
+        function renderDropdownList(cat) {
+            const limit = isCountable(cat) ? Math.min(cat.remaining || cat.what.length, 10) : Math.min(cat.what.length, 10);
+            return `<ol class="dropdown-list">${cat.what.slice(0, limit).map(item => `<li>${item}</li>`).join('')}</ol>`;
         }
 
         function render() {
@@ -616,11 +649,14 @@
                     const expanded = document.createElement('div');
                     expanded.className = 'cat-expanded';
                     expanded.innerHTML = `
-                        <div class="qty-row">
-                            <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',-1)">−</button>
-                            <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
-                            <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',1)">+</button>
-                        </div>
+                        ${isCountable(cat) ? `
+                            <div class="qty-label">Количество вещей в категории</div>
+                            <div class="qty-row">
+                                <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',-1)">−</button>
+                                <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
+                                <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',1)">+</button>
+                            </div>
+                        ` : ''}
                         <div class="comment-wrap">
                             <textarea
                                 class="comment-textarea"
@@ -641,7 +677,7 @@
                                           stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div>
-                            <div class="dropdown-body ${s.dropdownOpen ? 'open' : ''}">${cat.what.replace(/\n/g, '<br>')}</div>
+                            <div class="dropdown-body ${s.dropdownOpen ? 'open' : ''}">${renderDropdownList(cat)}</div>
                         </div>
                     `;
                     wrapper.appendChild(expanded);
@@ -734,7 +770,7 @@
             const selected = CATEGORIES
                 .map(cat => {
                     const s = getState(cat.id);
-                    return { id: s.id, name: cat.name, image: cat.image, quantity: s.quantity, comment: s.comment, selected: s.selected };
+                    return { id: s.id, name: cat.name, image: cat.image, quantity: isCountable(cat) ? s.quantity : null, countable: isCountable(cat), comment: s.comment, selected: s.selected };
                 })
                 .filter(s => s.selected);
 
@@ -743,7 +779,7 @@
             // Build description for step5
             if (selected.length > 0) {
                 const desc = selected.map(s => {
-                    const header = `${s.name}, ${s.quantity} ${pluralItems(s.quantity)}`;
+                    const header = s.countable === false ? s.name : `${s.name}, ${s.quantity} ${pluralItems(s.quantity)}`;
                     return s.comment ? `${header}\n\n${s.comment}` : header;
                 }).join('\n\n');
                 sessionStorage.setItem('adDesc', desc);

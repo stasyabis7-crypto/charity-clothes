@@ -593,7 +593,7 @@
                     <img class="selected-cat-img" src="${c.image}" alt="">
                     <div>
                         <div class="selected-cat-name">${c.name}</div>
-                        <div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>
+                        ${c.countable === false ? '' : `<div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>`}
                     </div>
                 </div>
             `).join('');

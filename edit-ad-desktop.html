@@ -169,6 +169,7 @@
 
         /* Expanded */
         .cat-expanded { margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
+        .qty-label { margin: 2px 0 0; font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .qty-row { display: flex; align-items: center; justify-content: space-between; background: #F4F4F4; border-radius: 12px; padding: 0 8px; height: 50px; }
         .qty-btn { background: none; border: none; font-size: 24px; font-weight: 300; color: #1A1A1A; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .qty-value { font-size: 17px; font-weight: 400; color: #1A1A1A; min-width: 32px; text-align: center; }
@@ -180,8 +181,9 @@
         .dropdown-label { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .dropdown-chevron { transition: transform 0.2s; flex-shrink: 0; }
         .dropdown-chevron.rotated { transform: rotate(180deg); }
-        .dropdown-body { display: none; padding: 0 16px 14px; font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.7; white-space: pre-line; }
+        .dropdown-body { display: none; padding: 0 16px 14px; font-size: 14px; font-weight: 400; color: #1A1A1A; line-height: 1.7; }
         .dropdown-body.open { display: block; }
+        .dropdown-list { margin: 0; padding-left: 20px; }
 
         /* ── SECTION TITLE ── */
         .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
@@ -662,32 +664,38 @@
         family: {
             id: 'family', title: 'Сбор "Помощь семьям"', subtitle: 'Собираем вещи на помощь многодетным семьям',
             categories: [
-                { id: 'kids-clothes', name: 'Детская одежда и обувь', subtitle: 'Осталось собрать 5 штук',
+                { id: 'kids-clothes', name: 'Детская одежда и обувь', subtitle: 'Осталось собрать 5 вещей', remaining: 5,
                   image: 'step 6 materials/Детская одежда и обувь.png',
-                  what: '— Одежда для новорождённых (50–68);\n— Одежда для детей ясельного возраста (68–98);\n— Одежда для дошкольников (98–122);\n— Школьная форма и повседневная одежда (122+);\n— Верхняя одежда: куртки, пальто, комбинезоны;\n— Обувь для детей любого возраста;\n— Головные уборы, шарфы, варежки;\n— Принимаем чистые вещи без дыр и сильного износа.' },
-                { id: 'adult-clothes', name: 'Мужская и женская одежда', subtitle: 'Осталось собрать 15 штук',
+                  what: ['Одежда для новорождённых (50–68)', 'Одежда для детей ясельного возраста (68–98)', 'Одежда для дошкольников (98–122)', 'Школьная форма и повседневная одежда (122+)', 'Верхняя одежда: куртки, пальто, комбинезоны', 'Обувь для детей любого возраста', 'Головные уборы, шарфы, варежки', 'Чистые вещи без дыр и сильного износа'] },
+                { id: 'adult-clothes', name: 'Мужская и женская одежда', subtitle: 'Осталось собрать 15 вещей', remaining: 15,
                   image: 'step 6 materials/Мужская и женская одежда.png',
-                  what: '— Одежда любого размера и сезона;\n— Верхняя одежда: куртки, пальто, шубы;\n— Обувь мужская и женская;\n— Головные уборы и аксессуары;\n— Принимаем чистые вещи в хорошем состоянии.' },
-                { id: 'strollers', name: 'Детские коляски', subtitle: 'Осталось собрать 3 штуки',
+                  what: ['Футболки и майки', 'Рубашки и блузки', 'Свитеры и толстовки', 'Брюки и джинсы', 'Платья и юбки', 'Верхняя одежда: куртки, пальто, шубы', 'Обувь мужская и женская', 'Головные уборы', 'Шарфы и аксессуары', 'Чистые вещи в хорошем состоянии'] },
+                { id: 'strollers', name: 'Детские коляски', subtitle: 'Осталось собрать 3 вещей', remaining: 3,
                   image: 'step 6 materials/Детские коляски.png',
-                  what: '— Коляски-трансформеры;\n— Прогулочные коляски;\n— Коляски для новорождённых;\n— Принимаем в рабочем состоянии, без сильных повреждений.' },
-                { id: 'toys', name: 'Игрушки', subtitle: 'Осталось собрать 100 штук',
+                  what: ['Коляски-трансформеры', 'Прогулочные коляски', 'Коляски для новорождённых', 'Коляски в рабочем состоянии, без сильных повреждений'] },
+                { id: 'toys', name: 'Игрушки', subtitle: 'Осталось собрать 100 вещей', remaining: 100,
                   image: 'step 6 materials/Игрушки.png',
-                  what: '— Мягкие игрушки;\n— Конструкторы и наборы;\n— Настольные и развивающие игры;\n— Куклы, машинки, музыкальные игрушки;\n— Принимаем чистые игрушки в рабочем состоянии.' }
+                  what: ['Мягкие игрушки', 'Конструкторы и наборы', 'Настольные игры', 'Развивающие игры', 'Куклы', 'Машинки', 'Музыкальные игрушки', 'Пазлы', 'Наборы для творчества', 'Чистые игрушки в рабочем состоянии'] },
+                { id: 'home-essentials', name: 'Домашняя утварь', subtitle: 'Фондам постоянно нужно',
+                  image: 'crisis help/cat 3.png', countable: false,
+                  what: ['Одеяла', 'Подушки', 'Игрушки', 'Носки', 'Постельное бельё', 'Полотенца', 'Пледы', 'Шапки и шарфы', 'Товары, которые сложно посчитать'] }
             ]
         },
         crisis: {
             id: 'crisis', title: 'Помощь в Дагестане ❤️', subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
             categories: [
-                { id: 'clothes', name: 'Одежда', subtitle: 'Для взрослых и детей', image: 'crisis help/cat 1.png', what: '— Тёплая/демисезонная одежда и обувь;\n— Повседневная одежда для взрослых и детей;\n— Новое нижнее бельё.' },
-                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Товары первой необходимости', image: 'crisis help/cat 2.png', what: '— Зубная щётка и паста;\n— Шампунь, гель для душа;\n— Мыло, порошок стиральный;\n— Антисептик, маски;\n— Влажные салфетки;\n— Туалетная бумага;\n— Предметы женской гигиены.' },
-                { id: 'home', name: 'Домашняя утварь', subtitle: 'Только новые предметы', image: 'crisis help/cat 3.png', what: '— Столовые приборы;\n— Посуда (тарелка, кружка);\n— Кастрюля от 3 л.;\n— Полотенца;\n— Постельное бельё;\n— Одеяло;\n— Подушка.' },
-                { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Гигиена, игрушки, канцелярия', image: 'crisis help/cat 4.png', what: '— Детская гигиена (подгузники, пелёнки);\n— Детские игрушки;\n— Канцелярские принадлежности.' },
-                { id: 'appliances', name: 'Рабочая техника', subtitle: 'В хорошем состоянии', image: 'crisis help/cat 5.png', what: '— Микроволновки;\n— Чайники;\n— Утюги.' },
-                { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Для маломобильных граждан', image: 'crisis help/cat 6.png', what: '— Подгузники взрослые (большие размеры).' },
-                { id: 'water', name: 'Откачка воды и осушение', subtitle: 'Ликвидация последствий', image: 'crisis help/cat 7.png', what: '— Помпа для откачки воды;\n— Пушка для сушки;\n— Напорные пожарные рукава.' },
-                { id: 'tools', name: 'Инструменты для расчистки', subtitle: 'Ручной и моторизованный', image: 'crisis help/cat 8.png', what: '— Лопаты штыковые;\n— Лопаты шуфельные;\n— Бензиновые пилы.' },
-                { id: 'protection', name: 'Средства защиты и спецодежда', subtitle: 'Для волонтёров', image: 'crisis help/cat 9.png', what: '— Спецодежда для волонтёров;\n— Резиновые сапоги;\n— Защитные каски.' }
+                { id: 'clothes', name: 'Одежда', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help/cat 1.png', what: ['Тёплая одежда', 'Демисезонная одежда', 'Повседневная одежда для взрослых', 'Повседневная одежда для детей', 'Обувь для взрослых', 'Обувь для детей', 'Куртки', 'Шапки и шарфы', 'Дождевики', 'Новое нижнее бельё'] },
+                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Осталось собрать 12 вещей', remaining: 12, image: 'crisis help/cat 2.png', what: ['Зубная щётка', 'Зубная паста', 'Шампунь', 'Гель для душа', 'Мыло кусковое', 'Порошок стиральный', 'Антисептик', 'Маски', 'Влажные салфетки', 'Туалетная бумага', 'Бритва', 'Пена для бритья', 'Предметы женской гигиены'] },
+                { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 9 вещей', remaining: 9, image: 'crisis help/cat 3.png', what: ['Столовые приборы', 'Посуда: тарелка глубокая, кружка', 'Кастрюля от 3 л с крышкой', 'Сковорода глубокая от 24 см', 'Таз 9 л', 'Полотенце банное', 'Полотенце для рук', 'Постельное бельё 2-спальное', 'Постельное бельё 1-спальное', 'Одеяло 2-спальное', 'Одеяло 1-спальное', 'Подушка'] },
+                { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Осталось собрать 8 вещей', remaining: 8, image: 'crisis help/cat 4.png', what: ['Подгузники', 'Пелёнки', 'Присыпки', 'Влажные салфетки', 'Детские игрушки', 'Канцелярские принадлежности', 'Раскраски', 'Товары для детских комнат в ПВР'] },
+                { id: 'appliances', name: 'Рабочая техника', subtitle: 'Осталось собрать 3 вещей', remaining: 3, image: 'crisis help/cat 5.png', what: ['Микроволновки', 'Чайники', 'Утюги'] },
+                { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Осталось собрать 1 вещей', remaining: 1, image: 'crisis help/cat 6.png', what: ['Подгузники взрослые больших размеров'] },
+                { id: 'water', name: 'Откачка воды и осушение', subtitle: 'Осталось собрать 3 вещей', remaining: 3, image: 'crisis help/cat 7.png', what: ['Помпа для откачки воды', 'Пушка для сушки', 'Напорные пожарные рукава'] },
+                { id: 'tools', name: 'Инструменты для расчистки', subtitle: 'Осталось собрать 3 вещей', remaining: 3, image: 'crisis help/cat 8.png', what: ['Лопаты штыковые', 'Лопаты шуфельные', 'Бензиновые пилы'] },
+                { id: 'protection', name: 'Средства защиты и спецодежда', subtitle: 'Осталось собрать 3 вещей', remaining: 3, image: 'crisis help/cat 9.png', what: ['Спецодежда для волонтёров', 'Резиновые сапоги', 'Защитные каски'] },
+                { id: 'family-clothes-extra', name: 'Мужская и женская одежда', subtitle: 'Фондам постоянно нужно',
+                  image: 'step 6 materials/Мужская и женская одежда.png', countable: false,
+                  what: ['Одеяла', 'Подушки', 'Игрушки', 'Носки', 'Постельное бельё', 'Полотенца', 'Пледы', 'Шапки и шарфы', 'Товары, которые сложно посчитать'] }
             ]
         }
     };
@@ -706,6 +714,23 @@
     let catState = {};
     let bannerDismissed = false;
     let descUserEdited = false;
+
+    function isCountable(cat) {
+        return cat.countable !== false;
+    }
+
+    function renderDropdownList(cat) {
+        const limit = isCountable(cat) ? Math.min(cat.remaining || cat.what.length, 10) : Math.min(cat.what.length, 10);
+        return `<ol class="dropdown-list">${cat.what.slice(0, limit).map(item => `<li>${item}</li>`).join('')}</ol>`;
+    }
+
+    function pluralItems(n) {
+        const m10 = n % 10, m100 = n % 100;
+        if (m100 >= 11 && m100 <= 14) return 'вещей';
+        if (m10 === 1) return 'вещь';
+        if (m10 >= 2 && m10 <= 4) return 'вещи';
+        return 'вещей';
+    }
 
     /* ═══════════ BACK BUTTON POSITIONING ═══════════ */
     function positionBackBtn() {
@@ -860,22 +885,25 @@
         const rot = s.dropdownOpen ? 'rotated' : '';
         return `
             <div class="cat-expanded">
-                <div class="qty-row">
-                    <button class="qty-btn" onclick="changeQty('${cat.id}',-1,event)">−</button>
-                    <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
-                    <button class="qty-btn" onclick="changeQty('${cat.id}',1,event)">+</button>
-                </div>
+                ${isCountable(cat) ? `
+                    <div class="qty-label">Количество вещей в категории</div>
+                    <div class="qty-row">
+                        <button class="qty-btn" onclick="changeQty('${cat.id}',-1,event)">−</button>
+                        <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty('${cat.id}',1,event)">+</button>
+                    </div>
+                ` : ''}
                 <div class="comment-wrap">
                     <textarea class="comment-textarea" placeholder="Уточните вещи для категории: бренд, размер, состояние"></textarea>
                 </div>
                 <div class="dropdown" id="dd-${cat.id}">
                     <div class="dropdown-header" onclick="toggleDropdown('${cat.id}',event)">
-                        <span class="dropdown-label">Что нужно фондам</span>
+                        <span class="dropdown-label">Что принимают в этой категории</span>
                         <svg class="dropdown-chevron ${rot}" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <div class="dropdown-body ${dd}">${cat.what}</div>
+                    <div class="dropdown-body ${dd}">${renderDropdownList(cat)}</div>
                 </div>
             </div>
         `;
@@ -924,7 +952,7 @@
         coll.categories.forEach(cat => {
             const s = catState[cat.id];
             if (!s || !s.selected) return;
-            let line = cat.name + ', ' + s.quantity + ' шт.';
+            let line = isCountable(cat) ? cat.name + ', ' + s.quantity + ' ' + pluralItems(s.quantity) : cat.name;
             if (s.comment && s.comment.trim()) line += '\n' + s.comment.trim();
             lines.push(line);
         });
@@ -1087,7 +1115,8 @@
         const coll = COLLECTIONS[currentCollection];
         const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
             id: c.id, name: c.name,
-            quantity: catState[c.id].quantity,
+            quantity: isCountable(c) ? catState[c.id].quantity : null,
+            countable: isCountable(c),
             comment: catState[c.id].comment
         }));
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
@@ -1180,7 +1209,7 @@
         sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
         const coll = COLLECTIONS[currentCollection];
         const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
-            id: c.id, name: c.name, quantity: catState[c.id].quantity, comment: catState[c.id].comment
+            id: c.id, name: c.name, quantity: isCountable(c) ? catState[c.id].quantity : null, countable: isCountable(c), comment: catState[c.id].comment
         }));
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
         window.location.href = pendingNavUrl || 'my-ads-desktop.html';

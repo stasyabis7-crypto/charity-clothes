@@ -87,6 +87,13 @@
 
         .cat-expanded { padding-bottom: 16px; }
 
+        .qty-label {
+            margin: 8px 0 6px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+        }
+
         .qty-row {
             display: flex;
             align-items: center;
@@ -185,6 +192,11 @@
             font-size: 14px;
             color: #1A1A1A;
             line-height: 1.7;
+        }
+
+        .dropdown-list {
+            margin: 0;
+            padding-left: 20px;
         }
 
         .dropdown-body.open { display: block; }
@@ -525,65 +537,82 @@
             {
                 id: 'clothes',
                 name: 'Одежда',
-                subtitle: 'Для взрослых и детей',
+                subtitle: 'Осталось собрать 10 вещей',
+                remaining: 10,
                 image: 'crisis help/cat 1.png',
-                what: '— Тёплая/демисезонная одежда и обувь;\n— Повседневная одежда и обувь для взрослых и детей;\n— Новое нижнее бельё.'
+                what: ['Тёплая одежда', 'Демисезонная одежда', 'Повседневная одежда для взрослых', 'Повседневная одежда для детей', 'Обувь для взрослых', 'Обувь для детей', 'Куртки', 'Шапки и шарфы', 'Дождевики', 'Новое нижнее бельё']
             },
             {
                 id: 'hygiene',
                 name: 'Средства гигиены',
-                subtitle: 'Товары первой необходимости',
+                subtitle: 'Осталось собрать 12 вещей',
+                remaining: 12,
                 image: 'crisis help/cat 2.png',
-                what: '— Зубная щётка;\n— Зубная паста;\n— Шампунь;\n— Гель для душа;\n— Мыло кусковое;\n— Порошок стиральный;\n— Антисептик;\n— Маски;\n— Влажные салфетки;\n— Туалетная бумага;\n— Бритва;\n— Пена для бритья;\n— Предметы женской гигиены;\n— Товары первой необходимости и постельные принадлежности (новое с бирками).'
+                what: ['Зубная щётка', 'Зубная паста', 'Шампунь', 'Гель для душа', 'Мыло кусковое', 'Порошок стиральный', 'Антисептик', 'Маски', 'Влажные салфетки', 'Туалетная бумага', 'Бритва', 'Пена для бритья', 'Предметы женской гигиены']
             },
             {
                 id: 'home',
                 name: 'Домашняя утварь',
-                subtitle: 'Только новые предметы',
+                subtitle: 'Осталось собрать 9 вещей',
+                remaining: 9,
                 image: 'crisis help/cat 3.png',
-                what: '— Столовые приборы (нож, вилка, ложка);\n— Посуда (тарелка глубокая, кружка);\n— Кастрюля от 3 л. с крышкой;\n— Сковорода глубокая от 24 см. в диаметре;\n— Таз (9 л.);\n— Полотенце банное;\n— Полотенце для рук;\n— Постельное бельё 2-х спальное;\n— Постельное бельё 1-спальное;\n— Одеяло 2-х спальное;\n— Одеяло 1-спальное;\n— Подушка.'
+                what: ['Столовые приборы', 'Посуда: тарелка глубокая, кружка', 'Кастрюля от 3 л с крышкой', 'Сковорода глубокая от 24 см', 'Таз 9 л', 'Полотенце банное', 'Полотенце для рук', 'Постельное бельё 2-спальное', 'Постельное бельё 1-спальное', 'Одеяло 2-спальное', 'Одеяло 1-спальное', 'Подушка']
             },
             {
                 id: 'kids',
                 name: 'Гуманитарная помощь для детей',
-                subtitle: 'Гигиена, игрушки, канцелярия',
+                subtitle: 'Осталось собрать 8 вещей',
+                remaining: 8,
                 image: 'crisis help/cat 4.png',
-                what: '— Детская гигиена (подгузники, пеленки, присыпки, влажные салфетки и пр.);\n— Детские игрушки и канцелярские принадлежности (для оборудования детских комнат в ПВР и оказания психосоциальной поддержки детям).'
+                what: ['Подгузники', 'Пелёнки', 'Присыпки', 'Влажные салфетки', 'Детские игрушки', 'Канцелярские принадлежности', 'Раскраски', 'Товары для детских комнат в ПВР']
             },
             {
                 id: 'appliances',
                 name: 'Рабочая техника',
-                subtitle: 'В хорошем состоянии',
+                subtitle: 'Осталось собрать 3 вещей',
+                remaining: 3,
                 image: 'crisis help/cat 5.png',
-                what: '— Микроволновки;\n— Чайники;\n— Утюги.'
+                what: ['Микроволновки', 'Чайники', 'Утюги']
             },
             {
                 id: 'disabled',
                 name: 'Гуманитарная помощь для людей с ОВЗ',
-                subtitle: 'Для маломобильных граждан',
+                subtitle: 'Осталось собрать 1 вещей',
+                remaining: 1,
                 image: 'crisis help/cat 6.png',
-                what: '— Подгузники взрослые (большие размеры).'
+                what: ['Подгузники взрослые больших размеров']
             },
             {
                 id: 'water',
                 name: 'Откачка воды и осушение',
-                subtitle: 'Оборудование для ликвидации последствий',
+                subtitle: 'Осталось собрать 3 вещей',
+                remaining: 3,
                 image: 'crisis help/cat 7.png',
-                what: '— Помпа для откачки воды;\n— Пушка для сушки;\n— Напорные пожарные рукава.'
+                what: ['Помпа для откачки воды', 'Пушка для сушки', 'Напорные пожарные рукава']
             },
             {
                 id: 'tools',
                 name: 'Инструменты для расчистки и земляных работ',
-                subtitle: 'Ручной и моторизованный инструмент',
+                subtitle: 'Осталось собрать 3 вещей',
+                remaining: 3,
                 image: 'crisis help/cat 8.png',
-                what: '— Лопаты штыковые;\n— Лопаты шуфельные (совковые);\n— Бензиновые пилы.'
+                what: ['Лопаты штыковые', 'Лопаты шуфельные', 'Бензиновые пилы']
             },
             {
                 id: 'protection',
                 name: 'Средства индивидуальной защиты и спецодежда',
-                subtitle: 'Для волонтёров и работников',
+                subtitle: 'Осталось собрать 3 вещей',
+                remaining: 3,
                 image: 'crisis help/cat 9.png',
-                what: '— Спецодежда для волонтёров;\n— Резиновые сапоги;\n— Защитные каски.'
+                what: ['Спецодежда для волонтёров', 'Резиновые сапоги', 'Защитные каски']
+            },
+            {
+                id: 'family-clothes-extra',
+                name: 'Мужская и женская одежда',
+                subtitle: 'Фондам постоянно нужно',
+                image: 'step 6 materials/Мужская и женская одежда.png',
+                countable: false,
+                what: ['Одеяла', 'Подушки', 'Игрушки', 'Носки', 'Постельное бельё', 'Полотенца', 'Пледы', 'Шапки и шарфы', 'Товары, которые сложно посчитать']
             }
         ];
 
@@ -602,6 +631,15 @@
             if (m10 === 1) return 'вещь';
             if (m10 >= 2 && m10 <= 4) return 'вещи';
             return 'вещей';
+        }
+
+        function isCountable(cat) {
+            return cat.countable !== false;
+        }
+
+        function renderDropdownList(cat) {
+            const limit = isCountable(cat) ? Math.min(cat.remaining || cat.what.length, 10) : Math.min(cat.what.length, 10);
+            return `<ol class="dropdown-list">${cat.what.slice(0, limit).map(item => `<li>${item}</li>`).join('')}</ol>`;
         }
 
         function render() {
@@ -631,11 +669,14 @@
                     const expanded = document.createElement('div');
                     expanded.className = 'cat-expanded';
                     expanded.innerHTML = `
-                        <div class="qty-row">
-                            <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',-1)">−</button>
-                            <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
-                            <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',1)">+</button>
-                        </div>
+                        ${isCountable(cat) ? `
+                            <div class="qty-label">Количество вещей в категории</div>
+                            <div class="qty-row">
+                                <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',-1)">−</button>
+                                <span class="qty-value" id="qty-${cat.id}">${s.quantity}</span>
+                                <button class="qty-btn" onclick="event.stopPropagation(); changeQty('${cat.id}',1)">+</button>
+                            </div>
+                        ` : ''}
                         <div class="comment-wrap">
                             <textarea
                                 class="comment-textarea"
@@ -656,7 +697,7 @@
                                           stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div>
-                            <div class="dropdown-body ${s.dropdownOpen ? 'open' : ''}">${cat.what.replace(/\n/g, '<br>')}</div>
+                            <div class="dropdown-body ${s.dropdownOpen ? 'open' : ''}">${renderDropdownList(cat)}</div>
                         </div>
                     `;
                     wrapper.appendChild(expanded);
@@ -748,7 +789,7 @@
             const selected = CATEGORIES
                 .map(cat => {
                     const s = getState(cat.id);
-                    return { id: s.id, name: cat.name, image: cat.image, quantity: s.quantity, comment: s.comment, selected: s.selected };
+                    return { id: s.id, name: cat.name, image: cat.image, quantity: isCountable(cat) ? s.quantity : null, countable: isCountable(cat), comment: s.comment, selected: s.selected };
                 })
                 .filter(s => s.selected);
 
@@ -756,7 +797,7 @@
 
             if (selected.length > 0) {
                 const desc = selected.map(s => {
-                    const header = `${s.name}, ${s.quantity} ${pluralItems(s.quantity)}`;
+                    const header = s.countable === false ? s.name : `${s.name}, ${s.quantity} ${pluralItems(s.quantity)}`;
                     return s.comment ? `${header}\n\n${s.comment}` : header;
                 }).join('\n\n');
                 sessionStorage.setItem('adDesc', desc);

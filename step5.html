@@ -883,7 +883,7 @@
                         <img class="selected-cat-img" src="${c.image}" width="44" height="44" alt="">
                         <div>
                             <div class="selected-cat-name">${c.name}</div>
-                            <div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>
+                            ${c.countable === false ? '' : `<div class="selected-cat-count">Добавлено ${c.quantity} ${pluralItems(c.quantity)}</div>`}
                         </div>
                     </div>
                 `).join('') + `
@@ -908,7 +908,7 @@
             const cats = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
             if (cats.length === 0) return;
             const cat = cats[0];
-            const header = `${cat.name}, ${cat.quantity} ${pluralItems(cat.quantity)}`;
+            const header = cat.countable === false ? cat.name : `${cat.name}, ${cat.quantity} ${pluralItems(cat.quantity)}`;
             if (text.startsWith(header)) {
                 cat.comment = text.slice(header.length).replace(/^\n+/, '');
                 sessionStorage.setItem('adCategories', JSON.stringify(cats));
