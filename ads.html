@@ -464,12 +464,12 @@
                 : 'drafts materials/img drafts.png';
 
             list.innerHTML = `
-                <div class="ad-item">
+                <div class="ad-item" onclick="window.location.href='ad-page.html'" style="cursor:pointer">
                     <img src="${photoSrc}" class="ad-photo" alt="">
                     <div class="ad-content">
                         <div class="ad-title-row">
                             <span class="ad-title ad-title-single">${escHtml(title)}</span>
-                            <a href="step5.html" style="flex-shrink:0;margin-top:1px;">
+                            <a href="step5.html" style="flex-shrink:0;margin-top:1px;" onclick="event.stopPropagation()">
                                 <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
                             </a>
                         </div>
