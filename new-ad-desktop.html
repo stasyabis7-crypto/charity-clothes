@@ -209,7 +209,7 @@
         .charity-hint.visible { display: block; }
         .charity-link { color: #9E9E9E; text-decoration: underline; cursor: pointer; }
         .price-input-wrap { position: relative; }
-        .price-input { padding-right: 44px; }
+        .price-input { padding-right: 44px; cursor: text; }
 
         /* ── SECTION TITLE ── */
         .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
@@ -623,8 +623,8 @@
             <div class="form-section">
                 <div class="section-title">Условия продажи</div>
                 <div style="height:14px"></div>
-                <div class="price-input-wrap">
-                    <input type="text" class="text-input price-input" id="regularPriceInput" inputmode="numeric" autocomplete="off">
+                <div class="price-input-wrap" onclick="focusRegularPrice()">
+                    <input type="text" class="text-input price-input" id="regularPriceInput" inputmode="numeric" autocomplete="off" placeholder="Цена, ₽">
                     <button class="title-clear" id="regularPriceClear" onclick="clearRegularPrice(event)">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M3 3L13 13M13 3L3 13" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round"/>
@@ -960,21 +960,15 @@
     }
 
     if (regularPriceInput) {
-        regularPriceInput.addEventListener('keydown', function(e) {
-            if (e.key >= '0' && e.key <= '9') {
-                e.preventDefault();
-                regularPriceDigits += e.key;
-                updateRegularPrice();
-            } else if (e.key === 'Backspace') {
-                e.preventDefault();
-                regularPriceDigits = regularPriceDigits.slice(0, -1);
-                updateRegularPrice();
-            }
-        });
         regularPriceInput.addEventListener('input', function() {
             regularPriceDigits = this.value.replace(/\D/g, '');
             updateRegularPrice();
         });
+        regularPriceInput.addEventListener('focus', function() {
+            this.value = regularPriceDigits;
+            requestAnimationFrame(() => this.setSelectionRange(this.value.length, this.value.length));
+        });
+        regularPriceInput.addEventListener('blur', updateRegularPrice);
     }
 
     function clearTitle() {
@@ -1097,6 +1091,10 @@
         regularPriceClear.style.display = regularPriceDigits ? 'flex' : 'none';
         document.getElementById('priceCharityHint').classList.toggle('visible', regularPriceDigits !== '');
         updateSubmitBtn();
+    }
+
+    function focusRegularPrice() {
+        regularPriceInput.focus();
     }
 
     function clearRegularPrice(e) {
