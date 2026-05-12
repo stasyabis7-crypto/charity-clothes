@@ -235,10 +235,9 @@
         }
 
         function applyChip(text) {
-            const current = input.value.trimEnd();
-            input.value = current ? current + ' ' + text : text;
+            input.value = text;
             save();
-            updateUI();
+            chipsContainer.innerHTML = '';
             input.focus();
         }
 
@@ -246,7 +245,7 @@
             const hasText = input.value.trim().length > 0;
             eraseBtn.style.display = hasText ? 'flex' : 'none';
             bottomBar.style.display = hasText ? 'block' : 'none';
-            renderChips(getSuggestions(input.value));
+            renderChips(hasText ? [] : getSuggestions(input.value));
         }
 
         function clearInput() {

@@ -134,7 +134,7 @@
         .sheet-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.15; margin-bottom: 18px; padding-right: 36px; }
         .sheet-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
         .sheet-tab { flex: 1; border: none; border-radius: 12px; background: #F4F4F4; padding: 10px 8px; font-family: 'Inter', sans-serif; font-size: 14px; color: #1A1A1A; cursor: pointer; }
-        .sheet-tab.active { background: #1A1A1A; color: #fff; }
+        .sheet-tab.active { background: #fff; color: #000; }
         .sheet-step { display: flex; gap: 12px; margin-bottom: 18px; }
         .sheet-step img { flex-shrink: 0; }
         .sheet-step-title { font-size: 17px; font-weight: 700; color: #1A1A1A; line-height: 1.3; margin-bottom: 4px; }
@@ -181,7 +181,7 @@
     <div class="checklist">
         <div class="check-row">
             <img src="success materials/check.svg" alt="">
-            <span class="check-text">Объявление <a href="ad-page.html">«<span id="ad-title"></span>»</a> опубликовано в категории «Благотворительные товары» для региона ЧС</span>
+            <span class="check-text">Объявление <a href="ad-page.html">«<span id="ad-title"></span>»</a> опубликовано в категории «Добрые вещи» для региона ЧС</span>
         </div>
         <div class="check-row">
             <img src="success materials/check.svg" alt="">
@@ -220,17 +220,17 @@
             <h2 class="sheet-title">Передача вещей на благотворительность</h2>
             <div class="sheet-tabs">
                 <button class="sheet-tab active" id="stab-how" onclick="switchSheetTab('how')">Как это работает</button>
-                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Преимущества</button>
+                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Почему это удобно</button>
             </div>
             <div class="sheet-pane" id="spane-how">
-                <div class="sheet-step"><img src="sheets materials/1.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Разместите благотворительное объявление</div><div class="sheet-step-sub">Выберите вещи, которые готовы передать пострадавшим</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/2.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Объявление увидят люди и фонды</div><div class="sheet-step-sub">Оно попадёт в специальный раздел помощи для региона ЧС</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/3.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Отправьте вещи Авито Доставкой</div><div class="sheet-step-sub">Получатель сможет оформить доставку всего за 1 ₽</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/1.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Отметьте вещи, которые готовы передать</div><div class="sheet-step-sub">Покажем, что сейчас нужно пострадавшим. Можно выбрать вещи из объявления или добавить другие подходящие вещи.</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/2.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Разместите объявление</div><div class="sheet-step-sub">Заполненные данные сохранятся. Можно передать вещи бесплатно или оставить символическую цену.</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/3.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Дождитесь сообщения в чате Авито</div><div class="sheet-step-sub">Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.</div></div></div>
             </div>
             <div class="sheet-pane" id="spane-benefits" style="display:none">
-                <div class="sheet-step"><img src="sheets materials/4.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Помощь быстрее доходит до пострадавших</div><div class="sheet-step-sub">Объявления показываются людям и фондам в регионе ЧС</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/5.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Можно отдать вещи даром или за символическую цену</div><div class="sheet-step-sub">Подойдут товары первой необходимости и гуманитарная помощь</div></div></div>
-                <div class="sheet-step"><img src="sheets materials/6.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Льготная доставка за счёт Авито</div><div class="sheet-step-sub">Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/4.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Понятно, что именно сейчас нужно</div><div class="sheet-step-sub">В списке будут конкретные позиции: например, резиновые сапоги нужного размера, помпы для воды или закрытые средства гигиены.</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/5.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Можно добавить вещи к объявлению</div><div class="sheet-step-sub">Если кроме основной вещи у вас есть что-то еще из списка, отметьте это в объявлении.</div></div></div>
+                <div class="sheet-step"><img src="sheets materials/6.png" width="64" height="64" alt=""><div><div class="sheet-step-title">Доставка для пострадавших — 1 ₽</div><div class="sheet-step-sub">Люди из зоны ЧС смогут оформить Авито Доставку за 1 ₽ на товары из «Добрых вещей».</div></div></div>
             </div>
         </div>
     </div>

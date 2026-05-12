@@ -13,7 +13,7 @@
         .sticky-shell { background: #fff; }
 
         /* ── TOP BAR ── */
-        .top-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #EBEBEB; }
+        .top-bar { position: sticky; top: 0; z-index: 300; background: #fff; border-bottom: 1px solid #EBEBEB; }
         .top-bar-inner {
             max-width: 1260px; margin: 0 auto; padding: 0 20px;
             height: 42px; display: flex; align-items: center;
@@ -84,8 +84,22 @@
 
         /* ═══════════════ FORM LAYOUT ═══════════════ */
         .form-outer { max-width: 1260px; margin: 0 auto; padding: 0 20px 80px; }
-        .form-inner { max-width: 636px; }
+        .form-inner { max-width: 636px; display: flex; flex-direction: column; }
         .form-section { padding-top: 56px; }
+        .charity-layout #extraSections { display: contents !important; }
+        .charity-layout #titleSection { order: 30; padding-top: 56px !important; }
+        .charity-layout #sectionCats { display: none !important; }
+        .charity-intro-section { order: 10; padding-top: 0; }
+        .charity-banner-section { order: 20; padding-top: 28px; }
+        .charity-photos-section { order: 25; }
+        .charity-category-section { order: 50; }
+        .charity-price-section { order: 55; }
+        .charity-collection-section { order: 60; }
+        .charity-needs-section { order: 70; }
+        .charity-description-section { order: 80; }
+        .charity-location-section { order: 90; }
+        .charity-delivery-section { order: 100; }
+        .charity-contacts-section { order: 110; }
 
         /* ── TITLE INPUT ── */
         .field-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 12px; }
@@ -135,9 +149,25 @@
         .collection-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
         .collection-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
         .collection-subtitle { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 4px; }
+        .charity-intro-title { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
+        .charity-intro-sub { margin-top: 6px; font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.4; }
+        .collection-card {
+            background: #F4F4F4; border-radius: 24px; padding: 12px 16px 16px 12px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .collection-card-img { width: 76px; height: 76px; border-radius: 18px; object-fit: cover; flex-shrink: 0; background: #fff; }
+        .collection-card-title { font-size: 16px; font-weight: 800; color: #1A1A1A; line-height: 1.25; }
+        .collection-card-subtitle { margin-top: 2px; font-size: 13px; font-weight: 400; color: #1A1A1A; line-height: 1.3; }
+        .collection-card + .change-btn { width: 100%; margin-top: 6px; min-height: 48px; }
+        .collection-field {
+            width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
+            font-weight: 400; color: #9E9E9E; display: flex; align-items: center;
+            justify-content: space-between;
+        }
         .change-btn {
             background: #F2F1F0; border: none; border-radius: 16px; padding: 14px 16px;
-            font-size: 15px; font-weight: 400; color: #1A1A1A; cursor: pointer;
+            font-size: 15px; font-weight: 400; color: #000; cursor: pointer;
             white-space: nowrap; flex-shrink: 0; font-family: 'Inter', sans-serif; transition: background 0.15s;
         }
         .change-btn:hover { background: #E8E7E6; }
@@ -171,7 +201,7 @@
         .cat-expanded { margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
         .qty-label { margin: 2px 0 0; font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .qty-row { display: flex; align-items: center; justify-content: space-between; background: #F4F4F4; border-radius: 12px; padding: 0 8px; height: 50px; }
-        .qty-btn { background: none; border: none; font-size: 24px; font-weight: 300; color: #1A1A1A; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
+        .qty-btn { background: none; border: none; font-size: 24px; font-weight: 300; color: #000; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .qty-value { font-size: 17px; font-weight: 400; color: #1A1A1A; min-width: 32px; text-align: center; }
         .comment-wrap { position: relative; }
         .comment-textarea { width: 100%; min-height: 80px; background: #F4F4F4; border: none; border-radius: 12px; padding: 12px 40px 12px 14px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; color: #1A1A1A; outline: none; resize: none; overflow: hidden; line-height: 1.45; display: block; }
@@ -199,6 +229,10 @@
         }
         .need-select.selected { color: #1A1A1A; }
         .need-select-arrow { position: absolute; right: 16px; top: 16px; transition: transform 0.2s; pointer-events: none; }
+        .need-select-arrow,
+        .cat-select-arrow,
+        .select-chevron,
+        .dropdown-chevron { width: 20px; height: 20px; }
         .need-select-arrow.open { transform: rotate(180deg); }
         .need-menu {
             display: none; position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 6px);
@@ -221,9 +255,12 @@
             color: #1A1A1A; line-height: 1.2;
         }
         .need-tag button {
-            width: 16px; height: 16px; border: none; background: transparent;
+            width: 24px; height: 24px; border: none; background: transparent;
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
         }
+        .need-tag button img { width: 20px; height: 20px; }
+        .modal-close img { width: 24px; height: 24px; }
+        .modal-tab { color: #000; }
 
         /* Regular listing flow */
         .option-list { display: flex; flex-direction: column; gap: 0; }
@@ -345,7 +382,7 @@
 
         /* How-it-works tabs */
         .modal-tabs { display: flex; border-bottom: 1px solid #EBEBEB; margin-bottom: 24px; }
-        .modal-tab { padding: 0 0 10px; margin-right: 24px; font-size: 15px; font-weight: 700; color: #9E9E9E; background: none; border: none; cursor: pointer; position: relative; white-space: nowrap; font-family: 'Inter', sans-serif; }
+        .modal-tab { padding: 0 0 10px; margin-right: 24px; font-size: 15px; font-weight: 700; color: #000; background: none; border: none; cursor: pointer; position: relative; white-space: nowrap; font-family: 'Inter', sans-serif; }
         .modal-tab.active { color: #1A1A1A; }
         .modal-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #1A1A1A; border-radius: 2px 2px 0 0; }
         .modal-pane { display: none; }
@@ -458,7 +495,7 @@
     <div class="form-inner">
 
         <!-- 1 · TITLE -->
-        <div class="form-section" style="padding-top:0">
+        <div class="form-section" id="titleSection" style="padding-top:0">
             <div class="section-title">Название объявления</div>
             <div style="height:12px"></div>
             <div class="title-input-wrap">
@@ -485,7 +522,7 @@
             <div class="cat-select-wrap" id="catSelectWrap" style="display:none">
                 <div class="cat-select-display" onclick="resetCat()">
                     <span id="catSelectValue"></span>
-                    <svg class="cat-select-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <svg class="cat-select-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none">
                         <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
@@ -495,17 +532,12 @@
         <!-- 3 · EXTRA (charity only) -->
         <div id="extraSections" style="display:none">
 
-            <!-- COLLECTION -->
-            <div class="form-section">
-                <div class="collection-head">
-                    <div>
-                        <div class="collection-title" id="collectionTitle">Сбор "Помощь семьям"</div>
-                        <div class="collection-subtitle" id="collectionSubtitle">Собираем вещи на помощь многодетным семьям</div>
-                    </div>
-                    <button class="change-btn" onclick="openChangeCollection()">Изменить сбор</button>
-                </div>
+            <div class="form-section charity-intro-section">
+                <div class="charity-intro-title">Добрые вещи ❤️</div>
+                <div class="charity-intro-sub">Продолжим с уже заполненными данными объявления</div>
+            </div>
 
-                <!-- Info banner -->
+            <div class="form-section charity-banner-section">
                 <div class="info-banner" id="infoBanner" onclick="openHowPopup()">
                     <div class="banner-illu-wrap">
                         <img src="how it works.png" class="banner-illu" alt="">
@@ -516,15 +548,10 @@
                         <span class="banner-link">Узнать подробнее</span>
                     </div>
                 </div>
-
-                <!-- Donation list -->
-                <div class="list-header-label">Что сейчас нужно</div>
-                <div class="list-header-sub">Выберите вещи, которые вы готовы передать на помощь людям</div>
-                <div class="list-items" id="donationList"></div>
             </div>
 
             <!-- PHOTOS -->
-            <div class="form-section">
+            <div class="form-section charity-photos-section">
                 <div class="section-title">Фотографии</div>
                 <div class="section-sub">Не более 40</div>
                 <div class="photos-wrap" id="photoWrap">
@@ -537,16 +564,60 @@
                 </div>
             </div>
 
+            <div class="form-section charity-category-section">
+                <div class="section-title">Категория</div>
+                <div class="section-sub">Выбирается автоматически для передачи вещей на благотворительность</div>
+                <div class="collection-field">
+                    <span>Добрые вещи</span>
+                    <svg class="select-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="form-section charity-price-section">
+                <div class="section-title">Условия продажи</div>
+                <div style="height:14px"></div>
+                <div class="price-input-wrap">
+                    <input type="text" class="text-input price-input" id="charityPriceInput" value="0 ₽">
+                    <button class="title-clear" style="display:flex" onclick="document.getElementById('charityPriceInput').value='';">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- COLLECTION -->
+            <div class="form-section charity-collection-section">
+                <div class="section-title">Кому могут подойти ваши вещи</div>
+                <div style="height:14px"></div>
+                <div class="collection-card">
+                    <img src="sbor 1 new.png" class="collection-card-img" id="collectionImage" alt="">
+                    <div>
+                        <div class="collection-card-title" id="collectionTitle">Для семей с детьми</div>
+                        <div class="collection-card-subtitle" id="collectionSubtitle">Собираем вещи на помощь многодетным семьям</div>
+                    </div>
+                </div>
+                <button class="change-btn" onclick="openChangeCollection()">Поменять сбор вещей</button>
+            </div>
+
+            <div class="form-section charity-needs-section">
+                <div class="section-title">Что сейчас нужно</div>
+                <div class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</div>
+                <div class="list-items" id="donationList"></div>
+            </div>
+
             <!-- DESCRIPTION -->
-            <div class="form-section">
+            <div class="form-section charity-description-section">
                 <div class="section-title">Описание товаров</div>
                 <div style="height:14px"></div>
                 <textarea class="textarea-field" id="descTextarea" placeholder="Введите текст"></textarea>
             </div>
 
             <!-- LOCATION -->
-            <div class="form-section">
-                <div class="section-title">Местоположение</div>
+            <div class="form-section charity-location-section">
+                <div class="section-title">Адрес</div>
                 <div style="height:14px"></div>
                 <div class="location-input-wrap">
                     <input type="text" class="location-input" value="Москва, Чонгарский б-р, 7" readonly>
@@ -563,7 +634,7 @@
             </div>
 
             <!-- DELIVERY -->
-            <div class="form-section">
+            <div class="form-section charity-delivery-section">
                 <div class="section-title">Авито Доставка</div>
                 <div class="delivery-desc">Выберите, как покупатели смогут заказать ваш товар. Это бесплатно и безопасно: вам не нужно платить за отправку, а если с посылкой что-то случится в пути, мы возместим ущерб.</div>
                 <div class="toggle-row">
@@ -577,7 +648,7 @@
             </div>
 
             <!-- CONTACTS -->
-            <div class="form-section">
+            <div class="form-section charity-contacts-section">
                 <div class="section-title">Контакты</div>
                 <div style="height:28px"></div>
                 <div class="contact-group">
@@ -605,7 +676,7 @@
                     <div style="height:10px"></div>
                     <div class="select-wrap">
                         <select class="select-field"><option>iPhone 16 Pro</option></select>
-                        <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <svg class="select-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none">
                             <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
@@ -963,8 +1034,10 @@
     const sectionCats = document.getElementById('sectionCats');
     const extraSections = document.getElementById('extraSections');
     const regularSections = document.getElementById('regularSections');
+    const formInner = document.querySelector('.form-inner');
     const breadcrumbs = document.getElementById('breadcrumbs');
     const descTextarea = document.getElementById('descTextarea');
+    const charityPriceInput = document.getElementById('charityPriceInput');
     const regularDescTextarea = document.getElementById('regularDescTextarea');
     const regularPriceInput = document.getElementById('regularPriceInput');
     const regularPriceClear = document.getElementById('regularPriceClear');
@@ -975,7 +1048,7 @@
         clearBtn.style.display = this.value.length > 0 ? 'flex' : 'none';
         if (v.length > 0) {
             sectionCats.style.display = 'block';
-            renderSuggests(v);
+            suggestsEl.style.display = 'none';
         } else {
             sectionCats.style.display = 'none';
             suggestsEl.style.display = 'none';
@@ -1035,9 +1108,9 @@
     }
 
     function applySuggest(text) {
-        const cur = titleInput.value.trim();
-        titleInput.value = cur ? cur + ' · ' + text : text;
+        titleInput.value = text;
         titleInput.dispatchEvent(new Event('input'));
+        suggestsEl.style.display = 'none';
         titleInput.focus();
     }
 
@@ -1055,11 +1128,13 @@
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
             extraSections.style.display = 'block';
             regularSections.style.display = 'none';
+            formInner.classList.add('charity-layout');
             renderCollection();
         } else {
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › ' + label;
             extraSections.style.display = 'none';
             regularSections.style.display = 'block';
+            formInner.classList.remove('charity-layout');
             renderRegularFlow();
         }
         updateSubmitBtn();
@@ -1073,6 +1148,7 @@
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
         extraSections.style.display = 'none';
         regularSections.style.display = 'none';
+        formInner.classList.remove('charity-layout');
         breadcrumbs.textContent = 'Личные вещи';
         updateSubmitBtn();
     }
@@ -1185,6 +1261,8 @@
         const coll = COLLECTIONS[currentCollection];
         document.getElementById('collectionTitle').textContent = coll.title;
         document.getElementById('collectionSubtitle').textContent = coll.subtitle;
+        const collectionImage = document.getElementById('collectionImage');
+        if (collectionImage) collectionImage.src = currentCollection === 'crisis' ? 'sbor 2 new.png' : 'sbor 1 new.png';
         catState = {};
         descUserEdited = false;
         renderDonationList();
@@ -1210,7 +1288,7 @@
                     <button class="need-select ${selectedCount ? 'selected' : ''}" onclick="toggleNeedDropdown('${cat.id}', event)">
                         <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
                     </button>
-                    <svg class="need-select-arrow ${s.selectOpen ? 'open' : ''}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <svg class="need-select-arrow ${s.selectOpen ? 'open' : ''}" width="20" height="20" viewBox="0 0 16 16" fill="none">
                         <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <div class="need-menu ${s.selectOpen ? 'open' : ''}" id="need-menu-${cat.id}">
@@ -1247,7 +1325,7 @@
                 <span class="need-tag">
                     ${item.name}${isCountable(cat) ? `, ${qty} шт.` : ''}
                     <button onclick="removeNeedItem('${cat.id}', '${item.id}', event)">
-                        <img src="sheets materials/CloseButton.svg" width="10" height="10" alt="">
+                        <img src="sheets materials/CloseButton.svg" width="20" height="20" alt="">
                     </button>
                 </span>
             `;
@@ -1273,7 +1351,7 @@
                 <div class="dropdown" id="dd-${cat.id}">
                     <div class="dropdown-header" onclick="toggleDropdown('${cat.id}',event)">
                         <span class="dropdown-label">Что принимают в этой категории</span>
-                        <svg class="dropdown-chevron ${rot}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <svg class="dropdown-chevron ${rot}" width="20" height="20" viewBox="0 0 16 16" fill="none">
                             <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
@@ -1300,6 +1378,19 @@
         catState[id].selectOpen = !catState[id].selectOpen;
         renderDonationList();
     }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.need-select-wrap')) {
+            let changed = false;
+            Object.keys(catState).forEach(key => {
+                if (catState[key]?.selectOpen) {
+                    catState[key].selectOpen = false;
+                    changed = true;
+                }
+            });
+            if (changed) renderDonationList();
+        }
+    });
 
     function selectNeedItem(catId, itemId, e) {
         e.stopPropagation();
@@ -1409,9 +1500,9 @@
     const POPUP_CONTENT = {
         family: {
             how: [
-                { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно фондам. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
-                { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные из обычной подачи сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
-                { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят только проверенные фонды. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
+                { img: '1', title: 'Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно фондам. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                { img: '2', title: 'Разместите объявление', sub: 'Заполненные данные из обычной подачи сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                { img: '3', title: 'Дождитесь сообщения в чате Авито', sub: 'Объявление увидят только проверенные фонды. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
             ],
             benefits: [
                 { img: '4', title: 'Понятно, какие вещи сейчас нужны', sub: 'В списке будут конкретные позиции: например, куртки нужного размера, книги для определенного возраста или рюкзаки в хорошем состоянии.' },
@@ -1421,9 +1512,9 @@
         },
         crisis: {
             how: [
-                { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно пострадавшим. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
-                { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
-                { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
+                { img: '1', title: 'Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно пострадавшим. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                { img: '2', title: 'Разместите объявление', sub: 'Заполненные данные сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                { img: '3', title: 'Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
             ],
             benefits: [
                 { img: '4', title: 'Понятно, что именно сейчас нужно', sub: 'В списке будут конкретные позиции: например, резиновые сапоги нужного размера, помпы для воды или закрытые средства гигиены.' },
@@ -1615,7 +1706,7 @@
         }
         sessionStorage.setItem('adFlow', 'charity');
         sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
-        sessionStorage.setItem('adPrice', 'Бесплатно');
+        sessionStorage.setItem('adPrice', charityPriceInput?.value.trim() || 'Бесплатно');
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
@@ -1703,12 +1794,15 @@
         const catArrow = document.querySelector('.cat-select-arrow');
         if (catArrow) catArrow.style.display = 'none';
         extraSections.style.display = 'block';
+        formInner.classList.add('charity-layout');
         breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
         const collection = sessionStorage.getItem('adCollection') || 'family';
         currentCollection = collection;
         const coll = COLLECTIONS[currentCollection];
         document.getElementById('collectionTitle').textContent = coll.title;
         document.getElementById('collectionSubtitle').textContent = coll.subtitle;
+        const collectionImage = document.getElementById('collectionImage');
+        if (collectionImage) collectionImage.src = currentCollection === 'crisis' ? 'sbor 2 new.png' : 'sbor 1 new.png';
         const savedCats = JSON.parse(sessionStorage.getItem('adSelectedCats') || '[]');
         catState = {};
         savedCats.forEach(c => {
@@ -1728,6 +1822,8 @@
         if (savedPhotos.length > 0) { photoSelection = savedPhotos; renderSelectedPhotos(); }
         const desc = sessionStorage.getItem('adDesc');
         if (desc) { descTextarea.value = desc; descTextarea.style.height = 'auto'; descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px'; descUserEdited = true; }
+        const price = sessionStorage.getItem('adPrice');
+        if (price && charityPriceInput) charityPriceInput.value = price;
         bannerDismissed = false;
         document.getElementById('infoBanner').style.display = '';
     }
