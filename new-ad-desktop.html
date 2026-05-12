@@ -419,7 +419,8 @@
 
         <!-- 1 · TITLE -->
         <div class="form-section" style="padding-top:0">
-            <div class="field-label">Название объявления</div>
+            <div class="section-title">Название объявления</div>
+            <div style="height:12px"></div>
             <div class="title-input-wrap">
                 <input type="text" class="text-input" id="titleInput" autocomplete="off" placeholder="" style="padding-right:44px;">
                 <button class="title-clear" id="titleClear" onclick="clearTitle()">
@@ -433,7 +434,8 @@
 
         <!-- 2 · CATEGORIES -->
         <div class="form-section" id="sectionCats" style="display:none">
-            <div class="field-label">Категория</div>
+            <div class="section-title">Категория</div>
+            <div style="height:12px"></div>
             <div class="chips-wrap" id="chipsWrap">
                 <span class="chip" onclick="selectCat(this,'tshirts','Футболки и майки')">Футболки и майки</span>
                 <span class="chip" onclick="selectCat(this,'homewear','Домашняя одежда')">Домашняя одежда</span>
@@ -576,6 +578,19 @@
         <div id="regularSections" style="display:none">
 
             <div class="form-section">
+                <div class="section-title">Фотографии</div>
+                <div class="section-sub">Не более 40</div>
+                <div class="photos-wrap" id="regularPhotoWrap">
+                    <div class="photo-uploader" onclick="openPhotoModal()">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="13" r="4" stroke="#1A1A1A" stroke-width="1.6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
                 <div class="section-title">Состояние</div>
                 <div class="section-sub">Выберите состояние вашего товара</div>
                 <div class="option-list" id="conditionOptions"></div>
@@ -634,19 +649,6 @@
                 <div class="charity-hint" id="priceCharityHint">
                     Ваш товар подходит под активный благотворительный сбор для фонда ❤️.
                     <span class="charity-link" onclick="switchToCharityFlow()">Перейти</span>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <div class="section-title">Фотографии</div>
-                <div class="section-sub">Не более 40</div>
-                <div class="photos-wrap" id="regularPhotoWrap">
-                    <div class="photo-uploader" onclick="openPhotoModal()">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="12" cy="13" r="4" stroke="#1A1A1A" stroke-width="1.6"/>
-                        </svg>
-                    </div>
                 </div>
             </div>
 
