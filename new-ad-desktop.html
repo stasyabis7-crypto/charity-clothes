@@ -185,6 +185,46 @@
         .dropdown-body.open { display: block; }
         .dropdown-list { margin: 0; padding-left: 20px; }
 
+        /* Charity item dropdowns */
+        .need-group { margin-top: 24px; }
+        .need-group:first-child { margin-top: 0; }
+        .need-title { font-size: 16px; font-weight: 800; color: #1A1A1A; line-height: 1.25; }
+        .need-sub { margin-top: 3px; font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.35; }
+        .need-select-wrap { position: relative; margin-top: 10px; }
+        .need-select {
+            width: 100%; min-height: 48px; background: #F4F4F4; border: none; border-radius: 12px;
+            padding: 0 44px 0 16px; font-size: 15px; font-family: 'Inter', sans-serif;
+            font-weight: 400; color: #757575; display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer;
+        }
+        .need-select.selected { color: #1A1A1A; }
+        .need-select-arrow { position: absolute; right: 16px; top: 16px; transition: transform 0.2s; pointer-events: none; }
+        .need-select-arrow.open { transform: rotate(180deg); }
+        .need-menu {
+            display: none; position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 6px);
+            background: #fff; border: 1px solid #EBEBEB; border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12); max-height: 320px; overflow-y: auto; padding: 8px;
+        }
+        .need-menu.open { display: block; }
+        .need-option {
+            width: 100%; border: none; background: transparent; border-radius: 10px;
+            padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            font-family: 'Inter', sans-serif; cursor: pointer; text-align: left;
+        }
+        .need-option:hover { background: #F4F4F4; }
+        .need-option-name { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.3; }
+        .need-option-sub { margin-top: 2px; font-size: 13px; font-weight: 400; color: #757575; }
+        .need-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .need-tag {
+            display: inline-flex; align-items: center; gap: 8px; background: #F4F4F4;
+            border-radius: 16px; padding: 9px 12px; font-size: 15px; font-weight: 400;
+            color: #1A1A1A; line-height: 1.2;
+        }
+        .need-tag button {
+            width: 16px; height: 16px; border: none; background: transparent;
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+
         /* Regular listing flow */
         .option-list { display: flex; flex-direction: column; gap: 0; }
         .option-row {
@@ -440,7 +480,7 @@
                 <span class="chip" onclick="selectCat(this,'tshirts','Футболки и майки')">Футболки и майки</span>
                 <span class="chip" onclick="selectCat(this,'homewear','Домашняя одежда')">Домашняя одежда</span>
                 <span class="chip" onclick="selectCat(this,'suits','Пиджаки и костюмы')">Пиджаки и костюмы</span>
-                <span class="chip" onclick="selectCat(this,'charity','Благотворительные товары ❤️')">Благотворительные товары ❤️</span>
+                <span class="chip" onclick="selectCat(this,'charity','Добрые вещи')">Добрые вещи</span>
             </div>
             <div class="cat-select-wrap" id="catSelectWrap" style="display:none">
                 <div class="cat-select-display" onclick="resetCat()">
@@ -478,8 +518,8 @@
                 </div>
 
                 <!-- Donation list -->
-                <div class="list-header-label">Выберите, что готовы передать</div>
-                <div class="list-header-sub">Фонды увидят эти вещи в вашем объявлении</div>
+                <div class="list-header-label">Что сейчас нужно</div>
+                <div class="list-header-sub">Выберите вещи, которые вы готовы передать на помощь людям</div>
                 <div class="list-items" id="donationList"></div>
             </div>
 
@@ -711,7 +751,7 @@
         <h2 class="modal-title">Передача вещей<br>на благотворительность</h2>
         <div class="modal-tabs">
             <button class="modal-tab active" id="htab-how" onclick="switchHowTab('how')">Как это работает</button>
-            <button class="modal-tab" id="htab-benefits" onclick="switchHowTab('benefits')">Преимущества</button>
+            <button class="modal-tab" id="htab-benefits" onclick="switchHowTab('benefits')">Почему это удобно</button>
         </div>
         <div class="modal-pane active" id="hpane-how"></div>
         <div class="modal-pane" id="hpane-benefits"></div>
@@ -729,12 +769,12 @@
         <h2 class="modal-title">Выберите другой сбор</h2>
         <p class="modal-desc">Сейчас в Авито запущено несколько активных сборов. Вы можете выбрать тот, в котором захотите поучаствовать.</p>
         <div class="collection-option" onclick="selectCollectionOption('family')">
-            <img src="crisis help/сбор 1.png" class="coll-img" alt="">
+            <img src="sbor 1 new.png" class="coll-img" alt="">
             <div class="coll-info"><div class="coll-name">Помощь семьям</div><div class="coll-sub">Собираем вещи на помощь малообеспеченным многодетным семьям</div></div>
             <img src="crisis help/Radio on.png" class="coll-radio" id="coll-radio-family" alt="">
         </div>
         <div class="collection-option" onclick="selectCollectionOption('crisis')">
-            <img src="crisis help/сбор 2.png" class="coll-img" alt="">
+            <img src="sbor 2 new.png" class="coll-img" alt="">
             <div class="coll-info"><div class="coll-name">Помощь в Дагестане ❤️</div><div class="coll-sub">Собираем вещи в помощь людям, пострадавшим от паводков</div></div>
             <img src="crisis help/Radio off.png" class="coll-radio" id="coll-radio-crisis" alt="">
         </div>
@@ -797,40 +837,26 @@
     /* ═══════════ DATA ═══════════ */
     const COLLECTIONS = {
         family: {
-            id: 'family', title: 'Сбор "Помощь семьям"', subtitle: 'Собираем вещи на помощь многодетным семьям',
+            id: 'family', title: 'Для семей с детьми', subtitle: 'Собираем вещи на помощь многодетным семьям',
             categories: [
-                { id: 'kids-clothes', name: 'Детская одежда и обувь', subtitle: 'Осталось собрать 5 вещей', remaining: 5,
-                  image: 'step 6 materials/Детская одежда и обувь.png',
-                  what: ['Одежда для новорождённых (50–68)', 'Одежда для детей ясельного возраста (68–98)', 'Одежда для дошкольников (98–122)', 'Школьная форма и повседневная одежда (122+)', 'Верхняя одежда: куртки, пальто, комбинезоны', 'Обувь для детей любого возраста', 'Головные уборы, шарфы, варежки', 'Чистые вещи без дыр и сильного износа'] },
-                { id: 'adult-clothes', name: 'Мужская и женская одежда', subtitle: 'Осталось собрать 10 вещей', remaining: 10,
+                { id: 'adult-clothes', name: 'Одежда и обувь', subtitle: 'Осталось собрать 40 вещей', remaining: 40,
                   image: 'step 6 materials/Мужская и женская одежда.png',
-                  what: ['Футболки и майки', 'Рубашки и блузки', 'Свитеры и толстовки', 'Брюки и джинсы', 'Платья и юбки', 'Верхняя одежда: куртки, пальто, шубы', 'Обувь мужская и женская', 'Головные уборы', 'Шарфы и аксессуары', 'Чистые вещи в хорошем состоянии'] },
-                { id: 'strollers', name: 'Детские коляски', subtitle: 'Осталось собрать 3 вещи', remaining: 3,
-                  image: 'step 6 materials/Детские коляски.png',
-                  what: ['Коляски-трансформеры', 'Прогулочные коляски', 'Коляски для новорождённых', 'Коляски в рабочем состоянии, без сильных повреждений'] },
-                { id: 'toys', name: 'Игрушки', subtitle: 'Осталось собрать 10 вещей', remaining: 10,
+                  what: ['Мужские джинсы, размер 48–54', 'Женские теплые кофты, размер S–L', 'Демисезонные куртки', 'Обувь для взрослых', 'Шапки и шарфы'] },
+                { id: 'kids-clothes', name: 'Детские вещи', subtitle: 'Осталось собрать 23 вещи', remaining: 23,
+                  image: 'step 6 materials/Детская одежда и обувь.png',
+                  what: ['Детские брюки и джинсы', 'Толстовки и свитшоты', 'Платья и сарафаны', 'Детская обувь', 'Куртки для детей'] },
+                { id: 'toys', name: 'Детские игрушки', subtitle: 'Нужны всегда в неограниченном количестве',
                   image: 'step 6 materials/Игрушки.png',
-                  what: ['Мягкие игрушки', 'Конструкторы и наборы', 'Настольные игры', 'Развивающие игры', 'Куклы', 'Машинки', 'Музыкальные игрушки', 'Пазлы', 'Наборы для творчества', 'Чистые игрушки в рабочем состоянии'] },
-                { id: 'home-essentials', name: 'Домашняя утварь', subtitle: 'Фондам постоянно нужно',
-                  image: 'crisis help/cat 3.png', countable: false,
-                  what: ['Одеяла', 'Подушки', 'Игрушки', 'Носки', 'Постельное бельё', 'Полотенца', 'Пледы', 'Шапки и шарфы'] }
+                  countable: false,
+                  what: ['Конструкторы', 'Куклы и аксессуары', 'Машинки', 'Детские книги', 'Настольные игры'] }
             ]
         },
         crisis: {
-            id: 'crisis', title: 'Помощь в Дагестане ❤️', subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+            id: 'crisis', title: 'Помощь Дагестану', subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
             categories: [
-                { id: 'clothes', name: 'Одежда', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help/cat 1.png', what: ['Тёплая одежда', 'Демисезонная одежда', 'Повседневная одежда для взрослых', 'Повседневная одежда для детей', 'Обувь для взрослых', 'Обувь для детей', 'Куртки', 'Шапки и шарфы', 'Дождевики', 'Новое нижнее бельё'] },
-                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help/cat 2.png', what: ['Зубная щётка', 'Зубная паста', 'Шампунь', 'Гель для душа', 'Мыло кусковое', 'Порошок стиральный', 'Антисептик', 'Маски', 'Влажные салфетки', 'Туалетная бумага', 'Бритва', 'Пена для бритья', 'Предметы женской гигиены'] },
-                { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 9 вещей', remaining: 9, image: 'crisis help/cat 3.png', what: ['Столовые приборы', 'Посуда: тарелка глубокая, кружка', 'Кастрюля от 3 л с крышкой', 'Сковорода глубокая от 24 см', 'Таз 9 л', 'Полотенце банное', 'Полотенце для рук', 'Постельное бельё 2-спальное', 'Постельное бельё 1-спальное', 'Одеяло 2-спальное', 'Одеяло 1-спальное', 'Подушка'] },
-                { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Осталось собрать 8 вещей', remaining: 8, image: 'crisis help/cat 4.png', what: ['Подгузники', 'Пелёнки', 'Присыпки', 'Влажные салфетки', 'Детские игрушки', 'Канцелярские принадлежности', 'Раскраски', 'Товары для детских комнат в ПВР'] },
-                { id: 'appliances', name: 'Рабочая техника', subtitle: 'Осталось собрать 3 вещи', remaining: 3, image: 'crisis help/cat 5.png', what: ['Микроволновки', 'Чайники', 'Утюги'] },
-                { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Осталось собрать 1 вещь', remaining: 1, image: 'crisis help/cat 6.png', what: ['Подгузники взрослые больших размеров'] },
-                { id: 'water', name: 'Откачка воды и осушение', subtitle: 'Осталось собрать 3 вещи', remaining: 3, image: 'crisis help/cat 7.png', what: ['Помпа для откачки воды', 'Пушка для сушки', 'Напорные пожарные рукава'] },
-                { id: 'tools', name: 'Инструменты для расчистки', subtitle: 'Осталось собрать 3 вещи', remaining: 3, image: 'crisis help/cat 8.png', what: ['Лопаты штыковые', 'Лопаты шуфельные', 'Бензиновые пилы'] },
-                { id: 'protection', name: 'Средства защиты и спецодежда', subtitle: 'Осталось собрать 3 вещи', remaining: 3, image: 'crisis help/cat 9.png', what: ['Спецодежда для волонтёров', 'Резиновые сапоги', 'Защитные каски'] },
-                { id: 'family-clothes-extra', name: 'Мужская и женская одежда', subtitle: 'Фондам постоянно нужно',
-                  image: 'step 6 materials/Мужская и женская одежда.png', countable: false,
-                  what: ['Одеяла', 'Подушки', 'Игрушки', 'Носки', 'Постельное бельё', 'Полотенца', 'Пледы', 'Шапки и шарфы'] }
+                { id: 'clothes', name: 'Одежда и обувь', subtitle: 'Осталось собрать 26 вещей', remaining: 26, image: 'crisis help/cat 1.png', what: ['Теплая одежда для взрослых', 'Теплая одежда для детей', 'Дождевики', 'Резиновые сапоги'] },
+                { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 26 вещей', remaining: 26, image: 'crisis help/cat 3.png', what: ['Постельное белье', 'Одеяла и пледы', 'Полотенца', 'Посуда'] },
+                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Нужны всегда в неограниченном количестве', remaining: 10, image: 'crisis help/cat 2.png', countable: false, what: ['Зубная паста и щетки', 'Шампунь и гель для душа', 'Мыло', 'Влажные салфетки', 'Стиральный порошок'] }
             ]
         }
     };
@@ -894,6 +920,20 @@
     function renderDropdownList(cat) {
         const limit = isCountable(cat) ? Math.min(cat.remaining || cat.what.length, 10) : Math.min(cat.what.length, 10);
         return `<ol class="dropdown-list">${cat.what.slice(0, limit).map(item => `<li>${item}</li>`).join('')}</ol>`;
+    }
+
+    function itemIdFromName(name) {
+        return name.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-').replace(/^-|-$/g, '');
+    }
+
+    function needItems(cat) {
+        const countable = isCountable(cat);
+        const base = Math.max(1, Math.floor((cat.remaining || cat.what.length || 1) / Math.max(1, cat.what.length || 1)));
+        return cat.what.map((name, index) => ({
+            id: itemIdFromName(name),
+            name,
+            needed: countable ? (index === 0 ? Math.max(1, (cat.remaining || base) - base * (cat.what.length - 1)) : base) : null
+        }));
     }
 
     function pluralItems(n) {
@@ -1012,7 +1052,7 @@
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = label;
         if (id === 'charity') {
-            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
             extraSections.style.display = 'block';
             regularSections.style.display = 'none';
             renderCollection();
@@ -1125,8 +1165,8 @@
         descUserEdited = true;
         sessionStorage.setItem('adDesc', buildRegularDescription());
         selectedCatId = 'charity';
-        document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
-        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+        document.getElementById('catSelectValue').textContent = 'Добрые вещи';
+        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
         regularSections.style.display = 'none';
         extraSections.style.display = 'block';
         renderCollection();
@@ -1157,38 +1197,61 @@
         const list = document.getElementById('donationList');
         list.innerHTML = '';
         coll.categories.forEach(cat => {
-            if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false };
+            if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
             const s = catState[cat.id];
             const item = document.createElement('div');
-            item.className = 'list-item';
+            item.className = 'need-group';
             item.id = 'item-' + cat.id;
-            const cbSrc = s.selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png';
+            const selectedCount = Object.keys(s.items || {}).length;
             item.innerHTML = `
-                <div class="list-item-row" onclick="toggleDonation('${cat.id}')">
-                    <img src="${cat.image}" class="item-thumb" alt="">
-                    <div class="item-info">
-                        <div class="item-name">${cat.name}</div>
-                        <div class="item-count">${cat.subtitle}</div>
+                <div class="need-title">${cat.name}</div>
+                <div class="need-sub">${isCountable(cat) ? cat.subtitle : 'Нужны всегда в неограниченном количестве'}</div>
+                <div class="need-select-wrap">
+                    <button class="need-select ${selectedCount ? 'selected' : ''}" onclick="toggleNeedDropdown('${cat.id}', event)">
+                        <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
+                    </button>
+                    <svg class="need-select-arrow ${s.selectOpen ? 'open' : ''}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="need-menu ${s.selectOpen ? 'open' : ''}" id="need-menu-${cat.id}">
+                        ${renderNeedOptions(cat)}
                     </div>
-                    <img src="${cbSrc}" class="item-cb" alt="">
                 </div>
-                ${s.selected ? renderExpanded(cat, s) : ''}
+                <div class="need-tags">${renderNeedTags(cat, s)}</div>
             `;
             list.appendChild(item);
-            if (s.selected) {
-                const ta = item.querySelector('.comment-textarea');
-                if (ta) {
-                    ta.value = s.comment;
-                    ta.addEventListener('input', function() {
-                        s.comment = this.value;
-                        this.style.height = 'auto';
-                        this.style.height = this.scrollHeight + 'px';
-                        updateDescription();
-                    });
-                    if (s.comment) { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
-                }
-            }
         });
+    }
+
+    function renderNeedOptions(cat) {
+        const s = catState[cat.id] || { items: {} };
+        return needItems(cat).map(item => {
+            const selected = Object.prototype.hasOwnProperty.call(s.items || {}, item.id);
+            return `
+                <button class="need-option" onclick="selectNeedItem('${cat.id}', '${item.id}', event)">
+                    <div>
+                        <div class="need-option-name">${item.name}</div>
+                        ${isCountable(cat) ? `<div class="need-option-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                    </div>
+                    <img src="${selected ? CHECK_ON : CHECK_OFF}" width="21" height="21" alt="">
+                </button>
+            `;
+        }).join('');
+    }
+
+    function renderNeedTags(cat, s) {
+        const selected = s.items || {};
+        return needItems(cat).filter(item => Object.prototype.hasOwnProperty.call(selected, item.id)).map(item => {
+            const qty = selected[item.id] || 1;
+            return `
+                <span class="need-tag">
+                    ${item.name}${isCountable(cat) ? `, ${qty} шт.` : ''}
+                    <button onclick="removeNeedItem('${cat.id}', '${item.id}', event)">
+                        <img src="sheets materials/CloseButton.svg" width="10" height="10" alt="">
+                    </button>
+                </span>
+            `;
+        }).join('');
     }
 
     function renderExpanded(cat, s) {
@@ -1221,8 +1284,49 @@
     }
 
     function toggleDonation(id) {
-        if (!catState[id]) catState[id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false };
+        if (!catState[id]) catState[id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
         catState[id].selected = !catState[id].selected;
+        renderDonationList();
+        updateDescription();
+        updateSubmitBtn();
+    }
+
+    function toggleNeedDropdown(id, e) {
+        e.stopPropagation();
+        Object.keys(catState).forEach(key => {
+            if (key !== id && catState[key]) catState[key].selectOpen = false;
+        });
+        if (!catState[id]) catState[id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
+        catState[id].selectOpen = !catState[id].selectOpen;
+        renderDonationList();
+    }
+
+    function selectNeedItem(catId, itemId, e) {
+        e.stopPropagation();
+        const coll = COLLECTIONS[currentCollection];
+        const cat = coll.categories.find(c => c.id === catId);
+        if (!cat) return;
+        if (!catState[catId]) catState[catId] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
+        const s = catState[catId];
+        if (Object.prototype.hasOwnProperty.call(s.items, itemId)) {
+            delete s.items[itemId];
+        } else {
+            s.items[itemId] = 1;
+        }
+        s.selected = Object.keys(s.items).length > 0;
+        descUserEdited = false;
+        renderDonationList();
+        updateDescription();
+        updateSubmitBtn();
+    }
+
+    function removeNeedItem(catId, itemId, e) {
+        e.stopPropagation();
+        const s = catState[catId];
+        if (!s || !s.items) return;
+        delete s.items[itemId];
+        s.selected = Object.keys(s.items).length > 0;
+        descUserEdited = false;
         renderDonationList();
         updateDescription();
         updateSubmitBtn();
@@ -1238,7 +1342,7 @@
         }
         btn.textContent = 'Разместить объявление';
         const coll = COLLECTIONS[currentCollection];
-        const anySelected = coll.categories.some(c => catState[c.id]?.selected);
+        const anySelected = coll.categories.some(c => Object.keys(catState[c.id]?.items || {}).length > 0);
         btn.disabled = !anySelected;
     }
 
@@ -1268,40 +1372,63 @@
         const lines = [];
         coll.categories.forEach(cat => {
             const s = catState[cat.id];
-            if (!s || !s.selected) return;
-            let line = isCountable(cat) ? cat.name + ', ' + s.quantity + ' ' + pluralItems(s.quantity) : cat.name;
-            if (s.comment && s.comment.trim()) line += '\n' + s.comment.trim();
-            lines.push(line);
+            if (!s || !s.items || Object.keys(s.items).length === 0) return;
+            const selectedLines = needItems(cat)
+                .filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id))
+                .map(item => isCountable(cat) ? `${item.name} — ${s.items[item.id]} шт.` : item.name);
+            if (selectedLines.length) lines.push(`${cat.name}\n${selectedLines.join('\n')}`);
         });
-        descTextarea.value = lines.join('\n\n');
+        descTextarea.value = lines.length ? `Готовы передать:\n${lines.join('\n\n')}` : '';
         descTextarea.style.height = 'auto';
         descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
+    }
+
+    function buildSelectedCats() {
+        const coll = COLLECTIONS[currentCollection];
+        return coll.categories
+            .filter(c => Object.keys(catState[c.id]?.items || {}).length > 0)
+            .map(c => {
+                const s = catState[c.id];
+                const selectedItems = needItems(c).filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id));
+                const quantity = isCountable(c)
+                    ? selectedItems.reduce((sum, item) => sum + Number(s.items[item.id] || 0), 0)
+                    : selectedItems.length;
+                const comment = selectedItems.map(item => isCountable(c) ? `${item.name} — ${s.items[item.id]} шт.` : item.name).join('\n');
+                return {
+                    id: c.id,
+                    name: c.name,
+                    quantity,
+                    countable: isCountable(c),
+                    comment,
+                    items: selectedItems.map(item => ({ id: item.id, name: item.name, quantity: s.items[item.id] || 1 }))
+                };
+            });
     }
 
     /* ═══════════ HOW POPUP ═══════════ */
     const POPUP_CONTENT = {
         family: {
             how: [
-                { img: '1', title: 'Разместите бесплатное объявление', sub: 'Выберите категории вещей, которые нужны фондам' },
-                { img: '2', title: 'Фонд напишет вам в чате', sub: 'Обычно это занимает несколько дней' },
-                { img: '3', title: 'Передайте вещи Авито Доставкой', sub: 'Договоритесь с фондом и отправьте вещи напрямую' }
+                { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно фондам. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные из обычной подачи сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят только проверенные фонды. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
             ],
             benefits: [
-                { img: '4', title: 'Пишут только проверенные фонды', sub: 'Объявление не видно в общей выдаче, поэтому вам не будут писать случайные покупатели' },
-                { img: '5', title: 'Передайте нужные вещи', sub: 'Мы показываем вещи, которые сейчас действительно нужны фондам' },
-                { img: '6', title: 'Без затрат на размещение и доставку', sub: 'Бесплатные размещения не расходуются, доставку оплачивает фонд' }
+                { img: '4', title: 'Понятно, какие вещи сейчас нужны', sub: 'В списке будут конкретные позиции: например, куртки нужного размера, книги для определенного возраста или рюкзаки в хорошем состоянии.' },
+                { img: '5', title: 'Можно передать несколько вещей сразу', sub: 'Если у вас пакет вещей, отметьте все подходящие позиции в одном объявлении.' },
+                { img: '6', title: 'Бесплатные размещения сохранятся', sub: 'Объявление в «Добрых вещах» не тратит лимит бесплатных размещений на Авито.' }
             ]
         },
         crisis: {
             how: [
-                { img: '1', title: 'Разместите благотворительное объявление', sub: 'Выберите вещи, которые готовы передать пострадавшим' },
-                { img: '2', title: 'Объявление увидят люди и фонды', sub: 'Оно попадёт в специальный раздел помощи для региона ЧС' },
-                { img: '3', title: 'Отправьте вещи Авито Доставкой', sub: 'Получатель сможет оформить доставку всего за 1 ₽' }
+                { img: '1', title: '1. Отметьте вещи, которые готовы передать', sub: 'Покажем, что сейчас нужно пострадавшим. Можно выбрать вещи из объявления или добавить другие подходящие вещи.' },
+                { img: '2', title: '2. Разместите объявление', sub: 'Заполненные данные сохранятся. Можно передать вещи бесплатно или оставить символическую цену.' },
+                { img: '3', title: '3. Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о передаче или доставке.' }
             ],
             benefits: [
-                { img: '4', title: 'Помощь быстрее доходит до пострадавших', sub: 'Объявления показываются людям и фондам в регионе ЧС' },
-                { img: '5', title: 'Можно отдать вещи даром или за символическую цену', sub: 'Подойдут товары первой необходимости и гуманитарная помощь' },
-                { img: '6', title: 'Льготная доставка за счёт Авито', sub: 'Доставка товаров из раздела Благотворительные товары стоит всего 1 ₽' }
+                { img: '4', title: 'Понятно, что именно сейчас нужно', sub: 'В списке будут конкретные позиции: например, резиновые сапоги нужного размера, помпы для воды или закрытые средства гигиены.' },
+                { img: '5', title: 'Можно добавить вещи к объявлению', sub: 'Если кроме основной вещи у вас есть что-то еще из списка, отметьте это в объявлении.' },
+                { img: '6', title: 'Доставка для пострадавших — 1 ₽', sub: 'Люди из зоны ЧС смогут оформить Авито Доставку за 1 ₽ на товары из «Добрых вещей».' }
             ]
         }
     };
@@ -1487,21 +1614,16 @@
             return;
         }
         sessionStorage.setItem('adFlow', 'charity');
-        sessionStorage.setItem('adCategoryLabel', 'Благотворительные товары');
+        sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
         sessionStorage.setItem('adPrice', 'Бесплатно');
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
         sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
         sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
-        const coll = COLLECTIONS[currentCollection];
-        const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
-            id: c.id, name: c.name,
-            quantity: isCountable(c) ? catState[c.id].quantity : null,
-            countable: isCountable(c),
-            comment: catState[c.id].comment
-        }));
+        const selectedCats = buildSelectedCats();
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
+        sessionStorage.setItem('adCategories', JSON.stringify(selectedCats));
         sessionStorage.removeItem('hasDraft');
         window.location.href = 'success-desktop.html';
     }
@@ -1536,21 +1658,16 @@
             return;
         }
         sessionStorage.setItem('adFlow', 'charity');
-        sessionStorage.setItem('adCategoryLabel', 'Благотворительные товары');
+        sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
         sessionStorage.setItem('adPrice', 'Бесплатно');
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title || 'Без названия');
         sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
         sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
         sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
-        const coll = COLLECTIONS[currentCollection];
-        const selectedCats = coll.categories.filter(c => catState[c.id]?.selected).map(c => ({
-            id: c.id, name: c.name,
-            quantity: isCountable(c) ? catState[c.id].quantity : null,
-            countable: isCountable(c),
-            comment: catState[c.id].comment
-        }));
+        const selectedCats = buildSelectedCats();
         sessionStorage.setItem('adSelectedCats', JSON.stringify(selectedCats));
+        sessionStorage.setItem('adCategories', JSON.stringify(selectedCats));
     }
     function openSaveDraftPopup() {
         document.getElementById('saveDraftPopup').classList.add('open');
@@ -1573,18 +1690,20 @@
         const title = sessionStorage.getItem('adTitle');
         if (!title) return;
         titleInput.value = title;
+        selectedCatId = 'charity';
+        selectedCatLabel = 'Добрые вещи';
         document.getElementById('titleClear').style.display = 'flex';
         sectionCats.style.display = 'block';
         document.getElementById('chipsWrap').style.display = 'none';
         document.getElementById('catSelectWrap').style.display = 'block';
-        document.getElementById('catSelectValue').textContent = 'Благотворительные товары ❤️';
+        document.getElementById('catSelectValue').textContent = 'Добрые вещи';
         const catDisplay = document.querySelector('.cat-select-display');
         catDisplay.removeAttribute('onclick');
         catDisplay.style.cursor = 'default';
         const catArrow = document.querySelector('.cat-select-arrow');
         if (catArrow) catArrow.style.display = 'none';
         extraSections.style.display = 'block';
-        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Благотворительные товары';
+        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
         const collection = sessionStorage.getItem('adCollection') || 'family';
         currentCollection = collection;
         const coll = COLLECTIONS[currentCollection];
@@ -1593,7 +1712,15 @@
         const savedCats = JSON.parse(sessionStorage.getItem('adSelectedCats') || '[]');
         catState = {};
         savedCats.forEach(c => {
-            catState[c.id] = { selected: true, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false };
+            const collCat = coll.categories.find(cat => cat.id === c.id);
+            const items = {};
+            if (Array.isArray(c.items)) {
+                c.items.forEach(item => { items[item.id || itemIdFromName(item.name)] = item.quantity || 1; });
+            } else if (collCat) {
+                const first = needItems(collCat)[0];
+                if (first) items[first.id] = c.quantity || 1;
+            }
+            catState[c.id] = { selected: Object.keys(items).length > 0, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false, items, selectOpen: false };
         });
         renderDonationList();
         updateSubmitBtn();
