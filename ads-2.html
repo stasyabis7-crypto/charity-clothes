@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
     <title>Мои объявления</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -329,7 +331,7 @@
 
         <!-- Ad 1: Sony (static) -->
         <div class="ad-item">
-            <img src="step 0 photo/Elements/Картинка.png" class="ad-photo" alt="">
+            <img src="optimized/ui/sony.jpg" class="ad-photo" alt="">
             <div class="ad-content">
                 <div class="ad-title-row">
                     <span class="ad-title">Sony a7 IV (a7m4) Body</span>
@@ -356,7 +358,7 @@
 
         <!-- Ad 2: Charity (dynamic) -->
         <div class="ad-item" onclick="window.location.href='ad-page.html'" style="cursor:pointer">
-            <img id="charity-photo" src="drafts materials/img drafts.png" class="ad-photo" alt="">
+            <img id="charity-photo" src="optimized/ui/img-drafts.jpg" class="ad-photo" alt="">
             <div class="ad-content">
                 <div class="ad-title-row">
                     <span class="ad-title" id="charity-title"></span>
@@ -429,7 +431,7 @@
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {
             const id = photos[0];
-            document.getElementById('charity-photo').src = id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+            document.getElementById('charity-photo').src = id <= 5 ? `optimized/photos/pic-${id}.jpg` : `optimized/photos/crisis-${id}.jpg`;
         }
 
         function startNewAd() {

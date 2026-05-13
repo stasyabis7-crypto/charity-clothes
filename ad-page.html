@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
     <title>Объявление</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -493,7 +495,7 @@
 
     <!-- PHOTO -->
     <div class="photo-wrap">
-        <img id="ad-main-photo" src="drafts materials/img drafts.png" class="ad-main-photo" alt="">
+        <img id="ad-main-photo" src="optimized/ui/img-drafts.jpg" class="ad-main-photo" alt="">
         <span class="photo-counter" id="photo-counter">1/1</span>
     </div>
 
@@ -617,7 +619,7 @@
 
     <script>
         function photoSrc(id) {
-            return id <= 5 ? `step 2 materials/pic ${id}.png` : `crisis photos/pic ${id}.png`;
+            return id <= 5 ? `optimized/photos/pic-${id}.jpg` : `optimized/photos/crisis-${id}.jpg`;
         }
 
         const title = sessionStorage.getItem('adTitle') || 'Без названия';

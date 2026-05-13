@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
     <title>Мои объявления</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -358,7 +360,7 @@
     <div id="content-active" class="tab-pane" style="display:none">
         <div class="ads-list">
             <div class="ad-item">
-                <img src="step 0 photo/Elements/Картинка.png" class="ad-photo" alt="">
+                <img src="optimized/ui/sony.jpg" class="ad-photo" alt="">
                 <div class="ad-content">
                     <div class="ad-title-row">
                         <span class="ad-title">Sony a7 IV (a7m4) Body</span>
@@ -460,8 +462,8 @@
             const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
             const firstId = photos[0];
             const photoSrc = photos.length > 0
-                ? (firstId <= 5 ? `step 2 materials/pic ${firstId}.png` : `crisis photos/pic ${firstId}.png`)
-                : 'drafts materials/img drafts.png';
+                ? (firstId <= 5 ? `optimized/photos/pic-${firstId}.jpg` : `optimized/photos/crisis-${firstId}.jpg`)
+                : 'optimized/ui/img-drafts.jpg';
             const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
 
             list.innerHTML = `
