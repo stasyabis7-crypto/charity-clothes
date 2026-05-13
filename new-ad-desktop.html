@@ -1150,6 +1150,15 @@
     let selectedCatId = null;
     let selectedCatLabel = '';
 
+    function activateCharityLayout() {
+        document.getElementById('catSelectValue').textContent = 'Добрые вещи';
+        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
+        sectionCats.style.display = 'none';
+        regularSections.style.display = 'none';
+        extraSections.style.display = 'block';
+        formInner.classList.add('charity-layout');
+    }
+
     function selectCat(el, id, label) {
         selectedCatId = id;
         selectedCatLabel = label;
@@ -1157,10 +1166,7 @@
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = label;
         if (id === 'charity') {
-            breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
-            extraSections.style.display = 'block';
-            regularSections.style.display = 'none';
-            formInner.classList.add('charity-layout');
+            activateCharityLayout();
             renderCollection();
         } else {
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › ' + label;
@@ -1293,10 +1299,11 @@
         descUserEdited = true;
         sessionStorage.setItem('adDesc', buildRegularDescription());
         selectedCatId = 'charity';
-        document.getElementById('catSelectValue').textContent = 'Добрые вещи';
-        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
-        regularSections.style.display = 'none';
-        extraSections.style.display = 'block';
+        selectedCatLabel = 'Добрые вещи';
+        activateCharityLayout();
+        if (regularPriceDigits && charityPriceInput) {
+            charityPriceInput.value = regularPriceDigits + ' ₽';
+        }
         renderCollection();
         const savedDesc = sessionStorage.getItem('adDesc');
         if (savedDesc && descTextarea) {
@@ -1861,7 +1868,6 @@
         selectedCatId = 'charity';
         selectedCatLabel = 'Добрые вещи';
         document.getElementById('titleClear').style.display = 'flex';
-        sectionCats.style.display = 'block';
         document.getElementById('chipsWrap').style.display = 'none';
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = 'Добрые вещи';
@@ -1870,9 +1876,7 @@
         catDisplay.style.cursor = 'default';
         const catArrow = document.querySelector('.cat-select-arrow');
         if (catArrow) catArrow.style.display = 'none';
-        extraSections.style.display = 'block';
-        formInner.classList.add('charity-layout');
-        breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › Добрые вещи';
+        activateCharityLayout();
         const collection = sessionStorage.getItem('adCollection') || 'family';
         currentCollection = collection;
         const coll = COLLECTIONS[currentCollection];
