@@ -524,7 +524,7 @@
     <!-- AD INFO -->
     <div class="ad-info">
         <div class="ad-title-text" id="ad-title-display"></div>
-        <div class="ad-price-text">Бесплатно</div>
+        <div class="ad-price-text" id="ad-price-display">Бесплатно</div>
         <div class="ad-qty">5 шт. в наличии</div>
     </div>
 
@@ -559,7 +559,7 @@
         </div>
         <div class="detail-row">
             <div class="detail-label">Цена, ₽</div>
-            <div class="detail-value">Бесплатно</div>
+            <div class="detail-value" id="ad-price-detail">Бесплатно</div>
         </div>
         <div class="detail-row">
             <div class="ad-desc-block" id="ad-desc-display"></div>
@@ -623,8 +623,25 @@
         const title = sessionStorage.getItem('adTitle') || 'Без названия';
         document.getElementById('ad-title-display').textContent = title;
 
-        const desc = sessionStorage.getItem('adDesc') || '';
+        function formatAdPrice(value) {
+            const digits = String(value || '').replace(/\D/g, '');
+            return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
+        }
+
+        function normalizeAdDescription(text) {
+            const parts = (text || '').split(/\n+\s*Готовы передать:\n/);
+            if (parts.length <= 1) return (text || '').trim();
+            const base = parts[0].trim();
+            const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
+            const uniqueLines = [...new Set(generatedLines)];
+            return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
+        }
+
+        const desc = normalizeAdDescription(sessionStorage.getItem('adDesc') || '');
         document.getElementById('ad-desc-display').textContent = desc;
+        const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
+        document.getElementById('ad-price-display').textContent = adPrice;
+        document.getElementById('ad-price-detail').textContent = adPrice;
 
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {

@@ -1267,9 +1267,29 @@
                 .map(item => isCountable(cat) ? `${item.name} — ${s.items[item.id]} шт.` : item.name);
             if (selectedLines.length) lines.push(`${cat.name}\n${selectedLines.join('\n')}`);
         });
-        descTextarea.value = lines.length ? `Готовы передать:\n${lines.join('\n\n')}` : '';
+        const base = buildDescriptionBase();
+        const generated = lines.length ? `Готовы передать:\n${lines.join('\n\n')}` : '';
+        descTextarea.value = normalizeDescriptionText([base, generated].filter(Boolean).join('\n\n'));
         descTextarea.style.height = 'auto';
         descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
+    }
+
+    function stripGeneratedDescription(text) {
+        return (text || '').split(/\n+\s*Готовы передать:\n/)[0].trim();
+    }
+
+    function normalizeDescriptionText(text) {
+        const parts = (text || '').split(/\n+\s*Готовы передать:\n/);
+        if (parts.length <= 1) return (text || '').trim();
+        const base = parts[0].trim();
+        const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
+        const uniqueLines = [...new Set(generatedLines)];
+        return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
+    }
+
+    function buildDescriptionBase() {
+        const savedDesc = sessionStorage.getItem('adDesc') || '';
+        return stripGeneratedDescription(descTextarea?.value || savedDesc);
     }
 
     /* ═══════════ HOW POPUP ═══════════ */
@@ -1414,13 +1434,18 @@
         renderSelectedPhotos();
     }
 
+    function formatAdPrice(value) {
+        const digits = String(value || '').replace(/\D/g, '');
+        return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
+    }
+
     function persistEditedAd(title) {
         sessionStorage.setItem('adFlow', 'charity');
         sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
-        sessionStorage.setItem('adPrice', charityPriceInput?.value.trim() || 'Бесплатно');
+        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput?.value));
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
-        sessionStorage.setItem('adDesc', descTextarea ? descTextarea.value : '');
+        sessionStorage.setItem('adDesc', normalizeDescriptionText(descTextarea ? descTextarea.value : ''));
         sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
         sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
         const selectedCats = selectedCatsFromState();

@@ -462,6 +462,7 @@
             const photoSrc = photos.length > 0
                 ? (firstId <= 5 ? `step 2 materials/pic ${firstId}.png` : `crisis photos/pic ${firstId}.png`)
                 : 'drafts materials/img drafts.png';
+            const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
 
             list.innerHTML = `
                 <div class="ad-item" onclick="window.location.href='ad-page.html'" style="cursor:pointer">
@@ -473,7 +474,7 @@
                                 <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
                             </a>
                         </div>
-                        <div class="ad-price">Бесплатно</div>
+                        <div class="ad-price">${escHtml(adPrice)}</div>
                         <div class="ad-badge-row">
                             <span class="charity-badge">Добрые вещи</span>
                         </div>
@@ -487,6 +488,11 @@
             countEl.textContent = sessionStorage.getItem('hasDraft') === '1' ? '1' : '';
         }
 
+        function formatAdPrice(value) {
+            const digits = String(value || '').replace(/\D/g, '');
+            return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
+        }
+
         function showToastNotification() {
             const toast = document.getElementById('toast');
             toast.classList.add('visible');
@@ -494,7 +500,7 @@
         }
 
         function startNewAd() {
-            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType'].forEach(k => sessionStorage.removeItem(k));
+            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice'].forEach(k => sessionStorage.removeItem(k));
             window.location.href = 'step1.html';
         }
 

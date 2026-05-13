@@ -427,8 +427,13 @@
     const adTitle = sessionStorage.getItem('adTitle') || 'Без названия';
     const adPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
     const adFlow = sessionStorage.getItem('adFlow') || (sessionStorage.getItem('mainCategory') ? 'regular' : 'charity');
+    function formatAdPrice(value) {
+        const digits = String(value || '').replace(/\D/g, '');
+        return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
+    }
     const legacyPrice = sessionStorage.getItem('mainPrice');
-    const adPrice = sessionStorage.getItem('adPrice') || (legacyPrice ? legacyPrice + ' ₽' : (adFlow === 'regular' ? 'Цена не указана' : 'Бесплатно'));
+    const storedPrice = sessionStorage.getItem('adPrice');
+    const adPrice = adFlow === 'regular' && !storedPrice && !legacyPrice ? 'Цена не указана' : formatAdPrice(storedPrice || legacyPrice || '');
 
     document.getElementById('charity-title').textContent = adTitle;
     document.getElementById('charity-price').textContent = adPrice;

@@ -364,7 +364,7 @@
                         <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
                     </a>
                 </div>
-                <div class="ad-price-bold">Бесплатно</div>
+                <div class="ad-price-bold" id="charity-price">Бесплатно</div>
                 <div class="ad-badge-row">
                     <span class="charity-badge">Добрые вещи</span>
                 </div>
@@ -418,6 +418,14 @@
         const title = sessionStorage.getItem('adTitle') || 'Без названия';
         document.getElementById('charity-title').textContent = title;
 
+        function formatAdPrice(value) {
+            const digits = String(value || '').replace(/\D/g, '');
+            return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
+        }
+
+        const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
+        document.getElementById('charity-price').textContent = adPrice;
+
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {
             const id = photos[0];
@@ -425,7 +433,7 @@
         }
 
         function startNewAd() {
-            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType'].forEach(k => sessionStorage.removeItem(k));
+            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice'].forEach(k => sessionStorage.removeItem(k));
             window.location.href = 'step1.html';
         }
 
