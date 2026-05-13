@@ -215,7 +215,8 @@
         function goNext() {
             if (!selectedCat) return;
             if (selectedCat === 'charity') {
-                window.location.href = 'step5.html';
+                sessionStorage.setItem('adCollection', 'crisis');
+                window.location.href = 'step5-crisis.html';
             } else {
                 sessionStorage.setItem('prevPage', 'step4.html');
                 window.location.href = 'main-condition.html';

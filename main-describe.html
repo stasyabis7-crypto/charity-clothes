@@ -195,7 +195,8 @@
             const desc = buildFullDescription();
             sessionStorage.setItem('adDesc', desc);
             sessionStorage.removeItem('adCategories');
-            window.location.href = 'step5.html';
+            sessionStorage.setItem('adCollection', 'crisis');
+            window.location.href = 'step5-crisis.html';
         }
 
         function goBack() {

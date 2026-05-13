@@ -287,7 +287,8 @@
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {
             const id = photos[0];
-            document.getElementById('charity-photo').src = id <= 5 ? `optimized/photos/pic-${id}.jpg` : `optimized/photos/crisis-${id}.jpg`;
+            const files = {1:'coat.jpg',2:'toothbrush.jpg',3:'bowls.jpg',4:'pampers kids.jpg',5:'toys.jpg',6:'kids clothes.jpg',7:'more kids clothes.jpg',8:'more and more kind clothes.jpg',9:'other kids clothes.jpg',10:'kids shorts.jpg'};
+            document.getElementById('charity-photo').src = `optimized/photos/${files[Number(id)] || id}`;
         }
 
         function startNewAd() {
