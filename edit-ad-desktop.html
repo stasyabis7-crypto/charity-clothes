@@ -79,18 +79,19 @@
         /* ── PAGE TITLE (non-sticky, scrolls away) ── */
         .page-section-title { padding: 24px 0 18px; }
         .page-section-title-inner { max-width: 1260px; margin: 0 auto; padding: 0 20px; }
-        .page-title-text { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
+        .page-title-text { font-size: 40px; font-weight: 800; color: #1A1A1A; line-height: 1.1; }
         .breadcrumbs { font-size: 13px; font-weight: 400; color: #9E9E9E; margin-top: 3px; }
 
         /* ═══════════════ FORM LAYOUT ═══════════════ */
         .form-outer { max-width: 1260px; margin: 0 auto; padding: 0 20px 80px; }
         .form-inner { max-width: 636px; display: flex; flex-direction: column; }
         .form-section { padding-top: 56px; }
+        .charity-layout .form-section { padding-top: 56px; }
         .charity-layout #extraSections { display: contents !important; }
         .charity-layout #titleSection { order: 30; padding-top: 56px !important; }
         .charity-layout #sectionCats { display: none !important; }
         .charity-intro-section { order: 10; padding-top: 0; }
-        .charity-banner-section { order: 20; padding-top: 28px; }
+        .charity-banner-section { order: 20; }
         .charity-photos-section { order: 25; }
         .charity-category-section { order: 40; }
         .charity-price-section { order: 45; }
@@ -100,6 +101,9 @@
         .charity-location-section { order: 80; }
         .charity-delivery-section { order: 90; }
         .charity-contacts-section { order: 100; }
+        .charity-layout .form-footer { order: 120; }
+        .charity-layout .legal-text { order: 130; }
+        .charity-layout .form-inner > div[style*="height:60px"] { order: 140; }
 
         /* ── TITLE INPUT ── */
         .field-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 12px; }
@@ -268,9 +272,17 @@
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
         }
         .need-tag button img { width: 20px; height: 20px; }
+        .need-popup-list { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+        .need-popup-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+        .need-popup-name { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.3; }
+        .need-popup-sub { margin-top: 2px; font-size: 13px; font-weight: 400; color: #757575; }
+        .need-popup-check { border: none; background: transparent; padding: 0; cursor: pointer; flex-shrink: 0; }
+        .need-popup-qty { margin-top: 10px; height: 50px; border-radius: 12px; background: #F4F4F4; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+        .need-popup-qty button { width: 40px; height: 40px; border: none; background: transparent; color: #000; font-size: 24px; cursor: pointer; font-family: 'Inter', sans-serif; }
+        .need-popup-qty span { font-size: 17px; font-weight: 400; color: #1A1A1A; }
 
         /* ── SECTION TITLE ── */
-        .section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
+        .section-title { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
         .section-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 2px; margin-bottom: 16px; }
 
         /* Photos */
@@ -763,6 +775,20 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="needPopup">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeNeedPopup()">
+            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                <path d="M4 4L16 16M16 4L4 16" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <h2 class="modal-title" id="needPopupTitle">Выберите, что готовы передать</h2>
+        <p class="modal-desc" id="needPopupSubtitle"></p>
+        <div class="need-popup-list" id="needPopupList"></div>
+        <button class="modal-btn-primary" onclick="confirmNeedPopup()">Выбрать</button>
+    </div>
+</div>
+
 <!-- ═══════════════ POPUP: ПОДТВЕРЖДЕНИЕ СМЕНЫ СБОРА ═══════════════ -->
 <div class="modal-overlay" id="confirmSwitchPopup">
     <div class="modal-card" onclick="event.stopPropagation()" style="width:440px">
@@ -984,7 +1010,7 @@
         if (formInner.classList.contains('charity-layout')) return;
         if (v.length > 0) {
             sectionCats.style.display = 'block';
-            suggestsEl.style.display = 'none';
+            renderSuggests(v);
         } else {
             sectionCats.style.display = 'none';
             suggestsEl.style.display = 'none';
@@ -1027,6 +1053,7 @@
     function applySuggest(text) {
         titleInput.value = text;
         titleInput.dispatchEvent(new Event('input'));
+        suggestsEl.innerHTML = '';
         suggestsEl.style.display = 'none';
         titleInput.focus();
     }
@@ -1087,36 +1114,17 @@
                 <div class="need-title">${cat.name}</div>
                 <div class="need-sub">${isCountable(cat) ? cat.subtitle : 'Нужны всегда в неограниченном количестве'}</div>
                 <div class="need-select-wrap">
-                    <button class="need-select ${selectedCount ? 'selected' : ''}" onclick="toggleNeedDropdown('${cat.id}', event)">
+                    <button class="need-select ${selectedCount ? 'selected' : ''}" onclick="openNeedPopup('${cat.id}', event)">
                         <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
                     </button>
-                    <svg class="need-select-arrow ${s.selectOpen ? 'open' : ''}" width="20" height="20" viewBox="0 0 16 16" fill="none">
+                    <svg class="need-select-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none">
                         <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="need-menu ${s.selectOpen ? 'open' : ''}" id="need-menu-${cat.id}">
-                        ${renderNeedOptions(cat)}
-                    </div>
                 </div>
                 <div class="need-tags">${renderNeedTags(cat, s)}</div>
             `;
             list.appendChild(item);
         });
-    }
-
-    function renderNeedOptions(cat) {
-        const s = catState[cat.id] || { items: {} };
-        return needItems(cat).map(item => {
-            const selected = Object.prototype.hasOwnProperty.call(s.items || {}, item.id);
-            return `
-                <button class="need-option" onclick="selectNeedItem('${cat.id}', '${item.id}', event)">
-                    <div>
-                        <div class="need-option-name">${item.name}</div>
-                        ${isCountable(cat) ? `<div class="need-option-sub">Нужно: ${item.needed} шт.</div>` : ''}
-                    </div>
-                    <img src="${selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png'}" width="21" height="21" alt="">
-                </button>
-            `;
-        }).join('');
     }
 
     function renderNeedTags(cat, s) {
@@ -1142,30 +1150,80 @@
         btn.disabled = !anySelected;
     }
 
-    function toggleNeedDropdown(id, e) {
+    let activeNeedCatId = null;
+    let draftNeedItems = {};
+
+    function openNeedPopup(id, e) {
         e.stopPropagation();
-        Object.keys(catState).forEach(key => {
-            if (key !== id && catState[key]) catState[key].selectOpen = false;
-        });
         if (!catState[id]) catState[id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
-        catState[id].selectOpen = !catState[id].selectOpen;
-        renderDonationList();
+        activeNeedCatId = id;
+        draftNeedItems = { ...(catState[id].items || {}) };
+        renderNeedPopup();
+        document.getElementById('needPopup').classList.add('open');
+        document.body.style.overflow = 'hidden';
     }
 
-    function selectNeedItem(catId, itemId, e) {
-        e.stopPropagation();
+    function closeNeedPopup() {
+        document.getElementById('needPopup').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function renderNeedPopup() {
         const coll = COLLECTIONS[currentCollection];
-        const cat = coll.categories.find(c => c.id === catId);
+        const cat = coll.categories.find(c => c.id === activeNeedCatId);
         if (!cat) return;
-        if (!catState[catId]) catState[catId] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
-        const s = catState[catId];
-        if (Object.prototype.hasOwnProperty.call(s.items, itemId)) {
-            delete s.items[itemId];
+        document.getElementById('needPopupTitle').textContent = 'Выберите, что готовы передать';
+        document.getElementById('needPopupSubtitle').textContent = `В категории «${cat.name}»`;
+        document.getElementById('needPopupList').innerHTML = needItems(cat).map(item => {
+            const selected = Object.prototype.hasOwnProperty.call(draftNeedItems, item.id);
+            const qty = draftNeedItems[item.id] || 1;
+            return `
+                <div>
+                    <div class="need-popup-row">
+                        <div>
+                            <div class="need-popup-name">${item.name}</div>
+                            ${isCountable(cat) ? `<div class="need-popup-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                        </div>
+                        <button class="need-popup-check" onclick="toggleDraftNeedItem('${item.id}', event)">
+                            <img src="${selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png'}" width="24" height="24" alt="">
+                        </button>
+                    </div>
+                    ${selected && isCountable(cat) ? `
+                        <div class="need-popup-qty">
+                            <button onclick="changeDraftNeedQty('${item.id}', -1, event)">−</button>
+                            <span>${qty}</span>
+                            <button onclick="changeDraftNeedQty('${item.id}', 1, event)">+</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function toggleDraftNeedItem(itemId, e) {
+        e.stopPropagation();
+        if (Object.prototype.hasOwnProperty.call(draftNeedItems, itemId)) {
+            delete draftNeedItems[itemId];
         } else {
-            s.items[itemId] = 1;
+            draftNeedItems[itemId] = 1;
         }
+        renderNeedPopup();
+    }
+
+    function changeDraftNeedQty(itemId, delta, e) {
+        e.stopPropagation();
+        draftNeedItems[itemId] = Math.max(1, (draftNeedItems[itemId] || 1) + delta);
+        renderNeedPopup();
+    }
+
+    function confirmNeedPopup() {
+        if (!activeNeedCatId) return;
+        const s = catState[activeNeedCatId];
+        s.items = { ...draftNeedItems };
         s.selected = Object.keys(s.items).length > 0;
+        s.selectOpen = false;
         descUserEdited = false;
+        closeNeedPopup();
         renderDonationList();
         updateDescription();
         updateSubmitBtn();
@@ -1269,7 +1327,7 @@
     }
 
     /* ═══════════ OVERLAY CLICK CLOSE ═══════════ */
-    ['howPopup','changeCollPopup','confirmSwitchPopup','saveChangesPopup','photoModal'].forEach(id => {
+    ['howPopup','changeCollPopup','needPopup','confirmSwitchPopup','saveChangesPopup','photoModal'].forEach(id => {
         document.getElementById(id).addEventListener('click', function(e) {
             if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
         });

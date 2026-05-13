@@ -370,7 +370,7 @@
 
         .delivery-copy {
             margin-top: 4px;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 400;
             line-height: 1.35;
         }
@@ -817,7 +817,7 @@
             </div>
         </section>
 
-        <section class="section" id="price-section" style="display:none;">
+        <section class="section" id="price-section">
             <h2 class="section-title">Условия продажи</h2>
             <div class="field-row dark">
                 <input class="field" id="price-input" inputmode="numeric" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
@@ -1152,10 +1152,8 @@
             let price = sessionStorage.getItem('mainPrice') || '';
             const descPrice = (sessionStorage.getItem('adDesc') || '').match(/Цена:\s*([0-9\s]+) ₽/);
             if (!price && descPrice) price = descPrice[1].replace(/\s/g, '');
-            if (price) {
-                document.getElementById('price-section').style.display = 'block';
-                document.getElementById('price-input').value = price + ' ₽';
-            }
+            document.getElementById('price-section').style.display = 'block';
+            document.getElementById('price-input').value = price ? price + ' ₽' : '0 ₽';
             document.getElementById('price-input').addEventListener('input', function () {
                 const digits = this.value.replace(/\D/g, '');
                 this.value = digits ? digits + ' ₽' : '';

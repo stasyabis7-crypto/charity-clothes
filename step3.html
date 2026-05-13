@@ -245,7 +245,7 @@
             const hasText = input.value.trim().length > 0;
             eraseBtn.style.display = hasText ? 'flex' : 'none';
             bottomBar.style.display = hasText ? 'block' : 'none';
-            renderChips(hasText ? [] : getSuggestions(input.value));
+            renderChips(getSuggestions(input.value));
         }
 
         function clearInput() {
