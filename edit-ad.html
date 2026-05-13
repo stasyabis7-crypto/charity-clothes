@@ -874,7 +874,7 @@
         <section class="section">
             <h2 class="section-title">Авито Доставка</h2>
             <p class="delivery-copy">Выберите, как покупатели смогут заказать ваши товары. Это бесплатно и безопасно: вам не нужно платить за отправку.</p>
-            <div class="toggle-row">
+            <div class="toggle-row" style="justify-content:space-between;">
                 <div class="toggle-static"></div>
                 <div>
                     <div class="toggle-title">В постамат</div>
@@ -906,6 +906,17 @@
                 <div class="radio-row"><span class="radio active"></span><span>Звонки и сообщения</span></div>
                 <div class="radio-row"><span class="radio"></span><span>Только звонки</span></div>
                 <div class="radio-row"><span class="radio"></span><span>Только сообщения</span></div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-bottom:24px;">
+            <h2 class="section-title">Автопубликация</h2>
+            <div class="toggle-row">
+                <div>
+                    <div class="toggle-title">Опубликовать заново, когда закончится срок размещения</div>
+                    <div class="toggle-sub">Подробнее</div>
+                </div>
+                <div class="toggle-static"></div>
             </div>
         </section>
     </main>
@@ -977,6 +988,7 @@
         let selectedCollection = 0;
         let activeNeedId = null;
         let draftSelections = {};
+        let selectionNames = {};
         let manualDesc = false;
 
         const COLLECTIONS = {
@@ -1278,6 +1290,48 @@
             return COLLECTIONS[currentCollection].needs.find(n => n.id === needId);
         }
 
+        function itemIdFromName(name) {
+            return String(name || '').toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-').replace(/^-|-$/g, '');
+        }
+
+        function normalizeSavedNeedId(collectionId, id) {
+            if (collectionId === 'family') {
+                if (id === 'adult-clothes' || id === 'kids-clothes') return id === 'adult-clothes' ? 'clothes' : 'kids';
+            }
+            return id;
+        }
+
+        function seedSelectionsFromSavedCategories() {
+            const currentSelections = loadSelections();
+            if (Object.keys(currentSelections).length) return;
+            const saved = JSON.parse(sessionStorage.getItem('adSelectedCats') || sessionStorage.getItem('adCategories') || '[]');
+            const seeded = {};
+            saved.forEach(cat => {
+                const needId = normalizeSavedNeedId(currentCollection, cat.id);
+                const need = getNeed(needId);
+                if (!need) return;
+                const group = {};
+                const names = {};
+                const sourceItems = Array.isArray(cat.items) && cat.items.length
+                    ? cat.items
+                    : String(cat.comment || '').split('\n').map(line => {
+                        const match = line.trim().match(/^(.*?)\s*[—-]\s*(\d+)\s*шт\.?$/);
+                        return match ? { name: match[1].trim(), quantity: Number(match[2]) } : { name: line.trim(), quantity: 1 };
+                    }).filter(item => item.name);
+                sourceItems.forEach(item => {
+                    const known = need.items.find(i => i.id === item.id || i.name === item.name);
+                    const id = known ? known.id : (item.id || itemIdFromName(item.name));
+                    group[id] = item.quantity || 1;
+                    names[id] = known ? known.name : item.name;
+                });
+                if (Object.keys(group).length) {
+                    seeded[needId] = group;
+                    selectionNames[needId] = names;
+                }
+            });
+            if (Object.keys(seeded).length) saveSelections(seeded);
+        }
+
         function renderCollection() {
             const data = COLLECTIONS[currentCollection];
             document.getElementById('collection-title').textContent = data.title;
@@ -1318,11 +1372,12 @@
             tags.innerHTML = '';
             Object.keys(selectedItems).forEach(itemId => {
                 const item = need.items.find(i => i.id === itemId);
-                if (!item) return;
+                const name = item ? item.name : selectionNames[needId]?.[itemId];
+                if (!name) return;
                 const qty = selectedItems[itemId];
                 const tag = document.createElement('span');
                 tag.className = 'tag';
-                tag.innerHTML = `${item.name}${need.countable ? `, ${qty} шт.` : ''}<button onclick="removeNeedItem('${needId}','${itemId}')"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>`;
+                tag.innerHTML = `${name}${need.countable ? `, ${qty} шт.` : ''}<button onclick="removeNeedItem('${needId}','${itemId}')"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>`;
                 tags.appendChild(tag);
             });
         }
@@ -1333,6 +1388,7 @@
                 delete selections[needId][itemId];
                 if (Object.keys(selections[needId]).length === 0) delete selections[needId];
             }
+            if (selectionNames[needId]) delete selectionNames[needId][itemId];
             saveSelections(selections);
             manualDesc = false;
             renderNeeds();
@@ -1419,8 +1475,9 @@
                 const group = selections[need.id] || {};
                 Object.keys(group).forEach(itemId => {
                     const item = need.items.find(i => i.id === itemId);
-                    if (!item) return;
-                    lines.push(need.countable ? `${item.name} — ${group[itemId]} шт.` : item.name);
+                    const name = item ? item.name : selectionNames[need.id]?.[itemId];
+                    if (!name) return;
+                    lines.push(need.countable ? `${name} — ${group[itemId]} шт.` : name);
                 });
             });
             return lines;
@@ -1487,7 +1544,8 @@
                     image: currentCollection === 'crisis' ? 'crisis help/cat 1.png' : 'crisis help/cat 3.png',
                     comment: ids.map(id => {
                         const item = need.items.find(i => i.id === id);
-                        return item ? (need.countable ? `${item.name} — ${group[id]} шт.` : item.name) : '';
+                        const name = item ? item.name : selectionNames[need.id]?.[id];
+                        return name ? (need.countable ? `${name} — ${group[id]} шт.` : name) : '';
                     }).filter(Boolean).join('\n')
                 });
             });
@@ -1536,6 +1594,7 @@
         renderPhotos();
         setupMainFields();
         renderCollection();
+        seedSelectionsFromSavedCategories();
         renderNeeds();
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);

@@ -105,6 +105,7 @@
         .charity-location-section { order: 80; }
         .charity-delivery-section { order: 90; }
         .charity-contacts-section { order: 100; }
+        .charity-autopub-section { order: 110; }
         .charity-layout .form-footer { order: 120; }
         .charity-layout .legal-text { order: 130; }
         .charity-layout .form-inner > div[style*="height:60px"] { order: 140; }
@@ -706,7 +707,7 @@
             </div>
 
             <!-- FOOTER -->
-            <div class="form-section">
+            <div class="form-section charity-autopub-section">
                 <div class="section-title">Автопубликация</div>
                 <div style="height:18px"></div>
                 <div class="autopub-row">
@@ -952,11 +953,16 @@
             .filter(c => Object.keys((catState[c.id] && catState[c.id].items) || {}).length > 0)
             .map(c => {
                 const s = catState[c.id];
-                const selectedItems = needItems(c).filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id));
+                const knownItems = needItems(c);
+                const selectedItems = knownItems.filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id));
+                const unknownItems = Object.keys(s.items || {})
+                    .filter(id => !knownItems.some(item => item.id === id))
+                    .map(id => ({ id, name: (s.itemNames && s.itemNames[id]) || id, needed: null }));
+                const allSelectedItems = selectedItems.concat(unknownItems);
                 const quantity = isCountable(c)
-                    ? selectedItems.reduce((sum, item) => sum + Number(s.items[item.id] || 0), 0)
-                    : selectedItems.length;
-                const comment = selectedItems.map(item => isCountable(c) ? `${item.name} — ${s.items[item.id]} шт.` : item.name).join('\n');
+                    ? allSelectedItems.reduce((sum, item) => sum + Number(s.items[item.id] || 0), 0)
+                    : allSelectedItems.length;
+                const comment = allSelectedItems.map(item => isCountable(c) ? `${item.name} — ${s.items[item.id]} шт.` : item.name).join('\n');
                 return {
                     id: c.id,
                     name: c.name,
@@ -964,9 +970,17 @@
                     quantity,
                     countable: isCountable(c),
                     comment,
-                    items: selectedItems.map(item => ({ id: item.id, name: item.name, quantity: s.items[item.id] || 1 }))
+                    items: allSelectedItems.map(item => ({ id: item.id, name: item.name, quantity: s.items[item.id] || 1 }))
                 };
             });
+    }
+
+    function normalizeSavedCategoryId(collectionId, id) {
+        if (collectionId === 'family') {
+            if (id === 'clothes') return 'adult-clothes';
+            if (id === 'kids') return 'kids-clothes';
+        }
+        return id;
     }
 
     function getSavedCategories() {
@@ -1135,7 +1149,8 @@
 
     function renderNeedTags(cat, s) {
         const selected = s.items || {};
-        return needItems(cat).filter(item => Object.prototype.hasOwnProperty.call(selected, item.id)).map(item => {
+        const knownItems = needItems(cat);
+        const knownTags = knownItems.filter(item => Object.prototype.hasOwnProperty.call(selected, item.id)).map(item => {
             const qty = selected[item.id] || 1;
             return `
                 <span class="need-tag">
@@ -1145,7 +1160,22 @@
                     </button>
                 </span>
             `;
-        }).join('');
+        });
+        const unknownTags = Object.keys(selected)
+            .filter(id => !knownItems.some(item => item.id === id))
+            .map(id => {
+                const name = (s.itemNames && s.itemNames[id]) || id;
+                const qty = selected[id] || 1;
+                return `
+                    <span class="need-tag">
+                        ${name}${isCountable(cat) ? `, ${qty} шт.` : ''}
+                        <button onclick="removeNeedItem('${cat.id}', '${id}', event)">
+                            <img src="sheets materials/CloseButton.svg" width="20" height="20" alt="">
+                        </button>
+                    </span>
+                `;
+            });
+        return knownTags.concat(unknownTags).join('');
     }
 
     function updateSubmitBtn() {
@@ -1240,6 +1270,7 @@
         const s = catState[catId];
         if (!s || !s.items) return;
         delete s.items[itemId];
+        if (s.itemNames) delete s.itemNames[itemId];
         s.selected = Object.keys(s.items).length > 0;
         descUserEdited = false;
         renderDonationList();
@@ -1268,9 +1299,16 @@
         coll.categories.forEach(cat => {
             const s = catState[cat.id];
             if (!s || !s.items || Object.keys(s.items).length === 0) return;
-            const selectedLines = needItems(cat)
+            const knownItems = needItems(cat);
+            const selectedLines = knownItems
                 .filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id))
                 .map(item => isCountable(cat) ? `${item.name} — ${s.items[item.id]} шт.` : item.name);
+            Object.keys(s.items)
+                .filter(id => !knownItems.some(item => item.id === id))
+                .forEach(id => {
+                    const name = (s.itemNames && s.itemNames[id]) || id;
+                    selectedLines.push(isCountable(cat) ? `${name} — ${s.items[id]} шт.` : name);
+                });
             if (selectedLines.length) lines.push(`${cat.name}\n${selectedLines.join('\n')}`);
         });
         const base = buildDescriptionBase();
@@ -1494,20 +1532,38 @@
         catState = {};
         savedCats.forEach(c => {
             if (!c.id) return;
-            const collCat = COLLECTIONS[currentCollection].categories.find(cat => cat.id === c.id);
+            const catId = normalizeSavedCategoryId(currentCollection, c.id);
+            const collCat = COLLECTIONS[currentCollection].categories.find(cat => cat.id === catId);
             const items = {};
+            const itemNames = {};
             if (Array.isArray(c.items)) {
-                c.items.forEach(item => { items[item.id || itemIdFromName(item.name)] = item.quantity || 1; });
+                c.items.forEach(item => {
+                    const id = item.id || itemIdFromName(item.name);
+                    items[id] = item.quantity || 1;
+                    if (item.name) itemNames[id] = item.name;
+                });
+            } else if (c.comment) {
+                c.comment.split('\n').map(line => line.trim()).filter(Boolean).forEach(line => {
+                    const match = line.match(/^(.*?)\s*[—-]\s*(\d+)\s*шт\.?$/);
+                    const name = match ? match[1].trim() : line;
+                    const id = itemIdFromName(name);
+                    items[id] = match ? Number(match[2]) : 1;
+                    itemNames[id] = name;
+                });
             } else if (collCat) {
                 const first = needItems(collCat)[0];
-                if (first) items[first.id] = c.quantity || 1;
+                if (first) {
+                    items[first.id] = c.quantity || 1;
+                    itemNames[first.id] = first.name;
+                }
             }
-            catState[c.id] = {
+            catState[catId] = {
                 selected: Object.keys(items).length > 0,
                 quantity: c.quantity || 1,
                 comment: c.comment || '',
                 dropdownOpen: false,
                 items,
+                itemNames,
                 selectOpen: false
             };
         });
