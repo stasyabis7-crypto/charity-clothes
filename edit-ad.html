@@ -570,24 +570,36 @@
         .sheet-tabs {
             margin-top: 18px;
             display: flex;
-            padding: 3px;
-            border-radius: 14px;
-            background: #F4F4F4;
+            border-bottom: 1px solid #EBEBEB;
+            margin-bottom: 4px;
         }
 
         .sheet-tab {
-            flex: 1;
-            border: none;
-            border-radius: 12px;
-            background: transparent;
-            padding: 10px;
+            padding: 0 0 10px;
+            margin-right: 24px;
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            color: #000;
+            font-size: 18px;
+            font-weight: 700;
+            color: #9E9E9E;
+            background: none;
+            border: none;
             cursor: pointer;
+            position: relative;
+            white-space: nowrap;
         }
 
-        .sheet-tab.active { background: #fff; }
+        .sheet-tab.active { color: #1A1A1A; }
+
+        .sheet-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1A1A1A;
+            border-radius: 2px 2px 0 0;
+        }
 
         .sheet-pane { margin-top: 20px; }
 
