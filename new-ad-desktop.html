@@ -98,6 +98,8 @@
         .charity-layout .charity-banner-section { order: 20; padding-top: 24px; }
         .charity-photos-section { order: 25; }
         .charity-category-section { order: 50; }
+        .charity-condition-section { order: 52; }
+        .charity-type-section { order: 54; }
         .charity-price-section { order: 55; }
         .charity-collection-section { order: 60; }
         .charity-needs-section { order: 70; }
@@ -587,6 +589,28 @@
                 <div class="section-sub">Выбирается автоматически для передачи вещей на благотворительность</div>
                 <div class="collection-field">
                     <span>Добрые вещи</span>
+                    <svg class="select-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="form-section charity-condition-section" id="charityConditionSection" style="display:none">
+                <div class="section-title">Состояние</div>
+                <div style="height:14px"></div>
+                <div class="collection-field">
+                    <span id="charityConditionValue">Хорошее</span>
+                    <svg class="select-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="form-section charity-type-section" id="charityTypeSection" style="display:none">
+                <div class="section-title">Тип объявления</div>
+                <div style="height:14px"></div>
+                <div class="collection-field">
+                    <span id="charityTypeValue">Продаю своё</span>
                     <svg class="select-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none">
                         <path d="M4 6L8 10L12 6" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -1160,6 +1184,24 @@
         formInner.classList.add('charity-layout');
     }
 
+    function optionLabel(options, id, fallbackId) {
+        const option = options.find(o => o.id === id) || options.find(o => o.id === fallbackId) || options[0];
+        return option ? option.label : '';
+    }
+
+    function updateCharityInheritedFields(showFields) {
+        const conditionSection = document.getElementById('charityConditionSection');
+        const typeSection = document.getElementById('charityTypeSection');
+        const conditionValue = document.getElementById('charityConditionValue');
+        const typeValue = document.getElementById('charityTypeValue');
+        if (!conditionSection || !typeSection || !conditionValue || !typeValue) return;
+
+        conditionValue.textContent = optionLabel(REGULAR_CONDITIONS, sessionStorage.getItem('mainCondition') || regularCondition, 'good');
+        typeValue.textContent = optionLabel(REGULAR_AD_TYPES, sessionStorage.getItem('mainAdType') || regularAdType, 'own');
+        conditionSection.style.display = showFields ? '' : 'none';
+        typeSection.style.display = showFields ? '' : 'none';
+    }
+
     function selectCat(el, id, label) {
         selectedCatId = id;
         selectedCatLabel = label;
@@ -1168,6 +1210,7 @@
         document.getElementById('catSelectValue').textContent = label;
         if (id === 'charity') {
             activateCharityLayout();
+            updateCharityInheritedFields(false);
             renderCollection();
         } else {
             breadcrumbs.textContent = 'Личные вещи › Одежда, обувь, аксессуары › ' + label;
@@ -1302,9 +1345,12 @@
     function switchToCharityFlow() {
         descUserEdited = true;
         sessionStorage.setItem('adDesc', buildRegularDescription());
+        sessionStorage.setItem('mainCondition', regularCondition);
+        sessionStorage.setItem('mainAdType', regularAdType);
         selectedCatId = 'charity';
         selectedCatLabel = 'Добрые вещи';
         activateCharityLayout();
+        updateCharityInheritedFields(true);
         if (regularPriceDigits && charityPriceInput) {
             charityPriceInput.value = regularPriceDigits + ' ₽';
         }
