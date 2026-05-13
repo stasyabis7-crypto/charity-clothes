@@ -87,13 +87,14 @@
         /* ═══════════════ FORM LAYOUT ═══════════════ */
         .form-outer { max-width: 1260px; margin: 0 auto; padding: 0 20px 80px; }
         .form-inner { max-width: 636px; display: flex; flex-direction: column; }
+        .form-inner.charity-layout { padding-top: 16px; }
         .form-section { padding-top: 56px; }
         .charity-layout .form-section { padding-top: 56px; }
         .charity-layout #extraSections { display: contents !important; }
         .charity-layout #titleSection { order: 30; padding-top: 56px !important; }
         .charity-layout #sectionCats { display: none !important; }
         .charity-intro-section { order: 10; padding-top: 0; }
-        .charity-banner-section { order: 20; }
+        .charity-layout .charity-banner-section { order: 20; padding-top: 24px; }
         .charity-photos-section { order: 25; }
         .charity-category-section { order: 40; }
         .charity-price-section { order: 45; }
@@ -179,11 +180,13 @@
 
         .edit-summary { display: none; }
         .collection-field {
+            position: relative;
             width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
-            padding: 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
+            padding: 14px 44px 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
             font-weight: 400; color: #9E9E9E; display: flex; align-items: center;
             justify-content: space-between;
         }
+        .collection-field .select-chevron { right: 16px; }
         .selected-cat-summary { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
         .selected-cat-row { display: flex; align-items: center; gap: 12px; }
         .selected-cat-img { width: 48px; height: 48px; border-radius: 14px; object-fit: cover; flex-shrink: 0; background: #F4F4F4; }
