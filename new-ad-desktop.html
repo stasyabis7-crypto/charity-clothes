@@ -1253,7 +1253,8 @@
     }
 
     function buildRegularDescription() {
-        const condition = REGULAR_CONDITIONS.find(o => o.id === regularCondition)?.label;
+        const conditionOption = REGULAR_CONDITIONS.find(o => o.id === regularCondition);
+        const condition = conditionOption ? conditionOption.label : '';
         const specs = REGULAR_SPECS[selectedCatId] || REGULAR_SPECS.tshirts;
         const descText = regularDescTextarea ? regularDescTextarea.value.trim() : '';
         const parts = [];
@@ -1279,7 +1280,7 @@
 
     function buildDescriptionBase() {
         const savedDesc = sessionStorage.getItem('adDesc') || '';
-        const base = stripGeneratedDescription(descTextarea?.value || savedDesc);
+        const base = stripGeneratedDescription((descTextarea && descTextarea.value) || savedDesc);
         return base || sessionStorage.getItem('mainDesc') || '';
     }
 
@@ -1497,7 +1498,7 @@
         }
         btn.textContent = 'Разместить объявление';
         const coll = COLLECTIONS[currentCollection];
-        const anySelected = coll.categories.some(c => Object.keys(catState[c.id]?.items || {}).length > 0);
+        const anySelected = coll.categories.some(c => Object.keys((catState[c.id] && catState[c.id].items) || {}).length > 0);
         btn.disabled = !anySelected;
     }
 
@@ -1543,7 +1544,7 @@
     function buildSelectedCats() {
         const coll = COLLECTIONS[currentCollection];
         return coll.categories
-            .filter(c => Object.keys(catState[c.id]?.items || {}).length > 0)
+            .filter(c => Object.keys((catState[c.id] && catState[c.id].items) || {}).length > 0)
             .map(c => {
                 const s = catState[c.id];
                 const selectedItems = needItems(c).filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id));
@@ -1777,7 +1778,7 @@
         }
         sessionStorage.setItem('adFlow', 'charity');
         sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
-        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput?.value));
+        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput ? charityPriceInput.value : ''));
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', normalizeDescriptionText(descTextarea ? descTextarea.value : ''));
@@ -1821,7 +1822,7 @@
         }
         sessionStorage.setItem('adFlow', 'charity');
         sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
-        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput?.value));
+        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput ? charityPriceInput.value : ''));
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title || 'Без названия');
         sessionStorage.setItem('adDesc', normalizeDescriptionText(descTextarea ? descTextarea.value : ''));

@@ -943,7 +943,7 @@
     function selectedCatsFromState() {
         const coll = COLLECTIONS[currentCollection];
         return coll.categories
-            .filter(c => Object.keys(catState[c.id]?.items || {}).length > 0)
+            .filter(c => Object.keys((catState[c.id] && catState[c.id].items) || {}).length > 0)
             .map(c => {
                 const s = catState[c.id];
                 const selectedItems = needItems(c).filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id));
@@ -1146,7 +1146,7 @@
         const btn = document.getElementById('submitBtn');
         if (!btn) return;
         const coll = COLLECTIONS[currentCollection];
-        const anySelected = coll.categories.some(c => Object.keys(catState[c.id]?.items || {}).length > 0);
+        const anySelected = coll.categories.some(c => Object.keys((catState[c.id] && catState[c.id].items) || {}).length > 0);
         btn.disabled = !anySelected;
     }
 
@@ -1245,7 +1245,7 @@
         if (!e.target.closest('.need-select-wrap')) {
             let changed = false;
             Object.keys(catState).forEach(key => {
-                if (catState[key]?.selectOpen) {
+                if (catState[key] && catState[key].selectOpen) {
                     catState[key].selectOpen = false;
                     changed = true;
                 }
@@ -1289,7 +1289,7 @@
 
     function buildDescriptionBase() {
         const savedDesc = sessionStorage.getItem('adDesc') || '';
-        return stripGeneratedDescription(descTextarea?.value || savedDesc);
+        return stripGeneratedDescription((descTextarea && descTextarea.value) || savedDesc);
     }
 
     /* ═══════════ HOW POPUP ═══════════ */
@@ -1442,7 +1442,7 @@
     function persistEditedAd(title) {
         sessionStorage.setItem('adFlow', 'charity');
         sessionStorage.setItem('adCategoryLabel', 'Добрые вещи');
-        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput?.value));
+        sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput ? charityPriceInput.value : ''));
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
         sessionStorage.setItem('adDesc', normalizeDescriptionText(descTextarea ? descTextarea.value : ''));
