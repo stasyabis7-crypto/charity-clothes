@@ -286,13 +286,10 @@
             const condId = sessionStorage.getItem('mainCondition') || '';
             const descText = sessionStorage.getItem('mainDesc') || '';
             const specs = SPECS_DATA[cat];
-            const priceStr = digits ? digits + ' ₽' : '';
-
             const parts = [];
             if (condId && CONDITION_NAMES[condId]) parts.push('Состояние: ' + CONDITION_NAMES[condId]);
             if (specs) parts.push(`Тип: ${specs.type}, Цвет: ${specs.color}, Для кого: ${specs.forWhom}, Бренд: ${specs.brand}`);
             if (descText) parts.push(descText);
-            if (priceStr) parts.push('Цена: ' + priceStr);
             return parts.join('\n\n');
         }
 

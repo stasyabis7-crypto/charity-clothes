@@ -87,13 +87,14 @@
         /* ═══════════════ FORM LAYOUT ═══════════════ */
         .form-outer { max-width: 1260px; margin: 0 auto; padding: 0 20px 80px; }
         .form-inner { max-width: 636px; display: flex; flex-direction: column; }
-        .form-inner.charity-layout { padding-top: 16px; }
+        .form-inner.charity-layout { padding-top: 0; }
         .form-section { padding-top: 56px; }
         .charity-layout .form-section { padding-top: 56px; }
         .charity-layout #extraSections { display: contents !important; }
         .charity-layout #titleSection { order: 30; padding-top: 56px !important; }
         .charity-layout #sectionCats { display: none !important; }
         .charity-intro-section { order: 10; padding-top: 0; }
+        .charity-layout .charity-intro-section { padding-top: 0 !important; }
         .charity-layout .charity-banner-section { order: 20; padding-top: 24px; }
         .charity-photos-section { order: 25; }
         .charity-category-section { order: 50; }
@@ -1272,18 +1273,21 @@
         if (condition) parts.push('Состояние: ' + condition);
         parts.push(specs.map(s => `${s.label}: ${s.value}`).join(', '));
         if (descText) parts.push(descText);
-        if (regularPriceDigits) parts.push('Цена: ' + regularPriceDigits + ' ₽');
         return parts.join('\n\n');
     }
 
     function stripGeneratedDescription(text) {
-        return (text || '').split(/\n+\s*Готовы передать:\n/)[0].trim();
+        return cleanDescriptionBase((text || '').split(/\n+\s*Готовы передать:\n/)[0]);
+    }
+
+    function cleanDescriptionBase(text) {
+        return (text || '').split('\n').filter(line => !/^\s*Цена:\s*/.test(line)).join('\n').trim();
     }
 
     function normalizeDescriptionText(text) {
         const parts = (text || '').split(/\n+\s*Готовы передать:\n/);
-        if (parts.length <= 1) return (text || '').trim();
-        const base = parts[0].trim();
+        if (parts.length <= 1) return cleanDescriptionBase(text);
+        const base = cleanDescriptionBase(parts[0]);
         const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
         const uniqueLines = [...new Set(generatedLines)];
         return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
@@ -1312,7 +1316,7 @@
             descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px';
             descUserEdited = true;
         }
-        document.getElementById('extraSections').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
     /* ═══════════ COLLECTION RENDER ═══════════ */

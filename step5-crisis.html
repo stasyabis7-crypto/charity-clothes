@@ -1417,13 +1417,17 @@
         }
 
         function stripGeneratedDescription(text) {
-            return (text || '').split(/\n+\s*Готовы передать:\n/)[0].trim();
+            return cleanDescriptionBase((text || '').split(/\n+\s*Готовы передать:\n/)[0]);
+        }
+
+        function cleanDescriptionBase(text) {
+            return (text || '').split('\n').filter(line => !/^\s*Цена:\s*/.test(line)).join('\n').trim();
         }
 
         function normalizeDescriptionText(text) {
             const parts = (text || '').split(/\n+\s*Готовы передать:\n/);
-            if (parts.length <= 1) return (text || '').trim();
-            const base = parts[0].trim();
+            if (parts.length <= 1) return cleanDescriptionBase(text);
+            const base = cleanDescriptionBase(parts[0]);
             const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
             const uniqueLines = [...new Set(generatedLines)];
             return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
@@ -1437,9 +1441,6 @@
             if (condition && CONDITION_NAMES[condition] && !base.includes('Состояние:')) parts.push('Состояние: ' + CONDITION_NAMES[condition]);
             const adtype = sessionStorage.getItem('mainAdType');
             if (adtype && ADTYPE_NAMES[adtype] && !base.includes('Тип объявления:')) parts.push('Тип объявления: ' + ADTYPE_NAMES[adtype]);
-            const priceInput = document.getElementById('price-input');
-            const priceDigits = (sessionStorage.getItem('mainPrice') || priceInput?.value || '').replace(/\D/g, '');
-            if (priceDigits && !base.includes('Цена:')) parts.push('Цена: ' + priceDigits + ' ₽');
             return parts.join('\n\n');
         }
 
