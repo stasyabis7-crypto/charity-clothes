@@ -91,18 +91,23 @@
         .form-section { padding-top: 56px; }
         .charity-layout .form-section { padding-top: 56px; }
         .charity-layout #extraSections { display: contents !important; }
-        .charity-layout #titleSection { order: 30; padding-top: 56px !important; }
         .charity-layout #sectionCats { display: none !important; }
         .charity-intro-section { order: 10; padding-top: 0; }
         .charity-layout .charity-intro-section { padding-top: 0 !important; }
         .charity-layout .charity-banner-section { order: 20; padding-top: 24px; }
-        .charity-photos-section { order: 25; }
-        .charity-category-section { order: 50; }
-        .charity-condition-section { order: 52; }
-        .charity-type-section { order: 54; }
-        .charity-price-section { order: 55; }
-        .charity-collection-section { order: 60; }
-        .charity-needs-section { order: 70; }
+        .charity-collection-section { order: 25; }
+        .charity-suggested-section { order: 30; }
+        .charity-urgent-section { order: 35; }
+        .charity-more-section { order: 40; }
+        .charity-data-section { order: 45; }
+        .charity-photos-section { order: 50; }
+        .charity-layout #titleSection { order: 55; padding-top: 56px !important; }
+        .charity-category-section { order: 60; }
+        .charity-condition-section { order: 62; }
+        .charity-type-section { order: 64; }
+        .charity-specs-section { order: 66; }
+        .charity-price-section { order: 68; }
+        .charity-needs-section { order: 70; display: none; }
         .charity-description-section { order: 80; }
         .charity-location-section { order: 90; }
         .charity-delivery-section { order: 100; }
@@ -163,12 +168,27 @@
         .charity-intro-sub { margin-top: 6px; font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.4; }
         .collection-card {
             background: #F4F4F4; border-radius: 24px; padding: 12px 16px 16px 12px;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: flex-start; gap: 10px;
         }
         .collection-card-img { width: 76px; height: 76px; border-radius: 18px; object-fit: cover; flex-shrink: 0; background: #fff; }
         .collection-card-title { font-size: 16px; font-weight: 800; color: #1A1A1A; line-height: 1.25; }
         .collection-card-subtitle { margin-top: 2px; font-size: 13px; font-weight: 400; color: #1A1A1A; line-height: 1.3; }
         .collection-card + .change-btn { margin-top: 6px; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; width: auto; }
+        .crisis-section-title { font-size: 21px; font-weight: 800; color: #1A1A1A; line-height: 1.25; }
+        .crisis-list { margin-top: 12px; display: flex; flex-direction: column; gap: 12px; }
+        .crisis-card {
+            width: 100%; border: none; background: #F4F4F4; border-radius: 16px;
+            padding: 14px 14px 14px 16px; display: flex; align-items: flex-start; gap: 12px;
+            text-align: left; font-family: 'Inter', sans-serif; color: #1A1A1A; cursor: pointer;
+        }
+        .crisis-card-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: #fff; }
+        .crisis-card-body { flex: 1; min-width: 0; }
+        .crisis-card-title { display: block; font-size: 16px; font-weight: 800; line-height: 1.25; }
+        .crisis-card-sub { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.3; }
+        .crisis-card-side { display: flex; align-items: center; gap: 6px; flex-shrink: 0; align-self: flex-start; padding-top: 2px; }
+        .crisis-count { width: 24px; height: 24px; border-radius: 50%; background: #111; color: #fff; font-size: 13px; font-weight: 400; line-height: 24px; text-align: center; display: none; }
+        .crisis-card.selected .crisis-count { display: block; }
+        .crisis-arrow { width: 16px; height: 20px; object-fit: contain; }
         .collection-field {
             position: relative;
             width: 100%; background: #F4F4F4; border: none; border-radius: 12px;
@@ -187,7 +207,7 @@
         /* Info banner */
         .info-banner {
             background: linear-gradient(90deg, #D7F1FF 0%, #E4F8FF 100%); border-radius: 20px;
-            display: flex; align-items: stretch; gap: 0; overflow: hidden;
+            display: flex; align-items: flex-start; gap: 0; overflow: hidden;
             margin-bottom: 28px; position: relative; cursor: pointer;
         }
         .banner-illu-wrap { width: 88px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; padding: 12px 12px 12px 16px; }
@@ -554,7 +574,7 @@
 
             <div class="form-section charity-intro-section">
                 <div class="charity-intro-title">Добрые вещи ❤️</div>
-                <div class="charity-intro-sub">Продолжим с уже заполненными данными объявления</div>
+                <div class="charity-intro-sub">Похоже, ваши вещи подходят<br>для помощи людям при ЧС.</div>
             </div>
 
             <div class="form-section charity-banner-section">
@@ -564,10 +584,45 @@
                     </div>
                     <div class="banner-content">
                         <div class="banner-title">Как это работает</div>
-                        <div class="banner-desc">Кто заберёт вещи и что делать после размещения объявления</div>
+                        <div class="banner-desc">Кто увидит объявление<br>и как передать вещи<br>на благотворительность</div>
                         <span class="banner-link">Узнать подробнее</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- COLLECTION -->
+            <div class="form-section charity-collection-section">
+                <div class="crisis-section-title">Кому могут подойти ваши вещи</div>
+                <div style="height:14px"></div>
+                <div class="collection-card">
+                    <img src="sbor 2 new.png" class="collection-card-img" id="collectionImage" alt="">
+                    <div>
+                        <div class="collection-card-title" id="collectionTitle">Пострадавшим от ЧС в Дагестане</div>
+                        <div class="collection-card-subtitle" id="collectionSubtitle">Нужны вещи для быта, гигиены, восстановления домов и помощи детям</div>
+                    </div>
+                </div>
+                <button class="change-btn" onclick="openChangeCollection()">Помочь в другой ситуации</button>
+            </div>
+
+            <div class="form-section charity-suggested-section" id="desktopSuggestedSection">
+                <div class="crisis-section-title">Может подойти<br>из вашего объявления</div>
+                <div class="section-sub">Отметьте вещи из списка. Если мы ошиблись, выберите другие подходящие вещи ниже.</div>
+                <div class="crisis-list" id="desktopSuggestedList"></div>
+            </div>
+
+            <div class="form-section charity-urgent-section">
+                <div class="crisis-section-title">Срочно нужны сейчас</div>
+                <div class="crisis-list" id="desktopUrgentList"></div>
+            </div>
+
+            <div class="form-section charity-more-section">
+                <div class="crisis-section-title">Еще можно передать</div>
+                <div class="crisis-list" id="desktopMoreList"></div>
+            </div>
+
+            <div class="form-section charity-data-section">
+                <div class="crisis-section-title">Данные объявления</div>
+                <div class="section-sub">Проверьте их перед публикацией</div>
             </div>
 
             <!-- PHOTOS -->
@@ -582,6 +637,12 @@
                         </svg>
                     </div>
                 </div>
+            </div>
+
+            <div class="form-section charity-needs-section">
+                <div class="section-title">Что сейчас нужно</div>
+                <div class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</div>
+                <div class="list-items" id="donationList"></div>
             </div>
 
             <div class="form-section charity-category-section">
@@ -617,6 +678,12 @@
                 </div>
             </div>
 
+            <div class="form-section charity-specs-section" id="charitySpecsSection" style="display:none">
+                <div class="section-title">Характеристики</div>
+                <div style="height:14px"></div>
+                <div class="spec-list" id="charitySpecs"></div>
+            </div>
+
             <div class="form-section charity-price-section">
                 <div class="section-title">Условия продажи</div>
                 <div style="height:14px"></div>
@@ -628,26 +695,6 @@
                         </svg>
                     </button>
                 </div>
-            </div>
-
-            <!-- COLLECTION -->
-            <div class="form-section charity-collection-section">
-                <div class="section-title">Кому могут подойти ваши вещи</div>
-                <div style="height:14px"></div>
-                <div class="collection-card">
-                    <img src="sbor 1 new.png" class="collection-card-img" id="collectionImage" alt="">
-                    <div>
-                        <div class="collection-card-title" id="collectionTitle">Для семей с детьми</div>
-                        <div class="collection-card-subtitle" id="collectionSubtitle">Собираем вещи на помощь многодетным семьям</div>
-                    </div>
-                </div>
-                <button class="change-btn" onclick="openChangeCollection()">Поменять сбор вещей</button>
-            </div>
-
-            <div class="form-section charity-needs-section">
-                <div class="section-title">Что сейчас нужно</div>
-                <div class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</div>
-                <div class="list-items" id="donationList"></div>
             </div>
 
             <!-- DESCRIPTION -->
@@ -979,11 +1026,26 @@
             ]
         },
         crisis: {
-            id: 'crisis', title: 'Помощь Дагестану', subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+            id: 'crisis', title: 'Пострадавшим от ЧС в Дагестане', subtitle: 'Нужны вещи для быта, гигиены, восстановления домов и помощи детям',
             categories: [
-                { id: 'clothes', name: 'Одежда и обувь', subtitle: 'Осталось собрать 26 вещей', remaining: 26, image: 'crisis help/cat 1.png', what: ['Теплая одежда для взрослых', 'Теплая одежда для детей', 'Дождевики', 'Резиновые сапоги'] },
-                { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 26 вещей', remaining: 26, image: 'crisis help/cat 3.png', what: ['Постельное белье', 'Одеяла и пледы', 'Полотенца', 'Посуда'] },
-                { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Нужны всегда в неограниченном количестве', remaining: 10, image: 'crisis help/cat 2.png', countable: false, what: ['Зубная паста и щетки', 'Шампунь и гель для душа', 'Мыло', 'Влажные салфетки', 'Стиральный порошок'] }
+                { id: 'clothes', name: 'Одежда и обувь', cardSub: 'Похоже, такие вещи есть в объявлении', image: 'crisis help new categories/Одежда и обувь.png',
+                  what: ['Тёплая или демисезонная одежда и обувь. Чистые, без сильного износа', 'Повседневная одежда и обувь. Чистые, в хорошем состоянии', 'Новое нижнее бельё. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
+                { id: 'water', name: 'Откачка воды и осушение', cardSub: 'Для домов и помещений после подтопления', image: 'crisis help new categories/Откачка воды и осушение.png',
+                  what: ['Помпа для откачки воды. Рабочая, без повреждений', 'Пушка для сушки помещений. Рабочая и исправная', 'Напорные пожарные рукава. Без повреждений и разрывов'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
+                { id: 'tools', name: 'Инструменты для расчистки', cardSub: 'Для уборки грязи, мусора и поврежденных конструкций', image: 'crisis help new categories/Инструменты для расчистки.png',
+                  what: ['Лопата штыковая. С целой ручкой, без сильной ржавчины', 'Лопата совковая. С целой ручкой, без сильной ржавчины', 'Бензиновая пила. Рабочая и исправная'], units: ['штук', 'штук', 'штук'], needed: [5, 3, 6] },
+                { id: 'protection', name: 'Защита и спецодежда', cardSub: 'Для жителей и волонтеров, которые работают на месте', image: 'crisis help new categories/Защита и спецодежда.png',
+                  what: ['Резиновые сапоги. Без трещин и повреждений', 'Спецодежда для волонтёров. Чистая, без повреждений', 'Защитная каска. Без трещин и повреждений'], units: ['пар', 'комплектов', 'штук'], needed: [20, 12, 6] },
+                { id: 'kids', name: 'Детские вещи', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/Детские вещи.png',
+                  what: ['Подгузники, пелёнки, присыпки, влажные салфетки. Только новые и закрытые.', 'Игрушки, книжки, тетради, карандаши или фломастеры. Чистые и целые'], units: ['любых товаров', 'любых товаров'], needed: [5, 8] },
+                { id: 'hygiene', name: 'Средства гигиены', cardSub: 'Для ежедневного ухода и первой необходимости', image: 'crisis help new categories/Средства гигиены.png',
+                  what: ['Зубные щётки. Только новые, в упаковке', 'Зубная паста. Новая, с нормальным сроком годности', 'Влажные салфетки. Только новые и закрытые'], units: ['штук', 'штук', 'упаковок'], needed: [5, 5, 30] },
+                { id: 'home', name: 'Домашняя утварь', cardSub: 'Для временного жилья и возвращения к быту', image: 'crisis help new categories/Домашняя утварь.png',
+                  what: ['Столовые приборы. Нож, вилка и ложка, без повреждений', 'Посуда. Глубокая тарелка и кружка, без сколов и трещин', 'Постельное бельё 1-спальное. Новое или в хорошем состоянии'], units: ['любых товаров', 'любых товаров', 'комплектов'], needed: [5, 5, 6] },
+                { id: 'appliances', name: 'Рабочая техника', cardSub: 'Для быта в пунктах помощи и временного жилья', image: 'crisis help new categories/Рабочая техника.png',
+                  what: ['Микроволновка. Рабочая, чистая внутри', 'Чайник. Рабочий, без протечек', 'Утюг. Рабочий, без повреждений'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
+                { id: 'care', name: 'Товары ухода', cardSub: 'Для людей, которым нужен постоянный уход', image: 'crisis help new categories/Товары ухода.png',
+                  what: ['Подгузники взрослые, большие размеры. Только новые, в закрытой упаковке'], units: ['штук'], needed: [5] }
             ]
         }
     };
@@ -1031,8 +1093,8 @@
         ]
     };
 
-    let currentCollection = 'family';
-    let selectedCollectionInPopup = 'family';
+    let currentCollection = 'crisis';
+    let selectedCollectionInPopup = 'crisis';
     let catState = {};
     let bannerDismissed = false;
     let descUserEdited = false;
@@ -1059,7 +1121,8 @@
         return cat.what.map((name, index) => ({
             id: itemIdFromName(name),
             name,
-            needed: countable ? (index === 0 ? Math.max(1, (cat.remaining || base) - base * (cat.what.length - 1)) : base) : null
+            needed: countable ? (Array.isArray(cat.needed) ? cat.needed[index] : (index === 0 ? Math.max(1, (cat.remaining || base) - base * (cat.what.length - 1)) : base)) : null,
+            unit: Array.isArray(cat.units) ? cat.units[index] : 'штук'
         }));
     }
 
@@ -1192,6 +1255,8 @@
     function updateCharityInheritedFields(showFields) {
         const conditionSection = document.getElementById('charityConditionSection');
         const typeSection = document.getElementById('charityTypeSection');
+        const specsSection = document.getElementById('charitySpecsSection');
+        const specsList = document.getElementById('charitySpecs');
         const conditionValue = document.getElementById('charityConditionValue');
         const typeValue = document.getElementById('charityTypeValue');
         if (!conditionSection || !typeSection || !conditionValue || !typeValue) return;
@@ -1200,6 +1265,16 @@
         typeValue.textContent = optionLabel(REGULAR_AD_TYPES, sessionStorage.getItem('mainAdType') || regularAdType, 'own');
         conditionSection.style.display = showFields ? '' : 'none';
         typeSection.style.display = showFields ? '' : 'none';
+        if (specsSection && specsList) {
+            const specs = REGULAR_SPECS[sessionStorage.getItem('mainCategory') || selectedCatId] || REGULAR_SPECS.tshirts;
+            specsSection.style.display = showFields ? '' : 'none';
+            specsList.innerHTML = specs.map(s => `
+                <div class="spec-field">
+                    <span class="spec-value">${s.label}</span>
+                    <span class="spec-value">${s.value}</span>
+                </div>
+            `).join('');
+        }
     }
 
     function selectCat(el, id, label) {
@@ -1209,6 +1284,8 @@
         document.getElementById('catSelectWrap').style.display = 'block';
         document.getElementById('catSelectValue').textContent = label;
         if (id === 'charity') {
+            currentCollection = 'crisis';
+            selectedCollectionInPopup = 'crisis';
             activateCharityLayout();
             updateCharityInheritedFields(false);
             renderCollection();
@@ -1320,11 +1397,16 @@
     }
 
     function stripGeneratedDescription(text) {
-        return cleanDescriptionBase((text || '').split(/\n+\s*Готовы передать:\n/)[0]);
+        return cleanDescriptionBase(text);
     }
 
     function cleanDescriptionBase(text) {
-        return (text || '').split('\n').filter(line => !/^\s*Цена:\s*/.test(line)).join('\n').trim();
+        return (text || '')
+            .replace(/\n*\s*Готовы передать:\n[\s\S]*$/m, '')
+            .split('\n')
+            .filter(line => !/^\s*Цена:\s*/.test(line))
+            .join('\n')
+            .trim();
     }
 
     function normalizeDescriptionText(text) {
@@ -1347,6 +1429,9 @@
         sessionStorage.setItem('adDesc', buildRegularDescription());
         sessionStorage.setItem('mainCondition', regularCondition);
         sessionStorage.setItem('mainAdType', regularAdType);
+        if (selectedCatId && selectedCatId !== 'charity') sessionStorage.setItem('mainCategory', selectedCatId);
+        currentCollection = 'crisis';
+        selectedCollectionInPopup = 'crisis';
         selectedCatId = 'charity';
         selectedCatLabel = 'Добрые вещи';
         activateCharityLayout();
@@ -1379,32 +1464,82 @@
         updateSubmitBtn();
     }
 
+    const PHOTO_TO_NEED = {
+        'coat.jpg': 'clothes',
+        'toothbrush.jpg': 'hygiene',
+        'bowls.jpg': 'home',
+        'pampers kids.jpg': 'kids',
+        'toys.jpg': 'kids',
+        'kids clothes.jpg': 'clothes',
+        'more kids clothes.jpg': 'clothes',
+        'more and more kind clothes.jpg': 'clothes',
+        'other kids clothes.jpg': 'clothes',
+        'kids shorts.jpg': 'clothes'
+    };
+
+    function photoFileName(src) {
+        return decodeURIComponent(String(src || '').split('/').pop() || '');
+    }
+
+    function detectedNeedIdsFromPhotos() {
+        const ids = [];
+        photoSelection.forEach(src => {
+            const needId = PHOTO_TO_NEED[photoFileName(src)];
+            if (needId && !ids.includes(needId)) ids.push(needId);
+        });
+        return ids;
+    }
+
+    function selectedCategoryQuantity(catId) {
+        const items = (catState[catId] && catState[catId].items) || {};
+        return Object.values(items).reduce((sum, value) => sum + Number(value || 0), 0);
+    }
+
+    function renderNeedCard(cat) {
+        if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
+        const qty = selectedCategoryQuantity(cat.id);
+        return `
+            <button class="crisis-card ${qty ? 'selected' : ''}" onclick="openNeedPopup('${cat.id}', event)">
+                <img class="crisis-card-img" src="${cat.image || 'sbor 2 new.png'}" alt="">
+                <span class="crisis-card-body">
+                    <span class="crisis-card-title">${cat.name}</span>
+                    <span class="crisis-card-sub">${cat.cardSub || cat.subtitle || ''}</span>
+                </span>
+                <span class="crisis-card-side">
+                    <span class="crisis-count">${qty}</span>
+                    <img class="crisis-arrow" src="Icon holder.png" alt="">
+                </span>
+            </button>
+        `;
+    }
+
+    function renderNeedCardList(targetId, categories) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        target.innerHTML = categories.map(renderNeedCard).join('');
+    }
+
     function renderDonationList() {
         const coll = COLLECTIONS[currentCollection];
-        const list = document.getElementById('donationList');
-        list.innerHTML = '';
         coll.categories.forEach(cat => {
             if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
-            const s = catState[cat.id];
-            const item = document.createElement('div');
-            item.className = 'need-group';
-            item.id = 'item-' + cat.id;
-            const selectedCount = Object.keys(s.items || {}).length;
-            item.innerHTML = `
-                <div class="need-title">${cat.name}</div>
-                <div class="need-sub">${isCountable(cat) ? cat.subtitle : 'Нужны всегда в неограниченном количестве'}</div>
-                <div class="need-select-wrap">
-                    <button class="need-select ${selectedCount ? 'selected' : ''}" onclick="openNeedPopup('${cat.id}', event)">
-                        <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
-                    </button>
-                    <svg class="need-select-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none">
-                        <path d="M4 6L8 10L12 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="need-tags">${renderNeedTags(cat, s)}</div>
-            `;
-            list.appendChild(item);
         });
+        const suggestedIds = detectedNeedIdsFromPhotos();
+        const suggested = suggestedIds.map(id => coll.categories.find(c => c.id === id)).filter(Boolean);
+        const urgent = ['water', 'tools', 'protection']
+            .filter(id => !suggestedIds.includes(id))
+            .map(id => coll.categories.find(c => c.id === id))
+            .filter(Boolean);
+        const more = ['kids', 'hygiene', 'home', 'appliances', 'care']
+            .filter(id => !suggestedIds.includes(id))
+            .map(id => coll.categories.find(c => c.id === id))
+            .filter(Boolean);
+
+        const suggestedSection = document.getElementById('desktopSuggestedSection');
+        if (suggestedSection) suggestedSection.style.display = suggested.length ? '' : 'none';
+        renderNeedCardList('desktopSuggestedList', suggested);
+        renderNeedCardList('desktopUrgentList', urgent);
+        renderNeedCardList('desktopMoreList', more);
     }
 
     function renderNeedTags(cat, s) {
@@ -1491,7 +1626,7 @@
                     <div class="need-popup-row">
                         <div>
                             <div class="need-popup-name">${item.name}</div>
-                            ${isCountable(cat) ? `<div class="need-popup-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                            ${isCountable(cat) ? `<div class="need-popup-sub">Осталось собрать ${item.needed} ${item.unit || 'штук'}</div>` : ''}
                         </div>
                         <button class="need-popup-check" onclick="toggleDraftNeedItem('${item.id}', event)">
                             <img src="${selected ? CHECK_ON : CHECK_OFF}" width="24" height="24" alt="">
@@ -1724,10 +1859,16 @@
 
     /* ═══════════ PHOTO PICKER ═══════════ */
     const DESKTOP_PHOTOS = [
-        'main-desktop/optimized/pic-1.jpg','main-desktop/optimized/pic-2.jpg','main-desktop/optimized/pic-3.jpg',
-        'main-desktop/optimized/pic-4.jpg','main-desktop/optimized/pic-5.jpg','main-desktop/optimized/pic-6.jpg',
-        'main-desktop/optimized/pic-7.jpg','main-desktop/optimized/pic-8.jpg','main-desktop/optimized/pic-9.jpg',
-        'main-desktop/optimized/pic-10.jpg'
+        'optimized/photos/coat.jpg',
+        'optimized/photos/toothbrush.jpg',
+        'optimized/photos/bowls.jpg',
+        'optimized/photos/pampers kids.jpg',
+        'optimized/photos/toys.jpg',
+        'optimized/photos/kids clothes.jpg',
+        'optimized/photos/more kids clothes.jpg',
+        'optimized/photos/more and more kind clothes.jpg',
+        'optimized/photos/other kids clothes.jpg',
+        'optimized/photos/kids shorts.jpg'
     ];
     let photoSelection = [];
 
@@ -1775,6 +1916,7 @@
         document.getElementById('photoModal').classList.remove('open');
         document.body.style.overflow = '';
         renderSelectedPhotos();
+        renderDonationList();
     }
     function renderSelectedPhotos() {
         renderPhotosInto('photoWrap', 'photoUploader');
@@ -1807,6 +1949,7 @@
         const idx = photoSelection.indexOf(src);
         if (idx !== -1) photoSelection.splice(idx, 1);
         renderSelectedPhotos();
+        renderDonationList();
     }
 
     function formatAdPrice(value) {
@@ -1927,7 +2070,7 @@
         const catArrow = document.querySelector('.cat-select-arrow');
         if (catArrow) catArrow.style.display = 'none';
         activateCharityLayout();
-        const collection = sessionStorage.getItem('adCollection') || 'family';
+        const collection = sessionStorage.getItem('adCollection') || 'crisis';
         currentCollection = collection;
         const coll = COLLECTIONS[currentCollection];
         document.getElementById('collectionTitle').textContent = coll.title;
@@ -1947,10 +2090,10 @@
             }
             catState[c.id] = { selected: Object.keys(items).length > 0, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false, items, selectOpen: false };
         });
-        renderDonationList();
-        updateSubmitBtn();
         const savedPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
         if (savedPhotos.length > 0) { photoSelection = savedPhotos; renderSelectedPhotos(); }
+        renderDonationList();
+        updateSubmitBtn();
         const desc = sessionStorage.getItem('adDesc');
         if (desc) { descTextarea.value = desc; descTextarea.style.height = 'auto'; descTextarea.style.height = Math.max(126, descTextarea.scrollHeight) + 'px'; descUserEdited = true; }
         const price = sessionStorage.getItem('adPrice');

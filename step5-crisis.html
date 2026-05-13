@@ -87,7 +87,7 @@
             border-radius: 16px;
             padding: 14px 14px 14px 16px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
             cursor: pointer;
         }
@@ -122,7 +122,7 @@
         }
 
         .compact-title {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: 700;
             line-height: 1.25;
         }
@@ -141,7 +141,7 @@
             border-radius: 16px;
             padding: 14px 14px 14px 16px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
             text-align: left;
             font-family: 'Inter', sans-serif;
@@ -322,7 +322,7 @@
             background: #F4F4F4;
             padding: 14px 14px 14px 16px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
         }
 
@@ -356,7 +356,7 @@
             background: #F4F4F4;
             min-height: 56px;
             font-family: 'Inter', sans-serif;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 400;
             color: #000;
             cursor: pointer;
@@ -1659,11 +1659,16 @@
         }
 
         function stripGeneratedDescription(text) {
-            return cleanDescriptionBase((text || '').split(/\n+\s*Готовы передать:\n/)[0]);
+            return cleanDescriptionBase(text);
         }
 
         function cleanDescriptionBase(text) {
-            return (text || '').split('\n').filter(line => !/^\s*Цена:\s*/.test(line)).join('\n').trim();
+            return (text || '')
+                .replace(/\n*\s*Готовы передать:\n[\s\S]*$/m, '')
+                .split('\n')
+                .filter(line => !/^\s*Цена:\s*/.test(line))
+                .join('\n')
+                .trim();
         }
 
         function normalizeDescriptionText(text) {
