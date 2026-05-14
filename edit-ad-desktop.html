@@ -615,7 +615,7 @@
             </div>
 
             <div class="form-section charity-collection-section">
-                <div class="section-title">Кому могут подойти ваши вещи</div>
+                <div class="section-title">Куда будут отправлены вещи</div>
                 <div style="height:14px"></div>
                 <div class="collection-field">
                     <span id="editCollectionName">Пострадавшим от ЧС в Дагестане</span>
@@ -626,8 +626,8 @@
             </div>
 
             <div class="form-section charity-needs-section" id="donationEditSection">
-                <div class="section-title" id="donationSelectedTitle">Вы добавили в объявление</div>
-                <div class="section-sub" id="donationSelectedSub">Отмеченные категории и вещи</div>
+                <div class="section-title" id="donationSelectedTitle">Может подойти<br>из вашего объявления</div>
+                <div class="section-sub" id="donationSelectedSub">Отметьте те вещи из списка, которые можете передать и количество вещей в каждой категории, которые будут в пакете</div>
                 <div class="list-items" id="donationList"></div>
                 <div class="section-title" id="donationMoreTitle" style="margin-top:40px;">Еще можно передать</div>
                 <div class="list-items" id="donationMoreList"></div>
@@ -1154,10 +1154,22 @@
             target.appendChild(item);
         }
 
+        const urgentIds = ['water', 'tools', 'protection'];
+        const selectedCats = [];
+        const urgentCats = [];
+        const moreCats = [];
         coll.categories.forEach(cat => {
             const selected = Object.keys((catState[cat.id] && catState[cat.id].items) || {}).length > 0;
-            appendCategory(cat, selected ? list : (moreList || list));
+            if (selected) {
+                selectedCats.push(cat);
+            } else if (urgentIds.includes(cat.id)) {
+                urgentCats.push(cat);
+            } else {
+                moreCats.push(cat);
+            }
         });
+        selectedCats.forEach(cat => appendCategory(cat, list));
+        urgentCats.concat(moreCats).forEach(cat => appendCategory(cat, moreList || list));
 
         const hasSelected = list.children.length > 0;
         document.getElementById('donationSelectedTitle').style.display = hasSelected ? '' : 'none';

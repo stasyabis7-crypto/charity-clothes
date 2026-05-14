@@ -617,7 +617,7 @@
 
             <!-- COLLECTION -->
             <div class="form-section charity-collection-section">
-                <div class="crisis-section-title">Кому могут подойти ваши вещи</div>
+                <div class="crisis-section-title">Куда будут отправлены вещи</div>
                 <div style="height:14px"></div>
                 <div class="collection-card">
                     <img src="sbor 2 new.png" class="collection-card-img" id="collectionImage" alt="">
@@ -633,11 +633,6 @@
                 <div class="crisis-section-title">Может подойти<br>из вашего объявления</div>
                 <div class="section-sub">Отметьте те вещи из списка, которые можете передать и количество вещей в каждой категории, которые будут в пакете</div>
                 <div class="crisis-list" id="desktopSuggestedList"></div>
-            </div>
-
-            <div class="form-section charity-urgent-section">
-                <div class="crisis-section-title">Срочно нужны сейчас</div>
-                <div class="crisis-list" id="desktopUrgentList"></div>
             </div>
 
             <div class="form-section charity-more-section">
@@ -1592,8 +1587,10 @@
         const suggestedSection = document.getElementById('desktopSuggestedSection');
         if (suggestedSection) suggestedSection.style.display = suggested.length ? '' : 'none';
         renderNeedCardList('desktopSuggestedList', suggested);
-        renderNeedCardList('desktopUrgentList', urgent, true);
-        renderNeedCardList('desktopMoreList', more);
+        const moreTarget = document.getElementById('desktopMoreList');
+        if (moreTarget) {
+            moreTarget.innerHTML = urgent.map(cat => renderNeedCard(cat, true)).concat(more.map(cat => renderNeedCard(cat))).join('');
+        }
     }
 
     function renderNeedTags(cat, s) {
