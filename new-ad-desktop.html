@@ -636,7 +636,8 @@
             </div>
 
             <div class="form-section charity-more-section">
-                <div class="crisis-section-title">Еще можно передать</div>
+                <div class="crisis-section-title" id="desktopMoreTitle">Еще можно передать</div>
+                <div class="section-sub" id="desktopMoreSub" style="display:none;">Отметьте те вещи из списка, которые можете передать и количество вещей в каждой категории, которые будут в пакете</div>
                 <div class="crisis-list" id="desktopMoreList"></div>
             </div>
 
@@ -1586,6 +1587,10 @@
 
         const suggestedSection = document.getElementById('desktopSuggestedSection');
         if (suggestedSection) suggestedSection.style.display = suggested.length ? '' : 'none';
+        const moreTitle = document.getElementById('desktopMoreTitle');
+        const moreSub = document.getElementById('desktopMoreSub');
+        if (moreTitle) moreTitle.textContent = suggested.length ? 'Еще можно передать' : 'Что нужно людям';
+        if (moreSub) moreSub.style.display = suggested.length ? 'none' : '';
         renderNeedCardList('desktopSuggestedList', suggested);
         const moreTarget = document.getElementById('desktopMoreList');
         if (moreTarget) {
