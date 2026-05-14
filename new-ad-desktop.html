@@ -181,7 +181,14 @@
             padding: 14px 14px 14px 16px; display: flex; align-items: flex-start; gap: 12px;
             text-align: left; font-family: 'Inter', sans-serif; color: #1A1A1A; cursor: pointer;
         }
-        .crisis-card-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: #fff; }
+        .crisis-img-wrap { position: relative; width: 60px; height: 60px; flex-shrink: 0; }
+        .crisis-card-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; display: block; background: #fff; }
+        .urgent-badge {
+            position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%);
+            width: 57px; height: 22px; border-radius: 14px; background: #FF4053; color: #fff;
+            font-size: 11px; font-weight: 400; line-height: 22px; text-align: center;
+            pointer-events: none; z-index: 1;
+        }
         .crisis-card-body { flex: 1; min-width: 0; }
         .crisis-card-title { display: block; font-size: 16px; font-weight: 800; line-height: 1.25; }
         .crisis-card-sub { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.3; }
@@ -1056,7 +1063,7 @@
             categories: [
                 { id: 'adult-clothes', name: 'Одежда и обувь для взрослых', cardSub: 'Для людей, которые остались без нужных вещей', image: 'crisis help new categories/Одежда и обувь для взрослых.png',
                   what: ['Тёплая или демисезонная одежда и обувь для взрослых. Чистые, без сильного износа', 'Повседневная одежда и обувь для взрослых. Чистые, в хорошем состоянии', 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
-                { id: 'kids-clothes', name: 'Одежда для детей', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/Одежда для детей.png',
+                { id: 'kids-clothes', name: 'Одежда для детей', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/kids clothes.png',
                   what: ['Тёплая или демисезонная одежда для детей. Чистая, без сильного износа', 'Повседневная одежда для детей. Чистая, в хорошем состоянии', 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
                 { id: 'water', name: 'Откачка воды и осушение', cardSub: 'Для домов и помещений после подтопления', image: 'crisis help new categories/Откачка воды и осушение.png',
                   what: ['Помпа для откачки воды. Рабочая, без повреждений', 'Пушка для сушки помещений. Рабочая и исправная', 'Напорные пожарные рукава. Без повреждений и разрывов'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
@@ -1065,11 +1072,13 @@
                 { id: 'protection', name: 'Защита и спецодежда', cardSub: 'Для жителей и волонтеров, которые работают на месте', image: 'crisis help new categories/Защита и спецодежда.png',
                   what: ['Резиновые сапоги. Без трещин и повреждений', 'Спецодежда для волонтёров. Чистая, без повреждений', 'Защитная каска. Без трещин и повреждений'], units: ['пар', 'комплектов', 'штук'], needed: [20, 12, 6] },
                 { id: 'kids', name: 'Уход за детьми и творчество', cardSub: 'Для детей, которым нужны уход и занятия', image: 'crisis help new categories/Уход за детьми и творчество.png',
-                  what: ['Подгузники, пелёнки, присыпки, влажные салфетки. Только новые и закрытые.', 'Игрушки, книжки, тетради, карандаши или фломастеры. Чистые и целые'], units: ['любых товаров', 'любых товаров'], needed: [5, 8] },
+                  what: ['Подгузники. Только новые и закрытые', 'Пелёнки. Только новые и закрытые', 'Присыпки. Только новые и закрытые', 'Влажные салфетки. Только новые и закрытые', 'Игрушки. Чистые и целые', 'Книжки. Чистые и целые', 'Тетради. Чистые и целые', 'Карандаши. Чистые и целые', 'Фломастеры. Чистые и целые'],
+                  units: ['любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5, 5, 8, 8, 8, 8, 8] },
                 { id: 'hygiene', name: 'Средства гигиены', cardSub: 'Для ежедневного ухода и первой необходимости', image: 'crisis help new categories/Средства гигиены.png',
                   what: ['Зубные щётки. Только новые, в упаковке', 'Зубная паста. Новая, с нормальным сроком годности', 'Влажные салфетки. Только новые и закрытые'], units: ['штук', 'штук', 'упаковок'], needed: [5, 5, 30] },
                 { id: 'home', name: 'Домашняя утварь', cardSub: 'Для временного жилья и возвращения к быту', image: 'crisis help new categories/Домашняя утварь.png',
-                  what: ['Столовые приборы. Нож, вилка и ложка, без повреждений', 'Посуда. Глубокая тарелка и кружка, без сколов и трещин', 'Постельное бельё 1-спальное. Новое или в хорошем состоянии'], units: ['любых товаров', 'любых товаров', 'комплектов'], needed: [5, 5, 6] },
+                  what: ['Ножи. Без повреждений', 'Вилки. Без повреждений', 'Ложки. Без повреждений', 'Глубокие тарелки. Без сколов и трещин', 'Кружки. Без сколов и трещин', 'Постельное бельё 1-спальное. Новое или в хорошем состоянии'],
+                  units: ['любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'любых товаров', 'комплектов'], needed: [5, 5, 5, 5, 5, 6] },
                 { id: 'appliances', name: 'Рабочая техника', cardSub: 'Для быта в пунктах помощи и временного жилья', image: 'crisis help new categories/Рабочая техника.png',
                   what: ['Микроволновка. Рабочая, чистая внутри', 'Чайник. Рабочий, без протечек', 'Утюг. Рабочий, без повреждений'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
                 { id: 'care', name: 'Товары ухода', cardSub: 'Для людей, которым нужен постоянный уход', image: 'crisis help new categories/Товары ухода.png',
@@ -1537,12 +1546,15 @@
         return Object.values(items).reduce((sum, value) => sum + Number(value || 0), 0);
     }
 
-    function renderNeedCard(cat) {
+    function renderNeedCard(cat, urgent = false) {
         if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
         const qty = selectedCategoryQuantity(cat.id);
         return `
             <button class="crisis-card ${qty ? 'selected' : ''}" onclick="openNeedPopup('${cat.id}', event)">
-                <img class="crisis-card-img" src="${cat.image || 'sbor 2 new.png'}" alt="">
+                <span class="crisis-img-wrap">
+                    <img class="crisis-card-img" src="${cat.image || 'sbor 2 new.png'}" alt="">
+                    ${urgent ? '<span class="urgent-badge">Срочно</span>' : ''}
+                </span>
                 <span class="crisis-card-body">
                     <span class="crisis-card-title">${cat.name}</span>
                     <span class="crisis-card-sub">${cat.cardSub || cat.subtitle || ''}</span>
@@ -1555,10 +1567,10 @@
         `;
     }
 
-    function renderNeedCardList(targetId, categories) {
+    function renderNeedCardList(targetId, categories, urgent = false) {
         const target = document.getElementById(targetId);
         if (!target) return;
-        target.innerHTML = categories.map(renderNeedCard).join('');
+        target.innerHTML = categories.map(cat => renderNeedCard(cat, urgent)).join('');
     }
 
     function renderDonationList() {
@@ -1580,7 +1592,7 @@
         const suggestedSection = document.getElementById('desktopSuggestedSection');
         if (suggestedSection) suggestedSection.style.display = suggested.length ? '' : 'none';
         renderNeedCardList('desktopSuggestedList', suggested);
-        renderNeedCardList('desktopUrgentList', urgent);
+        renderNeedCardList('desktopUrgentList', urgent, true);
         renderNeedCardList('desktopMoreList', more);
     }
 
@@ -1668,7 +1680,7 @@
                     <div class="need-popup-row">
                         <div>
                             <div class="need-popup-name">${item.name}</div>
-                            ${isCountable(cat) ? `<div class="need-popup-sub">Осталось собрать ${item.needed} ${item.unit || 'штук'}</div>` : ''}
+                            ${isCountable(cat) ? `<div class="need-popup-sub">Собрано ${selected ? qty : 0} из ${item.needed}</div>` : ''}
                         </div>
                         <button class="need-popup-check" onclick="toggleDraftNeedItem('${item.id}', event)">
                             <img src="${selected ? CHECK_ON : CHECK_OFF}" width="24" height="24" alt="">
