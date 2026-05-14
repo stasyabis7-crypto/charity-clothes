@@ -367,6 +367,7 @@
                     </a>
                 </div>
                 <div class="ad-price-bold" id="charity-price">Бесплатно</div>
+                <div class="ad-days" id="charity-package-qty">0 вещей в пакете</div>
                 <div class="ad-badge-row">
                     <span class="charity-badge">Добрые вещи</span>
                 </div>
@@ -424,9 +425,23 @@
             const digits = String(value || '').replace(/\D/g, '');
             return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
         }
+        function pluralPackageItems(n) {
+            const m10 = n % 10;
+            const m100 = n % 100;
+            if (m100 >= 11 && m100 <= 14) return 'вещей';
+            if (m10 === 1) return 'вещь';
+            if (m10 >= 2 && m10 <= 4) return 'вещи';
+            return 'вещей';
+        }
+        function packageItemsCount() {
+            const categories = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+            return categories.reduce((sum, category) => sum + Number(category.quantity || 0), 0);
+        }
 
         const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
         document.getElementById('charity-price').textContent = adPrice;
+        const packageCount = packageItemsCount();
+        document.getElementById('charity-package-qty').textContent = `${packageCount} ${pluralPackageItems(packageCount)} в пакете`;
 
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {

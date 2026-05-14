@@ -1134,11 +1134,16 @@
                 image: 'sbor 2 new.png',
                 storage: 'crisis',
                 needs: [
-                    { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
-                        { id: 'warm-any', name: 'Тёплая или демисезонная одежда и обувь. Чистые, без сильного износа', needed: 5 },
-                        { id: 'everyday-any', name: 'Повседневная одежда и обувь. Чистые, в хорошем состоянии', needed: 5 },
-                        { id: 'underwear-new', name: 'Новое нижнее бельё. Только новое, с бирками или в упаковке', needed: 5 }
-                    ], cardSub: 'Похоже, такие вещи есть в объявлении' },
+                    { id: 'adult-clothes', title: 'Одежда и обувь для взрослых', image: 'crisis help new categories/Одежда и обувь для взрослых.png', countable: true, items: [
+                        { id: 'adult-warm-any', name: 'Тёплая или демисезонная одежда и обувь для взрослых. Чистые, без сильного износа', needed: 5 },
+                        { id: 'adult-everyday-any', name: 'Повседневная одежда и обувь для взрослых. Чистые, в хорошем состоянии', needed: 5 },
+                        { id: 'adult-underwear-new', name: 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке', needed: 5 }
+                    ], cardSub: 'Для людей, которые остались без нужных вещей' },
+                    { id: 'kids-clothes', title: 'Одежда для детей', image: 'crisis help new categories/Одежда для детей.png', countable: true, items: [
+                        { id: 'kids-warm-any', name: 'Тёплая или демисезонная одежда для детей. Чистая, без сильного износа', needed: 5 },
+                        { id: 'kids-everyday-any', name: 'Повседневная одежда для детей. Чистая, в хорошем состоянии', needed: 5 },
+                        { id: 'kids-underwear-new', name: 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке', needed: 5 }
+                    ], cardSub: 'Для детей, которые остались без нужных вещей' },
                     { id: 'water', title: 'Откачка воды и осушение', countable: true, items: [
                         { id: 'pump', name: 'Помпа для откачки воды. Рабочая, без повреждений', needed: 5 },
                         { id: 'drying-gun', name: 'Пушка для сушки помещений. Рабочая и исправная', needed: 5 },
@@ -1154,7 +1159,7 @@
                         { id: 'volunteer-clothes', name: 'Спецодежда для волонтёров. Чистая, без повреждений', needed: 12 },
                         { id: 'helmet', name: 'Защитная каска. Без трещин и повреждений', needed: 6 }
                     ], cardSub: 'Для жителей и волонтеров, которые работают на месте' },
-                    { id: 'kids', title: 'Детские вещи', countable: true, items: [
+                    { id: 'kids', title: 'Уход за детьми и творчество', image: 'crisis help new categories/Уход за детьми и творчество.png', countable: true, items: [
                         { id: 'diapers-kids', name: 'Подгузники. Только новые и закрытые', needed: 5 },
                         { id: 'kids-pads', name: 'Пелёнки. Только новые и закрытые', needed: 5 },
                         { id: 'kids-powder', name: 'Присыпки. Только новые и закрытые', needed: 5 },
@@ -1164,7 +1169,7 @@
                         { id: 'kids-notebooks', name: 'Тетради. Чистые и целые', needed: 8 },
                         { id: 'kids-pencils', name: 'Карандаши. Чистые и целые', needed: 8 },
                         { id: 'kids-markers', name: 'Фломастеры. Чистые и целые', needed: 8 }
-                    ], cardSub: 'Для детей, которые остались без нужных вещей' },
+                    ], cardSub: 'Для детей, которым нужны уход и занятия' },
                     { id: 'hygiene', title: 'Средства гигиены', countable: true, items: [
                         { id: 'toothbrushes', name: 'Зубные щётки. Только новые, в упаковке', needed: 5 },
                         { id: 'toothpaste', name: 'Зубная паста. Новая, с нормальным сроком годности', needed: 5 },
@@ -1438,6 +1443,7 @@
         }
 
         function normalizeSavedNeedId(collectionId, id) {
+            if (collectionId === 'crisis' && id === 'clothes') return 'adult-clothes';
             if (collectionId === 'family') {
                 if (id === 'adult-clothes' || id === 'kids-clothes') return id === 'adult-clothes' ? 'clothes' : 'kids';
             }
@@ -1480,8 +1486,8 @@
             document.getElementById('collection-title').textContent = data.title;
         }
 
-        function categoryImage(title) {
-            return `crisis help new categories/${title}.png`;
+        function categoryImage(need) {
+            return need.image || `crisis help new categories/${need.title}.png`;
         }
 
         function selectedCategoryQuantity(needId) {
@@ -1493,7 +1499,7 @@
             const qty = selectedCategoryQuantity(need.id);
             return `
                 <button class="crisis-card ${qty ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
-                    <img class="crisis-card-img" src="${categoryImage(need.title)}" alt="">
+                    <img class="crisis-card-img" src="${categoryImage(need)}" alt="">
                     <span class="crisis-card-body">
                         <span class="crisis-card-title">${need.title}</span>
                         <span class="crisis-card-sub">${need.cardSub || 'Выберите вещи, которые готовы передать'}</span>

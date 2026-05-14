@@ -371,6 +371,9 @@
                             <span class="charity-badge" id="charity-badge">Добрые вещи</span>
                         </div>
                     </div>
+                    <div class="ad-meta">
+                        <div class="ad-meta-row" id="charity-package-qty">0 вещей в пакете</div>
+                    </div>
                     <div class="ad-stats">
                         <span class="stat-item"><img src="step 0 icons/Visibility.svg" width="16" height="16" alt=""> 0 <span class="stat-plus">+0</span></span>
                         <span class="stat-item"><img src="step 0 icons/Person.svg" width="16" height="16" alt=""> 0 <span class="stat-plus">+0</span></span>
@@ -433,6 +436,18 @@
         const digits = String(value || '').replace(/\D/g, '');
         return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
     }
+    function pluralPackageItems(n) {
+        const m10 = n % 10;
+        const m100 = n % 100;
+        if (m100 >= 11 && m100 <= 14) return 'вещей';
+        if (m10 === 1) return 'вещь';
+        if (m10 >= 2 && m10 <= 4) return 'вещи';
+        return 'вещей';
+    }
+    function packageItemsCount() {
+        const categories = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+        return categories.reduce((sum, category) => sum + Number(category.quantity || 0), 0);
+    }
     const legacyPrice = sessionStorage.getItem('mainPrice');
     const storedPrice = sessionStorage.getItem('adPrice');
     const adPrice = adFlow === 'regular' && !storedPrice && !legacyPrice ? 'Цена не указана' : formatAdPrice(storedPrice || legacyPrice || '');
@@ -440,6 +455,8 @@
     document.getElementById('charity-title').textContent = adTitle;
     document.getElementById('charity-price').textContent = adPrice;
     document.getElementById('charity-badge').style.display = adFlow === 'charity' ? 'inline-block' : 'none';
+    const packageCount = packageItemsCount();
+    document.getElementById('charity-package-qty').textContent = `${packageCount} ${pluralPackageItems(packageCount)} в пакете`;
     if (adPhotos.length > 0) {
         document.getElementById('charity-photo').src = adPhotos[0];
     }

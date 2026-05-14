@@ -528,7 +528,7 @@
     <div class="ad-info">
         <div class="ad-title-text" id="ad-title-display"></div>
         <div class="ad-price-text" id="ad-price-display">Бесплатно</div>
-        <div class="ad-qty">5 шт. в наличии</div>
+        <div class="ad-qty" id="ad-package-qty">0 вещей в пакете</div>
     </div>
 
     <!-- ZNAK DOBRA -->
@@ -645,11 +645,27 @@
             return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
         }
 
+        function pluralPackageItems(n) {
+            const m10 = n % 10;
+            const m100 = n % 100;
+            if (m100 >= 11 && m100 <= 14) return 'вещей';
+            if (m10 === 1) return 'вещь';
+            if (m10 >= 2 && m10 <= 4) return 'вещи';
+            return 'вещей';
+        }
+
+        function packageItemsCount() {
+            const categories = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+            return categories.reduce((sum, category) => sum + Number(category.quantity || 0), 0);
+        }
+
         const desc = normalizeAdDescription(sessionStorage.getItem('adDesc') || '');
         document.getElementById('ad-desc-display').textContent = desc;
         const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
         document.getElementById('ad-price-display').textContent = adPrice;
         document.getElementById('ad-price-detail').textContent = adPrice;
+        const packageCount = packageItemsCount();
+        document.getElementById('ad-package-qty').textContent = `${packageCount} ${pluralPackageItems(packageCount)} в пакете`;
 
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {

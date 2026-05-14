@@ -137,6 +137,7 @@
 
         /* ── RIGHT COLUMN ── */
         .right-price { font-size: 28px; font-weight: 700; color: #1A1A1A; }
+        .right-package-qty { margin-top: 6px; font-size: 15px; color: #1A1A1A; }
         .btn-boost {
             width: 100%; background: #1A1A1A; color: #fff; border: none;
             border-radius: 12px; padding: 14px; margin-top: 20px;
@@ -342,6 +343,7 @@
         <!-- RIGHT COLUMN -->
         <div class="ad-right">
             <div class="right-price" id="right-price">Бесплатно</div>
+            <div class="right-package-qty" id="ad-package-qty">0 вещей в пакете</div>
             <div class="seller-block">
                 <img src="desktop-header/avatar.png" class="seller-avatar" alt="Аватар">
                 <div>
@@ -408,6 +410,18 @@
         const digits = String(value || '').replace(/\D/g, '');
         return !digits || Number(digits) === 0 ? 'Бесплатно' : digits + ' ₽';
     }
+    function pluralPackageItems(n) {
+        const m10 = n % 10;
+        const m100 = n % 100;
+        if (m100 >= 11 && m100 <= 14) return 'вещей';
+        if (m10 === 1) return 'вещь';
+        if (m10 >= 2 && m10 <= 4) return 'вещи';
+        return 'вещей';
+    }
+    function packageItemsCount() {
+        const categories = JSON.parse(sessionStorage.getItem('adCategories') || '[]');
+        return categories.reduce((sum, category) => sum + Number(category.quantity || 0), 0);
+    }
     const regularCategoryLabels = {
         tshirts: 'Футболки и майки',
         homewear: 'Домашняя одежда',
@@ -424,6 +438,8 @@
     document.getElementById('ad-category').textContent = adCategory;
     document.getElementById('ad-price-char').textContent = adPrice;
     document.getElementById('right-price').textContent = adPrice;
+    const packageCount = packageItemsCount();
+    document.getElementById('ad-package-qty').textContent = `${packageCount} ${pluralPackageItems(packageCount)} в пакете`;
 
     if (adFlow === 'regular') {
         document.querySelector('.not-published-title').textContent = 'Ещё не опубликовано';

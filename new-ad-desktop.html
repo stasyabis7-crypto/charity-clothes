@@ -320,11 +320,29 @@
         .spec-value { font-size: 15px; font-weight: 400; color: #1A1A1A; }
         .spec-helper { font-size: 13px; font-weight: 400; color: #9E9E9E; line-height: 1.4; }
         .charity-hint {
-            display: none; margin-top: 8px; font-size: 13px; font-weight: 400;
-            color: #9E9E9E; line-height: 1.5;
+            display: none;
+            margin-top: 24px;
+            border: none;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 14px 14px 14px 16px;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+            cursor: pointer;
         }
-        .charity-hint.visible { display: block; }
-        .charity-link { color: #9E9E9E; text-decoration: underline; cursor: pointer; }
+        .charity-hint.visible { display: flex; }
+        .charity-hint-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #fff;
+        }
+        .charity-hint-title { font-size: 16px; font-weight: 700; line-height: 1.25; color: #000; }
+        .charity-hint-sub { margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.3; color: #000; }
+        .charity-link { display: block; margin-top: 6px; font-size: 13px; font-weight: 400; color: #000; text-decoration: underline; }
         .price-input-wrap { position: relative; }
         .price-input { padding-right: 44px; cursor: text; }
 
@@ -606,7 +624,7 @@
 
             <div class="form-section charity-suggested-section" id="desktopSuggestedSection">
                 <div class="crisis-section-title">Может подойти<br>из вашего объявления</div>
-                <div class="section-sub">Отметьте вещи из списка. Если мы ошиблись, выберите другие подходящие вещи ниже.</div>
+                <div class="section-sub">Отметьте те вещи из списка, которые можете передать и количество вещей в каждой категории, которые будут в пакете</div>
                 <div class="crisis-list" id="desktopSuggestedList"></div>
             </div>
 
@@ -812,9 +830,13 @@
                 <div class="section-title">Описание товара</div>
                 <div style="height:14px"></div>
                 <textarea class="textarea-field" id="regularDescTextarea" placeholder="Опишите ваш товар подробнее"></textarea>
-                <div class="charity-hint" id="descCharityHint">
-                    Похоже, эти вещи могут пригодиться при ЧС в Дагестане 🧡.
-                    <span class="charity-link" onclick="switchToCharityFlow()">Передать через «Добрые вещи»</span>
+                <div class="charity-hint" id="descCharityHint" onclick="switchToCharityFlow()">
+                    <img class="charity-hint-img" src="sbor 2 new.png" alt="">
+                    <div>
+                        <div class="charity-hint-title">Похоже, эти вещи могут пригодиться при ЧС<br>в Дагестане 🧡</div>
+                        <div class="charity-hint-sub">Фонды и люди из зоны ЧС смогут увидеть объявление и связаться<br>с вами</div>
+                        <span class="charity-link">Передать вещи</span>
+                    </div>
                 </div>
             </div>
 
@@ -846,9 +868,13 @@
                         </svg>
                     </button>
                 </div>
-                <div class="charity-hint" id="priceCharityHint">
-                    Эти вещи могут быстрее найти тех, кому нужны в зоне ЧС 🧡.
-                    <span class="charity-link" onclick="switchToCharityFlow()">Передать через «Добрые вещи»</span>
+                <div class="charity-hint" id="priceCharityHint" onclick="switchToCharityFlow()">
+                    <img class="charity-hint-img" src="sbor 2 new.png" alt="">
+                    <div>
+                        <div class="charity-hint-title">Похоже, эти вещи могут пригодиться при ЧС<br>в Дагестане 🧡</div>
+                        <div class="charity-hint-sub">Фонды и люди из зоны ЧС смогут увидеть объявление и связаться<br>с вами</div>
+                        <span class="charity-link">Передать вещи</span>
+                    </div>
                 </div>
             </div>
 
@@ -1028,15 +1054,17 @@
         crisis: {
             id: 'crisis', title: 'Пострадавшим от ЧС в Дагестане', subtitle: 'Нужны вещи для быта, гигиены, восстановления домов и помощи детям',
             categories: [
-                { id: 'clothes', name: 'Одежда и обувь', cardSub: 'Похоже, такие вещи есть в объявлении', image: 'crisis help new categories/Одежда и обувь.png',
-                  what: ['Тёплая или демисезонная одежда и обувь. Чистые, без сильного износа', 'Повседневная одежда и обувь. Чистые, в хорошем состоянии', 'Новое нижнее бельё. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
+                { id: 'adult-clothes', name: 'Одежда и обувь для взрослых', cardSub: 'Для людей, которые остались без нужных вещей', image: 'crisis help new categories/Одежда и обувь для взрослых.png',
+                  what: ['Тёплая или демисезонная одежда и обувь для взрослых. Чистые, без сильного износа', 'Повседневная одежда и обувь для взрослых. Чистые, в хорошем состоянии', 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
+                { id: 'kids-clothes', name: 'Одежда для детей', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/Одежда для детей.png',
+                  what: ['Тёплая или демисезонная одежда для детей. Чистая, без сильного износа', 'Повседневная одежда для детей. Чистая, в хорошем состоянии', 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
                 { id: 'water', name: 'Откачка воды и осушение', cardSub: 'Для домов и помещений после подтопления', image: 'crisis help new categories/Откачка воды и осушение.png',
                   what: ['Помпа для откачки воды. Рабочая, без повреждений', 'Пушка для сушки помещений. Рабочая и исправная', 'Напорные пожарные рукава. Без повреждений и разрывов'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
                 { id: 'tools', name: 'Инструменты для расчистки', cardSub: 'Для уборки грязи, мусора и поврежденных конструкций', image: 'crisis help new categories/Инструменты для расчистки.png',
                   what: ['Лопата штыковая. С целой ручкой, без сильной ржавчины', 'Лопата совковая. С целой ручкой, без сильной ржавчины', 'Бензиновая пила. Рабочая и исправная'], units: ['штук', 'штук', 'штук'], needed: [5, 3, 6] },
                 { id: 'protection', name: 'Защита и спецодежда', cardSub: 'Для жителей и волонтеров, которые работают на месте', image: 'crisis help new categories/Защита и спецодежда.png',
                   what: ['Резиновые сапоги. Без трещин и повреждений', 'Спецодежда для волонтёров. Чистая, без повреждений', 'Защитная каска. Без трещин и повреждений'], units: ['пар', 'комплектов', 'штук'], needed: [20, 12, 6] },
-                { id: 'kids', name: 'Детские вещи', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/Детские вещи.png',
+                { id: 'kids', name: 'Уход за детьми и творчество', cardSub: 'Для детей, которым нужны уход и занятия', image: 'crisis help new categories/Уход за детьми и творчество.png',
                   what: ['Подгузники, пелёнки, присыпки, влажные салфетки. Только новые и закрытые.', 'Игрушки, книжки, тетради, карандаши или фломастеры. Чистые и целые'], units: ['любых товаров', 'любых товаров'], needed: [5, 8] },
                 { id: 'hygiene', name: 'Средства гигиены', cardSub: 'Для ежедневного ухода и первой необходимости', image: 'crisis help new categories/Средства гигиены.png',
                   what: ['Зубные щётки. Только новые, в упаковке', 'Зубная паста. Новая, с нормальным сроком годности', 'Влажные салфетки. Только новые и закрытые'], units: ['штук', 'штук', 'упаковок'], needed: [5, 5, 30] },
@@ -1479,16 +1507,16 @@
     }
 
     const PHOTO_TO_NEED = {
-        'coat.jpg': 'clothes',
+        'coat.jpg': 'adult-clothes',
         'toothbrush.jpg': 'hygiene',
         'bowls.jpg': 'home',
         'pampers kids.jpg': 'kids',
         'toys.jpg': 'kids',
-        'kids clothes.jpg': 'clothes',
-        'more kids clothes.jpg': 'clothes',
-        'more and more kind clothes.jpg': 'clothes',
-        'other kids clothes.jpg': 'clothes',
-        'kids shorts.jpg': 'clothes'
+        'kids clothes.jpg': 'kids-clothes',
+        'more kids clothes.jpg': 'kids-clothes',
+        'more and more kind clothes.jpg': 'kids-clothes',
+        'other kids clothes.jpg': 'kids-clothes',
+        'kids shorts.jpg': 'kids-clothes'
     };
 
     function photoFileName(src) {
@@ -1544,7 +1572,7 @@
             .filter(id => !suggestedIds.includes(id))
             .map(id => coll.categories.find(c => c.id === id))
             .filter(Boolean);
-        const more = ['kids', 'hygiene', 'home', 'appliances', 'care']
+        const more = ['adult-clothes', 'kids-clothes', 'kids', 'hygiene', 'home', 'appliances', 'care']
             .filter(id => !suggestedIds.includes(id))
             .map(id => coll.categories.find(c => c.id === id))
             .filter(Boolean);
