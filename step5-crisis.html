@@ -918,7 +918,7 @@
         </section>
 
         <section class="section">
-            <h2 class="section-title">Данные объявления</h2>
+            <h2 class="section-title">Другие данные объявления</h2>
             <p class="section-sub">Проверьте их перед публикацией</p>
         </section>
 
@@ -1689,7 +1689,6 @@
 
         function autoBuildDescription() {
             const ta = document.getElementById('desc-textarea');
-            if (manualDesc) return;
             const savedDesc = sessionStorage.getItem('adDesc') || '';
             const base = buildRememberedDescription(savedDesc);
             const lines = selectedLines();

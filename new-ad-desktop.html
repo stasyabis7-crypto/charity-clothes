@@ -117,7 +117,7 @@
         .charity-layout .form-inner > div[style*="height:60px"] { order: 140; }
 
         /* ── TITLE INPUT ── */
-        .field-label { font-size: 16px; font-weight: 800; color: #1A1A1A; margin-bottom: 12px; }
+        .field-label { font-size: 18px; font-weight: 800; color: #1A1A1A; margin-bottom: 12px; }
         .text-input {
             width: 100%; background: #F4F4F4; border: 2px solid transparent;
             border-radius: 12px; padding: 14px 16px;
@@ -164,7 +164,7 @@
         .collection-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
         .collection-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
         .collection-subtitle { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 4px; }
-        .charity-intro-title { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
+        .charity-intro-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
         .charity-intro-sub { margin-top: 6px; font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.4; }
         .collection-card {
             background: #F4F4F4; border-radius: 24px; padding: 12px 16px 16px 12px;
@@ -174,7 +174,7 @@
         .collection-card-title { font-size: 16px; font-weight: 800; color: #1A1A1A; line-height: 1.25; }
         .collection-card-subtitle { margin-top: 2px; font-size: 13px; font-weight: 400; color: #1A1A1A; line-height: 1.3; }
         .collection-card + .change-btn { margin-top: 6px; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; width: auto; }
-        .crisis-section-title { font-size: 21px; font-weight: 800; color: #1A1A1A; line-height: 1.25; }
+        .crisis-section-title { font-size: 26px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
         .crisis-list { margin-top: 12px; display: flex; flex-direction: column; gap: 12px; }
         .crisis-card {
             width: 100%; border: none; background: #F4F4F4; border-radius: 16px;
@@ -329,7 +329,7 @@
         .price-input { padding-right: 44px; cursor: text; }
 
         /* ── SECTION TITLE ── */
-        .section-title { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.15; }
+        .section-title { font-size: 18px; font-weight: 800; color: #1A1A1A; line-height: 1.2; }
         .section-sub { font-size: 15px; font-weight: 400; color: #1A1A1A; margin-top: 2px; margin-bottom: 16px; }
 
         /* Photos */
@@ -584,7 +584,7 @@
                     </div>
                     <div class="banner-content">
                         <div class="banner-title">Как это работает</div>
-                        <div class="banner-desc">Кто увидит объявление<br>и как передать вещи<br>на благотворительность</div>
+                        <div class="banner-desc">Кто увидит объявление и как передать вещи на благотворительность</div>
                         <span class="banner-link">Узнать подробнее</span>
                     </div>
                 </div>
@@ -621,7 +621,7 @@
             </div>
 
             <div class="form-section charity-data-section">
-                <div class="crisis-section-title">Данные объявления</div>
+                <div class="crisis-section-title">Другие данные объявления</div>
                 <div class="section-sub">Проверьте их перед публикацией</div>
             </div>
 
@@ -1167,7 +1167,7 @@
         clearBtn.style.display = this.value.length > 0 ? 'flex' : 'none';
         if (v.length > 0) {
             sectionCats.style.display = 'block';
-            renderSuggests(v);
+            suggestsEl.style.display = 'none';
         } else {
             sectionCats.style.display = 'none';
             suggestsEl.style.display = 'none';
@@ -1424,9 +1424,23 @@
         return base || sessionStorage.getItem('mainDesc') || '';
     }
 
+    function buildPublishedCharityDescription() {
+        const raw = normalizeDescriptionText(descTextarea ? descTextarea.value : '');
+        const parts = raw.split(/\n+\s*Готовы передать:\n/);
+        const base = cleanDescriptionBase(parts[0] || '');
+        const generated = parts.slice(1).join('\n').trim();
+        const details = [];
+        const conditionId = sessionStorage.getItem('mainCondition');
+        const condition = REGULAR_CONDITIONS.find(o => o.id === conditionId);
+        if (condition) details.push('Состояние: ' + condition.label);
+        const specs = REGULAR_SPECS[sessionStorage.getItem('mainCategory')];
+        if (specs) details.push(specs.map(s => `${s.label}: ${s.value}`).join('\n'));
+        return [base, details.join('\n'), generated ? `Готовы передать:\n${generated}` : ''].filter(Boolean).join('\n\n');
+    }
+
     function switchToCharityFlow() {
         descUserEdited = true;
-        sessionStorage.setItem('adDesc', buildRegularDescription());
+        sessionStorage.setItem('adDesc', regularDescTextarea ? regularDescTextarea.value.trim() : '');
         sessionStorage.setItem('mainCondition', regularCondition);
         sessionStorage.setItem('mainAdType', regularAdType);
         if (selectedCatId && selectedCatId !== 'charity') sessionStorage.setItem('mainCategory', selectedCatId);
@@ -1720,7 +1734,7 @@
 
     /* ═══════════ DESCRIPTION AUTO-FILL ═══════════ */
     function updateDescription() {
-        if (!descTextarea || descUserEdited) return;
+        if (!descTextarea) return;
         const coll = COLLECTIONS[currentCollection];
         const lines = [];
         coll.categories.forEach(cat => {
@@ -1986,7 +2000,7 @@
         sessionStorage.setItem('adPrice', formatAdPrice(charityPriceInput ? charityPriceInput.value : ''));
         sessionStorage.setItem('adCollection', currentCollection);
         sessionStorage.setItem('adTitle', title);
-        sessionStorage.setItem('adDesc', normalizeDescriptionText(descTextarea ? descTextarea.value : ''));
+        sessionStorage.setItem('adDesc', buildPublishedCharityDescription());
         sessionStorage.setItem('adPhotos', JSON.stringify(photoSelection));
         sessionStorage.setItem('adLocation', 'Москва, Чонгарский б-р, 7');
         const selectedCats = buildSelectedCats();
