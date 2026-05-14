@@ -976,7 +976,7 @@
             <h1 class="intro-title">Добрые вещи 🧡</h1>
             <p class="intro-subtitle">Похоже, ваши вещи<br>подходят для помощи<br>людям при ЧС</p>
         </div>
-        <button class="hero-how-btn" id="hero-how-btn" type="button">Как это работает</button>
+        <button class="hero-how-btn" id="hero-how-btn" type="button" onclick="return openHeroSheet(event)" ontouchend="return openHeroSheet(event)">Как это работает</button>
     </section>
 
     <main class="content">
@@ -1476,12 +1476,28 @@
             });
         }
 
+        let lastHeroSheetOpen = 0;
+
+        function openHeroSheet(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const now = Date.now();
+            if (now - lastHeroSheetOpen < 250) return false;
+            lastHeroSheetOpen = now;
+            openSheet();
+            return false;
+        }
+
         function openSheet() {
-            renderInfoSheet();
             const overlay = document.getElementById('sheet-overlay');
+            if (!overlay) return false;
             overlay.classList.add('open');
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            renderInfoSheet();
+            return false;
         }
 
         function closeSheet() {
@@ -1720,7 +1736,7 @@
         function changeDraftQty(itemId, delta) {
             const need = getNeed(activeNeedId);
             const item = need.items.find(i => i.id === itemId);
-            const max = item?.needed || 99;
+            const max = item && item.needed ? item.needed : 99;
             draftSelections[itemId] = Math.max(1, Math.min(max, (draftSelections[itemId] || 1) + delta));
             renderNeedSheetList();
         }
@@ -1824,14 +1840,16 @@
             });
             sessionStorage.setItem('adCategories', JSON.stringify(categories));
             sessionStorage.setItem('adCollection', COLLECTIONS[currentCollection].storage);
-            sessionStorage.setItem('adPrice', formatAdPrice(document.getElementById('price-input')?.value));
+            const priceInput = document.getElementById('price-input');
+            sessionStorage.setItem('adPrice', formatAdPrice(priceInput ? priceInput.value : ''));
             sessionStorage.setItem('adDesc', normalizeDescriptionText(document.getElementById('desc-textarea').value));
         }
 
         function persistAll() {
             persistCategories();
             sessionStorage.setItem('adTitle', document.getElementById('title-display').value);
-            sessionStorage.setItem('adPrice', formatAdPrice(document.getElementById('price-input')?.value));
+            const priceInput = document.getElementById('price-input');
+            sessionStorage.setItem('adPrice', formatAdPrice(priceInput ? priceInput.value : ''));
             sessionStorage.setItem('adDesc', normalizeDescriptionText(document.getElementById('desc-textarea').value));
         }
 
@@ -1854,17 +1872,17 @@
         });
 
         currentCollection = CURRENT_COLLECTION;
-        document.getElementById('hero-how-btn')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            openSheet();
-        });
+        const heroHowBtn = document.getElementById('hero-how-btn');
+        if (heroHowBtn) {
+            heroHowBtn.addEventListener('click', openHeroSheet);
+        }
         renderPhotos();
         setupMainFields();
         renderCollection();
         renderNeeds();
         window.addEventListener('scroll', function() {
-            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+            const header = document.querySelector('.header');
+            if (header) header.classList.toggle('scrolled', window.scrollY > 0);
         }, { passive: true });
     </script>
 </body>
