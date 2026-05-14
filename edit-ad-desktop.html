@@ -1234,6 +1234,23 @@
         document.body.style.overflow = '';
     }
 
+    function inferProgressUnit(item) {
+        if (item && item.unit) return item.unit;
+        const name = String((item && item.name) || '').toLowerCase();
+        if (name.includes('сапог') || name.includes('обув')) return 'пар';
+        if (name.includes('спецодежд') || name.includes('бельё') || name.includes('постель')) return 'комплектов';
+        if (name.includes('салфет')) return 'упаковок';
+        if (name.includes('одежд') || name.includes('игруш') || name.includes('книж') || name.includes('тетрад') || name.includes('карандаш') || name.includes('фломастер')) return 'любых товаров';
+        return 'штук';
+    }
+
+    function progressText(item) {
+        const collected = Number(item.collected ?? item.needed ?? 0);
+        const total = Number(item.total ?? (item.needed ? item.needed * 2 : collected));
+        const unit = inferProgressUnit(item);
+        return `Собрано ${collected} из ${total}${unit ? ` ${unit}` : ''}`;
+    }
+
     function renderNeedPopup() {
         const coll = COLLECTIONS[currentCollection];
         const cat = coll.categories.find(c => c.id === activeNeedCatId);
@@ -1248,7 +1265,7 @@
                     <div class="need-popup-row">
                         <div>
                             <div class="need-popup-name">${item.name}</div>
-                            ${isCountable(cat) ? `<div class="need-popup-sub">Собрано ${selected ? qty : 0} из ${item.needed}</div>` : ''}
+                            ${isCountable(cat) ? `<div class="need-popup-sub">${progressText(item)}</div>` : ''}
                         </div>
                         <button class="need-popup-check" onclick="toggleDraftNeedItem('${item.id}', event)">
                             <img src="${selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png'}" width="24" height="24" alt="">

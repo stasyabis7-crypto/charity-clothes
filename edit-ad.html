@@ -1577,6 +1577,23 @@
             document.body.style.overflow = '';
         }
 
+        function inferProgressUnit(item) {
+            if (item && item.unit) return item.unit;
+            const name = String((item && item.name) || '').toLowerCase();
+            if (name.includes('сапог') || name.includes('обув')) return 'пар';
+            if (name.includes('спецодежд') || name.includes('бельё') || name.includes('постель')) return 'комплектов';
+            if (name.includes('салфет')) return 'упаковок';
+            if (name.includes('одежд') || name.includes('игруш') || name.includes('книж') || name.includes('тетрад') || name.includes('карандаш') || name.includes('фломастер')) return 'любых товаров';
+            return 'штук';
+        }
+
+        function progressText(item) {
+            const collected = Number(item.collected ?? item.needed ?? 0);
+            const total = Number(item.total ?? (item.needed ? item.needed * 2 : collected));
+            const unit = inferProgressUnit(item);
+            return `Собрано ${collected} из ${total}${unit ? ` ${unit}` : ''}`;
+        }
+
         function renderNeedSheetList() {
             const need = getNeed(activeNeedId);
             const list = document.getElementById('need-sheet-list');
@@ -1589,7 +1606,7 @@
                 row.innerHTML = `
                     <div style="flex:1;min-width:0;">
                         <div class="need-item-name">${item.name}</div>
-                        ${need.countable ? `<div class="need-item-sub">Собрано ${selected ? qty : 0} из ${item.needed}</div>` : ''}
+                        ${need.countable ? `<div class="need-item-sub">${progressText(item)}</div>` : ''}
                         ${selected && need.countable ? `
                             <div class="qty-picker">
                                 <button onclick="changeDraftQty('${item.id}', -1)">−</button>
