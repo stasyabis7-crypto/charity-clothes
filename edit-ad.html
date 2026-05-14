@@ -370,6 +370,84 @@
 
         .tag button img { width: 20px; height: 20px; }
 
+        .category-list {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .crisis-card {
+            width: 100%;
+            border: none;
+            background: #F4F4F4;
+            border-radius: 16px;
+            padding: 14px 14px 14px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .crisis-card-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #fff;
+        }
+
+        .crisis-card-body { flex: 1; min-width: 0; }
+
+        .crisis-card-title {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .crisis-card-sub {
+            display: block;
+            margin-top: 2px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .crisis-card-side {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            align-self: flex-start;
+            padding-top: 2px;
+        }
+
+        .crisis-count {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 24px;
+            text-align: center;
+            display: none;
+        }
+
+        .crisis-card.selected .crisis-count { display: block; }
+
+        .crisis-arrow {
+            width: 16px;
+            height: 20px;
+            object-fit: contain;
+        }
+
         .desc-textarea {
             margin-top: 12px;
             display: block;
@@ -874,9 +952,14 @@
         </section>
 
         <section class="section">
-            <h2 class="section-title">Что сейчас нужно</h2>
-            <p class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</p>
-            <div id="needs-container"></div>
+            <h2 class="section-title" id="needs-title">Вы добавили в объявление</h2>
+            <p class="section-sub" id="needs-sub">Отмеченные категории и вещи</p>
+            <div class="category-list" id="needs-container"></div>
+        </section>
+
+        <section class="section" id="more-needs-section">
+            <h2 class="section-title">Еще можно передать</h2>
+            <div class="category-list" id="more-needs-container"></div>
         </section>
 
         <section class="section">
@@ -1046,30 +1129,63 @@
             },
             crisis: {
                 route: 'step5-crisis.html',
-                title: 'Помощь Дагестану',
-                sub: 'Собираем вещи в помощь людям, пострадавшим от паводков',
+                title: 'Пострадавшим от ЧС в Дагестане',
+                sub: 'Нужны вещи для быта, гигиены, восстановления домов и помощи детям',
                 image: 'sbor 2 new.png',
                 storage: 'crisis',
                 needs: [
                     { id: 'clothes', title: 'Одежда и обувь', countable: true, items: [
-                        { id: 'warm-clothes', name: 'Теплая одежда для взрослых', needed: 8 },
-                        { id: 'kids-warm', name: 'Теплая одежда для детей', needed: 7 },
-                        { id: 'raincoats', name: 'Дождевики', needed: 5 },
-                        { id: 'boots', name: 'Резиновые сапоги', needed: 6 }
-                    ] },
+                        { id: 'warm-any', name: 'Тёплая или демисезонная одежда и обувь. Чистые, без сильного износа', needed: 5 },
+                        { id: 'everyday-any', name: 'Повседневная одежда и обувь. Чистые, в хорошем состоянии', needed: 5 },
+                        { id: 'underwear-new', name: 'Новое нижнее бельё. Только новое, с бирками или в упаковке', needed: 5 }
+                    ], cardSub: 'Похоже, такие вещи есть в объявлении' },
+                    { id: 'water', title: 'Откачка воды и осушение', countable: true, items: [
+                        { id: 'pump', name: 'Помпа для откачки воды. Рабочая, без повреждений', needed: 5 },
+                        { id: 'drying-gun', name: 'Пушка для сушки помещений. Рабочая и исправная', needed: 5 },
+                        { id: 'fire-hoses', name: 'Напорные пожарные рукава. Без повреждений и разрывов', needed: 5 }
+                    ], cardSub: 'Для домов и помещений после подтопления' },
+                    { id: 'tools', title: 'Инструменты для расчистки', countable: true, items: [
+                        { id: 'bayonet-shovel', name: 'Лопата штыковая. С целой ручкой, без сильной ржавчины', needed: 5 },
+                        { id: 'scoop-shovel', name: 'Лопата совковая. С целой ручкой, без сильной ржавчины', needed: 3 },
+                        { id: 'chainsaw', name: 'Бензиновая пила. Рабочая и исправная', needed: 6 }
+                    ], cardSub: 'Для уборки грязи, мусора и поврежденных конструкций' },
+                    { id: 'protection', title: 'Защита и спецодежда', countable: true, items: [
+                        { id: 'rubber-boots', name: 'Резиновые сапоги. Без трещин и повреждений', needed: 20 },
+                        { id: 'volunteer-clothes', name: 'Спецодежда для волонтёров. Чистая, без повреждений', needed: 12 },
+                        { id: 'helmet', name: 'Защитная каска. Без трещин и повреждений', needed: 6 }
+                    ], cardSub: 'Для жителей и волонтеров, которые работают на месте' },
+                    { id: 'kids', title: 'Детские вещи', countable: true, items: [
+                        { id: 'diapers-kids', name: 'Подгузники. Только новые и закрытые', needed: 5 },
+                        { id: 'kids-pads', name: 'Пелёнки. Только новые и закрытые', needed: 5 },
+                        { id: 'kids-powder', name: 'Присыпки. Только новые и закрытые', needed: 5 },
+                        { id: 'kids-wipes', name: 'Влажные салфетки. Только новые и закрытые', needed: 5 },
+                        { id: 'kids-toys', name: 'Игрушки. Чистые и целые', needed: 8 },
+                        { id: 'kids-books', name: 'Книжки. Чистые и целые', needed: 8 },
+                        { id: 'kids-notebooks', name: 'Тетради. Чистые и целые', needed: 8 },
+                        { id: 'kids-pencils', name: 'Карандаши. Чистые и целые', needed: 8 },
+                        { id: 'kids-markers', name: 'Фломастеры. Чистые и целые', needed: 8 }
+                    ], cardSub: 'Для детей, которые остались без нужных вещей' },
+                    { id: 'hygiene', title: 'Средства гигиены', countable: true, items: [
+                        { id: 'toothbrushes', name: 'Зубные щётки. Только новые, в упаковке', needed: 5 },
+                        { id: 'toothpaste', name: 'Зубная паста. Новая, с нормальным сроком годности', needed: 5 },
+                        { id: 'wipes', name: 'Влажные салфетки. Только новые и закрытые', needed: 30 }
+                    ], cardSub: 'Для ежедневного ухода и первой необходимости' },
                     { id: 'home', title: 'Домашняя утварь', countable: true, items: [
-                        { id: 'bedding', name: 'Постельное белье', needed: 6 },
-                        { id: 'blankets', name: 'Одеяла и пледы', needed: 5 },
-                        { id: 'towels', name: 'Полотенца', needed: 8 },
-                        { id: 'dishes', name: 'Посуда', needed: 7 }
-                    ] },
-                    { id: 'hygiene', title: 'Средства гигиены', countable: false, items: [
-                        { id: 'toothpaste', name: 'Зубная паста и щетки' },
-                        { id: 'shampoo', name: 'Шампунь и гель для душа' },
-                        { id: 'soap', name: 'Мыло' },
-                        { id: 'wipes', name: 'Влажные салфетки' },
-                        { id: 'powder', name: 'Стиральный порошок' }
-                    ] }
+                        { id: 'knives', name: 'Ножи. Без повреждений', needed: 5 },
+                        { id: 'forks', name: 'Вилки. Без повреждений', needed: 5 },
+                        { id: 'spoons', name: 'Ложки. Без повреждений', needed: 5 },
+                        { id: 'deep-plates', name: 'Глубокие тарелки. Без сколов и трещин', needed: 5 },
+                        { id: 'mugs', name: 'Кружки. Без сколов и трещин', needed: 5 },
+                        { id: 'bedding', name: 'Постельное бельё 1-спальное. Новое или в хорошем состоянии', needed: 6 }
+                    ], cardSub: 'Для временного жилья и возвращения к быту' },
+                    { id: 'appliances', title: 'Рабочая техника', countable: true, items: [
+                        { id: 'microwave', name: 'Микроволновка. Рабочая, чистая внутри', needed: 5 },
+                        { id: 'kettle', name: 'Чайник. Рабочий, без протечек', needed: 5 },
+                        { id: 'iron', name: 'Утюг. Рабочий, без повреждений', needed: 5 }
+                    ], cardSub: 'Для быта в пунктах помощи и временного жилья' },
+                    { id: 'care', title: 'Товары ухода', countable: true, items: [
+                        { id: 'adult-diapers', name: 'Подгузники взрослые, большие размеры. Только новые, в закрытой упаковке', needed: 5 }
+                    ], cardSub: 'Для людей, которым нужен постоянный уход' }
                 ]
             }
         };
@@ -1364,28 +1480,47 @@
             document.getElementById('collection-title').textContent = data.title;
         }
 
+        function categoryImage(title) {
+            return `crisis help new categories/${title}.png`;
+        }
+
+        function selectedCategoryQuantity(needId) {
+            const group = loadSelections()[needId] || {};
+            return Object.values(group).reduce((sum, qty) => sum + Number(qty || 0), 0);
+        }
+
+        function renderNeedCard(need) {
+            const qty = selectedCategoryQuantity(need.id);
+            return `
+                <button class="crisis-card ${qty ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
+                    <img class="crisis-card-img" src="${categoryImage(need.title)}" alt="">
+                    <span class="crisis-card-body">
+                        <span class="crisis-card-title">${need.title}</span>
+                        <span class="crisis-card-sub">${need.cardSub || 'Выберите вещи, которые готовы передать'}</span>
+                    </span>
+                    <span class="crisis-card-side">
+                        <span class="crisis-count">${qty}</span>
+                        <img class="crisis-arrow" src="Icon holder.png" alt="">
+                    </span>
+                </button>
+            `;
+        }
+
         function renderNeeds() {
             const container = document.getElementById('needs-container');
+            const moreContainer = document.getElementById('more-needs-container');
             const selections = loadSelections();
             container.innerHTML = '';
+            if (moreContainer) moreContainer.innerHTML = '';
+
             COLLECTIONS[currentCollection].needs.forEach(need => {
                 const selectedItems = selections[need.id] || {};
-                const selectedCount = Object.keys(selectedItems).length;
-                const total = need.countable ? need.items.reduce((sum, item) => sum + item.needed, 0) : 0;
-                const block = document.createElement('div');
-                block.className = 'need-block';
-                block.innerHTML = `
-                    <div class="need-title">${need.title}</div>
-                    <div class="need-sub">${need.countable ? `Осталось собрать ${total} ${pluralItems(total)}` : 'Нужны всегда в неограниченном количестве'}</div>
-                    <button class="selector ${selectedCount ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
-                        <span>${selectedCount ? `Выбрано ${selectedCount}` : 'Выберите'}</span>
-                        <img class="arrow-icon" src="arrow down.svg" alt="">
-                    </button>
-                    <div class="tags" id="tags-${need.id}"></div>
-                `;
-                container.appendChild(block);
-                renderTags(need.id);
+                const target = Object.keys(selectedItems).length ? container : (moreContainer || container);
+                target.insertAdjacentHTML('beforeend', renderNeedCard(need));
             });
+            document.getElementById('needs-title').style.display = container.children.length ? '' : 'none';
+            document.getElementById('needs-sub').style.display = container.children.length ? '' : 'none';
+            document.getElementById('more-needs-section').style.display = moreContainer && moreContainer.children.length ? '' : 'none';
             updateContinueState();
             autoBuildDescription();
         }
@@ -1399,7 +1534,7 @@
             tags.innerHTML = '';
             Object.keys(selectedItems).forEach(itemId => {
                 const item = need.items.find(i => i.id === itemId);
-                const name = item ? item.name : selectionNames[needId]?.[itemId];
+                const name = item ? item.name : (selectionNames[needId] && selectionNames[needId][itemId]);
                 if (!name) return;
                 const qty = selectedItems[itemId];
                 const tag = document.createElement('span');
@@ -1448,7 +1583,7 @@
                 row.innerHTML = `
                     <div style="flex:1;min-width:0;">
                         <div class="need-item-name">${item.name}</div>
-                        ${need.countable ? `<div class="need-item-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                        ${need.countable ? `<div class="need-item-sub">Собрано ${selected ? qty : 0} из ${item.needed}</div>` : ''}
                         ${selected && need.countable ? `
                             <div class="qty-picker">
                                 <button onclick="changeDraftQty('${item.id}', -1)">−</button>
@@ -1472,7 +1607,7 @@
         function changeDraftQty(itemId, delta) {
             const need = getNeed(activeNeedId);
             const item = need.items.find(i => i.id === itemId);
-            const max = item?.needed || 99;
+            const max = item && item.needed ? item.needed : 99;
             draftSelections[itemId] = Math.max(1, Math.min(max, (draftSelections[itemId] || 1) + delta));
             renderNeedSheetList();
         }
@@ -1484,6 +1619,7 @@
             saveSelections(selections);
             manualDesc = false;
             closeNeedSheet();
+            autoBuildDescription();
             renderNeeds();
         }
 
@@ -1502,7 +1638,7 @@
                 const group = selections[need.id] || {};
                 Object.keys(group).forEach(itemId => {
                     const item = need.items.find(i => i.id === itemId);
-                    const name = item ? item.name : selectionNames[need.id]?.[itemId];
+                    const name = item ? item.name : (selectionNames[need.id] && selectionNames[need.id][itemId]);
                     if (!name) return;
                     lines.push(need.countable ? `${name} — ${group[itemId]} шт.` : name);
                 });
@@ -1571,21 +1707,23 @@
                     image: currentCollection === 'crisis' ? 'crisis help/cat 1.png' : 'crisis help/cat 3.png',
                     comment: ids.map(id => {
                         const item = need.items.find(i => i.id === id);
-                        const name = item ? item.name : selectionNames[need.id]?.[id];
+                        const name = item ? item.name : (selectionNames[need.id] && selectionNames[need.id][id]);
                         return name ? (need.countable ? `${name} — ${group[id]} шт.` : name) : '';
                     }).filter(Boolean).join('\n')
                 });
             });
             sessionStorage.setItem('adCategories', JSON.stringify(categories));
             sessionStorage.setItem('adCollection', COLLECTIONS[currentCollection].storage);
-            sessionStorage.setItem('adPrice', formatAdPrice(document.getElementById('price-input')?.value));
+            const priceInput = document.getElementById('price-input');
+            sessionStorage.setItem('adPrice', formatAdPrice(priceInput ? priceInput.value : ''));
             sessionStorage.setItem('adDesc', normalizeDescriptionText(document.getElementById('desc-textarea').value));
         }
 
         function persistAll() {
             persistCategories();
             sessionStorage.setItem('adTitle', document.getElementById('title-display').value);
-            sessionStorage.setItem('adPrice', formatAdPrice(document.getElementById('price-input')?.value));
+            const priceInput = document.getElementById('price-input');
+            sessionStorage.setItem('adPrice', formatAdPrice(priceInput ? priceInput.value : ''));
             sessionStorage.setItem('adDesc', normalizeDescriptionText(document.getElementById('desc-textarea').value));
         }
 
@@ -1624,7 +1762,8 @@
         seedSelectionsFromSavedCategories();
         renderNeeds();
         window.addEventListener('scroll', function() {
-            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+            const header = document.querySelector('.header');
+            if (header) header.classList.toggle('scrolled', window.scrollY > 0);
         }, { passive: true });
     </script>
 </body>

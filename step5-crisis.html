@@ -1246,8 +1246,15 @@
                         { id: 'helmet', name: 'Защитная каска. Без трещин и повреждений', needed: 6, unit: 'штук' }
                     ], cardSub: 'Для жителей и волонтеров, которые работают на месте' },
                     { id: 'kids', title: 'Детские вещи', countable: true, items: [
-                        { id: 'diapers-kids', name: 'Подгузники, пелёнки, присыпки, влажные салфетки. Только новые и закрытые.', needed: 5, unit: 'любых товаров' },
-                        { id: 'kids-toys-stationery', name: 'Игрушки, книжки, тетради, карандаши или фломастеры. Чистые и целые', needed: 8, unit: 'любых товаров' }
+                        { id: 'diapers-kids', name: 'Подгузники. Только новые и закрытые', needed: 5, unit: 'любых товаров' },
+                        { id: 'kids-pads', name: 'Пелёнки. Только новые и закрытые', needed: 5, unit: 'любых товаров' },
+                        { id: 'kids-powder', name: 'Присыпки. Только новые и закрытые', needed: 5, unit: 'любых товаров' },
+                        { id: 'kids-wipes', name: 'Влажные салфетки. Только новые и закрытые', needed: 5, unit: 'любых товаров' },
+                        { id: 'kids-toys', name: 'Игрушки. Чистые и целые', needed: 8, unit: 'любых товаров' },
+                        { id: 'kids-books', name: 'Книжки. Чистые и целые', needed: 8, unit: 'любых товаров' },
+                        { id: 'kids-notebooks', name: 'Тетради. Чистые и целые', needed: 8, unit: 'любых товаров' },
+                        { id: 'kids-pencils', name: 'Карандаши. Чистые и целые', needed: 8, unit: 'любых товаров' },
+                        { id: 'kids-markers', name: 'Фломастеры. Чистые и целые', needed: 8, unit: 'любых товаров' }
                     ], cardSub: 'Для детей, которые остались без нужных вещей' },
                     { id: 'hygiene', title: 'Средства гигиены', countable: true, items: [
                         { id: 'toothbrushes', name: 'Зубные щётки. Только новые, в упаковке', needed: 5, unit: 'штук' },
@@ -1255,8 +1262,11 @@
                         { id: 'wipes', name: 'Влажные салфетки. Только новые и закрытые', needed: 30, unit: 'упаковок' }
                     ], cardSub: 'Для ежедневного ухода и первой необходимости' },
                     { id: 'home', title: 'Домашняя утварь', countable: true, items: [
-                        { id: 'cutlery', name: 'Столовые приборы. Нож, вилка и ложка, без повреждений', needed: 5, unit: 'любых товаров' },
-                        { id: 'dishes', name: 'Посуда. Глубокая тарелка и кружка, без сколов и трещин', needed: 5, unit: 'любых товаров' },
+                        { id: 'knives', name: 'Ножи. Без повреждений', needed: 5, unit: 'любых товаров' },
+                        { id: 'forks', name: 'Вилки. Без повреждений', needed: 5, unit: 'любых товаров' },
+                        { id: 'spoons', name: 'Ложки. Без повреждений', needed: 5, unit: 'любых товаров' },
+                        { id: 'deep-plates', name: 'Глубокие тарелки. Без сколов и трещин', needed: 5, unit: 'любых товаров' },
+                        { id: 'mugs', name: 'Кружки. Без сколов и трещин', needed: 5, unit: 'любых товаров' },
                         { id: 'bedding', name: 'Постельное бельё 1-спальное. Новое или в хорошем состоянии', needed: 6, unit: 'комплектов' }
                     ], cardSub: 'Для временного жилья и возвращения к быту' },
                     { id: 'appliances', title: 'Рабочая техника', countable: true, items: [
@@ -1712,7 +1722,7 @@
                 row.innerHTML = `
                     <div style="flex:1;min-width:0;">
                         <div class="need-item-name">${item.name}</div>
-                        ${need.countable ? `<div class="need-item-sub">Осталось собрать ${item.needed} ${item.unit || 'штук'}</div>` : ''}
+                        ${need.countable ? `<div class="need-item-sub">Собрано ${selected ? qty : 0} из ${item.needed}</div>` : ''}
                         ${selected && need.countable ? `
                             <div class="qty-picker">
                                 <button onclick="changeDraftQty('${item.id}', -1)">−</button>
@@ -1748,6 +1758,7 @@
             saveSelections(selections);
             manualDesc = false;
             closeNeedSheet();
+            autoBuildDescription();
             renderNeeds();
         }
 

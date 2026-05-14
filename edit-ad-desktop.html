@@ -626,9 +626,11 @@
             </div>
 
             <div class="form-section charity-needs-section" id="donationEditSection">
-                <div class="section-title">Что сейчас нужно</div>
-                <div class="section-sub">Выберите вещи, которые вы готовы передать на помощь людям</div>
+                <div class="section-title" id="donationSelectedTitle">Вы добавили в объявление</div>
+                <div class="section-sub" id="donationSelectedSub">Отмеченные категории и вещи</div>
                 <div class="list-items" id="donationList"></div>
+                <div class="section-title" id="donationMoreTitle" style="margin-top:40px;">Еще можно передать</div>
+                <div class="list-items" id="donationMoreList"></div>
             </div>
 
             <!-- DESCRIPTION -->
@@ -875,7 +877,7 @@
             categories: [
                 { id: 'clothes', name: 'Одежда', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help/cat 1.png', what: ['Тёплая одежда', 'Демисезонная одежда', 'Повседневная одежда для взрослых', 'Повседневная одежда для детей', 'Обувь для взрослых', 'Обувь для детей', 'Куртки', 'Шапки и шарфы', 'Дождевики', 'Новое нижнее бельё'] },
                 { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help/cat 2.png', what: ['Зубная щётка', 'Зубная паста', 'Шампунь', 'Гель для душа', 'Мыло кусковое', 'Порошок стиральный', 'Антисептик', 'Маски', 'Влажные салфетки', 'Туалетная бумага', 'Бритва', 'Пена для бритья', 'Предметы женской гигиены'] },
-                { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 9 вещей', remaining: 9, image: 'crisis help/cat 3.png', what: ['Столовые приборы', 'Посуда: тарелка глубокая, кружка', 'Кастрюля от 3 л с крышкой', 'Сковорода глубокая от 24 см', 'Таз 9 л', 'Полотенце банное', 'Полотенце для рук', 'Постельное бельё 2-спальное', 'Постельное бельё 1-спальное', 'Одеяло 2-спальное', 'Одеяло 1-спальное', 'Подушка'] },
+                { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 9 вещей', remaining: 9, image: 'crisis help/cat 3.png', what: ['Ножи', 'Вилки', 'Ложки', 'Глубокие тарелки', 'Кружки', 'Кастрюля от 3 л с крышкой', 'Сковорода глубокая от 24 см', 'Таз 9 л', 'Полотенце банное', 'Полотенце для рук', 'Постельное бельё 2-спальное', 'Постельное бельё 1-спальное', 'Одеяло 2-спальное', 'Одеяло 1-спальное', 'Подушка'] },
                 { id: 'kids', name: 'Гуманитарная помощь для детей', subtitle: 'Осталось собрать 8 вещей', remaining: 8, image: 'crisis help/cat 4.png', what: ['Подгузники', 'Пелёнки', 'Присыпки', 'Влажные салфетки', 'Детские игрушки', 'Канцелярские принадлежности', 'Раскраски', 'Товары для детских комнат в ПВР'] },
                 { id: 'appliances', name: 'Рабочая техника', subtitle: 'Осталось собрать 3 вещи', remaining: 3, image: 'crisis help/cat 5.png', what: ['Микроволновки', 'Чайники', 'Утюги'] },
                 { id: 'disabled', name: 'Помощь людям с ОВЗ', subtitle: 'Осталось собрать 1 вещь', remaining: 1, image: 'crisis help/cat 6.png', what: ['Подгузники взрослые больших размеров'] },
@@ -1123,8 +1125,11 @@
     function renderDonationList() {
         const coll = COLLECTIONS[currentCollection];
         const list = document.getElementById('donationList');
+        const moreList = document.getElementById('donationMoreList');
         list.innerHTML = '';
-        coll.categories.forEach(cat => {
+        if (moreList) moreList.innerHTML = '';
+
+        function appendCategory(cat, target) {
             if (!catState[cat.id]) catState[cat.id] = { selected: false, quantity: 1, comment: '', dropdownOpen: false, items: {}, selectOpen: false };
             const s = catState[cat.id];
             const item = document.createElement('div');
@@ -1144,8 +1149,18 @@
                 </div>
                 <div class="need-tags">${renderNeedTags(cat, s)}</div>
             `;
-            list.appendChild(item);
+            target.appendChild(item);
+        }
+
+        coll.categories.forEach(cat => {
+            const selected = Object.keys((catState[cat.id] && catState[cat.id].items) || {}).length > 0;
+            appendCategory(cat, selected ? list : (moreList || list));
         });
+
+        const hasSelected = list.children.length > 0;
+        document.getElementById('donationSelectedTitle').style.display = hasSelected ? '' : 'none';
+        document.getElementById('donationSelectedSub').style.display = hasSelected ? '' : 'none';
+        document.getElementById('donationMoreTitle').style.display = moreList && moreList.children.length ? '' : 'none';
     }
 
     function renderNeedTags(cat, s) {
@@ -1219,7 +1234,7 @@
                     <div class="need-popup-row">
                         <div>
                             <div class="need-popup-name">${item.name}</div>
-                            ${isCountable(cat) ? `<div class="need-popup-sub">Нужно: ${item.needed} шт.</div>` : ''}
+                            ${isCountable(cat) ? `<div class="need-popup-sub">Собрано ${selected ? qty : 0} из ${item.needed}</div>` : ''}
                         </div>
                         <button class="need-popup-check" onclick="toggleDraftNeedItem('${item.id}', event)">
                             <img src="${selected ? 'step 6 materials/checkbox on.png' : 'step 6 materials/checkbox off.png'}" width="24" height="24" alt="">
