@@ -26,14 +26,21 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 16px;
-            background: #fff;
-            position: sticky;
+            background: transparent;
+            position: fixed;
             top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
             z-index: 80;
-            transition: box-shadow 0.2s;
+            transition: background 0.2s, box-shadow 0.2s;
         }
 
-        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        .header.scrolled {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
 
         .save-exit {
             font-size: 15px;
@@ -42,32 +49,65 @@
             cursor: pointer;
         }
 
+        .hero {
+            position: relative;
+            min-height: 320px;
+            padding: 96px 16px 28px;
+            background-image: url('hero.png');
+            background-size: cover;
+            background-position: center top;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
         .intro {
-            margin-top: 16px;
             padding: 0 16px;
-            text-align: center;
+            text-align: left;
         }
 
         .intro-title {
-            font-size: 24px;
+            font-size: 36px;
             font-weight: 700;
             line-height: 1.15;
         }
 
         .intro-subtitle {
             margin-top: 6px;
-            font-size: 15px;
+            font-size: 24px;
             font-weight: 400;
             line-height: 1.35;
         }
 
+        .hero .intro {
+            padding: 0;
+            max-width: 250px;
+        }
+
+        .hero-how-btn {
+            margin-top: 24px;
+            width: 160px;
+            height: 44px;
+            border: none;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #000;
+            cursor: pointer;
+        }
+
         .content {
-            margin-top: 16px;
+            margin-top: 0;
             padding: 0 16px;
+            background: #fff;
         }
 
         .section { margin-top: 32px; }
-        .section:first-child { margin-top: 0; }
+        .section:first-child { margin-top: 24px; }
 
         .section-title {
             font-size: 24px;
@@ -152,12 +192,44 @@
         .crisis-card.clickable { cursor: pointer; }
 
         .crisis-card-img {
+            position: relative;
             width: 60px;
             height: 60px;
             border-radius: 10px;
             object-fit: cover;
             flex-shrink: 0;
             background: #fff;
+        }
+
+        .crisis-img-wrap {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+
+        .crisis-img-wrap .crisis-card-img {
+            width: 60px;
+            height: 60px;
+            display: block;
+        }
+
+        .urgent-badge {
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            transform: translateX(-50%);
+            width: 57px;
+            height: 22px;
+            border-radius: 14px;
+            background: #FF4053;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 22px;
+            text-align: center;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .crisis-card-body { flex: 1; min-width: 0; }
@@ -320,10 +392,12 @@
             margin-top: 12px;
             border-radius: 16px;
             background: #F4F4F4;
+            border: 1px solid #000;
             padding: 14px 14px 14px 16px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            position: relative;
         }
 
         .collection-img {
@@ -346,6 +420,29 @@
             font-size: 13px;
             font-weight: 400;
             line-height: 1.25;
+            padding-right: 28px;
+        }
+
+        .collection-radio {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #111;
+        }
+
+        .collection-radio::after {
+            content: '';
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .change-collection-btn {
@@ -872,31 +969,24 @@
         <span class="save-exit" onclick="saveAndExit()">Сохранить и выйти</span>
     </header>
 
-    <section class="intro">
-        <h1 class="intro-title">Добрые вещи 🧡</h1>
-        <p class="intro-subtitle">Похоже, ваши вещи подходят<br>для помощи людям при ЧС.</p>
+    <section class="hero">
+        <div class="intro">
+            <h1 class="intro-title">Добрые вещи 🧡</h1>
+            <p class="intro-subtitle">Похоже, ваши вещи подходят<br>для помощи людям при ЧС</p>
+        </div>
+        <button class="hero-how-btn" onclick="openSheet()">Как это работает</button>
     </section>
 
     <main class="content">
         <section class="section">
-            <div class="banner" id="banner" onclick="openSheet()">
-                <img class="banner-img" src="how it works.png" alt="">
-                <div>
-                    <div class="banner-title">Как это работает</div>
-                    <div class="banner-sub">Кто увидит объявление<br>и как передать вещи<br>на благотворительность</div>
-                    <div class="banner-link">Узнать подробнее</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="compact-title">Кому могут подойти ваши вещи</h2>
+            <h2 class="compact-title">Куда будут отправлены вещи</h2>
             <div class="collection-card">
                 <img class="collection-img" id="collection-img" src="sbor 2 new.png" alt="">
                 <div>
                     <div class="collection-title" id="collection-title">Пострадавшим от ЧС<br>в Дагестане</div>
                     <div class="collection-sub" id="collection-sub">Нужны вещи для быта, гигиены, восстановления домов и помощи детям</div>
                 </div>
+                <span class="collection-radio" aria-hidden="true"></span>
             </div>
             <button class="change-collection-btn" onclick="openChangeSheet()">Помочь в другой ситуации</button>
         </section>
@@ -907,7 +997,7 @@
             <div class="category-list" id="suggested-list"></div>
         </section>
 
-        <section class="section">
+        <section class="section" id="urgent-section" style="display:none;">
             <h2 class="compact-title">Срочно нужны сейчас</h2>
             <div class="category-list" id="urgent-list"></div>
         </section>
@@ -1507,11 +1597,14 @@
             return ids;
         }
 
-        function renderNeedCard(need) {
+        function renderNeedCard(need, urgent = false) {
             const qty = selectedCategoryQuantity(need.id);
             return `
                 <button class="crisis-card clickable ${qty ? 'selected' : ''}" onclick="openNeedSheet('${need.id}')">
-                    <img class="crisis-card-img" src="${categoryImage(need.title)}" alt="">
+                    <span class="crisis-img-wrap">
+                        <img class="crisis-card-img" src="${categoryImage(need.title)}" alt="">
+                        ${urgent ? '<span class="urgent-badge">Срочно</span>' : ''}
+                    </span>
                     <span class="crisis-card-body">
                         <span class="crisis-card-title">${need.title}</span>
                         <span class="crisis-card-sub">${need.cardSub || ''}</span>
@@ -1535,8 +1628,8 @@
 
             document.getElementById('suggested-section').style.display = suggested.length ? '' : 'none';
             document.getElementById('suggested-list').innerHTML = suggested.map(renderNeedCard).join('');
-            document.getElementById('urgent-list').innerHTML = urgent.map(renderNeedCard).join('');
-            document.getElementById('more-list').innerHTML = more.map(renderNeedCard).join('');
+            document.getElementById('urgent-list').innerHTML = '';
+            document.getElementById('more-list').innerHTML = urgent.map(need => renderNeedCard(need, true)).concat(more.map(need => renderNeedCard(need))).join('');
             updateContinueState();
             autoBuildDescription();
         }
