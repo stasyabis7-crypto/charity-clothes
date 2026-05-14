@@ -976,7 +976,7 @@
             <h1 class="intro-title">Добрые вещи 🧡</h1>
             <p class="intro-subtitle">Похоже, ваши вещи<br>подходят для помощи<br>людям при ЧС</p>
         </div>
-        <button class="hero-how-btn" type="button" onclick="event.preventDefault(); openSheet();">Как это работает</button>
+        <button class="hero-how-btn" id="hero-how-btn" type="button">Как это работает</button>
     </section>
 
     <main class="content">
@@ -1478,12 +1478,16 @@
 
         function openSheet() {
             renderInfoSheet();
-            document.getElementById('sheet-overlay').classList.add('open');
+            const overlay = document.getElementById('sheet-overlay');
+            overlay.classList.add('open');
+            overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
         function closeSheet() {
-            document.getElementById('sheet-overlay').classList.remove('open');
+            const overlay = document.getElementById('sheet-overlay');
+            overlay.classList.remove('open');
+            overlay.style.display = '';
             document.body.style.overflow = '';
         }
 
@@ -1850,6 +1854,11 @@
         });
 
         currentCollection = CURRENT_COLLECTION;
+        document.getElementById('hero-how-btn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openSheet();
+        });
         renderPhotos();
         setupMainFields();
         renderCollection();
