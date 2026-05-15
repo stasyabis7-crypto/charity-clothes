@@ -95,13 +95,13 @@
         .charity-intro-section { order: 10; padding-top: 0; }
         .charity-layout .charity-intro-section { padding-top: 0 !important; }
         .charity-layout .charity-banner-section { order: 20; padding-top: 24px; }
-        .charity-collection-section { order: 25; }
-        .charity-suggested-section { order: 30; }
-        .charity-urgent-section { order: 35; }
-        .charity-more-section { order: 40; }
-        .charity-data-section { order: 45; }
-        .charity-photos-section { order: 50; }
-        .charity-layout #titleSection { order: 55; padding-top: 56px !important; }
+        .charity-layout #titleSection { order: 25; padding-top: 56px !important; }
+        .charity-photos-section { order: 30; }
+        .charity-collection-section { order: 35; }
+        .charity-suggested-section { order: 40; }
+        .charity-urgent-section { order: 45; }
+        .charity-more-section { order: 50; }
+        .charity-data-section { order: 55; }
         .charity-category-section { order: 60; }
         .charity-condition-section { order: 62; }
         .charity-type-section { order: 64; }
@@ -709,8 +709,8 @@
                 <div class="section-title">Условия продажи</div>
                 <div style="height:14px"></div>
                 <div class="price-input-wrap">
-                    <input type="text" class="text-input price-input" id="charityPriceInput" value="0 ₽">
-                    <button class="title-clear" style="display:flex" onclick="document.getElementById('charityPriceInput').value='';">
+                    <input type="text" class="text-input price-input" id="charityPriceInput" inputmode="numeric" autocomplete="off" value="0 ₽">
+                    <button class="title-clear" style="display:flex" onclick="clearCharityPrice(event)">
                         <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
                             <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
@@ -1058,9 +1058,9 @@
             id: 'crisis', title: 'Пострадавшим от ЧС в Дагестане', subtitle: 'Нужны вещи для быта, гигиены, восстановления домов и помощи детям',
             categories: [
                 { id: 'adult-clothes', name: 'Одежда и обувь для взрослых', cardSub: 'Для людей, которые остались без нужных вещей', image: 'crisis help new categories/Одежда и обувь для взрослых.png',
-                  what: ['Тёплая или демисезонная одежда и обувь для взрослых. Чистые, без сильного износа', 'Повседневная одежда и обувь для взрослых. Чистые, в хорошем состоянии', 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
+                  what: ['Тёплая куртка для взрослых. Чистая, без сильного износа', 'Тёплое пальто для взрослых. Чистое, без сильного износа', 'Демисезонная куртка для взрослых. Чистая, без сильного износа', 'Демисезонное пальто или плащ для взрослых. Чистые, без сильного износа', 'Свитер, толстовка или тёплая кофта для взрослых. В хорошем состоянии', 'Брюки или джинсы для взрослых. Чистые, без сильного износа', 'Футболка, рубашка или блузка для взрослых. Чистые, в хорошем состоянии', 'Обувь для взрослых. Чистая, без сильного износа', 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке'], units: ['штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'пар', 'комплектов'], needed: [5, 5, 5, 5, 5, 5, 5, 5, 5] },
                 { id: 'kids-clothes', name: 'Одежда для детей', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/kids clothes.png',
-                  what: ['Тёплая или демисезонная одежда для детей. Чистая, без сильного износа', 'Повседневная одежда для детей. Чистая, в хорошем состоянии', 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке'], units: ['любых товаров', 'любых товаров', 'любых товаров'], needed: [5, 5, 5] },
+                  what: ['Тёплая куртка или комбинезон для детей. Чистые, без сильного износа', 'Тёплое пальто для детей. Чистое, без сильного износа', 'Демисезонная куртка или ветровка для детей. Чистые, без сильного износа', 'Свитер, толстовка или тёплая кофта для детей. В хорошем состоянии', 'Брюки, джинсы или леггинсы для детей. Чистые, в хорошем состоянии', 'Платье, юбка, футболка или рубашка для детей. Чистые, в хорошем состоянии', 'Обувь для детей. Чистая, без сильного износа', 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке'], units: ['штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'пар', 'комплектов'], needed: [5, 5, 5, 5, 5, 5, 5, 5] },
                 { id: 'water', name: 'Откачка воды и осушение', cardSub: 'Для домов и помещений после подтопления', image: 'crisis help new categories/Откачка воды и осушение.png',
                   what: ['Помпа для откачки воды. Рабочая, без повреждений', 'Пушка для сушки помещений. Рабочая и исправная', 'Напорные пожарные рукава. Без повреждений и разрывов'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
                 { id: 'tools', name: 'Инструменты для расчистки', cardSub: 'Для уборки грязи, мусора и поврежденных конструкций', image: 'crisis help new categories/Инструменты для расчистки.png',
@@ -1232,10 +1232,25 @@
             updateRegularPrice();
         });
         regularPriceInput.addEventListener('focus', function() {
-            this.value = regularPriceDigits;
-            requestAnimationFrame(() => this.setSelectionRange(this.value.length, this.value.length));
+            updateRegularPrice();
+            placePriceCaret(this);
+        });
+        regularPriceInput.addEventListener('click', function() {
+            placePriceCaret(this);
         });
         regularPriceInput.addEventListener('blur', updateRegularPrice);
+    }
+
+    if (charityPriceInput) {
+        charityPriceInput.addEventListener('input', function() {
+            updatePriceInputValue(this);
+        });
+        charityPriceInput.addEventListener('focus', function() {
+            updatePriceInputValue(this);
+        });
+        charityPriceInput.addEventListener('click', function() {
+            placePriceCaret(this);
+        });
     }
 
     function clearTitle() {
@@ -1403,7 +1418,29 @@
         regularPriceInput.value = regularPriceDigits ? regularPriceDigits + ' ₽' : '';
         regularPriceClear.style.display = regularPriceDigits ? 'flex' : 'none';
         document.getElementById('priceCharityHint').classList.toggle('visible', regularPriceDigits !== '');
+        if (document.activeElement === regularPriceInput) placePriceCaret(regularPriceInput);
         updateSubmitBtn();
+    }
+
+    function placePriceCaret(input) {
+        requestAnimationFrame(() => {
+            const digitsEnd = String(input.value || '').replace(/\s*₽\s*$/, '').length;
+            input.setSelectionRange(digitsEnd, digitsEnd);
+        });
+    }
+
+    function updatePriceInputValue(input) {
+        const digits = input.value.replace(/\D/g, '');
+        input.value = digits ? digits + ' ₽' : '';
+        placePriceCaret(input);
+        return digits;
+    }
+
+    function clearCharityPrice(e) {
+        if (e) e.stopPropagation();
+        if (!charityPriceInput) return;
+        charityPriceInput.value = '';
+        charityPriceInput.focus();
     }
 
     function focusRegularPrice() {
@@ -1799,9 +1836,16 @@
         coll.categories.forEach(cat => {
             const s = catState[cat.id];
             if (!s || !s.items || Object.keys(s.items).length === 0) return;
-            const selectedLines = needItems(cat)
+            const knownItems = needItems(cat);
+            const selectedLines = knownItems
                 .filter(item => Object.prototype.hasOwnProperty.call(s.items, item.id))
                 .map(item => isCountable(cat) ? `${item.name} — ${s.items[item.id]} шт.` : item.name);
+            Object.keys(s.items)
+                .filter(id => !knownItems.some(item => item.id === id))
+                .forEach(id => {
+                    const name = (s.itemNames && s.itemNames[id]) || id;
+                    selectedLines.push(isCountable(cat) ? `${name} — ${s.items[id]} шт.` : name);
+                });
             if (selectedLines.length) lines.push(`${cat.name}\n${selectedLines.join('\n')}`);
         });
         const base = buildDescriptionBase();
@@ -2155,13 +2199,21 @@
         savedCats.forEach(c => {
             const collCat = coll.categories.find(cat => cat.id === c.id);
             const items = {};
+            const itemNames = {};
             if (Array.isArray(c.items)) {
-                c.items.forEach(item => { items[item.id || itemIdFromName(item.name)] = item.quantity || 1; });
+                c.items.forEach(item => {
+                    const id = item.id || itemIdFromName(item.name);
+                    items[id] = item.quantity || 1;
+                    if (item.name) itemNames[id] = item.name;
+                });
             } else if (collCat) {
                 const first = needItems(collCat)[0];
-                if (first) items[first.id] = c.quantity || 1;
+                if (first) {
+                    items[first.id] = c.quantity || 1;
+                    itemNames[first.id] = first.name;
+                }
             }
-            catState[c.id] = { selected: Object.keys(items).length > 0, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false, items, selectOpen: false };
+            catState[c.id] = { selected: Object.keys(items).length > 0, quantity: c.quantity || 1, comment: c.comment || '', dropdownOpen: false, items, itemNames, selectOpen: false };
         });
         const savedPhotos = JSON.parse(sessionStorage.getItem('adPhotos') || '[]');
         if (savedPhotos.length > 0) { photoSelection = savedPhotos; renderSelectedPhotos(); }

@@ -91,12 +91,12 @@
         .form-section { padding-top: 56px; }
         .charity-layout .form-section { padding-top: 56px; }
         .charity-layout #extraSections { display: contents !important; }
-        .charity-layout #titleSection { order: 30; padding-top: 56px !important; }
+        .charity-layout #titleSection { order: 25; padding-top: 56px !important; }
         .charity-layout #sectionCats { display: none !important; }
         .charity-intro-section { order: 10; padding-top: 0; }
         .charity-layout .charity-intro-section { padding-top: 0 !important; }
         .charity-layout .charity-banner-section { order: 20; padding-top: 24px; }
-        .charity-photos-section { order: 25; }
+        .charity-photos-section { order: 30; }
         .charity-category-section { order: 40; }
         .charity-price-section { order: 45; }
         .charity-collection-section { order: 50; }
@@ -605,8 +605,8 @@
                 <div class="section-title">Условия продажи</div>
                 <div style="height:14px"></div>
                 <div class="price-input-wrap">
-                    <input type="text" class="text-input price-input" id="charityPriceInput" value="0 ₽">
-                    <button class="title-clear" style="display:flex" onclick="document.getElementById('charityPriceInput').value='';">
+                    <input type="text" class="text-input price-input" id="charityPriceInput" inputmode="numeric" autocomplete="off" value="0 ₽">
+                    <button class="title-clear" style="display:flex" onclick="clearCharityPrice(event)">
                         <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
                             <path d="M3 3L13 13M13 3L3 13" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
@@ -875,8 +875,8 @@
         crisis: {
             id: 'crisis', title: 'Помощь в Дагестане ❤️', subtitle: 'Собираем вещи в помощь людям, пострадавшим от паводков',
             categories: [
-                { id: 'adult-clothes', name: 'Одежда и обувь для взрослых', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help new categories/Одежда и обувь для взрослых.png', what: ['Тёплая одежда для взрослых', 'Демисезонная одежда для взрослых', 'Повседневная одежда для взрослых', 'Обувь для взрослых', 'Новое нижнее бельё для взрослых'] },
-                { id: 'kids-clothes', name: 'Одежда для детей', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help new categories/kids clothes.png', what: ['Тёплая одежда для детей', 'Демисезонная одежда для детей', 'Повседневная одежда для детей', 'Обувь для детей', 'Новое нижнее бельё для детей'] },
+                { id: 'adult-clothes', name: 'Одежда и обувь для взрослых', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help new categories/Одежда и обувь для взрослых.png', what: ['Тёплая куртка для взрослых', 'Тёплое пальто для взрослых', 'Демисезонная куртка для взрослых', 'Демисезонное пальто или плащ для взрослых', 'Свитер, толстовка или тёплая кофта для взрослых', 'Брюки или джинсы для взрослых', 'Футболка, рубашка или блузка для взрослых', 'Обувь для взрослых', 'Новое нижнее бельё для взрослых'] },
+                { id: 'kids-clothes', name: 'Одежда для детей', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help new categories/kids clothes.png', what: ['Тёплая куртка или комбинезон для детей', 'Тёплое пальто для детей', 'Демисезонная куртка или ветровка для детей', 'Свитер, толстовка или тёплая кофта для детей', 'Брюки, джинсы или леггинсы для детей', 'Платье, юбка, футболка или рубашка для детей', 'Обувь для детей', 'Новое нижнее бельё для детей'] },
                 { id: 'hygiene', name: 'Средства гигиены', subtitle: 'Осталось собрать 10 вещей', remaining: 10, image: 'crisis help/cat 2.png', what: ['Зубная щётка', 'Зубная паста', 'Шампунь', 'Гель для душа', 'Мыло кусковое', 'Порошок стиральный', 'Антисептик', 'Маски', 'Влажные салфетки', 'Туалетная бумага', 'Бритва', 'Пена для бритья', 'Предметы женской гигиены'] },
                 { id: 'home', name: 'Домашняя утварь', subtitle: 'Осталось собрать 9 вещей', remaining: 9, image: 'crisis help/cat 3.png', what: ['Ножи', 'Вилки', 'Ложки', 'Глубокие тарелки', 'Кружки', 'Кастрюля от 3 л с крышкой', 'Сковорода глубокая от 24 см', 'Таз 9 л', 'Полотенце банное', 'Полотенце для рук', 'Постельное бельё 2-спальное', 'Постельное бельё 1-спальное', 'Одеяло 2-спальное', 'Одеяло 1-спальное', 'Подушка'] },
                 { id: 'kids', name: 'Уход за детьми и творчество', subtitle: 'Осталось собрать 8 вещей', remaining: 8, image: 'crisis help new categories/Уход за детьми и творчество.png', what: ['Подгузники', 'Пелёнки', 'Присыпки', 'Влажные салфетки', 'Детские игрушки', 'Канцелярские принадлежности', 'Раскраски', 'Товары для детских комнат в ПВР'] },
@@ -1049,6 +1049,39 @@
             this.style.height = 'auto';
             this.style.height = Math.max(126, this.scrollHeight) + 'px';
         });
+    }
+
+    if (charityPriceInput) {
+        charityPriceInput.addEventListener('input', function() {
+            updatePriceInputValue(this);
+        });
+        charityPriceInput.addEventListener('focus', function() {
+            updatePriceInputValue(this);
+        });
+        charityPriceInput.addEventListener('click', function() {
+            placePriceCaret(this);
+        });
+    }
+
+    function placePriceCaret(input) {
+        requestAnimationFrame(() => {
+            const digitsEnd = String(input.value || '').replace(/\s*₽\s*$/, '').length;
+            input.setSelectionRange(digitsEnd, digitsEnd);
+        });
+    }
+
+    function updatePriceInputValue(input) {
+        const digits = input.value.replace(/\D/g, '');
+        input.value = digits ? digits + ' ₽' : '';
+        placePriceCaret(input);
+        return digits;
+    }
+
+    function clearCharityPrice(e) {
+        if (e) e.stopPropagation();
+        if (!charityPriceInput) return;
+        charityPriceInput.value = '';
+        charityPriceInput.focus();
     }
 
     function clearTitle() {
