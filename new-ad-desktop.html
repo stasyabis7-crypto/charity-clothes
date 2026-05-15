@@ -298,7 +298,10 @@
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
         }
         .need-tag button img { width: 20px; height: 20px; }
-        .need-popup-list { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+        #needPopup .modal-card { max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+        #needPopup .modal-btn-primary { flex-shrink: 0; margin-top: 16px; }
+        .need-popup-list { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; overflow-y: auto; padding-right: 4px; min-height: 0; }
+        .need-popup-group-title { margin: 8px 0 -4px; font-size: 13px; font-weight: 800; color: #757575; line-height: 1.25; }
         .need-popup-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
         .need-popup-name { font-size: 15px; font-weight: 400; color: #1A1A1A; line-height: 1.3; }
         .need-popup-sub { margin-top: 2px; font-size: 13px; font-weight: 400; color: #757575; }
@@ -1044,23 +1047,23 @@
             categories: [
                 { id: 'adult-clothes', name: 'Одежда и обувь', subtitle: 'Осталось собрать 40 вещей', remaining: 40,
                   image: 'step 6 materials/Мужская и женская одежда.png',
-                  what: ['Мужские джинсы, размер 48–54', 'Женские теплые кофты, размер S–L', 'Демисезонные куртки', 'Обувь для взрослых', 'Шапки и шарфы'] },
+                  what: ['Мужские джинсы, размер 48–54', 'Женские теплые кофты, размер S–L', 'Демисезонные куртки', 'Обувь для взрослых', 'Шапки', 'Шарфы'] },
                 { id: 'kids-clothes', name: 'Детские вещи', subtitle: 'Осталось собрать 23 вещи', remaining: 23,
                   image: 'step 6 materials/Детская одежда и обувь.png',
-                  what: ['Детские брюки и джинсы', 'Толстовки и свитшоты', 'Платья и сарафаны', 'Детская обувь', 'Куртки для детей'] },
+                  what: ['Детские брюки', 'Детские джинсы', 'Толстовки', 'Свитшоты', 'Платья', 'Сарафаны', 'Детская обувь', 'Куртки для детей'] },
                 { id: 'toys', name: 'Детские игрушки', subtitle: 'Нужны всегда в неограниченном количестве',
                   image: 'step 6 materials/Игрушки.png',
                   countable: false,
-                  what: ['Конструкторы', 'Куклы и аксессуары', 'Машинки', 'Детские книги', 'Настольные игры'] }
+                  what: ['Конструкторы', 'Куклы', 'Аксессуары для кукол', 'Машинки', 'Детские книги', 'Настольные игры'] }
             ]
         },
         crisis: {
             id: 'crisis', title: 'Пострадавшим от ЧС в Дагестане', subtitle: 'Нужны вещи для быта, гигиены, восстановления домов и помощи детям',
             categories: [
                 { id: 'adult-clothes', name: 'Одежда и обувь для взрослых', cardSub: 'Для людей, которые остались без нужных вещей', image: 'crisis help new categories/Одежда и обувь для взрослых.png',
-                  what: ['Тёплая куртка для взрослых. Чистая, без сильного износа', 'Тёплое пальто для взрослых. Чистое, без сильного износа', 'Демисезонная куртка для взрослых. Чистая, без сильного износа', 'Демисезонное пальто или плащ для взрослых. Чистые, без сильного износа', 'Свитер, толстовка или тёплая кофта для взрослых. В хорошем состоянии', 'Брюки или джинсы для взрослых. Чистые, без сильного износа', 'Футболка, рубашка или блузка для взрослых. Чистые, в хорошем состоянии', 'Обувь для взрослых. Чистая, без сильного износа', 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке'], units: ['штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'пар', 'комплектов'], needed: [5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                  what: ['Тёплая куртка для взрослых. Чистая, без сильного износа', 'Тёплое пальто для взрослых. Чистое, без сильного износа', 'Демисезонная куртка для взрослых. Чистая, без сильного износа', 'Демисезонное пальто для взрослых. Чистое, без сильного износа', 'Плащ для взрослых. Чистый, без сильного износа', 'Свитер для взрослых. В хорошем состоянии', 'Толстовка для взрослых. В хорошем состоянии', 'Тёплая кофта для взрослых. В хорошем состоянии', 'Брюки для взрослых. Чистые, без сильного износа', 'Джинсы для взрослых. Чистые, без сильного износа', 'Футболка для взрослых. Чистая, в хорошем состоянии', 'Рубашка для взрослых. Чистая, в хорошем состоянии', 'Блузка для взрослых. Чистая, в хорошем состоянии', 'Обувь для взрослых. Чистая, без сильного износа', 'Новое нижнее бельё для взрослых. Только новое, с бирками или в упаковке'], units: ['штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'пар', 'комплектов'], needed: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
                 { id: 'kids-clothes', name: 'Одежда для детей', cardSub: 'Для детей, которые остались без нужных вещей', image: 'crisis help new categories/kids clothes.png',
-                  what: ['Тёплая куртка или комбинезон для детей. Чистые, без сильного износа', 'Тёплое пальто для детей. Чистое, без сильного износа', 'Демисезонная куртка или ветровка для детей. Чистые, без сильного износа', 'Свитер, толстовка или тёплая кофта для детей. В хорошем состоянии', 'Брюки, джинсы или леггинсы для детей. Чистые, в хорошем состоянии', 'Платье, юбка, футболка или рубашка для детей. Чистые, в хорошем состоянии', 'Обувь для детей. Чистая, без сильного износа', 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке'], units: ['штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'пар', 'комплектов'], needed: [5, 5, 5, 5, 5, 5, 5, 5] },
+                  what: ['Тёплая куртка для детей. Чистая, без сильного износа', 'Комбинезон для детей. Чистый, без сильного износа', 'Тёплое пальто для детей. Чистое, без сильного износа', 'Демисезонная куртка для детей. Чистая, без сильного износа', 'Ветровка для детей. Чистая, без сильного износа', 'Свитер для детей. В хорошем состоянии', 'Толстовка для детей. В хорошем состоянии', 'Тёплая кофта для детей. В хорошем состоянии', 'Брюки для детей. Чистые, в хорошем состоянии', 'Джинсы для детей. Чистые, в хорошем состоянии', 'Леггинсы для детей. Чистые, в хорошем состоянии', 'Платье для детей. Чистое, в хорошем состоянии', 'Юбка для детей. Чистая, в хорошем состоянии', 'Футболка для детей. Чистая, в хорошем состоянии', 'Рубашка для детей. Чистая, в хорошем состоянии', 'Обувь для детей. Чистая, без сильного износа', 'Новое нижнее бельё для детей. Только новое, с бирками или в упаковке'], units: ['штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'штук', 'пар', 'комплектов'], needed: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
                 { id: 'water', name: 'Откачка воды и осушение', cardSub: 'Для домов и помещений после подтопления', image: 'crisis help new categories/Откачка воды и осушение.png',
                   what: ['Помпа для откачки воды. Рабочая, без повреждений', 'Пушка для сушки помещений. Рабочая и исправная', 'Напорные пожарные рукава. Без повреждений и разрывов'], units: ['штук', 'штук', 'штук'], needed: [5, 5, 5] },
                 { id: 'tools', name: 'Инструменты для расчистки', cardSub: 'Для уборки грязи, мусора и поврежденных конструкций', image: 'crisis help new categories/Инструменты для расчистки.png',
@@ -1157,6 +1160,28 @@
             needed: countable ? (Array.isArray(cat.needed) ? cat.needed[index] : (index === 0 ? Math.max(1, (cat.remaining || base) - base * (cat.what.length - 1)) : base)) : null,
             unit: Array.isArray(cat.units) ? cat.units[index] : 'штук'
         }));
+    }
+
+    function itemGroupTitle(name) {
+        const text = String(name || '').toLowerCase();
+        if (text.includes('куртк') || text.includes('пальто') || text.includes('плащ') || text.includes('комбинезон') || text.includes('ветровк')) return 'Верхняя одежда';
+        if (text.includes('свитер') || text.includes('толстовк') || text.includes('кофт') || text.includes('футболк') || text.includes('рубашк') || text.includes('блузк') || text.includes('майк') || text.includes('свитшот')) return 'Верх';
+        if (text.includes('брюк') || text.includes('джинс') || text.includes('леггинс')) return 'Низ';
+        if (text.includes('плать') || text.includes('юбк') || text.includes('сарафан')) return 'Платья и юбки';
+        if (text.includes('обув')) return 'Обувь';
+        if (text.includes('бель')) return 'Бельё';
+        if (text.includes('шапк') || text.includes('шарф') || text.includes('вареж')) return 'Аксессуары';
+        return '';
+    }
+
+    function renderGroupedNeedItems(items, renderItem) {
+        let lastGroup = null;
+        return items.map(item => {
+            const group = itemGroupTitle(item.name);
+            const header = group && group !== lastGroup ? `<div class="need-popup-group-title">${group}</div>` : '';
+            if (group) lastGroup = group;
+            return header + renderItem(item);
+        }).join('');
     }
 
     function pluralItems(n) {
@@ -1480,7 +1505,7 @@
     }
 
     function normalizeDescriptionText(text) {
-        const parts = (text || '').split(/\n+\s*Готовы передать:\n/);
+        const parts = (text || '').split(/(?:^|\n+)\s*Готовы передать:\n/);
         if (parts.length <= 1) return cleanDescriptionBase(text);
         const base = cleanDescriptionBase(parts[0]);
         const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
@@ -1496,7 +1521,7 @@
 
     function buildPublishedCharityDescription() {
         const raw = normalizeDescriptionText(descTextarea ? descTextarea.value : '');
-        const parts = raw.split(/\n+\s*Готовы передать:\n/);
+        const parts = raw.split(/(?:^|\n+)\s*Готовы передать:\n/);
         const base = cleanDescriptionBase(parts[0] || '');
         const generated = parts.slice(1).join('\n').trim();
         const details = [];
@@ -1728,7 +1753,7 @@
         if (!cat) return;
         document.getElementById('needPopupTitle').textContent = 'Выберите, что готовы передать';
         document.getElementById('needPopupSubtitle').textContent = `В категории «${cat.name}»`;
-        document.getElementById('needPopupList').innerHTML = needItems(cat).map(item => {
+        document.getElementById('needPopupList').innerHTML = renderGroupedNeedItems(needItems(cat), item => {
             const selected = Object.prototype.hasOwnProperty.call(draftNeedItems, item.id);
             const qty = draftNeedItems[item.id] || 1;
             return `
@@ -1923,10 +1948,11 @@
         document.body.style.overflow = '';
     }
     function switchHowTab(tab) {
-        document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.modal-pane').forEach(p => p.classList.remove('active'));
-        document.getElementById('htab-' + tab).classList.add('active');
-        document.getElementById('hpane-' + tab).classList.add('active');
+        const popup = document.getElementById('howPopup');
+        popup.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+        popup.querySelectorAll('.modal-pane').forEach(p => p.classList.remove('active'));
+        popup.querySelector('#htab-' + tab).classList.add('active');
+        popup.querySelector('#hpane-' + tab).classList.add('active');
     }
 
     /* ═══════════ CHANGE COLLECTION POPUP ═══════════ */

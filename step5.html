@@ -716,6 +716,18 @@
             gap: 12px;
         }
 
+        .need-sheet-group-title {
+            margin-top: 28px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #757575;
+            line-height: 1.25;
+        }
+
+        .need-sheet-group-title + .need-row {
+            margin-top: 12px;
+        }
+
         .need-item-name {
             font-size: 17px;
             font-weight: 400;
@@ -992,18 +1004,23 @@
                         { id: 'women-sweaters', name: 'Женские теплые кофты, размер S–L', needed: 6 },
                         { id: 'jackets', name: 'Демисезонные куртки', needed: 8 },
                         { id: 'shoes', name: 'Обувь для взрослых', needed: 7 },
-                        { id: 'hats', name: 'Шапки и шарфы', needed: 4 }
+                        { id: 'hats', name: 'Шапки', needed: 4 },
+                        { id: 'scarves', name: 'Шарфы', needed: 4 }
                     ] },
                     { id: 'kids', title: 'Детские вещи', countable: true, items: [
-                        { id: 'kids-pants', name: 'Детские брюки и джинсы', needed: 5 },
-                        { id: 'kids-hoodies', name: 'Толстовки и свитшоты', needed: 6 },
-                        { id: 'kids-dresses', name: 'Платья и сарафаны', needed: 4 },
+                        { id: 'kids-pants', name: 'Детские брюки', needed: 5 },
+                        { id: 'kids-jeans', name: 'Детские джинсы', needed: 5 },
+                        { id: 'kids-hoodies', name: 'Толстовки', needed: 6 },
+                        { id: 'kids-sweatshirts', name: 'Свитшоты', needed: 6 },
+                        { id: 'kids-dresses', name: 'Платья', needed: 4 },
+                        { id: 'kids-sundresses', name: 'Сарафаны', needed: 4 },
                         { id: 'kids-shoes', name: 'Детская обувь', needed: 5 },
                         { id: 'kids-outerwear', name: 'Куртки для детей', needed: 3 }
                     ] },
                     { id: 'toys', title: 'Детские игрушки', countable: false, items: [
                         { id: 'constructors', name: 'Конструкторы' },
-                        { id: 'dolls', name: 'Куклы и аксессуары' },
+                        { id: 'dolls', name: 'Куклы' },
+                        { id: 'doll-accessories', name: 'Аксессуары для кукол' },
                         { id: 'cars', name: 'Машинки' },
                         { id: 'books', name: 'Детские книги' },
                         { id: 'board-games', name: 'Настольные игры' }
@@ -1194,10 +1211,11 @@
         }
 
         function switchSheetTab(tab) {
-            document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
-            document.getElementById('stab-' + tab).classList.add('active');
-            document.getElementById('spane-' + tab).style.display = 'block';
+            const sheet = document.getElementById('info-sheet');
+            sheet.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
+            sheet.querySelectorAll('.sheet-pane').forEach(p => p.style.display = 'none');
+            sheet.querySelector('#stab-' + tab).classList.add('active');
+            sheet.querySelector('#spane-' + tab).style.display = 'block';
         }
 
         function renderInfoSheet() {
@@ -1356,11 +1374,32 @@
             document.body.style.overflow = '';
         }
 
+        function itemGroupTitle(name) {
+            const text = String(name || '').toLowerCase();
+            if (text.includes('куртк') || text.includes('пальто') || text.includes('плащ') || text.includes('комбинезон') || text.includes('ветровк')) return 'Верхняя одежда';
+            if (text.includes('свитер') || text.includes('толстовк') || text.includes('кофт') || text.includes('футболк') || text.includes('рубашк') || text.includes('блузк') || text.includes('майк') || text.includes('свитшот')) return 'Верх';
+            if (text.includes('брюк') || text.includes('джинс') || text.includes('леггинс')) return 'Низ';
+            if (text.includes('плать') || text.includes('юбк') || text.includes('сарафан')) return 'Платья и юбки';
+            if (text.includes('обув')) return 'Обувь';
+            if (text.includes('бель')) return 'Бельё';
+            if (text.includes('шапк') || text.includes('шарф') || text.includes('вареж')) return 'Аксессуары';
+            return '';
+        }
+
         function renderNeedSheetList() {
             const need = getNeed(activeNeedId);
             const list = document.getElementById('need-sheet-list');
             list.innerHTML = '';
+            let lastGroup = null;
             need.items.forEach(item => {
+                const group = itemGroupTitle(item.name);
+                if (group && group !== lastGroup) {
+                    const header = document.createElement('div');
+                    header.className = 'need-sheet-group-title';
+                    header.textContent = group;
+                    list.appendChild(header);
+                    lastGroup = group;
+                }
                 const selected = Object.prototype.hasOwnProperty.call(draftSelections, item.id);
                 const qty = draftSelections[item.id] || 1;
                 const row = document.createElement('div');
@@ -1430,7 +1469,7 @@
         }
 
         function stripGeneratedDescription(text) {
-            return cleanDescriptionBase((text || '').split(/\n+\s*Готовы передать:\n/)[0]);
+            return cleanDescriptionBase((text || '').split(/(?:^|\n+)\s*Готовы передать:\n/)[0]);
         }
 
         function cleanDescriptionBase(text) {
@@ -1438,7 +1477,7 @@
         }
 
         function normalizeDescriptionText(text) {
-            const parts = (text || '').split(/\n+\s*Готовы передать:\n/);
+            const parts = (text || '').split(/(?:^|\n+)\s*Готовы передать:\n/);
             if (parts.length <= 1) return cleanDescriptionBase(text);
             const base = cleanDescriptionBase(parts[0]);
             const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
