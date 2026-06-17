@@ -1766,6 +1766,7 @@
         <section class="section" id="pack-section">
             <h2 class="compact-title">Что кладёте в пакет?</h2>
             <p class="section-sub" id="pack-subtitle">Мы увидели, что у вас есть подходящие вещи</p>
+            <p class="section-sub" id="pack-subtitle-empty" style="display:none;">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
             <div id="pack-cards"></div>
         </section>
 
@@ -2357,24 +2358,12 @@
             const catSel = loadCatSelections();
             const hasPhotos = fromPhotos.length > 0;
 
-            // Show/hide subtitle and "add more" title depending on whether photos exist
             document.getElementById('pack-subtitle').style.display = hasPhotos ? '' : 'none';
+            document.getElementById('pack-subtitle-empty').style.display = hasPhotos ? 'none' : '';
             const addMoreTitle = document.getElementById('add-more-title');
             const addMoreSub = document.getElementById('add-more-sub');
             if (addMoreTitle) addMoreTitle.style.display = hasPhotos ? '' : 'none';
-            if (addMoreSub) {
-                if (!hasPhotos) {
-                    // move sub under main title
-                    addMoreSub.style.display = '';
-                    document.getElementById('pack-section').appendChild(addMoreSub);
-                } else {
-                    addMoreSub.style.display = '';
-                    const addMoreBlock = document.getElementById('add-more-block');
-                    if (addMoreSub.parentElement !== addMoreBlock) {
-                        addMoreBlock.insertBefore(addMoreSub, addMoreBlock.querySelector('.add-more-slider-wrap'));
-                    }
-                }
-            }
+            if (addMoreSub) addMoreSub.style.display = hasPhotos ? '' : 'none';
 
             // Main pack cards
             const packCards = document.getElementById('pack-cards');
