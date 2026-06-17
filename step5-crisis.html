@@ -929,9 +929,7 @@
         }
 
         .fund-name-row {
-            display: flex;
-            align-items: center;
-            gap: 0;
+            display: block;
         }
 
         .fund-name {
@@ -940,10 +938,7 @@
             font-weight: 700;
             line-height: 22px;
             color: #000;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            display: inline;
         }
 
         .fund-question-btn {
@@ -952,7 +947,8 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            margin: -8px -8px -8px 0;
+            vertical-align: middle;
+            margin-top: -2px;
             background: none;
             border: none;
             cursor: pointer;
