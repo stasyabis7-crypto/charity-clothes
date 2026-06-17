@@ -3449,6 +3449,7 @@
 
         function cleanDescriptionBase(text) {
             return (text || '')
+                .replace(/\n*\s*Также готов передать[\s\S]*$/m, '')
                 .replace(/\n*\s*Готовы передать:\n[\s\S]*$/m, '')
                 .split('\n')
                 .filter(line => !/^\s*Цена:\s*/.test(line))
@@ -3457,12 +3458,7 @@
         }
 
         function normalizeDescriptionText(text) {
-            const parts = (text || '').split(/(?:^|\n+)\s*Готовы передать:\n/);
-            if (parts.length <= 1) return cleanDescriptionBase(text);
-            const base = cleanDescriptionBase(parts[0]);
-            const generatedLines = parts.slice(1).join('\n').split('\n').map(line => line.trim()).filter(Boolean);
-            const uniqueLines = [...new Set(generatedLines)];
-            return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
+            return cleanDescriptionBase(text);
         }
 
         function buildRememberedDescription() {
@@ -3472,19 +3468,17 @@
         function autoBuildDescription() {
             const ta = document.getElementById('desc-textarea');
             const base = buildRememberedDescription();
-            const lines = selectedLines();
-            // aggregate category descriptions (always freshly rebuilt from current selections)
             const catSel = loadCatSelections();
-            const catLines = [];
+            const catBlocks = [];
             Object.entries(catSel).forEach(([catId, data]) => {
                 if (data && data.desc) {
                     const cat = CATEGORIES[catId];
-                    catLines.push((cat ? cat.name + ':\n' : '') + data.desc);
+                    catBlocks.push((cat ? cat.name + ':\n' : '') + data.desc);
                 }
             });
-            const generated = lines.length ? `Готовы передать:\n${lines.join('\n')}` : '';
-            const parts = [base, catLines.join('\n\n'), generated].filter(Boolean);
-            ta.value = parts.join('\n\n');
+            const parts = [base];
+            if (catBlocks.length) parts.push('Также готов передать\n\n' + catBlocks.join('\n\n'));
+            ta.value = parts.filter(Boolean).join('\n\n');
             resizeTextarea();
             persistCategories();
         }

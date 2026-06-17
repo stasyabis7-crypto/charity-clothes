@@ -82,11 +82,12 @@
         .charity-hint.visible { display: flex; }
 
         .charity-hint-img {
-            width: 90px;
+            width: 104px;
             height: auto;
             object-fit: contain;
             flex-shrink: 0;
             align-self: flex-end;
+            transform: translate(10px, 15px);
         }
 
         .charity-hint-title {
@@ -232,7 +233,10 @@
         function buildCombinedDesc() {
             const params = buildParamsText();
             const userText = ta.value.trim();
-            return [params, userText].filter(Boolean).join('\n');
+            const parts = [];
+            if (params) parts.push('О вещи\n' + params);
+            if (userText) parts.push('Описание\n' + userText);
+            return parts.join('\n\n');
         }
 
         function goToCharity() {
