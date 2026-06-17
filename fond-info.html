@@ -243,7 +243,7 @@
         </button>
         <span class="header-title">О фонде</span>
         <button class="header-close" onclick="closeAll()">
-            <img src="new category/CloseButton.svg" width="20" height="20" alt="">
+            <img src="new category/CloseButton.svg" width="24" height="24" alt="">
         </button>
     </header>
 
@@ -330,6 +330,11 @@
         document.getElementById('fund-desc').textContent = fund.desc;
         document.getElementById('report-photo').src = fund.reportPhoto;
         document.getElementById('report-text').textContent = fund.report;
+
+        // show back button only when coming from fond-choose
+        if (returnPage !== 'fond-choose.html') {
+            document.getElementById('back-btn').style.visibility = 'hidden';
+        }
 
         function switchTab(tab) {
             document.getElementById('tab-about').classList.toggle('active', tab === 'about');

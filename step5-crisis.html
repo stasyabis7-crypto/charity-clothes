@@ -1022,7 +1022,7 @@
         .info-sheet-close {
             position: absolute;
             top: 24px; right: 24px;
-            width: 20px; height: 20px;
+            width: 24px; height: 24px;
             background: none; border: none;
             padding: 0; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
@@ -1140,6 +1140,576 @@
             width: 44px;
             height: 44px;
         }
+
+        /* ===== PACK SECTION ===== */
+        #pack-cards { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+        .cat-card {
+            background: #F2F1F0;
+            border-radius: 28px;
+            padding: 15px 16px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .cat-img-wrap {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            flex-shrink: 0;
+        }
+
+        .cat-img-wrap img.cat-img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .cat-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 7px;
+            height: 7px;
+        }
+
+        .cat-info { flex: 1; min-width: 0; }
+
+        .cat-name {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #000;
+        }
+
+        .cat-sub-text {
+            margin-top: 2px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+        }
+        .cat-sub-text.red { color: #FF4053; }
+        .cat-sub-text.done { color: #9E9E9E; }
+
+        /* ADD MORE BLOCK */
+        .add-more-block {
+            margin-top: 24px;
+            padding: 0 16px;
+        }
+
+        .add-more-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #000;
+        }
+
+        .add-more-sub {
+            margin-top: 2px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000;
+        }
+
+        .add-more-slider-wrap {
+            margin-top: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            margin-left: -16px;
+            margin-right: -16px;
+            padding-left: 16px;
+        }
+        .add-more-slider-wrap::-webkit-scrollbar { display: none; }
+
+        .add-more-slider {
+            display: flex;
+            gap: 10px;
+            padding-right: 16px;
+            width: max-content;
+        }
+
+        .add-more-item {
+            width: 114px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .add-more-item img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .add-more-item-label {
+            margin-top: 2px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000;
+            text-align: center;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width: 114px;
+        }
+
+        /* ===== CATEGORY SHEET ===== */
+        .cat-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+        }
+        .cat-overlay.open { display: block; }
+
+        .cat-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            z-index: 301;
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .cat-sheet.open { transform: translateX(-50%) translateY(0); }
+
+        .cat-sheet-scroll {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 24px 16px 0;
+        }
+
+        .cat-sheet-title {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 30px;
+            color: #1A1A1A;
+            padding-right: 32px;
+        }
+
+        .cat-sheet-subtitle {
+            margin-top: 6px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #757575;
+        }
+
+        .fund-items-card {
+            margin-top: 12px;
+            background: #F4F4F4;
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .fund-items-card-text {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000;
+            flex: 1;
+        }
+
+        .fund-items-arrow {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        .fund-items-arrow.open { transform: rotate(180deg); }
+
+        .fund-items-list {
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+        .fund-items-list li {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #1A1A1A;
+            margin-left: 16px;
+            margin-bottom: 2px;
+        }
+
+        .param-block { margin-top: 24px; }
+
+        .param-label {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .param-required { color: #FF4053; }
+
+        .param-question-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            margin: -4px;
+            line-height: 0;
+        }
+
+        .chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            border-radius: 20px;
+            background: #F4F4F4;
+            padding: 8px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .chip.active {
+            background: #1A1A1A;
+            color: #fff;
+        }
+
+        .type-selector {
+            width: 100%;
+            min-height: 50px;
+            border: none;
+            border-radius: 16px;
+            background: #F4F4F4;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #9E9E9E;
+            cursor: pointer;
+            text-align: left;
+        }
+        .type-selector.has-value { color: #000; }
+
+        .type-chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .type-chip {
+            border-radius: 20px;
+            background: #F4F4F4;
+            padding: 6px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            color: #000;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .type-chip-remove {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+            line-height: 0;
+        }
+
+        .cond-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+            cursor: pointer;
+        }
+        .cond-row:last-child { border-bottom: none; }
+
+        .cond-checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: #E0E0E0;
+            border: none;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .cond-checkbox.active { background: #1A1A1A; }
+        .cond-checkbox.active::after {
+            content: '✓';
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .cond-label {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000;
+        }
+
+        /* cat sheet photos */
+        .cat-photos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .cat-photos-grid.collapsed { max-height: 210px; overflow: hidden; }
+
+        .cat-photos-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, #fff);
+            pointer-events: none;
+        }
+
+        .cat-show-all-btn {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            background: #F4F4F4;
+            border: none;
+            border-radius: 16px;
+            padding: 12px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .cat-add-photo-btn {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            background: #F4F4F4;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .cat-sheet-bottom {
+            padding: 12px 16px 28px;
+            background: #fff;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .cat-save-btn {
+            width: 100%;
+            background: #C4C4C4;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: default;
+        }
+        .cat-save-btn.active {
+            background: #1A1A1A;
+            cursor: pointer;
+        }
+
+        .cat-remove-btn {
+            width: 100%;
+            background: #F4F4F4;
+            color: #000;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        /* type sub-sheet */
+        .type-sub-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 400;
+        }
+        .type-sub-overlay.open { display: block; }
+
+        .type-sub-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            z-index: 401;
+            transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .type-sub-sheet.open { transform: translateX(-50%) translateY(0); }
+
+        .type-sub-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 16px;
+        }
+
+        .type-sub-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 24px;
+            color: #1A1A1A;
+            margin-bottom: 16px;
+        }
+
+        .type-sub-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #F0F0F0;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 400;
+            color: #000;
+        }
+        .type-sub-item:last-child { border-bottom: none; }
+
+        .type-sub-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: #E0E0E0;
+            flex-shrink: 0;
+        }
+        .type-sub-check.active { background: #1A1A1A; }
+        .type-sub-check.active::after { content: '✓'; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; width: 22px; height: 22px; }
+
+        .type-sub-done {
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 12px 16px 28px;
+            width: calc(100% - 32px);
+        }
+
+        /* size guide sub-sheet */
+        .size-guide-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 400;
+        }
+        .size-guide-overlay.open { display: block; }
+
+        .size-guide-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            z-index: 401;
+            transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 24px 16px 40px;
+        }
+        .size-guide-sheet.open { transform: translateX(-50%) translateY(0); }
+
+        .size-guide-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 24px;
+            margin-bottom: 16px;
+        }
+
+        .size-guide-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .size-guide-table th, .size-guide-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #F0F0F0;
+            text-align: left;
+        }
+        .size-guide-table th { font-weight: 700; }
     </style>
 </head>
 <body>
@@ -1180,21 +1750,19 @@
             </div>
         </section>
 
-        <section class="section" id="suggested-section">
-            <h2 class="compact-title">Может подойти<br>из вашего объявления</h2>
-            <p class="section-sub">Отметьте те вещи из списка, которые можете передать и количество вещей в каждой категории, которые будут в пакете</p>
-            <div class="category-list" id="suggested-list"></div>
+        <section class="section" id="pack-section">
+            <h2 class="compact-title">Что кладёте в пакет?</h2>
+            <p class="section-sub" id="pack-subtitle">Мы увидели, что у вас есть подходящие вещи</p>
+            <div id="pack-cards"></div>
         </section>
 
-        <section class="section" id="urgent-section" style="display:none;">
-            <h2 class="compact-title">Срочно нужны сейчас</h2>
-            <div class="category-list" id="urgent-list"></div>
-        </section>
-
-        <section class="section">
-            <h2 class="compact-title">Еще можно передать</h2>
-            <div class="category-list" id="more-list"></div>
-        </section>
+        <div class="add-more-block" id="add-more-block">
+            <h3 class="add-more-title">Добавьте ещё, если есть</h3>
+            <p class="add-more-sub">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
+            <div class="add-more-slider-wrap">
+                <div class="add-more-slider" id="add-more-slider"></div>
+            </div>
+        </div>
 
         <section class="section">
             <h2 class="section-title">Другие данные объявления</h2>
@@ -1320,7 +1888,7 @@
         <div class="info-sheet-image-wrap">
             <img class="info-sheet-photo" src="new category/photo sheet.png" alt="">
             <button class="info-sheet-close" onclick="closeSheet()">
-                <img src="new category/CloseButton.svg" width="20" height="20" alt="">
+                <img src="new category/CloseButton.svg" width="24" height="24" alt="">
             </button>
         </div>
         <div class="info-sheet-body">
@@ -1399,6 +1967,48 @@
             <div id="need-sheet-list"></div>
             <button class="sheet-primary" onclick="applyNeedSelection()">Выбрать</button>
         </div>
+    </div>
+
+    <!-- Category sheet overlay -->
+    <div class="cat-overlay" id="cat-overlay" onclick="closeCatSheet()"></div>
+
+    <!-- Category sheet -->
+    <div class="cat-sheet" id="cat-sheet">
+        <div class="cat-sheet-scroll" id="cat-sheet-scroll">
+            <h2 class="cat-sheet-title" id="cat-sheet-title"></h2>
+            <p class="cat-sheet-subtitle">Заполните немного данных, по которым фонды смогут оценить состояние вещей и понять, кому они могут подойти</p>
+
+            <div class="fund-items-card" id="fund-items-card" onclick="toggleFundItems()">
+                <span class="fund-items-card-text">Посмотрите, что именно принимает фонд в этой категории</span>
+                <img class="fund-items-arrow" id="fund-items-arrow" src="arrow down.svg" width="20" height="20" alt="">
+            </div>
+            <ul class="fund-items-list" id="fund-items-list"></ul>
+
+            <div id="cat-params"></div>
+
+            <div style="height:24px;"></div>
+        </div>
+        <div class="cat-sheet-bottom" id="cat-sheet-bottom">
+            <button class="cat-save-btn" id="cat-save-btn" onclick="saveCatSheet()">Сохранить</button>
+            <button class="cat-remove-btn" id="cat-remove-btn" onclick="removeCatFromPack()">Убрать из пакета</button>
+        </div>
+    </div>
+
+    <!-- Type sub-sheet -->
+    <div class="type-sub-overlay" id="type-sub-overlay" onclick="closeTypeSheet()"></div>
+    <div class="type-sub-sheet" id="type-sub-sheet">
+        <div class="type-sub-scroll">
+            <div class="type-sub-title" id="type-sub-title"></div>
+            <div id="type-sub-list"></div>
+        </div>
+        <button class="type-sub-done" onclick="closeTypeSheet()">Готово</button>
+    </div>
+
+    <!-- Size guide sub-sheet -->
+    <div class="size-guide-overlay" id="size-guide-overlay" onclick="closeSizeGuide()"></div>
+    <div class="size-guide-sheet" id="size-guide-sheet">
+        <h2 class="size-guide-title" id="size-guide-title">Таблица размеров</h2>
+        <table class="size-guide-table" id="size-guide-table"></table>
     </div>
 
     <script>
@@ -1629,6 +2239,582 @@
             'new podacha/fond 1 photo 7.png': 'kids',
             'new podacha/fond 1 photo 8.png': 'hygiene'
         };
+
+        // ===== CATEGORY SYSTEM (Part 7 & 8) =====
+
+        const PHOTO_TO_CATEGORY = {
+            'new podacha/fond 1 photo 1.png': 'children-clothes',
+            'new podacha/fond 1 photo 2.png': 'children-clothes',
+            'new podacha/fond 1 photo 3.png': 'children-clothes',
+            'new podacha/fond 1 photo 4.png': 'basic-clothes',
+            'new podacha/fond 1 photo 5.png': 'seasonal-clothes',
+            'new podacha/fond 1 photo 6.png': 'adult-shoes',
+            'new podacha/fond 1 photo 7.png': 'textile',
+            'new podacha/fond 1 photo 8.png': 'kitchen',
+        };
+
+        const CATEGORY_ORDER = ['children-clothes','basic-clothes','seasonal-clothes','adult-shoes','textile','kitchen'];
+
+        const CATEGORIES = {
+            'children-clothes': {
+                name: 'Детская одежда и обувь',
+                image: 'new podacha/children.png',
+                sliderImage: 'new podacha/slider children.png',
+                params: ['gender','size-children','season','type-clothing','condition'],
+                fundItems: ['Детская одежда','Детская обувь'],
+            },
+            'basic-clothes': {
+                name: 'Базовая одежда',
+                image: 'new podacha/base.png',
+                sliderImage: 'new podacha/slider base.png',
+                params: ['gender','size-clothes','season','type-clothing','condition'],
+                fundItems: ['Базовые футболки','Спортивный костюм','Нижнее бельё: майки, трусы, носки, ночные рубашки'],
+            },
+            'seasonal-clothes': {
+                name: 'Сезонная одежда',
+                image: 'new podacha/puh.png',
+                sliderImage: 'new podacha/slider season.png',
+                params: ['gender','size-clothes','season','type-clothing','condition'],
+                fundItems: ['Мужская и женская сезонная одежда, в том числе больших размеров: куртки, пуховики, ветровки'],
+            },
+            'adult-shoes': {
+                name: 'Обувь для взрослых',
+                image: 'new podacha/boots.png',
+                sliderImage: 'new podacha/slider boots.png',
+                params: ['gender','size-shoes','season','type-shoes','condition'],
+                fundItems: ['Резиновые тапки 35-46 размера','Кроссовки разных размеров унисекс'],
+            },
+            'textile': {
+                name: 'Текстиль',
+                image: 'new podacha/textile.png',
+                sliderImage: 'new podacha/slider textile.png',
+                params: ['type-textile','condition'],
+                fundItems: ['Постельное бельё','Плед','Одеяло','Подушка для сна','Махровые полотенца 70/140 и 50/90','Вафельное полотенце 40/60'],
+            },
+            'kitchen': {
+                name: 'Посуда и кухня',
+                image: 'new podacha/kitchen.png',
+                sliderImage: 'new podacha/slider litchen.png',
+                params: ['type-kitchen','completeness','condition'],
+                fundItems: ['Набор кастрюль','Набор столовой посуды','Набор столовых приборов','Кухонный нож','Разделочная доска','Половник','Сковорода','Чайник электрический или обычный','СВЧ','Мультиварка','Электрическая или газовая плитка'],
+            }
+        };
+
+        const PARAMS_CONFIG = {
+            gender: { label: 'Пол', required: true, type: 'chips', options: ['Мужской','Женский','Унисекс'], multi: true },
+            'size-clothes': { label: 'Размер', required: true, type: 'chips', options: ['XS','S','M','L','XL','XXL','XXXL'], multi: true, sizeGuide: 'clothes' },
+            'size-children': { label: 'Размер', required: true, type: 'chips', options: ['80-86','86-92','92-98','98-104','110-116','122-128','134-140','146-152'], multi: true, sizeGuide: 'children' },
+            'size-shoes': { label: 'Размер', required: true, type: 'chips', options: ['35-37','38-40','41-43','44-46','47+'], multi: true, sizeGuide: 'shoes' },
+            season: { label: 'Сезон', required: true, type: 'chips', options: ['Зима','Весна/осень','Лето','Демисезон'], multi: true },
+            'type-clothing': { label: 'Тип одежды', required: true, type: 'select', options: ['Верхняя одежда','Свитера и кофты','Футболки и майки','Рубашки и блузки','Брюки и джинсы','Платья и юбки','Спортивный костюм','Нижнее бельё'] },
+            'type-shoes': { label: 'Тип обуви', required: true, type: 'select', options: ['Кроссовки','Ботинки','Туфли','Сапоги','Тапочки','Сандалии'] },
+            'type-textile': { label: 'Тип', required: true, type: 'select', options: ['Постельное бельё','Одеяло','Плед','Подушки','Полотенца'] },
+            'type-kitchen': { label: 'Тип', required: true, type: 'select', options: ['Кастрюли','Сковороды','Посуда и тарелки','Столовые приборы','Электроприборы'] },
+            completeness: { label: 'Комплектность', required: true, type: 'chips', options: ['Полный комплект','Неполный'], multi: false },
+            condition: { label: 'Состояние', required: true, type: 'checkboxes', options: ['Отличное','Хорошее','Удовлетворительное'] },
+        };
+
+        const SIZE_GUIDES = {
+            clothes: {
+                title: 'Таблица размеров одежды',
+                headers: ['Размер','Рост (см)','Грудь (см)'],
+                rows: [['XS','155-160','76-80'],['S','160-165','80-84'],['M','165-170','84-88'],['L','170-175','88-92'],['XL','175-180','92-96'],['XXL','180-185','96-100'],['XXXL','185+','100+']]
+            },
+            children: {
+                title: 'Таблица размеров (дети)',
+                headers: ['Размер','Возраст','Рост (см)'],
+                rows: [['80-86','1-1.5 г','80-86'],['86-92','1.5-2 г','86-92'],['92-98','2-3 г','92-98'],['98-104','3-4 г','98-104'],['110-116','5-6 л','110-116'],['122-128','7-8 л','122-128'],['134-140','9-10 л','134-140'],['146-152','11-12 л','146-152']]
+            },
+            shoes: {
+                title: 'Таблица размеров обуви',
+                headers: ['Размер EU','Размер RU','Длина стопы (см)'],
+                rows: [['35-37','35-37','22-24'],['38-40','38-40','24-26'],['41-43','41-43','26-28'],['44-46','44-46','28-30'],['47+','47+','30+']]
+            }
+        };
+
+        let activeCatId = null;
+        let catFromPack = true; // true=from pack cards, false=from slider
+        let catDraft = {}; // { gender:[], size:[], season:[], type:[], condition:[], desc:'', photos:[] }
+        let fundItemsOpen = false;
+        let activeTypeParam = null;
+        let catPhotosExpanded = false;
+
+        function loadCatSelections() {
+            return JSON.parse(sessionStorage.getItem('catSelections') || '{}');
+        }
+
+        function saveCatSelections(sel) {
+            sessionStorage.setItem('catSelections', JSON.stringify(sel));
+        }
+
+        function getPhotosForCategory(catId) {
+            const selected = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            const result = [];
+            selected.forEach(id => {
+                const file = photoFile(id);
+                if (PHOTO_TO_CATEGORY[file] === catId) result.push(Number(id));
+            });
+            return result;
+        }
+
+        function getActiveCategoriesFromPhotos() {
+            const selected = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            const seen = new Set();
+            const result = [];
+            selected.forEach(id => {
+                const file = photoFile(id);
+                const catId = PHOTO_TO_CATEGORY[file];
+                if (catId && !seen.has(catId)) { seen.add(catId); result.push(catId); }
+            });
+            return result;
+        }
+
+        function renderPackSection() {
+            const fromPhotos = getActiveCategoriesFromPhotos();
+            const catSel = loadCatSelections();
+
+            // Main pack cards
+            const packCards = document.getElementById('pack-cards');
+            packCards.innerHTML = '';
+            fromPhotos.forEach(catId => {
+                const cat = CATEGORIES[catId];
+                if (!cat) return;
+                const saved = catSel[catId];
+                const isFilled = saved && saved._saved;
+                const card = document.createElement('div');
+                card.className = 'cat-card';
+                card.onclick = () => openCatSheet(catId, true);
+                card.innerHTML = `
+                    <div class="cat-img-wrap">
+                        <img class="cat-img" src="${cat.image}" alt="">
+                        <img class="cat-badge" src="new podacha/Badge.svg" alt="">
+                    </div>
+                    <div class="cat-info">
+                        <div class="cat-name">${cat.name}</div>
+                        <div class="cat-sub-text ${isFilled ? 'done' : 'red'}">${isFilled ? 'Вещи лежат в пакете' : 'Кратко расскажите про вещи'}</div>
+                    </div>
+                `;
+                packCards.appendChild(card);
+            });
+
+            // Add-more slider
+            const slider = document.getElementById('add-more-slider');
+            slider.innerHTML = '';
+            const sliderCats = CATEGORY_ORDER.filter(id => !fromPhotos.includes(id));
+            sliderCats.forEach(catId => {
+                const cat = CATEGORIES[catId];
+                if (!cat) return;
+                const item = document.createElement('div');
+                item.className = 'add-more-item';
+                item.onclick = () => openCatSheet(catId, false);
+                item.innerHTML = `
+                    <img src="${cat.sliderImage}" alt="">
+                    <div class="add-more-item-label">${cat.name}</div>
+                `;
+                slider.appendChild(item);
+            });
+
+            // hide add-more block if no slider items
+            document.getElementById('add-more-block').style.display = sliderCats.length ? '' : 'none';
+
+            updateContinueState();
+        }
+
+        function openCatSheet(catId, fromPack) {
+            activeCatId = catId;
+            catFromPack = fromPack;
+            fundItemsOpen = false;
+            catPhotosExpanded = false;
+
+            const cat = CATEGORIES[catId];
+            const saved = loadCatSelections()[catId] || {};
+
+            // init draft from saved or defaults
+            catDraft = {
+                gender: saved.gender ? [...saved.gender] : [],
+                'size-clothes': saved['size-clothes'] ? [...saved['size-clothes']] : [],
+                'size-children': saved['size-children'] ? [...saved['size-children']] : [],
+                'size-shoes': saved['size-shoes'] ? [...saved['size-shoes']] : [],
+                season: saved.season ? [...saved.season] : [],
+                'type-clothing': saved['type-clothing'] ? [...saved['type-clothing']] : [],
+                'type-shoes': saved['type-shoes'] ? [...saved['type-shoes']] : [],
+                'type-textile': saved['type-textile'] ? [...saved['type-textile']] : [],
+                'type-kitchen': saved['type-kitchen'] ? [...saved['type-kitchen']] : [],
+                completeness: saved.completeness ? [...saved.completeness] : [],
+                condition: saved.condition ? [...saved.condition] : [],
+                desc: saved.desc || '',
+                photos: saved.photos ? [...saved.photos] : getPhotosForCategory(catId),
+            };
+
+            document.getElementById('cat-sheet-title').textContent = cat.name;
+
+            // fund items list
+            const fundList = document.getElementById('fund-items-list');
+            fundList.style.display = 'none';
+            fundList.innerHTML = cat.fundItems.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('fund-items-arrow').classList.remove('open');
+
+            // remove btn visible only from pack
+            document.getElementById('cat-remove-btn').style.display = fromPack ? '' : 'none';
+
+            renderCatParams();
+
+            document.getElementById('cat-overlay').classList.add('open');
+            document.getElementById('cat-sheet').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCatSheet() {
+            document.getElementById('cat-overlay').classList.remove('open');
+            document.getElementById('cat-sheet').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function toggleFundItems() {
+            fundItemsOpen = !fundItemsOpen;
+            const list = document.getElementById('fund-items-list');
+            const arrow = document.getElementById('fund-items-arrow');
+            list.style.display = fundItemsOpen ? 'block' : 'none';
+            arrow.classList.toggle('open', fundItemsOpen);
+        }
+
+        function renderCatParams() {
+            const cat = CATEGORIES[activeCatId];
+            const container = document.getElementById('cat-params');
+            container.innerHTML = '';
+
+            cat.params.forEach(paramId => {
+                const cfg = PARAMS_CONFIG[paramId];
+                if (!cfg) return;
+                const block = document.createElement('div');
+                block.className = 'param-block';
+
+                if (cfg.type === 'chips') {
+                    const hasGuide = cfg.sizeGuide;
+                    block.innerHTML = `
+                        <div class="param-label">
+                            ${cfg.label}<span class="param-required">*</span>
+                            ${hasGuide ? `<button class="param-question-btn" onclick="openSizeGuide('${cfg.sizeGuide}')"><img src="new category/Question Filled.svg" width="21" height="21" alt=""></button>` : ''}
+                        </div>
+                        <div class="chips-row" id="chips-${paramId}"></div>
+                    `;
+                    container.appendChild(block);
+                    renderChips(paramId, cfg);
+                } else if (cfg.type === 'select') {
+                    block.innerHTML = `
+                        <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
+                        <button class="type-selector" id="sel-${paramId}" onclick="openTypeSheet('${paramId}')">
+                            <span id="sel-label-${paramId}">Выберите</span>
+                            <img src="arrow down.svg" width="20" height="20" alt="">
+                        </button>
+                        <div class="type-chips-row" id="type-chips-${paramId}"></div>
+                    `;
+                    container.appendChild(block);
+                    renderTypeChips(paramId);
+                } else if (cfg.type === 'checkboxes') {
+                    block.innerHTML = `
+                        <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
+                        <div id="cond-list-${paramId}"></div>
+                    `;
+                    container.appendChild(block);
+                    renderCondList(paramId, cfg);
+                }
+            });
+
+            // Photos param
+            const photosBlock = document.createElement('div');
+            photosBlock.className = 'param-block';
+            photosBlock.id = 'photos-param-block';
+            photosBlock.innerHTML = `<div class="param-label">Фотографии<span class="param-required">*</span></div>`;
+            container.appendChild(photosBlock);
+            renderCatPhotos();
+
+            // Description param
+            const descBlock = document.createElement('div');
+            descBlock.className = 'param-block';
+            descBlock.innerHTML = `
+                <div class="param-label">Описание вещей</div>
+                <textarea class="desc-textarea" id="cat-desc-input" placeholder="Например: 3 кофты, из хлопка, без потёртостей" style="margin-top:0;">${catDraft.desc}</textarea>
+            `;
+            container.appendChild(descBlock);
+            document.getElementById('cat-desc-input').addEventListener('input', function() {
+                catDraft.desc = this.value;
+            });
+
+            updateCatSaveBtn();
+        }
+
+        function renderChips(paramId, cfg) {
+            const row = document.getElementById('chips-' + paramId);
+            if (!row) return;
+            row.innerHTML = '';
+            cfg.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'chip' + (catDraft[paramId] && catDraft[paramId].includes(opt) ? ' active' : '');
+                btn.textContent = opt;
+                btn.onclick = () => toggleChip(paramId, opt, cfg.multi !== false);
+                row.appendChild(btn);
+            });
+        }
+
+        function toggleChip(paramId, opt, multi) {
+            if (!catDraft[paramId]) catDraft[paramId] = [];
+            const idx = catDraft[paramId].indexOf(opt);
+            if (idx !== -1) {
+                catDraft[paramId].splice(idx, 1);
+            } else {
+                if (!multi) catDraft[paramId] = [opt];
+                else catDraft[paramId].push(opt);
+            }
+            const cfg = PARAMS_CONFIG[paramId];
+            renderChips(paramId, cfg);
+            autoBuildCatDesc();
+            updateCatSaveBtn();
+        }
+
+        function renderTypeChips(paramId) {
+            const chips = document.getElementById('type-chips-' + paramId);
+            const label = document.getElementById('sel-label-' + paramId);
+            const selector = document.getElementById('sel-' + paramId);
+            if (!chips) return;
+            const selected = catDraft[paramId] || [];
+            chips.innerHTML = '';
+            selected.forEach(val => {
+                const chip = document.createElement('span');
+                chip.className = 'type-chip';
+                chip.innerHTML = `${val}<button class="type-chip-remove" onclick="removeTypeItem('${paramId}','${val}')"><img src="new category/CloseButton.svg" width="14" height="14" alt=""></button>`;
+                chips.appendChild(chip);
+            });
+            if (label) label.textContent = selected.length ? 'Выбрать ещё' : 'Выберите';
+            if (selector) selector.classList.toggle('has-value', selected.length > 0);
+        }
+
+        function removeTypeItem(paramId, val) {
+            catDraft[paramId] = (catDraft[paramId] || []).filter(v => v !== val);
+            renderTypeChips(paramId);
+            autoBuildCatDesc();
+            updateCatSaveBtn();
+        }
+
+        function renderCondList(paramId, cfg) {
+            const cont = document.getElementById('cond-list-' + paramId);
+            if (!cont) return;
+            cont.innerHTML = '';
+            cfg.options.forEach(opt => {
+                const active = catDraft[paramId] && catDraft[paramId].includes(opt);
+                const row = document.createElement('div');
+                row.className = 'cond-row';
+                row.onclick = () => toggleCond(paramId, opt);
+                const box = document.createElement('div');
+                box.className = 'cond-checkbox' + (active ? ' active' : '');
+                const lbl = document.createElement('span');
+                lbl.className = 'cond-label';
+                lbl.textContent = opt;
+                row.appendChild(box);
+                row.appendChild(lbl);
+                cont.appendChild(row);
+            });
+        }
+
+        function toggleCond(paramId, opt) {
+            if (!catDraft[paramId]) catDraft[paramId] = [];
+            const idx = catDraft[paramId].indexOf(opt);
+            if (idx !== -1) catDraft[paramId].splice(idx, 1);
+            else catDraft[paramId].push(opt);
+            const cfg = PARAMS_CONFIG[paramId];
+            renderCondList(paramId, cfg);
+            autoBuildCatDesc();
+            updateCatSaveBtn();
+        }
+
+        function renderCatPhotos() {
+            const block = document.getElementById('photos-param-block');
+            if (!block) return;
+            // remove old grid if any
+            const oldGrid = block.querySelector('.cat-photos-grid');
+            if (oldGrid) oldGrid.remove();
+            const oldBtn = block.querySelector('.cat-show-all-btn');
+            if (oldBtn) oldBtn.remove();
+            const oldAddBtn = block.querySelector('.cat-add-photo-btn:not(.in-grid)');
+            if (oldAddBtn) oldAddBtn.remove();
+
+            const photos = catDraft.photos || [];
+            if (photos.length === 0) {
+                const addBtn = document.createElement('button');
+                addBtn.className = 'cat-add-photo-btn';
+                addBtn.style.cssText = 'width:100%;min-height:80px;border-radius:16px;';
+                addBtn.innerHTML = `<img src="step 2 materials/Camera.svg" width="24" height="24" alt=""><span>Добавить фото</span>`;
+                addBtn.onclick = openCatPhotoEdit;
+                block.appendChild(addBtn);
+                return;
+            }
+
+            const grid = document.createElement('div');
+            grid.className = 'cat-photos-grid' + (!catPhotosExpanded && photos.length > 4 ? ' collapsed' : '');
+
+            photos.forEach((pid, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'photo-cell';
+                cell.innerHTML = `
+                    ${i === 0 ? '<span class="main-tag">Главная</span>' : ''}
+                    <img src="${photoSrc(pid)}" class="photo-img" alt="">
+                    <button class="delete-btn" onclick="deleteCatPhoto(${pid})">
+                        <img src="step 2 materials/Icon delete.svg" width="24" height="24" alt="">
+                    </button>
+                `;
+                grid.appendChild(cell);
+            });
+
+            if (catPhotosExpanded || photos.length <= 4) {
+                const addCell = document.createElement('button');
+                addCell.className = 'photo-cell add-cell in-grid';
+                addCell.onclick = openCatPhotoEdit;
+                addCell.innerHTML = `<img src="step 2 materials/Camera.svg" width="24" height="24" alt=""><span>Добавить</span>`;
+                grid.appendChild(addCell);
+            } else {
+                const grad = document.createElement('div');
+                grad.className = 'cat-photos-gradient';
+                grid.appendChild(grad);
+            }
+
+            block.appendChild(grid);
+
+            if (!catPhotosExpanded && photos.length > 4) {
+                const showBtn = document.createElement('button');
+                showBtn.className = 'cat-show-all-btn';
+                showBtn.textContent = 'Показать все';
+                showBtn.onclick = () => { catPhotosExpanded = true; renderCatPhotos(); };
+                block.appendChild(showBtn);
+            }
+        }
+
+        function deleteCatPhoto(pid) {
+            catDraft.photos = (catDraft.photos || []).filter(p => p !== pid);
+            renderCatPhotos();
+            updateCatSaveBtn();
+        }
+
+        function openCatPhotoEdit() {
+            sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
+            window.location.href = 'step2-choose.html';
+        }
+
+        function autoBuildCatDesc() {
+            const cat = CATEGORIES[activeCatId];
+            const parts = [];
+            cat.params.forEach(paramId => {
+                const cfg = PARAMS_CONFIG[paramId];
+                if (!cfg) return;
+                const val = catDraft[paramId];
+                if (!val || !val.length) return;
+                if (cfg.type === 'checkboxes') parts.push(`Состояние: ${val.join(', ')}`);
+                else if (cfg.type === 'chips') parts.push(`${cfg.label}: ${val.join(', ')}`);
+                else if (cfg.type === 'select') parts.push(`${cfg.label}: ${val.join(', ')}`);
+            });
+            const ta = document.getElementById('cat-desc-input');
+            if (ta && !catDraft._descManual) ta.value = parts.join('\n');
+            catDraft.desc = ta ? ta.value : parts.join('\n');
+        }
+
+        function isCatDraftValid() {
+            const cat = CATEGORIES[activeCatId];
+            return cat.params.every(paramId => {
+                const cfg = PARAMS_CONFIG[paramId];
+                if (!cfg || !cfg.required) return true;
+                const val = catDraft[paramId];
+                return val && val.length > 0;
+            }) && (catDraft.photos || []).length > 0;
+        }
+
+        function updateCatSaveBtn() {
+            const btn = document.getElementById('cat-save-btn');
+            if (btn) btn.classList.toggle('active', isCatDraftValid());
+        }
+
+        function saveCatSheet() {
+            if (!isCatDraftValid()) return;
+            const sel = loadCatSelections();
+            sel[activeCatId] = { ...catDraft, _saved: true };
+            saveCatSelections(sel);
+            closeCatSheet();
+            renderPackSection();
+            updateContinueState();
+        }
+
+        function removeCatFromPack() {
+            const sel = loadCatSelections();
+            delete sel[activeCatId];
+            saveCatSelections(sel);
+            closeCatSheet();
+            renderPackSection();
+            updateContinueState();
+        }
+
+        // Type sub-sheet
+        function openTypeSheet(paramId) {
+            activeTypeParam = paramId;
+            const cfg = PARAMS_CONFIG[paramId];
+            document.getElementById('type-sub-title').textContent = cfg.label;
+            renderTypeSubList(paramId, cfg);
+            document.getElementById('type-sub-overlay').classList.add('open');
+            document.getElementById('type-sub-sheet').classList.add('open');
+        }
+
+        function closeTypeSheet() {
+            document.getElementById('type-sub-overlay').classList.remove('open');
+            document.getElementById('type-sub-sheet').classList.remove('open');
+            if (activeTypeParam) {
+                renderTypeChips(activeTypeParam);
+                autoBuildCatDesc();
+                updateCatSaveBtn();
+            }
+            activeTypeParam = null;
+        }
+
+        function renderTypeSubList(paramId, cfg) {
+            const list = document.getElementById('type-sub-list');
+            list.innerHTML = '';
+            cfg.options.forEach(opt => {
+                const selected = (catDraft[paramId] || []).includes(opt);
+                const row = document.createElement('div');
+                row.className = 'type-sub-item';
+                row.onclick = () => toggleTypeItem(paramId, opt);
+                const box = document.createElement('div');
+                box.className = 'type-sub-check' + (selected ? ' active' : '');
+                if (selected) box.style.cssText = 'background:#1A1A1A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;';
+                if (selected) box.textContent = '✓';
+                row.appendChild(document.createTextNode(opt));
+                row.appendChild(box);
+                list.appendChild(row);
+            });
+        }
+
+        function toggleTypeItem(paramId, opt) {
+            if (!catDraft[paramId]) catDraft[paramId] = [];
+            const idx = catDraft[paramId].indexOf(opt);
+            if (idx !== -1) catDraft[paramId].splice(idx, 1);
+            else catDraft[paramId].push(opt);
+            renderTypeSubList(paramId, PARAMS_CONFIG[paramId]);
+        }
+
+        // Size guide
+        function openSizeGuide(guideKey) {
+            const guide = SIZE_GUIDES[guideKey];
+            if (!guide) return;
+            document.getElementById('size-guide-title').textContent = guide.title;
+            const table = document.getElementById('size-guide-table');
+            table.innerHTML = `
+                <thead><tr>${guide.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                <tbody>${guide.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+            `;
+            document.getElementById('size-guide-overlay').classList.add('open');
+            document.getElementById('size-guide-sheet').classList.add('open');
+        }
+
+        function closeSizeGuide() {
+            document.getElementById('size-guide-overlay').classList.remove('open');
+            document.getElementById('size-guide-sheet').classList.remove('open');
+        }
 
         function photoFile(id) {
             return PHOTO_FILES[Number(id)] || id;
@@ -1906,11 +3092,15 @@
 
         function openFundPage(e) {
             if (e) e.stopPropagation();
-            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
-            let fundId = 1;
-            for (const id of photos) {
-                const fid = PHOTO_TO_FUND[photoFile(id)];
-                if (fid) { fundId = fid; break; }
+            const stored = sessionStorage.getItem('selectedFundId');
+            let fundId = stored ? Number(stored) : 0;
+            if (!fundId || !FUNDS[fundId]) {
+                const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+                fundId = 1;
+                for (const id of photos) {
+                    const fid = PHOTO_TO_FUND[photoFile(id)];
+                    if (fid) { fundId = fid; break; }
+                }
             }
             sessionStorage.setItem('viewFundId', String(fundId));
             sessionStorage.setItem('fundInfoReturn', 'step5-crisis.html');
@@ -2210,12 +3400,15 @@
         }
 
         function updateContinueState() {
-            const hasSelections = Object.keys(loadSelections()).length > 0;
-            document.getElementById('continue-btn').classList.toggle('active', hasSelections);
+            const hasOldSelections = Object.keys(loadSelections()).length > 0;
+            const hasCatSelections = Object.keys(loadCatSelections()).length > 0;
+            document.getElementById('continue-btn').classList.toggle('active', hasOldSelections || hasCatSelections);
         }
 
         function goToDelivery() {
-            if (!Object.keys(loadSelections()).length) return;
+            const hasOldSelections = Object.keys(loadSelections()).length > 0;
+            const hasCatSelections = Object.keys(loadCatSelections()).length > 0;
+            if (!hasOldSelections && !hasCatSelections) return;
             persistAll();
             window.location.href = currentCollection === 'crisis' ? 'success-crisis.html' : 'success.html';
         }
@@ -2235,7 +3428,7 @@
         renderPhotos();
         setupMainFields();
         renderCollection();
-        renderNeeds();
+        renderPackSection();
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
             if (header) header.classList.toggle('scrolled', window.scrollY > 0);

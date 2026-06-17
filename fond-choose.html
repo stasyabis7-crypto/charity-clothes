@@ -156,7 +156,7 @@
     <header class="header">
         <span class="header-title">Кому хотите помочь?</span>
         <button class="header-close" onclick="closePage()">
-            <img src="new category/CloseButton.svg" width="20" height="20" alt="">
+            <img src="new category/CloseButton.svg" width="24" height="24" alt="">
         </button>
     </header>
 
@@ -212,6 +212,7 @@
         }
 
         function openFundInfo(id) {
+            sessionStorage.setItem('selectedFundId', String(selectedId)); // preserve current choice
             sessionStorage.setItem('viewFundId', String(id));
             sessionStorage.setItem('fundInfoReturn', 'fond-choose.html');
             window.location.href = 'fond-info.html';
