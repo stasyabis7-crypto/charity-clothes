@@ -304,15 +304,7 @@
         };
 
         function buildFullDescription() {
-            const cat = sessionStorage.getItem('mainCategory') || '';
-            const condId = sessionStorage.getItem('mainCondition') || '';
-            const descText = sessionStorage.getItem('mainDesc') || '';
-            const specs = SPECS_DATA[cat];
-            const parts = [];
-            if (condId && CONDITION_NAMES[condId]) parts.push('Состояние: ' + CONDITION_NAMES[condId]);
-            if (specs) parts.push(`Тип: ${specs.type}, Цвет: ${specs.color}, Для кого: ${specs.forWhom}, Бренд: ${specs.brand}`);
-            if (descText) parts.push(descText);
-            return parts.join('\n\n');
+            return sessionStorage.getItem('mainDesc') || '';
         }
 
         function goBack() {
@@ -321,6 +313,7 @@
 
         function goNext() {
             if (!digits) return;
+            sessionStorage.setItem('adDesc', buildFullDescription());
             sessionStorage.setItem('mainPrice', digits);
             sessionStorage.setItem('prevPage', 'main-price.html');
             window.location.href = 'delivery.html';

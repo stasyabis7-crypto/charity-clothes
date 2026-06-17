@@ -77,7 +77,6 @@
             gap: 12px;
             text-align: left;
             cursor: pointer;
-            width: 343px;
         }
 
         .charity-hint.visible { display: flex; }
@@ -164,9 +163,8 @@
             <div style="flex:1;min-width:0;">
                 <div class="charity-hint-title">Похоже, ваши вещи подходят фондам</div>
                 <div class="charity-hint-sub">Вы можете бесплатно передать вещи на благотворительность через объявление Авито</div>
-                <span class="charity-link">Передать вещи</span>
             </div>
-            <img class="charity-hint-img" src="sbor 2 new.png" alt="">
+            <img class="charity-hint-img" src="Picture.png" alt="">
         </div>
     </div>
 
@@ -208,27 +206,19 @@
             hint.classList.toggle('visible', ta.value.trim().length > 0);
         }
 
-        function buildFullDescription() {
+        function buildParamsText() {
             const cat = sessionStorage.getItem('mainCategory') || '';
             const condId = sessionStorage.getItem('mainCondition') || '';
             const specs = SPECS_DATA[cat];
-            const descText = ta.value.trim();
-
             const parts = [];
-            if (condId && CONDITION_NAMES[condId]) {
-                parts.push('Состояние: ' + CONDITION_NAMES[condId]);
-            }
-            if (specs) {
-                parts.push(`Цвет: ${specs.color}, Для кого: ${specs.forWhom}, Бренд: ${specs.brand}, Размер: ${specs.size}`);
-            }
-            if (descText) parts.push(descText);
-
+            if (condId && CONDITION_NAMES[condId]) parts.push('Состояние: ' + CONDITION_NAMES[condId]);
+            if (specs) parts.push(`Цвет: ${specs.color}, Для кого: ${specs.forWhom}, Бренд: ${specs.brand}, Размер: ${specs.size}`);
             return parts.join('\n\n');
         }
 
         function goToCharity() {
-            const desc = buildFullDescription();
-            sessionStorage.setItem('adDesc', desc);
+            sessionStorage.setItem('mainDesc', ta.value);
+            sessionStorage.setItem('adDesc', ta.value.trim());
             sessionStorage.removeItem('adCategories');
             sessionStorage.setItem('adCollection', 'crisis');
             window.location.href = 'step5-crisis.html';
@@ -240,6 +230,7 @@
 
         function goNext() {
             sessionStorage.setItem('mainDesc', ta.value);
+            sessionStorage.setItem('adDesc', ta.value.trim());
             sessionStorage.setItem('prevPage', 'main-describe.html');
             window.location.href = 'main-address.html';
         }
@@ -247,6 +238,11 @@
         const saved = sessionStorage.getItem('mainDesc');
         if (saved) {
             ta.value = saved;
+        } else {
+            const params = buildParamsText();
+            if (params) ta.value = params;
+        }
+        if (ta.value) {
             ta.style.height = ta.scrollHeight + 'px';
             checkTrigger();
         }
