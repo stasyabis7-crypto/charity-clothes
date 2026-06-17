@@ -1177,6 +1177,14 @@
             height: 7px;
         }
 
+        .cat-arrow {
+            position: absolute;
+            top: 15px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+        }
+
         .cat-info { flex: 1; min-width: 0; }
 
         .cat-name {
@@ -1766,8 +1774,8 @@
         </div>
 
         <section class="section">
-            <h2 class="section-title">Другие данные объявления</h2>
-            <p class="section-sub">Проверьте их перед публикацией</p>
+            <h2 class="section-title">Проверьте данные объявления</h2>
+            <p class="section-sub">Вы заполнили их автоматически — отредактируйте если нужно</p>
         </section>
 
         <section class="section">
@@ -1776,7 +1784,7 @@
         </section>
 
         <section class="section">
-            <h2 class="section-title">Название объявления</h2>
+            <h2 class="section-title">Название</h2>
             <div class="field-row dark">
                 <input class="field" id="title-display" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
                 <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>
@@ -1784,46 +1792,8 @@
         </section>
 
         <section class="section">
-            <h2 class="section-title">Категория</h2>
-            <p class="section-sub">Выбирается автоматически для передачи вещей на благотворительность</p>
-            <div class="field-row disabled">
-                <span>Добрые вещи</span>
-                <img class="arrow-icon gray" src="arrow down.svg" alt="">
-            </div>
-        </section>
-
-        <section class="section" id="condition-section" style="display:none;">
-            <h2 class="section-title">Состояние</h2>
-            <div class="field-row disabled">
-                <span id="condition-value">Хорошее</span>
-                <img class="arrow-icon gray" src="arrow down.svg" alt="">
-            </div>
-        </section>
-
-        <section class="section" id="adtype-section" style="display:none;">
-            <h2 class="section-title">Тип объявления</h2>
-            <div class="field-row disabled">
-                <span id="adtype-value">Продаю своё</span>
-                <img class="arrow-icon gray" src="arrow down.svg" alt="">
-            </div>
-        </section>
-
-        <section class="section" id="specs-section" style="display:none;">
-            <h2 class="section-title">Характеристики</h2>
-            <div id="specs-list"></div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Описание товаров</h2>
+            <h2 class="section-title">Описание вещей</h2>
             <textarea class="desc-textarea" id="desc-textarea"></textarea>
-        </section>
-
-        <section class="section" id="price-section">
-            <h2 class="section-title">Условия продажи</h2>
-            <div class="field-row dark">
-                <input class="field" id="price-input" inputmode="numeric" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
-                <button class="clear-btn" onclick="clearPrice()"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>
-            </div>
         </section>
 
         <section class="section">
@@ -1832,12 +1802,11 @@
                 <span>Москва, Чонгарский б-р, 7</span>
                 <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></span>
             </div>
-            <p class="hint">Укажите реальный адрес, откуда покупатель сможет оформить доставку</p>
         </section>
 
         <section class="section">
             <h2 class="section-title">Авито Доставка</h2>
-            <p class="delivery-copy">Выберите, как покупатели смогут заказать ваши товары. Это бесплатно и безопасно: вам не нужно платить за отправку.</p>
+            <p class="delivery-copy">Фонды смогут оформить бесплатную доставку. Вам не нужно платить за отправку.</p>
             <div class="toggle-row">
                 <div class="toggle-static"></div>
                 <div>
@@ -1856,7 +1825,7 @@
 
         <section class="section" style="padding-bottom:24px;">
             <h2 class="section-title">Контакты</h2>
-            <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявления с нужными им вещами, узнают подробности и договорятся о сделке</p>
+            <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявление с нужными им вещами, узнают подробности и договорятся о сделке</p>
             <div class="section" style="margin-top:24px;">
                 <h2 class="minor-title">Телефон</h2>
                 <p class="contacts-copy">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span style="color:#767676;text-decoration:underline;">Подробнее</span></p>
@@ -1867,9 +1836,9 @@
             </div>
             <div class="section" style="margin-top:24px;">
                 <h2 class="minor-title">Способ связи</h2>
-                <div class="radio-row"><span class="radio active"></span><span>Звонки и сообщения</span></div>
-                <div class="radio-row"><span class="radio"></span><span>Только звонки</span></div>
-                <div class="radio-row"><span class="radio"></span><span>Только сообщения</span></div>
+                <div class="radio-row" onclick="setContactMethod(0)"><span class="radio active" id="cm-0"></span><span>Звонки и сообщения</span></div>
+                <div class="radio-row" onclick="setContactMethod(1)"><span class="radio" id="cm-1"></span><span>Только звонки</span></div>
+                <div class="radio-row" onclick="setContactMethod(2)"><span class="radio" id="cm-2"></span><span>Только сообщения</span></div>
             </div>
         </section>
     </main>
@@ -2215,6 +2184,13 @@
             }
         };
 
+        function setContactMethod(idx) {
+            [0,1,2].forEach(i => {
+                const el = document.getElementById('cm-' + i);
+                if (el) el.className = 'radio' + (i === idx ? ' active' : '');
+            });
+        }
+
         function saveAndExit() {
             persistAll();
             sessionStorage.setItem('hasDraft', '1');
@@ -2387,15 +2363,17 @@
                 const card = document.createElement('div');
                 card.className = 'cat-card';
                 card.onclick = () => openCatSheet(catId, true);
+                card.style.position = 'relative';
                 card.innerHTML = `
                     <div class="cat-img-wrap">
                         <img class="cat-img" src="${cat.image}" alt="">
-                        <img class="cat-badge" src="new podacha/Badge.svg" alt="">
+                        ${!isFilled ? '<img class="cat-badge" src="new podacha/Badge.svg" alt="">' : ''}
                     </div>
                     <div class="cat-info">
                         <div class="cat-name">${cat.name}</div>
                         <div class="cat-sub-text ${isFilled ? 'done' : 'red'}">${isFilled ? 'Вещи лежат в пакете' : 'Кратко расскажите про вещи'}</div>
                     </div>
+                    <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
                 `;
                 packCards.appendChild(card);
             });
@@ -3107,13 +3085,16 @@
 
         function openFundSelection(e) {
             if (e) e.stopPropagation();
-            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
-            let fundId = 1;
-            for (const id of photos) {
-                const fid = PHOTO_TO_FUND[photoFile(id)];
-                if (fid) { fundId = fid; break; }
+            // only auto-detect from photos if user hasn't made an explicit choice yet
+            if (!sessionStorage.getItem('selectedFundId')) {
+                const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+                let fundId = 1;
+                for (const id of photos) {
+                    const fid = PHOTO_TO_FUND[photoFile(id)];
+                    if (fid) { fundId = fid; break; }
+                }
+                sessionStorage.setItem('selectedFundId', String(fundId));
             }
-            sessionStorage.setItem('selectedFundId', String(fundId));
             window.location.href = 'fond-choose.html';
         }
 
