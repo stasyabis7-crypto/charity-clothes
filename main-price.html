@@ -85,15 +85,7 @@
 
         .charity-hint {
             display: none;
-            margin-top: 24px;
-            border: none;
-            border-radius: 16px;
-            background: #F4F4F4;
-            padding: 14px 14px 14px 16px;
-            align-items: flex-start;
-            gap: 12px;
-            text-align: left;
-            cursor: pointer;
+            margin-top: 12px;
         }
 
         .charity-hint-img {
@@ -223,7 +215,7 @@
         <span class="save-exit">Сохранить и выйти</span>
     </header>
 
-    <h1 class="page-title">Условия продажи</h1>
+    <h1 class="page-title">Цена</h1>
 
     <div class="price-wrap">
         <div class="price-field" onclick="document.getElementById('price-input').focus()">
@@ -237,13 +229,8 @@
             >
             <button class="price-clear" id="price-clear" onclick="clearPrice(event)">✕</button>
         </div>
-        <div class="charity-hint" id="charity-hint" onclick="goToCharity()">
-            <img class="charity-hint-img" src="sbor 2 new.png" alt="">
-            <div>
-                <div class="charity-hint-title">Похоже, эти вещи могут пригодиться при ЧС<br>в Дагестане 🧡</div>
-                <div class="charity-hint-sub">Фонды и люди из зоны ЧС смогут увидеть объявление и связаться<br>с вами</div>
-                <span class="charity-link">Передать вещи</span>
-            </div>
+        <div class="charity-hint" id="charity-hint">
+            <p style="font-size:15px;font-weight:400;line-height:22px;color:#1A1A1A;">Кажется, эту вещь можно передать на благотворительность 💙. <span style="text-decoration:underline;cursor:pointer;" onclick="goToCharity()">Попробовать</span></p>
         </div>
     </div>
 

@@ -70,13 +70,14 @@
             display: none;
             margin-top: 24px;
             border: none;
-            border-radius: 16px;
-            background: #F4F4F4;
-            padding: 14px 14px 14px 16px;
+            border-radius: 20px;
+            background: linear-gradient(98deg, #C9F0FF 5.5%, #E7D9FF 91.57%);
+            padding: 18px 18px 22px 18px;
             align-items: flex-start;
             gap: 12px;
             text-align: left;
             cursor: pointer;
+            width: 343px;
         }
 
         .charity-hint.visible { display: flex; }
@@ -160,12 +161,12 @@
             placeholder="Опишите ваш товар подробнее"
         ></textarea>
         <div class="charity-hint" id="charity-hint" onclick="goToCharity()">
-            <img class="charity-hint-img" src="sbor 2 new.png" alt="">
-            <div>
-                <div class="charity-hint-title">Похоже, эти вещи могут пригодиться при ЧС<br>в Дагестане 🧡</div>
-                <div class="charity-hint-sub">Фонды и люди из зоны ЧС смогут увидеть объявление и связаться<br>с вами</div>
+            <div style="flex:1;min-width:0;">
+                <div class="charity-hint-title">Похоже, ваши вещи подходят фондам</div>
+                <div class="charity-hint-sub">Вы можете бесплатно передать вещи на благотворительность через объявление Авито</div>
                 <span class="charity-link">Передать вещи</span>
             </div>
+            <img class="charity-hint-img" src="sbor 2 new.png" alt="">
         </div>
     </div>
 
