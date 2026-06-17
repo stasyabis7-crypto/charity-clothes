@@ -2910,41 +2910,21 @@
                 document.getElementById('title-clear-btn').style.display = titleInput.value ? 'block' : 'none';
             });
 
-            const condition = sessionStorage.getItem('mainCondition');
-            if (condition && CONDITION_NAMES[condition]) {
-                document.getElementById('condition-section').style.display = 'block';
-                document.getElementById('condition-value').textContent = CONDITION_NAMES[condition];
+            const priceInput = document.getElementById('price-input');
+            if (priceInput) {
+                let price = sessionStorage.getItem('mainPrice') || '';
+                const descPrice = (sessionStorage.getItem('adDesc') || '').match(/Цена:\s*([0-9\s]+) ₽/);
+                if (!price && descPrice) price = descPrice[1].replace(/\s/g, '');
+                const priceSection = document.getElementById('price-section');
+                if (priceSection) priceSection.style.display = 'block';
+                priceInput.value = price ? price + ' ₽' : '0 ₽';
+                priceInput.addEventListener('input', function () {
+                    const digits = this.value.replace(/\D/g, '');
+                    this.value = digits ? digits + ' ₽' : '';
+                    if (digits) sessionStorage.setItem('mainPrice', digits);
+                    else sessionStorage.removeItem('mainPrice');
+                });
             }
-
-            const adtype = sessionStorage.getItem('mainAdType');
-            if (adtype && ADTYPE_NAMES[adtype]) {
-                document.getElementById('adtype-section').style.display = 'block';
-                document.getElementById('adtype-value').textContent = ADTYPE_NAMES[adtype];
-            }
-
-            const mainCategory = sessionStorage.getItem('mainCategory');
-            const specs = SPECS_DATA[mainCategory];
-            if (specs && (condition || adtype)) {
-                document.getElementById('specs-section').style.display = 'block';
-                document.getElementById('specs-list').innerHTML = specs.map(spec => `
-                    <div class="field-row disabled">
-                        <span>${spec.label}</span>
-                        <span>${spec.value}</span>
-                    </div>
-                `).join('');
-            }
-
-            let price = sessionStorage.getItem('mainPrice') || '';
-            const descPrice = (sessionStorage.getItem('adDesc') || '').match(/Цена:\s*([0-9\s]+) ₽/);
-            if (!price && descPrice) price = descPrice[1].replace(/\s/g, '');
-            document.getElementById('price-section').style.display = 'block';
-            document.getElementById('price-input').value = price ? price + ' ₽' : '0 ₽';
-            document.getElementById('price-input').addEventListener('input', function () {
-                const digits = this.value.replace(/\D/g, '');
-                this.value = digits ? digits + ' ₽' : '';
-                if (digits) sessionStorage.setItem('mainPrice', digits);
-                else sessionStorage.removeItem('mainPrice');
-            });
         }
 
         let lastHeroSheetOpen = 0;
