@@ -2873,6 +2873,8 @@
                 delete sel[catId];
                 saveCatSelections(sel);
                 renderPackSection();
+                renderPhotos();
+                autoBuildDescription();
                 updateContinueState();
             }, 350); // after close animation
         }
