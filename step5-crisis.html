@@ -3492,7 +3492,7 @@
         function resizeTextarea() {
             const ta = document.getElementById('desc-textarea');
             ta.style.height = 'auto';
-            ta.style.height = ta.scrollHeight + 'px';
+            requestAnimationFrame(() => { ta.style.height = ta.scrollHeight + 'px'; });
         }
 
         function persistCategories() {
