@@ -84,6 +84,8 @@
             font-weight: 400;
             color: #1A1A1A;
             line-height: 22px;
+            overflow-wrap: break-word;
+            max-width: 280px;
         }
 
         .view-btn {
@@ -189,11 +191,22 @@
             4: 'Дари надежду'
         };
 
-        const fondId = Number(sessionStorage.getItem('selectedFundId') || '1');
-        const fondName = FUNDS[fondId] || FUNDS[1];
+        function fixHangingPrepositions(el) {
+            var NBSP = ' ';
+            var pattern = /(^|\s)(в|к|с|у|о|и|а|но|ни|на|до|из|за|по|от|не|да|бы|ли|же|то|об|со|ко|во|для|без|под|над|про|при|или|это|что|как|так|уже|ещё|раз|всё)\s/giu;
+            el.textContent = el.textContent.replace(pattern, function(_, before, prep) {
+                return before + prep + NBSP;
+            });
+        }
+
+        var fondId = Number(sessionStorage.getItem('selectedFundId') || '1');
+        var fondName = FUNDS[fondId] || FUNDS[1];
 
         document.getElementById('fond-img').src = 'new podacha/success fond ' + fondId + '.png';
-        document.getElementById('success-sub').textContent = 'Опубликуем через минуту для фонда «' + fondName + '»';
+
+        var subEl = document.getElementById('success-sub');
+        subEl.textContent = 'Опубликуем через минуту для фонда «' + fondName + '»';
+        fixHangingPrepositions(subEl);
     </script>
 
 </body>
