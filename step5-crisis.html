@@ -2703,10 +2703,11 @@
         }
 
         function openCatPhotoEdit() {
-            // Save current cat sheet state
             sessionStorage.setItem('catPhotoEditId', activeCatId);
             sessionStorage.setItem('catPhotoEditDraft', JSON.stringify(catDraft));
             sessionStorage.setItem('catPhotoEditFromPack', catFromPack ? '1' : '0');
+            // Save global photos so we can restore them on return
+            sessionStorage.setItem('globalSelectedPhotos', sessionStorage.getItem('selectedPhotos') || '[]');
             // Pre-select only the category's current photos in the chooser
             const catPhotos = catDraft.photos || [];
             sessionStorage.setItem('selectedPhotos', JSON.stringify(catPhotos));
@@ -3463,11 +3464,15 @@
             const _fromPack = sessionStorage.getItem('catPhotoEditFromPack') !== '0';
             // photos in selectedPhotos are now the user's choice for this category
             _draft.photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]').map(Number);
+            // restore global selectedPhotos that was overwritten before navigating
+            const _globalPhotos = sessionStorage.getItem('globalSelectedPhotos');
+            if (_globalPhotos) {
+                sessionStorage.setItem('selectedPhotos', _globalPhotos);
+                sessionStorage.removeItem('globalSelectedPhotos');
+            }
             sessionStorage.removeItem('catPhotoEditId');
             sessionStorage.removeItem('catPhotoEditDraft');
             sessionStorage.removeItem('catPhotoEditFromPack');
-            // restore global selectedPhotos (category photos edit should not affect global)
-            // they were overwritten before navigating — restore from saved categories or keep as is
             catDraft = _draft;
             activeCatId = _catPhotoEditId;
             catFromPack = _fromPack;
