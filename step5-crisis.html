@@ -1210,7 +1210,6 @@
         /* ADD MORE BLOCK */
         .add-more-block {
             margin-top: 24px;
-            padding: 0 16px;
         }
 
         .add-more-title {
@@ -2354,9 +2353,20 @@
         }
 
         function renderPackSection() {
-            const fromPhotos = getActiveCategoriesFromPhotos();
+            // Derive pack categories only on first load; store so re-renders don't react to photo changes
+            let packCatIds = JSON.parse(sessionStorage.getItem('initialPackCategories') || 'null');
+            if (packCatIds === null) {
+                packCatIds = getActiveCategoriesFromPhotos();
+                sessionStorage.setItem('initialPackCategories', JSON.stringify(packCatIds));
+            }
+
+            // Also include categories explicitly saved via slider (not in initial list)
             const catSel = loadCatSelections();
-            const hasPhotos = fromPhotos.length > 0;
+            Object.keys(catSel).forEach(catId => {
+                if (CATEGORIES[catId] && !packCatIds.includes(catId)) packCatIds = [...packCatIds, catId];
+            });
+
+            const hasPhotos = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]').length > 0;
 
             document.getElementById('pack-subtitle').style.display = hasPhotos ? '' : 'none';
             document.getElementById('pack-subtitle-empty').style.display = hasPhotos ? 'none' : '';
@@ -2368,7 +2378,7 @@
             // Main pack cards
             const packCards = document.getElementById('pack-cards');
             packCards.innerHTML = '';
-            fromPhotos.forEach(catId => {
+            packCatIds.forEach(catId => {
                 const cat = CATEGORIES[catId];
                 if (!cat) return;
                 const saved = catSel[catId];
@@ -2391,10 +2401,10 @@
                 packCards.appendChild(card);
             });
 
-            // Add-more slider
+            // Add-more slider: all categories NOT in pack
             const slider = document.getElementById('add-more-slider');
             slider.innerHTML = '';
-            const sliderCats = CATEGORY_ORDER.filter(id => !fromPhotos.includes(id));
+            const sliderCats = CATEGORY_ORDER.filter(id => !packCatIds.includes(id));
             sliderCats.forEach(catId => {
                 const cat = CATEGORIES[catId];
                 if (!cat) return;
@@ -2408,7 +2418,6 @@
                 slider.appendChild(item);
             });
 
-            // hide add-more block only if no photos AND no slider items (shouldn't happen)
             document.getElementById('add-more-block').style.display = (sliderCats.length || !hasPhotos) ? '' : 'none';
 
             updateContinueState();
@@ -2728,7 +2737,11 @@
                 else if (cfg.type === 'select') parts.push(`${cfg.label}: ${val.join(', ')}`);
             });
             const ta = document.getElementById('cat-desc-input');
-            if (ta && !catDraft._descManual) ta.value = parts.join('\n');
+            if (ta && !catDraft._descManual) {
+                ta.value = parts.join('\n');
+                ta.style.height = 'auto';
+                ta.style.height = ta.scrollHeight + 'px';
+            }
             catDraft.desc = ta ? ta.value : parts.join('\n');
         }
 
@@ -2750,10 +2763,20 @@
         function saveCatSheet() {
             if (!isCatDraftValid()) return;
             const sel = loadCatSelections();
+
+            // Exclusive photo ownership: remove these photos from every other category
+            const myPhotos = new Set((catDraft.photos || []).map(Number));
+            Object.keys(sel).forEach(otherCatId => {
+                if (otherCatId !== activeCatId && sel[otherCatId] && sel[otherCatId].photos) {
+                    sel[otherCatId].photos = sel[otherCatId].photos.filter(p => !myPhotos.has(Number(p)));
+                }
+            });
+
             sel[activeCatId] = { ...catDraft, _saved: true };
             saveCatSelections(sel);
             closeCatSheet();
             renderPackSection();
+            renderPhotos();
             updateContinueState();
             autoBuildDescription();
         }
@@ -2762,6 +2785,11 @@
             const catId = activeCatId;
             closeCatSheet();
             setTimeout(() => {
+                // Remove from initial pack categories so it moves back to slider
+                let initCats = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
+                initCats = initCats.filter(id => id !== catId);
+                sessionStorage.setItem('initialPackCategories', JSON.stringify(initCats));
+
                 const sel = loadCatSelections();
                 delete sel[catId];
                 saveCatSelections(sel);
@@ -2846,10 +2874,25 @@
 
         function renderPhotos() {
             const grid = document.getElementById('photos-grid');
-            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
-            grid.innerHTML = '';
+            const globalPhotos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
 
-            photos.forEach((id, index) => {
+            // Collect all photos from saved cat sheets
+            const catSel = loadCatSelections();
+            const catPhotoIds = [];
+            Object.values(catSel).forEach(data => {
+                if (data && data.photos) catPhotoIds.push(...data.photos.map(Number));
+            });
+
+            // Merge: global first, then cat-sheet photos, deduplicated
+            const seen = new Set();
+            const allPhotos = [];
+            [...globalPhotos, ...catPhotoIds].forEach(id => {
+                const n = Number(id);
+                if (!seen.has(n)) { seen.add(n); allPhotos.push(n); }
+            });
+
+            grid.innerHTML = '';
+            allPhotos.forEach((id, index) => {
                 const cell = document.createElement('div');
                 cell.className = 'photo-cell';
                 cell.innerHTML = `
@@ -3343,19 +3386,15 @@
             return [base, uniqueLines.length ? `Готовы передать:\n${uniqueLines.join('\n')}` : ''].filter(Boolean).join('\n\n');
         }
 
-        function buildRememberedDescription(savedDesc = sessionStorage.getItem('adDesc') || '') {
-            const parts = [];
-            const base = sessionStorage.getItem('mainDesc') || stripGeneratedDescription(savedDesc);
-            if (base) parts.push(base);
-            return parts.join('\n\n');
+        function buildRememberedDescription() {
+            return sessionStorage.getItem('mainDesc') || '';
         }
 
         function autoBuildDescription() {
             const ta = document.getElementById('desc-textarea');
-            const savedDesc = sessionStorage.getItem('adDesc') || '';
-            const base = buildRememberedDescription(savedDesc);
+            const base = buildRememberedDescription();
             const lines = selectedLines();
-            // aggregate category descriptions
+            // aggregate category descriptions (always freshly rebuilt from current selections)
             const catSel = loadCatSelections();
             const catLines = [];
             Object.entries(catSel).forEach(([catId, data]) => {
@@ -3366,7 +3405,7 @@
             });
             const generated = lines.length ? `Готовы передать:\n${lines.join('\n')}` : '';
             const parts = [base, catLines.join('\n\n'), generated].filter(Boolean);
-            ta.value = normalizeDescriptionText(parts.join('\n\n'));
+            ta.value = parts.join('\n\n');
             resizeTextarea();
             persistCategories();
         }
