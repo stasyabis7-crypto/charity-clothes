@@ -107,16 +107,16 @@
         .section:first-child { margin-top: 24px; }
 
         .section-title {
-            font-size: 24px;
+            font-size: 21px;
             font-weight: 700;
-            line-height: 1.25;
+            line-height: 26px;
         }
 
         .section-sub {
-            margin-top: 4px;
+            margin-top: 2px;
             font-size: 15px;
             font-weight: 400;
-            line-height: 1.35;
+            line-height: 22px;
         }
 
         .banner {
@@ -161,7 +161,7 @@
         .compact-title {
             font-size: 21px;
             font-weight: 700;
-            line-height: 1.25;
+            line-height: 26px;
         }
 
         .category-list {
@@ -233,17 +233,17 @@
 
         .crisis-card-title {
             display: block;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
-            line-height: 1.25;
+            line-height: 22px;
         }
 
         .crisis-card-sub {
             display: block;
             margin-top: 2px;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 400;
-            line-height: 1.3;
+            line-height: 22px;
         }
 
         .crisis-card-side {
@@ -902,6 +902,91 @@
             color: #000;
         }
 
+        /* ===== FUND CARD ===== */
+        .fund-card {
+            margin-top: 12px;
+            background: #F2F1F0;
+            border-radius: 28px;
+            padding: 15px 16px 21px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .fund-logo {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .fund-info {
+            flex: 1;
+            min-width: 0;
+            padding-right: 32px;
+        }
+
+        .fund-name-row {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .fund-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #000;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .fund-question-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: -8px -8px -8px 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .fund-sub {
+            margin-top: 2px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .fund-dataview {
+            position: absolute;
+            top: 15px;
+            right: 16px;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* ===== INFO SHEET (новая шторка) ===== */
         .info-overlay {
             display: none;
@@ -1075,16 +1160,22 @@
 
     <main class="content">
         <section class="section">
-            <h2 class="compact-title">Куда будут отправлены вещи</h2>
-            <div class="collection-card">
-                <img class="collection-img" id="collection-img" src="sbor 2 new.png" alt="">
-                <div class="collection-card-content">
-                    <div class="collection-title" id="collection-title">Пострадавшим от ЧС<br>в Дагестане</div>
-                    <div class="collection-sub" id="collection-sub">Нужны вещи для быта, гигиены, восстановления домов и помощи детям</div>
+            <h2 class="compact-title">Кому хотите помочь?</h2>
+            <div class="fund-card" onclick="openFundSelection()">
+                <img class="fund-logo" id="fund-logo" src="new podacha/RKK.png" alt="">
+                <div class="fund-info">
+                    <div class="fund-name-row">
+                        <span class="fund-name" id="fund-name">Российский Красный Крест</span>
+                        <button class="fund-question-btn" onclick="openFundPage(event)">
+                            <img src="new category/Question Filled.svg" width="24" height="24" alt="">
+                        </button>
+                    </div>
+                    <div class="fund-sub" id="fund-sub">Помощь людям, пострадавшим от паводков в Дагестане</div>
                 </div>
-                <span class="collection-radio" aria-hidden="true"></span>
+                <button class="fund-dataview" onclick="openFundSelection(event)">
+                    <img src="new podacha/DataView.svg" width="24" height="24" alt="">
+                </button>
             </div>
-            <button class="change-collection-btn" onclick="openChangeSheet()">Помочь в другой ситуации</button>
         </section>
 
         <section class="section" id="suggested-section">
@@ -1213,7 +1304,7 @@
     </main>
 
     <div class="bottom-bar">
-        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Разместить объявление</button>
+        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Передать вещи</button>
     </div>
 
     <!-- Info overlay -->
@@ -1760,11 +1851,48 @@
             return COLLECTIONS[currentCollection].needs.find(n => n.id === needId);
         }
 
+        const FUNDS = {
+            1: { name: 'Российский Красный Крест', sub: 'Помощь людям, пострадавшим от паводков в Дагестане', logo: 'new podacha/RKK.png' },
+            2: { name: 'Ночлежка', sub: 'Поддержка людей без жилья', logo: 'new podacha/noch.png' },
+            3: { name: 'Миллион книг', sub: 'Сбор книг для детских сельских библиотек', logo: 'new podacha/mil knig.png' },
+            4: { name: 'Дари надежду', sub: 'Помощь людям старшего возраста', logo: 'new podacha/dari nad.png' }
+        };
+
+        const PHOTO_TO_FUND = {
+            'new podacha/fond 1 photo 1.png': 1,
+            'new podacha/fond 1 photo 2.png': 1,
+            'new podacha/fond 1 photo 3.png': 1,
+            'new podacha/fond 1 photo 4.png': 1,
+            'new podacha/fond 1 photo 5.png': 1,
+            'new podacha/fond 1 photo 6.png': 1,
+            'new podacha/fond 1 photo 7.png': 1,
+            'new podacha/fond 1 photo 8.png': 1
+        };
+
+        function getSelectedFund() {
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            for (const id of photos) {
+                const fundId = PHOTO_TO_FUND[photoFile(id)];
+                if (fundId) return FUNDS[fundId];
+            }
+            return FUNDS[1];
+        }
+
         function renderCollection() {
-            const data = COLLECTIONS[currentCollection];
-            document.getElementById('collection-img').src = data.image;
-            document.getElementById('collection-title').textContent = data.title;
-            document.getElementById('collection-sub').textContent = data.sub;
+            const fund = getSelectedFund();
+            document.getElementById('fund-logo').src = fund.logo;
+            document.getElementById('fund-name').textContent = fund.name;
+            document.getElementById('fund-sub').textContent = fund.sub;
+        }
+
+        function openFundSelection(e) {
+            if (e) e.stopPropagation();
+            /* выбор фонда — следующий шаг */
+        }
+
+        function openFundPage(e) {
+            if (e) e.stopPropagation();
+            /* страница фонда — следующий шаг */
         }
 
         function categoryImage(need) {
