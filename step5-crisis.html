@@ -556,6 +556,10 @@
             outline: none;
         }
 
+        .desc-textarea::placeholder {
+            color: #9E9E9E;
+        }
+
         .hint {
             margin-top: 8px;
             font-size: 13px;
@@ -1766,8 +1770,8 @@
         </section>
 
         <div class="add-more-block" id="add-more-block">
-            <h3 class="add-more-title">Добавьте ещё, если есть</h3>
-            <p class="add-more-sub">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
+            <h3 class="add-more-title" id="add-more-title">Добавьте ещё, если есть</h3>
+            <p class="add-more-sub" id="add-more-sub">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
             <div class="add-more-slider-wrap">
                 <div class="add-more-slider" id="add-more-slider"></div>
             </div>
@@ -1793,7 +1797,7 @@
 
         <section class="section">
             <h2 class="section-title">Описание вещей</h2>
-            <textarea class="desc-textarea" id="desc-textarea"></textarea>
+            <textarea class="desc-textarea" id="desc-textarea" placeholder="Например: 3 кофты, из хлопка, без потёртостей"></textarea>
         </section>
 
         <section class="section">
@@ -2351,6 +2355,26 @@
         function renderPackSection() {
             const fromPhotos = getActiveCategoriesFromPhotos();
             const catSel = loadCatSelections();
+            const hasPhotos = fromPhotos.length > 0;
+
+            // Show/hide subtitle and "add more" title depending on whether photos exist
+            document.getElementById('pack-subtitle').style.display = hasPhotos ? '' : 'none';
+            const addMoreTitle = document.getElementById('add-more-title');
+            const addMoreSub = document.getElementById('add-more-sub');
+            if (addMoreTitle) addMoreTitle.style.display = hasPhotos ? '' : 'none';
+            if (addMoreSub) {
+                if (!hasPhotos) {
+                    // move sub under main title
+                    addMoreSub.style.display = '';
+                    document.getElementById('pack-section').appendChild(addMoreSub);
+                } else {
+                    addMoreSub.style.display = '';
+                    const addMoreBlock = document.getElementById('add-more-block');
+                    if (addMoreSub.parentElement !== addMoreBlock) {
+                        addMoreBlock.insertBefore(addMoreSub, addMoreBlock.querySelector('.add-more-slider-wrap'));
+                    }
+                }
+            }
 
             // Main pack cards
             const packCards = document.getElementById('pack-cards');
@@ -2395,8 +2419,8 @@
                 slider.appendChild(item);
             });
 
-            // hide add-more block if no slider items
-            document.getElementById('add-more-block').style.display = sliderCats.length ? '' : 'none';
+            // hide add-more block only if no photos AND no slider items (shouldn't happen)
+            document.getElementById('add-more-block').style.display = (sliderCats.length || !hasPhotos) ? '' : 'none';
 
             updateContinueState();
         }
@@ -3483,10 +3507,12 @@
                 document.body.style.overflow = 'hidden';
             }
         }
-        window.addEventListener('scroll', function() {
+        function updateHeaderScroll() {
             const header = document.querySelector('.header');
             if (header) header.classList.toggle('scrolled', window.scrollY > 0);
-        }, { passive: true });
+        }
+        window.addEventListener('scroll', updateHeaderScroll, { passive: true });
+        updateHeaderScroll();
     </script>
 </body>
 </html>
