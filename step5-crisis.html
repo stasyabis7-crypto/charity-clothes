@@ -1286,8 +1286,8 @@
             transform: translateX(-50%) translateY(-10px);
             width: calc(100% - 32px);
             max-width: 398px;
-            background: #fff;
-            color: #1A1A1A;
+            background: #1A1A1A;
+            color: #fff;
             border-radius: 16px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.12);
             padding: 14px 48px 14px 16px;
@@ -1317,6 +1317,7 @@
             justify-content: center;
             line-height: 0;
         }
+        #save-toast-close img { filter: invert(1); }
 
         .cat-overlay {
             display: none;
@@ -2734,7 +2735,6 @@
                 const cell = document.createElement('div');
                 cell.className = 'photo-cell';
                 cell.innerHTML = `
-                    ${i === 0 ? '<span class="main-tag">Главная</span>' : ''}
                     <img src="${photoSrc(pid)}" class="photo-img" alt="">
                     <button class="delete-btn" onclick="deleteCatPhoto(${pid})">
                         <img src="step 2 materials/Icon delete.svg" width="24" height="24" alt="">

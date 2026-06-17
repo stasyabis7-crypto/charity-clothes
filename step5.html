@@ -83,13 +83,14 @@
         }
 
         .banner {
-            background: linear-gradient(90deg, #D7F1FF 0%, #E4F8FF 100%);
-            border-radius: 16px;
-            padding: 14px 14px 14px 16px;
+            background: linear-gradient(98deg, #C9F0FF 5.5%, #E7D9FF 91.57%);
+            border-radius: 20px;
+            padding: 18px 18px 22px 18px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
             cursor: pointer;
+            width: 343px;
         }
 
         .banner-img {
@@ -797,11 +798,11 @@
     <main class="content">
         <section class="section">
             <div class="banner" id="banner" onclick="openSheet()">
-                <img class="banner-img" src="how it works.png" alt="">
-                <div>
-                    <div class="banner-title">Как это работает</div>
-                    <div class="banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
+                <div style="flex:1;min-width:0;">
+                    <div class="banner-title">Похоже, ваши вещи подходят фондам</div>
+                    <div class="banner-sub">Вы можете бесплатно передать вещи на благотворительность через объявление Авито</div>
                 </div>
+                <img class="banner-img" src="how it works.png" alt="">
             </div>
         </section>
 
@@ -844,11 +845,12 @@
         </section>
 
         <section class="section" id="price-section">
-            <h2 class="section-title">Условия продажи</h2>
+            <h2 class="section-title">Цена</h2>
             <div class="field-row dark">
                 <input class="field" id="price-input" inputmode="numeric" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
                 <button class="clear-btn" onclick="clearPrice()"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>
             </div>
+            <p style="margin-top:12px;font-size:15px;font-weight:400;line-height:22px;color:#1A1A1A;">Кажется, эту вещь можно передать на благотворительность 💙. <span style="text-decoration:underline;cursor:pointer;" onclick="sessionStorage.setItem('adCollection','crisis');window.location.href='step5-crisis.html'">Попробовать</span></p>
         </section>
 
         <section class="section">
