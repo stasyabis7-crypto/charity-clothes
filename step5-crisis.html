@@ -1277,6 +1277,47 @@
         }
 
         /* ===== CATEGORY SHEET ===== */
+        /* ===== SAVE TOAST ===== */
+        #save-toast {
+            display: none;
+            position: fixed;
+            top: 88px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            width: calc(100% - 32px);
+            max-width: 398px;
+            background: #fff;
+            color: #1A1A1A;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            padding: 14px 48px 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            z-index: 3000;
+            opacity: 0;
+            transition: opacity 0.25s, transform 0.25s;
+        }
+        #save-toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        #save-toast-close {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 0;
+        }
+
         .cat-overlay {
             display: none;
             position: fixed;
@@ -1375,9 +1416,9 @@
         .param-block { margin-top: 24px; }
 
         .param-label {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 700;
-            line-height: 22px;
+            line-height: 24px;
             color: #000;
             display: flex;
             align-items: center;
@@ -1451,17 +1492,17 @@
         }
 
         .type-chip {
-            border-radius: 20px;
+            border-radius: 16px;
             background: #F4F4F4;
-            padding: 6px 12px;
+            padding: 10px 16px;
             font-family: 'Inter', sans-serif;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 400;
-            line-height: 20px;
+            line-height: 22px;
             color: #000;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         .type-chip-remove {
@@ -1779,7 +1820,7 @@
 
         <section class="section">
             <h2 class="section-title">Проверьте данные объявления</h2>
-            <p class="section-sub">Вы заполнили их автоматически — отредактируйте если нужно</p>
+            <p class="section-sub">Мы заполнили их автоматически — отредактируйте если нужно</p>
         </section>
 
         <section class="section">
@@ -1944,7 +1985,12 @@
     </div>
 
     <!-- Save toast -->
-    <div id="save-toast" style="display:none;position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#1A1A1A;color:#fff;text-align:center;padding:14px 16px;font-family:'Inter',sans-serif;font-size:15px;font-weight:400;z-index:3000;transition:opacity 0.3s;opacity:0;">Изменения сохранены</div>
+    <div id="save-toast">
+        Изменения сохранены
+        <button id="save-toast-close" onclick="hideSaveToast()">
+            <img src="new category/CloseButton.svg" width="20" height="20" alt="">
+        </button>
+    </div>
 
     <!-- Category sheet overlay -->
     <div class="cat-overlay" id="cat-overlay" onclick="closeCatSheet()"></div>
@@ -2478,13 +2524,17 @@
 
         function showSaveToast() {
             const toast = document.getElementById('save-toast');
-            toast.style.display = 'block';
-            toast.style.opacity = '1';
             clearTimeout(toast._hideTimer);
-            toast._hideTimer = setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => { toast.style.display = 'none'; }, 300);
-            }, 2000);
+            toast.style.display = 'block';
+            requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('visible')));
+            toast._hideTimer = setTimeout(hideSaveToast, 2500);
+        }
+
+        function hideSaveToast() {
+            const toast = document.getElementById('save-toast');
+            clearTimeout(toast._hideTimer);
+            toast.classList.remove('visible');
+            setTimeout(() => { toast.style.display = 'none'; }, 250);
         }
 
         function toggleFundItems() {
@@ -3531,6 +3581,7 @@
         setupMainFields();
         renderCollection();
         renderPackSection();
+        autoBuildDescription();
 
         if (_catPhotoEditId) {
             // reopen category sheet after photo edit
