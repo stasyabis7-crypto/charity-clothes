@@ -72,22 +72,23 @@
             border: none;
             border-radius: 20px;
             background: linear-gradient(98deg, #C9F0FF 5.5%, #E7D9FF 91.57%);
-            padding: 18px 18px 22px 18px;
+            position: relative;
+            padding: 18px 18px 24px 18px;
             align-items: flex-start;
-            gap: 12px;
             text-align: left;
             cursor: pointer;
+            overflow: hidden;
         }
 
         .charity-hint.visible { display: flex; }
 
         .charity-hint-img {
+            position: absolute;
+            bottom: 0;
+            right: 0;
             width: 120px;
             height: auto;
             object-fit: contain;
-            flex-shrink: 0;
-            align-self: flex-end;
-            transform: translate(15px, 30px);
         }
 
         .charity-hint-title {
@@ -160,7 +161,7 @@
             placeholder="Опишите ваш товар подробнее"
         ></textarea>
         <div class="charity-hint" id="charity-hint" onclick="goToCharity()">
-            <div style="flex:1;min-width:0;">
+            <div style="flex:1;min-width:0;padding-right:110px;">
                 <div class="charity-hint-title">Похоже, ваши вещи подходят фондам</div>
                 <div class="charity-hint-sub">Вы можете бесплатно передать вещи на благотворительность через объявление Авито</div>
             </div>
