@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <title>О фонде</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 16px 16px;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 50;
+        }
+
+        .header-back {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 20px;
+            color: #1A1A1A;
+        }
+
+        .header-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+
+        .verified-row {
+            margin-top: 12px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .verified-icon {
+            width: 16px;
+            height: 20px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .verified-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #1A1A1A;
+        }
+
+        .fund-title {
+            margin-top: 4px;
+            padding: 0 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 30px;
+            color: #1A1A1A;
+        }
+
+        .tabs {
+            margin-top: 16px;
+            padding: 0 16px;
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .tab-btn {
+            padding: 0 0 12px;
+            margin-right: 24px;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #757575;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: #1A1A1A;
+            text-decoration: underline;
+            text-underline-offset: 14px;
+            text-decoration-thickness: 2px;
+        }
+
+        /* ABOUT TAB */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .fund-photo-wrap {
+            margin-top: 16px;
+            position: relative;
+            width: 100%;
+        }
+
+        .fund-photo {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .fund-logo-overlay {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .fund-description {
+            margin-top: 16px;
+            padding: 0 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #1A1A1A;
+        }
+
+        /* REPORTS TAB */
+        .reports-filters {
+            margin-top: 12px;
+            padding: 0 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            border-radius: 20px;
+            background: #F2F1F0;
+            padding: 8px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: default;
+        }
+
+        .report-block {
+            margin-top: 16px;
+            padding: 0 16px;
+        }
+
+        .report-photo {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+        }
+
+        .report-text {
+            margin-top: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #1A1A1A;
+        }
+
+        /* BOTTOM BUTTON */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            padding: 12px 16px 28px;
+            z-index: 100;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        }
+
+        .donate-btn {
+            display: block;
+            width: 100%;
+            background: #00AAFF;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <button class="header-back" id="back-btn" onclick="goBack()">
+            <img src="new podacha/Arrow Back.svg" width="24" height="24" alt="">
+        </button>
+        <span class="header-title">О фонде</span>
+        <button class="header-close" onclick="closeAll()">
+            <img src="new category/CloseButton.svg" width="20" height="20" alt="">
+        </button>
+    </header>
+
+    <div class="verified-row">
+        <img class="verified-icon" src="new podacha/Verify.svg" alt="">
+        <span class="verified-text">Проверенный фонд</span>
+    </div>
+
+    <h1 class="fund-title" id="fund-title"></h1>
+
+    <div class="tabs">
+        <button class="tab-btn active" id="tab-about" onclick="switchTab('about')">О фонде</button>
+        <button class="tab-btn" id="tab-reports" onclick="switchTab('reports')">Добрые дела фонда</button>
+    </div>
+
+    <!-- О фонде -->
+    <div class="tab-pane active" id="pane-about">
+        <div class="fund-photo-wrap">
+            <img class="fund-photo" id="fund-photo" src="" alt="">
+            <img class="fund-logo-overlay" id="fund-logo" src="" alt="">
+        </div>
+        <p class="fund-description" id="fund-desc"></p>
+    </div>
+
+    <!-- Добрые дела -->
+    <div class="tab-pane" id="pane-reports">
+        <div class="reports-filters">
+            <span class="filter-chip">2025 год</span>
+            <span class="filter-chip">Февраль</span>
+        </div>
+        <div class="report-block">
+            <img class="report-photo" id="report-photo" src="" alt="">
+            <p class="report-text" id="report-text"></p>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        <button class="donate-btn">Сделать пожертвование</button>
+    </div>
+
+    <script>
+        const FUNDS = {
+            1: {
+                name: 'Российский Красный Крест',
+                logo: 'new podacha/RKK.png',
+                photo: 'new podacha/img fond 1.png',
+                reportPhoto: 'new podacha/img fond 1 report.png',
+                desc: 'Общероссийская общественная организация «Российский Красный Крест», основанный в 1867 году, является старейшей гуманитарной организацией страны и частью Международного Движения Красного Креста и Красного Полумесяца. Организация осуществляет деятельность через 85 региональных отделений, объединяя более 100 000 участников. Ее миссия заключается в предотвращении и облегчении страданий людей, защите человеческого достоинства и содействии гуманизации общественных отношений на основе принципов беспристрастности и нейтральности. Ключевые направления работы включают помощь в чрезвычайных ситуациях, восстановление семейных связей, содействие соблюдению норм международного гуманитарного права и повышение готовности населения к действиям в кризисных ситуациях.',
+                report: 'В феврале Российский Красный Крест добился важного стратегического результата: после более чем 20 лет обсуждений был принят федеральный закон, закрепивший особый правовой статус Национального Общества, что усилило позиции организации для взаимодействия с властями и партнерами. Фонд продолжил системную помощь жителям приграничья: в Белгородской области работали стационарные и мобильные пункты обогрева, а также было доставлено более 2 000 единиц техники (генераторы, тепловые пушки) для автономного жизнеобеспечения. В рамках развития донорства РКК провел первую встречу со студентами ВГИК, где будущие режиссеры узнали о важности вступления в Федеральный регистр доноров костного мозга — ведь для более чем 75% пациентов это единственный шанс на спасение. Студент и волонтер Свердловского отделения Денис Усов на месте серьезного ДТП профессионально помогал пострадавшим и участвовал в их эвакуации до приезда медиков. Психологи Татарстанского отделения РКК оперативно включились в работу после трагедии в лицее № 37, проведя индивидуальные консультации для учеников и семинар для педагогов. Также фонд анонсировал выход 20 февраля документального фильма «Нити надежды» о работе Службы восстановления семейных связей, чтобы каждый мог узнать, как специалисты возвращают людей друг другу. Российский Красный Крест неизменно выполняет свою миссию, охватывая за месяц тысячи нуждающихся психологической поддержкой, гуманитарной помощью и работой мобильных бригад, чтобы облегчать страдания людей и сохранять их достоинство в любой жизненной ситуации.'
+            },
+            2: {
+                name: 'Ночлежка',
+                logo: 'new podacha/noch.png',
+                photo: 'new podacha/img fond 2.png',
+                reportPhoto: 'new podacha/img fond 2 report.png',
+                desc: '«Ночлежка» — одна из старейших и наиболее опытных организаций России, помогающая бездомным людям с 1990 года. Ежегодно силами сотен волонтёров и партнёров фонд оказывает десятки тысяч услуг: только в 2024 году 11 921 человек нашёл кров в пунктах обогрева, 7 262 человека получили юридические и социальные консультации, а 239 бездомных прошли реабилитацию. Миссия Ночлежки — вернуть людей к обычной жизни через системную помощь, защиту прав и поддержку по всей стране.',
+                report: 'В феврале фонд «Ночлежка» провел несколько важных акций и мероприятий, которые направлены на помощь бездомным людям. Команда фонда работала над сбором блинов для бездомных людей в Москве и Петербурге во время Масленицы. Также они организовали серию видео, чтобы помочь людям согреться в условиях сильных морозов. Кроме того, фонд продолжал помогать пережить холода путем раздачи спасательных одеял в различных проектах Ночлежки. Соединяя экстренную помощь с долгосрочной реабилитацией и системными исследованиями проблемы бездомности, «Ночлежка» продолжает доказывать, что только комплексный подход позволяет возвращать людей к обычной жизни и защищать их права по всей стране.'
+            },
+            3: {
+                name: 'Миллион книг',
+                logo: 'new podacha/mil knig.png',
+                photo: 'new podacha/img fond 3.png',
+                reportPhoto: 'new podacha/img fond 3 report.png',
+                desc: 'Некоммерческий проект помощи деревенским и сельским детским библиотекам. Пока работаем только в Псковской области, помогаем отдельным библиотекам в Новгородской и Тверской областях, но планируем и другие территории. Если есть партнеры, пишите! Будем рады двигаться дальше.',
+                report: 'В рамках всероссийской акции «Читаем детям о войне» состоялось громкое чтение и обсуждение книги Виктора Кокосова «Животные на войне». Ребята из группы продлённого дня СОШ №1 узнали о том, что четвероногие и крылатые бойцы наравне с людьми участвовали в опаснейших военных операциях, доставляли важные грузы, работали минёрами и разведчиками, связистами и санитарами. Дети узнали насколько важным и ценным был вклад животных в нашу Победу в Великой Отечественной войне. Книга получена благодаря проекту «Миллион книг»! Сотрудники Островской центральной районной библиотеки и наши самые маленькие читатели очень благодарим за возможность работать с такими интересными и важными книгами.'
+            },
+            4: {
+                name: 'Дари надежду',
+                logo: 'new podacha/dari nad.png',
+                photo: 'new podacha/img fond 4.png',
+                reportPhoto: 'new podacha/img fond 4 report.png',
+                desc: 'Благотворительный фонд «Дари Надежду» с 2019 года ведет системную работу по поддержке пожилых людей через 4 ключевые программы. В рамках программ «Добро до двери» и «Дари ремонт» фонд обеспечивает нуждающихся продуктовыми наборами и помогает с косметическим ремонтом жилья одиноких пенсионеров. Кроме того, программа «Уютная старость» направлена на улучшение условий в домах интернатах, а инициатива «Пожилым людям» — на организацию досуга для их подопечных.',
+                report: 'В феврале фонд «Дари надежду» в преддверии 8 марта запустил акцию по сбору косметики и средств ухода для женщин из Ржевского дома интерната: всего десятки подопечных получили шампуни, кремы и помады. Повара испекли для бабушек и дедушек 1000 блинов, и волонтёры в снегопад развезли их по домам, чтобы масленичное тепло дошло до каждого. Фонд выпустил лимитированную серию свитшотов с вышивкой «Ю мейк май харт смайл» — их можно получить за пожертвование, а все средства направляются на продукты, ремонты и адресную помощь одиноким пожилым людям. Регулярные пожертвования позволили поддержать 90-летнюю Елену Николаевну, которая почти не встаёт с постели: фонд обеспечил её подгузниками и средствами гигиены, без которых каждый день становится испытанием на стойкость. Охватывая помощь на дому и в интернатах, Благотворительный фонд «Дари Надежду» продолжает заботиться о пожилых людях регулярно, чтобы каждый чувствовал себя нужным и защищённым.'
+            }
+        };
+
+        const fundId = Number(sessionStorage.getItem('viewFundId') || '1');
+        const returnPage = sessionStorage.getItem('fundInfoReturn') || 'fond-choose.html';
+        const fund = FUNDS[fundId] || FUNDS[1];
+
+        document.getElementById('fund-title').textContent = fund.name;
+        document.getElementById('fund-photo').src = fund.photo;
+        document.getElementById('fund-logo').src = fund.logo;
+        document.getElementById('fund-desc').textContent = fund.desc;
+        document.getElementById('report-photo').src = fund.reportPhoto;
+        document.getElementById('report-text').textContent = fund.report;
+
+        function switchTab(tab) {
+            document.getElementById('tab-about').classList.toggle('active', tab === 'about');
+            document.getElementById('tab-reports').classList.toggle('active', tab === 'reports');
+            document.getElementById('pane-about').classList.toggle('active', tab === 'about');
+            document.getElementById('pane-reports').classList.toggle('active', tab === 'reports');
+        }
+
+        function goBack() {
+            window.location.href = returnPage;
+        }
+
+        function closeAll() {
+            window.location.href = 'step5-crisis.html';
+        }
+    </script>
+
+</body>
+</html>

@@ -957,6 +957,8 @@
             cursor: pointer;
             padding: 6px;
             margin: -6px -6px -6px -4px;
+            position: relative;
+            top: -2px;
         }
 
         .fund-sub {
@@ -1873,6 +1875,8 @@
         };
 
         function getSelectedFund() {
+            const stored = sessionStorage.getItem('selectedFundId');
+            if (stored && FUNDS[Number(stored)]) return FUNDS[Number(stored)];
             const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
             for (const id of photos) {
                 const fundId = PHOTO_TO_FUND[photoFile(id)];
@@ -1890,12 +1894,27 @@
 
         function openFundSelection(e) {
             if (e) e.stopPropagation();
-            /* выбор фонда — следующий шаг */
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            let fundId = 1;
+            for (const id of photos) {
+                const fid = PHOTO_TO_FUND[photoFile(id)];
+                if (fid) { fundId = fid; break; }
+            }
+            sessionStorage.setItem('selectedFundId', String(fundId));
+            window.location.href = 'fond-choose.html';
         }
 
         function openFundPage(e) {
             if (e) e.stopPropagation();
-            /* страница фонда — следующий шаг */
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            let fundId = 1;
+            for (const id of photos) {
+                const fid = PHOTO_TO_FUND[photoFile(id)];
+                if (fid) { fundId = fid; break; }
+            }
+            sessionStorage.setItem('viewFundId', String(fundId));
+            sessionStorage.setItem('fundInfoReturn', 'step5-crisis.html');
+            window.location.href = 'fond-info.html';
         }
 
         function categoryImage(need) {
