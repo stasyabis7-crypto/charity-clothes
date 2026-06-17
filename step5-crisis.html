@@ -57,6 +57,8 @@
             width: 100%;
             height: auto;
             display: block;
+            max-height: 320px;
+            object-fit: cover;
         }
 
         .hero-content {
@@ -902,6 +904,87 @@
             color: #000;
         }
 
+        /* ===== INFO SHEET (новая шторка) ===== */
+        .info-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 200;
+        }
+        .info-overlay.active { display: block; }
+
+        .info-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            z-index: 201;
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .info-sheet.active { transform: translateX(-50%) translateY(0); }
+
+        .info-sheet-image-wrap { position: relative; width: 100%; }
+        .info-sheet-photo { width: 100%; height: auto; display: block; }
+        .info-sheet-close {
+            position: absolute;
+            top: 24px; right: 24px;
+            width: 20px; height: 20px;
+            background: none; border: none;
+            padding: 0; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .info-sheet-body { padding: 16px 16px 0; }
+        .info-sheet-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            line-height: 30px;
+            color: #1A1A1A;
+        }
+        .info-banners-wrap { margin-top: 16px; }
+        .info-banners-carousel {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 32px;
+        }
+        .info-banners-carousel::-webkit-scrollbar { display: none; }
+        .info-banner {
+            flex-shrink: 0;
+            width: 328px;
+            background: #F2F1F0;
+            border-radius: 24px;
+            padding: 12px 16px 18px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 12px;
+            scroll-snap-align: start;
+        }
+        .info-banner-image { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
+        .info-banner-text { flex: 1; min-width: 0; }
+        .info-banner-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700; font-size: 16px; line-height: 20px; color: #1A1A1A;
+        }
+        .info-banner-subtitle {
+            margin-top: 2px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400; font-size: 15px; line-height: 22px; color: #1A1A1A;
+        }
+
         .need-row {
             margin-top: 24px;
             display: flex;
@@ -984,7 +1067,7 @@
     </header>
 
     <section class="hero">
-        <img class="hero-bg" src="new podacha/banner podacha.png" alt="">
+        <img class="hero-bg" src="new podacha/banner podacha.png?v=2" alt="">
         <div class="hero-content">
             <h1 class="intro-title">Передавайте вещи благотворительным фондам</h1>
             <p class="intro-subtitle">Проверьте данные бесплатного объявления и выберите вещи, которые хотите положить в благотворительный пакет</p>
@@ -1135,17 +1218,51 @@
         <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Разместить объявление</button>
     </div>
 
-    <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()">
-        <div class="sheet-card" onclick="event.stopPropagation()">
-            <div class="sheet-drag"></div>
-            <button class="sheet-close" onclick="closeSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
-            <h2 class="sheet-title" id="info-sheet-title">Передача вещей на благотворительность</h2>
-            <div class="sheet-tabs">
-                <button class="sheet-tab active" id="stab-how" onclick="switchSheetTab('how')">Как это работает</button>
-                <button class="sheet-tab" id="stab-benefits" onclick="switchSheetTab('benefits')">Почему это удобно</button>
+    <!-- Info overlay -->
+    <div class="info-overlay" id="info-overlay" onclick="closeSheet()"></div>
+
+    <!-- Info bottom sheet -->
+    <div class="info-sheet" id="info-sheet">
+        <div class="info-sheet-image-wrap">
+            <img class="info-sheet-photo" src="new category/photo sheet.png" alt="">
+            <button class="info-sheet-close" onclick="closeSheet()">
+                <img src="new category/CloseButton.svg" width="20" height="20" alt="">
+            </button>
+        </div>
+        <div class="info-sheet-body">
+            <h2 class="info-sheet-title">Передавайте вещи благотворительным фондам</h2>
+            <div class="info-banners-wrap">
+                <div class="info-banners-carousel">
+                    <div class="info-banner">
+                        <img class="info-banner-image" src="new category/img 1.png" alt="">
+                        <div class="info-banner-text">
+                            <div class="info-banner-title">Это не продажа вещей</div>
+                            <div class="info-banner-subtitle">Вы сможете бесплатно передать вещи фондам на благотворительность</div>
+                        </div>
+                    </div>
+                    <div class="info-banner">
+                        <img class="info-banner-image" src="new category/img 2.png" alt="">
+                        <div class="info-banner-text">
+                            <div class="info-banner-title">Увидят только фонды</div>
+                            <div class="info-banner-subtitle">Объявление видят только сотрудники проверенных организаций</div>
+                        </div>
+                    </div>
+                    <div class="info-banner">
+                        <img class="info-banner-image" src="new category/img 3.png" alt="">
+                        <div class="info-banner-text">
+                            <div class="info-banner-title">Ответ за 3 дня</div>
+                            <div class="info-banner-subtitle">Если вещи подойдут вам напишут в чат Авито и договорятся о сделке</div>
+                        </div>
+                    </div>
+                    <div class="info-banner">
+                        <img class="info-banner-image" src="new category/img 4.png" alt="">
+                        <div class="info-banner-text">
+                            <div class="info-banner-title">Доставка за счёт Авито</div>
+                            <div class="info-banner-subtitle">Авито отправит вещи и пришлёт уведомление, когда фонд их получит</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="sheet-pane" id="spane-how"></div>
-            <div class="sheet-pane" id="spane-benefits" style="display:none"></div>
         </div>
     </div>
 
@@ -1546,19 +1663,15 @@
         }
 
         function openSheet() {
-            const overlay = document.getElementById('sheet-overlay');
-            if (!overlay) return false;
-            overlay.classList.add('open');
-            overlay.style.display = 'flex';
+            document.getElementById('info-overlay').classList.add('active');
+            document.getElementById('info-sheet').classList.add('active');
             document.body.style.overflow = 'hidden';
-            renderInfoSheet();
             return false;
         }
 
         function closeSheet() {
-            const overlay = document.getElementById('sheet-overlay');
-            overlay.classList.remove('open');
-            overlay.style.display = '';
+            document.getElementById('info-overlay').classList.remove('active');
+            document.getElementById('info-sheet').classList.remove('active');
             document.body.style.overflow = '';
         }
 
