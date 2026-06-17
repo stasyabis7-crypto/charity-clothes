@@ -661,7 +661,10 @@
         }
 
         .continue-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
             width: 100%;
             background: #C4C4C4;
             color: #fff;
@@ -1300,7 +1303,10 @@
     </main>
 
     <div class="bottom-bar">
-        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">Передать вещи</button>
+        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">
+            <img src="new category/Icon charity.svg" width="30" height="30" alt="">
+            Передать вещи
+        </button>
     </div>
 
     <!-- Info overlay -->
