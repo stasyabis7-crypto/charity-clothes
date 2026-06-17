@@ -2870,6 +2870,13 @@
                 sessionStorage.setItem('initialPackCategories', JSON.stringify(initCats));
 
                 const sel = loadCatSelections();
+                // Remove category's photos from global selectedPhotos too
+                const catPhotos = new Set(((sel[catId] || {}).photos || []).map(Number));
+                if (catPhotos.size) {
+                    const global = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]')
+                        .filter(p => !catPhotos.has(Number(p)));
+                    sessionStorage.setItem('selectedPhotos', JSON.stringify(global));
+                }
                 delete sel[catId];
                 saveCatSelections(sel);
                 renderPackSection();
