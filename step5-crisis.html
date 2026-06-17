@@ -1943,6 +1943,9 @@
         </div>
     </div>
 
+    <!-- Save toast -->
+    <div id="save-toast" style="display:none;position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#1A1A1A;color:#fff;text-align:center;padding:14px 16px;font-family:'Inter',sans-serif;font-size:15px;font-weight:400;z-index:3000;transition:opacity 0.3s;opacity:0;">Изменения сохранены</div>
+
     <!-- Category sheet overlay -->
     <div class="cat-overlay" id="cat-overlay" onclick="closeCatSheet()"></div>
 
@@ -2473,6 +2476,17 @@
             document.body.style.overflow = '';
         }
 
+        function showSaveToast() {
+            const toast = document.getElementById('save-toast');
+            toast.style.display = 'block';
+            toast.style.opacity = '1';
+            clearTimeout(toast._hideTimer);
+            toast._hideTimer = setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => { toast.style.display = 'none'; }, 300);
+            }, 2000);
+        }
+
         function toggleFundItems() {
             fundItemsOpen = !fundItemsOpen;
             const list = document.getElementById('fund-items-list');
@@ -2718,8 +2732,21 @@
             // Save global photos so we can restore them on return
             sessionStorage.setItem('globalSelectedPhotos', sessionStorage.getItem('selectedPhotos') || '[]');
             // Pre-select only the category's current photos in the chooser
-            const catPhotos = catDraft.photos || [];
+            const catPhotos = (catDraft.photos || []).map(Number);
             sessionStorage.setItem('selectedPhotos', JSON.stringify(catPhotos));
+            // Photos from other categories — shown as "taken" in picker
+            const allCatSel = loadCatSelections();
+            const catPhotosSet = new Set(catPhotos);
+            const takenPhotos = [];
+            Object.entries(allCatSel).forEach(([cid, data]) => {
+                if (cid !== activeCatId && data && data.photos) {
+                    data.photos.forEach(p => {
+                        const n = Number(p);
+                        if (!catPhotosSet.has(n) && !takenPhotos.includes(n)) takenPhotos.push(n);
+                    });
+                }
+            });
+            sessionStorage.setItem('catPhotoEditTakenPhotos', JSON.stringify(takenPhotos));
             sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
             window.location.href = 'step2-choose.html';
         }
@@ -2762,6 +2789,7 @@
 
         function saveCatSheet() {
             if (!isCatDraftValid()) return;
+            autoBuildCatDesc(); // ensure catDraft.desc reflects current textarea before saving
             const sel = loadCatSelections();
 
             // Exclusive photo ownership: remove these photos from every other category
@@ -2775,6 +2803,7 @@
             sel[activeCatId] = { ...catDraft, _saved: true };
             saveCatSelections(sel);
             closeCatSheet();
+            showSaveToast();
             renderPackSection();
             renderPhotos();
             updateContinueState();
@@ -3492,6 +3521,7 @@
             sessionStorage.removeItem('catPhotoEditId');
             sessionStorage.removeItem('catPhotoEditDraft');
             sessionStorage.removeItem('catPhotoEditFromPack');
+            sessionStorage.removeItem('catPhotoEditTakenPhotos');
             catDraft = _draft;
             activeCatId = _catPhotoEditId;
             catFromPack = _fromPack;

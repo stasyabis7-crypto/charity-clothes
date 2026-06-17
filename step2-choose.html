@@ -40,6 +40,19 @@
             color: #1A1A1A;
         }
 
+        .header-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
         /* PHOTO GRID */
         .photos-grid-all {
             display: grid;
@@ -65,6 +78,7 @@
             transition: opacity 0.15s;
         }
 
+        /* Selected (own) */
         .photo-item.selected img.photo-img {
             opacity: 0.85;
         }
@@ -74,6 +88,20 @@
             position: absolute;
             inset: 0;
             border: 3px solid #1A1A1A;
+            border-radius: 28px;
+            pointer-events: none;
+        }
+
+        /* Taken (belongs to another category) */
+        .photo-item.taken img.photo-img {
+            opacity: 0.55;
+        }
+
+        .photo-item.taken::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 3px solid #9E9E9E;
             border-radius: 28px;
             pointer-events: none;
         }
@@ -95,6 +123,11 @@
             justify-content: center;
             z-index: 10;
             border: 2px solid #fff;
+        }
+
+        .badge.taken-badge {
+            background: #9E9E9E;
+            font-size: 11px;
         }
 
         /* BOTTOM BAR */
@@ -148,9 +181,9 @@
 <body>
 
     <header class="header">
-        <a href="#" onclick="history.back(); return false;">
-            <img src="step 2 materials/back.svg" width="48" height="48" alt="">
-        </a>
+        <button class="header-btn" id="header-left-btn" onclick="history.back()">
+            <img id="header-left-icon" src="step 2 materials/back.svg" width="48" height="48" alt="">
+        </button>
         <div class="header-title">
             Недавние
             <img src="step 2 materials/Expand More.svg" width="20" height="20" alt="">
@@ -202,16 +235,45 @@
     </div>
 
     <script>
+        const isCatPhotoEdit = !!sessionStorage.getItem('catPhotoEditId');
+
+        // When opened from a category sheet: show close X instead of back arrow
+        if (isCatPhotoEdit) {
+            document.getElementById('header-left-icon').src = 'new category/CloseButton.svg';
+            document.getElementById('header-left-icon').width = 24;
+            document.getElementById('header-left-icon').height = 24;
+        }
+
         let selected = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+        let taken = JSON.parse(sessionStorage.getItem('catPhotoEditTakenPhotos') || '[]');
+
+        const files = {
+            1: 'new podacha/fond 1 photo 1.png',
+            2: 'new podacha/fond 1 photo 2.png',
+            3: 'new podacha/fond 1 photo 3.png',
+            4: 'new podacha/fond 1 photo 4.png',
+            5: 'new podacha/fond 1 photo 5.png',
+            6: 'new podacha/fond 1 photo 6.png',
+            7: 'new podacha/fond 1 photo 7.png',
+            8: 'new podacha/fond 1 photo 8.png'
+        };
 
         function toggle(id) {
-            const idx = selected.indexOf(id);
-            if (idx === -1) {
+            const inSelected = selected.includes(id);
+            const inTaken = taken.includes(id);
+
+            if (inTaken) {
+                // Claim: move from "taken by another cat" to selected for this cat
+                taken = taken.filter(t => t !== id);
                 selected.push(id);
+            } else if (inSelected) {
+                selected = selected.filter(s => s !== id);
             } else {
-                selected.splice(idx, 1);
+                selected.push(id);
             }
+
             sessionStorage.setItem('selectedPhotos', JSON.stringify(selected));
+            sessionStorage.setItem('catPhotoEditTakenPhotos', JSON.stringify(taken));
             render();
         }
 
@@ -220,13 +282,24 @@
                 const item = document.querySelector(`[data-id="${i}"]`);
                 if (!item) continue;
                 const badge = document.getElementById(`badge-${i}`);
-                const idx = selected.indexOf(i);
-                if (idx !== -1) {
+                const inSelected = selected.includes(i);
+                const inTaken = taken.includes(i);
+
+                if (inSelected) {
                     item.classList.add('selected');
-                    badge.textContent = idx + 1;
+                    item.classList.remove('taken');
+                    badge.textContent = selected.indexOf(i) + 1;
+                    badge.className = 'badge';
+                    badge.style.display = 'flex';
+                } else if (inTaken) {
+                    item.classList.remove('selected');
+                    item.classList.add('taken');
+                    badge.textContent = '✕';
+                    badge.className = 'badge taken-badge';
                     badge.style.display = 'flex';
                 } else {
                     item.classList.remove('selected');
+                    item.classList.remove('taken');
                     badge.style.display = 'none';
                 }
             }
@@ -236,16 +309,6 @@
                 footer.style.display = 'flex';
                 document.getElementById('footer-count').textContent = selected.length + ' фото';
                 const last = selected[selected.length - 1];
-                const files = {
-                    1: 'new podacha/fond 1 photo 1.png',
-                    2: 'new podacha/fond 1 photo 2.png',
-                    3: 'new podacha/fond 1 photo 3.png',
-                    4: 'new podacha/fond 1 photo 4.png',
-                    5: 'new podacha/fond 1 photo 5.png',
-                    6: 'new podacha/fond 1 photo 6.png',
-                    7: 'new podacha/fond 1 photo 7.png',
-                    8: 'new podacha/fond 1 photo 8.png'
-                };
                 document.getElementById('footer-thumb').src = files[last];
             } else {
                 footer.style.display = 'none';
