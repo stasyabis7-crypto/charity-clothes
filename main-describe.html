@@ -82,12 +82,11 @@
         .charity-hint.visible { display: flex; }
 
         .charity-hint-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            object-fit: cover;
+            width: 90px;
+            height: auto;
+            object-fit: contain;
             flex-shrink: 0;
-            background: #fff;
+            align-self: flex-end;
         }
 
         .charity-hint-title {
@@ -204,7 +203,7 @@
         ta.addEventListener('input', function() {
             ta.style.height = 'auto';
             ta.style.height = ta.scrollHeight + 'px';
-            sessionStorage.setItem('mainDesc', ta.value);
+            sessionStorage.setItem('mainUserDesc', ta.value);
             checkTrigger();
         });
 
@@ -230,9 +229,16 @@
             return parts.join('\n');
         }
 
+        function buildCombinedDesc() {
+            const params = buildParamsText();
+            const userText = ta.value.trim();
+            return [params, userText].filter(Boolean).join('\n');
+        }
+
         function goToCharity() {
-            sessionStorage.setItem('mainDesc', ta.value);
-            sessionStorage.setItem('adDesc', ta.value.trim());
+            const combined = buildCombinedDesc();
+            sessionStorage.setItem('mainDesc', combined);
+            sessionStorage.setItem('adDesc', combined);
             sessionStorage.removeItem('adCategories');
             sessionStorage.setItem('adCollection', 'crisis');
             window.location.href = 'step5-crisis.html';
@@ -243,20 +249,16 @@
         }
 
         function goNext() {
-            sessionStorage.setItem('mainDesc', ta.value);
-            sessionStorage.setItem('adDesc', ta.value.trim());
+            const combined = buildCombinedDesc();
+            sessionStorage.setItem('mainDesc', combined);
+            sessionStorage.setItem('adDesc', combined);
             sessionStorage.setItem('prevPage', 'main-describe.html');
             window.location.href = 'main-address.html';
         }
 
-        const saved = sessionStorage.getItem('mainDesc');
+        const saved = sessionStorage.getItem('mainUserDesc');
         if (saved) {
             ta.value = saved;
-        } else {
-            const params = buildParamsText();
-            if (params) ta.value = params;
-        }
-        if (ta.value) {
             ta.style.height = ta.scrollHeight + 'px';
             checkTrigger();
         }
