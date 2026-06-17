@@ -2453,7 +2453,7 @@
 
             // fund items list
             const fundList = document.getElementById('fund-items-list');
-            fundList.style.display = 'none';
+            fundList.classList.remove('open');
             fundList.innerHTML = cat.fundItems.map(i => `<li>${i}</li>`).join('');
             document.getElementById('fund-items-arrow').classList.remove('open');
 
