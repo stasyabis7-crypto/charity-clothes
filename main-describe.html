@@ -164,7 +164,7 @@
                 <div class="charity-hint-title">Похоже, ваши вещи подходят фондам</div>
                 <div class="charity-hint-sub">Вы можете бесплатно передать вещи на благотворительность через объявление Авито</div>
             </div>
-            <img class="charity-hint-img" src="Picture.png" alt="">
+            <img class="charity-hint-img" src="new podacha/picture banner lalala.png" alt="">
         </div>
     </div>
 
@@ -186,10 +186,16 @@
             'fair': 'Удовлетворительное'
         };
 
+        const ADTYPE_NAMES = {
+            'own': 'Продаю своё',
+            'other': 'Продаю чужое',
+            'rent': 'Сдаю в аренду'
+        };
+
         const SPECS_DATA = {
-            't-shirts':  { label: 'Футболки и майки',    color: 'Белый',   forWhom: 'Для девочек', brand: 'H&M',       size: '128' },
-            'homewear':  { label: 'Домашняя одежда',      color: 'Розовый', forWhom: 'Для девочек', brand: 'Без бренда', size: '104' },
-            'suits':     { label: 'Пиджаки и костюмы',   color: 'Синий',   forWhom: 'Для девочек', brand: 'Zara Kids', size: '116' }
+            't-shirts':  { type: 'Футболка',         color: 'Белый',   forWhom: 'Для девочек', brand: 'H&M',       size: '128' },
+            'homewear':  { type: 'Домашний комплект', color: 'Розовый', forWhom: 'Для девочек', brand: 'Без бренда', size: '104' },
+            'suits':     { type: 'Пиджак',            color: 'Синий',   forWhom: 'Для девочек', brand: 'Zara Kids', size: '116' }
         };
 
         const ta = document.getElementById('describe-ta');
@@ -209,11 +215,19 @@
         function buildParamsText() {
             const cat = sessionStorage.getItem('mainCategory') || '';
             const condId = sessionStorage.getItem('mainCondition') || '';
+            const adTypeId = sessionStorage.getItem('mainAdType') || '';
             const specs = SPECS_DATA[cat];
             const parts = [];
             if (condId && CONDITION_NAMES[condId]) parts.push('Состояние: ' + CONDITION_NAMES[condId]);
-            if (specs) parts.push(`Цвет: ${specs.color}, Для кого: ${specs.forWhom}, Бренд: ${specs.brand}, Размер: ${specs.size}`);
-            return parts.join('\n\n');
+            if (adTypeId && ADTYPE_NAMES[adTypeId]) parts.push('Вид объявления: ' + ADTYPE_NAMES[adTypeId]);
+            if (specs) {
+                if (specs.type) parts.push('Тип одежды: ' + specs.type);
+                if (specs.brand) parts.push('Бренд: ' + specs.brand);
+                if (specs.color) parts.push('Цвет: ' + specs.color);
+                if (specs.forWhom) parts.push('Для кого: ' + specs.forWhom);
+                if (specs.size) parts.push('Размер: ' + specs.size);
+            }
+            return parts.join('\n');
         }
 
         function goToCharity() {
