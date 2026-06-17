@@ -1554,7 +1554,13 @@
         function goToDelivery() {
             if (!Object.keys(loadSelections()).length) return;
             persistAll();
-            window.location.href = currentCollection === 'crisis' ? 'success-crisis.html' : 'success.html';
+            if (currentCollection === 'crisis') {
+                window.location.href = 'success-crisis.html';
+            } else {
+                // основной флоу — возвращаем на нашу подачу
+                sessionStorage.setItem('adCollection', 'crisis');
+                window.location.href = 'step5-crisis.html';
+            }
         }
 
         const descTextarea = document.getElementById('desc-textarea');
