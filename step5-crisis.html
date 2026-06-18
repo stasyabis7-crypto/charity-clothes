@@ -1354,11 +1354,11 @@
 
         .cat-hero-img {
             display: block;
-            width: calc(100% + 32px);
+            width: 100%;
             height: 220px;
             object-fit: cover;
             border-radius: 28px 28px 0 0;
-            margin: -24px -16px 20px;
+            flex-shrink: 0;
         }
 
         .cat-sheet .sheet-close {
@@ -2043,8 +2043,8 @@
     <!-- Category sheet -->
     <div class="cat-sheet" id="cat-sheet">
         <button class="sheet-close" onclick="closeCatSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
+        <img class="cat-hero-img" id="cat-hero-img" src="" alt="" style="display:none;">
         <div class="cat-sheet-scroll" id="cat-sheet-scroll">
-            <img class="cat-hero-img" id="cat-hero-img" src="" alt="" style="display:none;">
             <h2 class="cat-sheet-title" id="cat-sheet-title"></h2>
             <p class="cat-sheet-subtitle" id="cat-sheet-subtitle"></p>
 
@@ -2060,7 +2060,7 @@
             </div>
 
             <div class="subtype-block" id="subtypes-block" style="display:none;">
-                <div class="param-label">Подтип <span class="param-required">*</span></div>
+                <div class="param-label">Тип <span class="param-required">*</span></div>
                 <div class="chips-row" id="subtypes-chips"></div>
             </div>
 
@@ -2897,12 +2897,28 @@
             // Subtypes block
             const subtypesBlock = document.getElementById('subtypes-block');
             if (cat.subtypes && cat.subtypes.length) {
-                subtypesBlock.style.display = '';
-                renderSubtypesChips(cat);
+                if (cat.subtypes.length === 1) {
+                    // Single subtype: hide selector, auto-select it
+                    subtypesBlock.style.display = 'none';
+                    if (!catDraft.selectedSubtypes || !catDraft.selectedSubtypes.includes(cat.subtypes[0].id)) {
+                        catDraft.selectedSubtypes = [cat.subtypes[0].id];
+                        // auto-fill chips-fixed params
+                        cat.subtypes[0].params.forEach(p => {
+                            const cfg0 = PARAMS_CONFIG[p];
+                            if (cfg0 && cfg0.type === 'chips-fixed') {
+                                catDraft[p + '__' + cat.subtypes[0].id] = [...cfg0.options];
+                            }
+                        });
+                    }
+                } else {
+                    subtypesBlock.style.display = '';
+                    renderSubtypesChips(cat);
+                }
                 // Render each selected subtype's params
+                const singleSubtype = cat.subtypes.length === 1;
                 (catDraft.selectedSubtypes || []).forEach(subtypeId => {
                     const subtype = cat.subtypes.find(s => s.id === subtypeId);
-                    if (subtype) renderSubtypeSection(subtype, container);
+                    if (subtype) renderSubtypeSection(subtype, container, !singleSubtype);
                 });
             } else {
                 subtypesBlock.style.display = 'none';
@@ -2978,9 +2994,10 @@
             const cat = CATEGORIES[activeCatId];
             const container = document.getElementById('cat-params');
             container.innerHTML = '';
+            const singleSub = cat.subtypes.length === 1;
             (catDraft.selectedSubtypes || []).forEach(stId => {
                 const sub = cat.subtypes.find(s => s.id === stId);
-                if (sub) renderSubtypeSection(sub, container);
+                if (sub) renderSubtypeSection(sub, container, !singleSub);
             });
             // re-add photos + desc
             const photosBlock = document.createElement('div');
@@ -3011,11 +3028,13 @@
             updateCatSaveBtn();
         }
 
-        function renderSubtypeSection(subtype, container) {
-            const header = document.createElement('div');
-            header.className = 'subtype-section';
-            header.innerHTML = `<div class="subtype-section-label">${subtype.label}</div>`;
-            container.appendChild(header);
+        function renderSubtypeSection(subtype, container, showHeader = true) {
+            if (showHeader) {
+                const header = document.createElement('div');
+                header.className = 'subtype-section';
+                header.innerHTML = `<div class="subtype-section-label">${subtype.label}</div>`;
+                container.appendChild(header);
+            }
             subtype.params.forEach(paramId => {
                 renderParamBlockNs(paramId, subtype.id, container);
             });
