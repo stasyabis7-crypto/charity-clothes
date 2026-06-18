@@ -1352,6 +1352,21 @@
             padding: 24px 16px 0;
         }
 
+        .cat-hero-img {
+            display: block;
+            width: calc(100% + 32px);
+            height: 220px;
+            object-fit: cover;
+            border-radius: 28px 28px 0 0;
+            margin: -24px -16px 20px;
+        }
+
+        .cat-sheet .sheet-close {
+            background: rgba(255,255,255,0.85);
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+        }
+
         .cat-sheet-title {
             font-size: 26px;
             font-weight: 700;
@@ -2029,6 +2044,7 @@
     <div class="cat-sheet" id="cat-sheet">
         <button class="sheet-close" onclick="closeCatSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
         <div class="cat-sheet-scroll" id="cat-sheet-scroll">
+            <img class="cat-hero-img" id="cat-hero-img" src="" alt="" style="display:none;">
             <h2 class="cat-sheet-title" id="cat-sheet-title"></h2>
             <p class="cat-sheet-subtitle" id="cat-sheet-subtitle"></p>
 
@@ -2347,6 +2363,7 @@
                 name: 'Детская одежда и обувь',
                 image: 'new podacha/children.png',
                 sliderImage: 'new podacha/slider children.png',
+                catImage: 'new podacha/cat-children-clothes.png',
                 subtitle: 'Детские вещи — самое востребованное после ЧС: семьи эвакуируются без вещей',
                 fundAccepts: 'Детская одежда и обувь в хорошем состоянии, размеры 80–152. Вещи для мальчиков и девочек любого сезона.',
                 fundRejects: 'Не принимают: рваные вещи и вещи с пятнами, нижнее бельё б/у, одежда размером меньше 80 — нужна только новая.',
@@ -2359,6 +2376,7 @@
                 name: 'Базовая одежда',
                 image: 'new podacha/base.png',
                 sliderImage: 'new podacha/slider base.png',
+                catImage: 'new podacha/cat-basic-clothes.png',
                 subtitle: 'Взрослая одежда нужна людям, которые ушли из дома в чём были',
                 fundAccepts: 'Базовая повседневная одежда для взрослых в хорошем состоянии: футболки, свитеры, брюки, джинсы. Мужское и женское.',
                 fundRejects: 'Не принимают: нижнее бельё б/у, вещи с дырками, катышками, стойкими пятнами, домашняя и пижамная одежда.',
@@ -2371,6 +2389,7 @@
                 name: 'Сезонная одежда',
                 image: 'new podacha/puh.png',
                 sliderImage: 'new podacha/slider season.png',
+                catImage: 'new podacha/cat-seasonal-clothes.png',
                 subtitle: 'Тёплые вещи особенно нужны при эвакуации в холодное время года',
                 fundAccepts: 'Верхняя одежда для взрослых в хорошем состоянии: куртки, пуховики, пальто. Мужское и женское, любые размеры.',
                 fundRejects: 'Не принимают: вещи с повреждениями подкладки или молнии, очень светлая одежда, лёгкая летняя одежда в зимний сбор.',
@@ -2384,6 +2403,7 @@
                 name: 'Обувь для взрослых',
                 image: 'new podacha/boots.png',
                 sliderImage: 'new podacha/slider boots.png',
+                catImage: 'new podacha/cat-adult-shoes.png',
                 subtitle: 'Обувь изнашивается быстро — особенно при вынужденном переезде',
                 fundAccepts: 'Мужская и женская обувь в хорошем состоянии: ботинки, кроссовки, сапоги. Любые размеры.',
                 fundRejects: 'Не принимают: обувь с расклеенной или сильно стёртой подошвой, обувь на каблуке выше 5 см, домашняя обувь и тапочки.',
@@ -2397,6 +2417,7 @@
                 name: 'Текстиль',
                 image: 'new podacha/textile.png',
                 sliderImage: 'new podacha/slider textile.png',
+                catImage: 'new podacha/cat-textile.png',
                 subtitle: 'Постельное бельё и полотенца нужны с первого дня в новом месте',
                 fundAccepts: 'Постельное бельё, полотенца, пледы и одеяла в хорошем состоянии. Чистые, без стойких запахов.',
                 fundRejects: 'Не принимают: постельное бельё с пятнами или разрывами, б/у подушки, шторы и скатерти.',
@@ -2410,6 +2431,7 @@
                 name: 'Посуда и кухня',
                 image: 'new podacha/kitchen.png',
                 sliderImage: 'new podacha/slider litchen.png',
+                catImage: 'new podacha/cat-kitchen.png',
                 subtitle: 'Базовый кухонный набор помогает обустроить временное жильё',
                 fundAccepts: 'Посуда в хорошем состоянии: тарелки, кружки, кастрюли, сковородки. Столовые приборы комплектом.',
                 fundRejects: 'Не принимают: посуда с трещинами и сколами, разрозненные предметы (одна тарелка), кухонная техника — принимается отдельно.',
@@ -2426,6 +2448,7 @@
                 name: 'Одежда',
                 image: 'new podacha/puh.png',
                 sliderImage: 'new podacha/slider season.png',
+                catImage: 'new podacha/cat-men-clothes.png',
                 subtitle: 'Мужской одежды на складе фонда постоянно не хватает — особенно осенью и зимой',
                 fundAccepts: 'Только мужская одежда в хорошем состоянии: тёмных и ярких цветов, без дыр и катышков. Верхняя одежда, джинсы, свитеры, толстовки.',
                 fundRejects: 'Не принимают: светлая одежда, женская и детская одежда, домашняя одежда и пижамы, вещи с дырками и катышками.',
@@ -2440,6 +2463,7 @@
                 name: 'Обувь',
                 image: 'new podacha/boots.png',
                 sliderImage: 'new podacha/slider boots.png',
+                catImage: 'new podacha/cat-men-shoes.png',
                 subtitle: 'Крепкая обувь нужна круглый год — люди без жилья проводят на ногах весь день',
                 fundAccepts: 'Только мужская обувь с целой подошвой, в хорошем состоянии: ботинки, кроссовки, зимние сапоги. Размеры 40–46.',
                 fundRejects: 'Не принимают: женская обувь, обувь с расклеенной подошвой, с дырками, домашние тапочки.',
@@ -2453,6 +2477,7 @@
                 name: 'Сумки и аксессуары',
                 image: 'new podacha/bag.png',
                 sliderImage: 'new podacha/slider bag.png',
+                catImage: 'new podacha/cat-bags.png',
                 subtitle: 'Рюкзак — единственный способ хранить все вещи, когда нет дома',
                 fundAccepts: 'Вместительные рюкзаки с целыми лямками и рабочими молниями, в хорошем состоянии.',
                 fundRejects: 'Не принимают: маленькие городские рюкзаки и клатчи, рюкзаки с поломанными молниями или оторванными лямками.',
@@ -2466,6 +2491,7 @@
                 name: 'Электроника',
                 image: 'new podacha/smartphone.png',
                 sliderImage: 'new podacha/slider smartphone.png',
+                catImage: 'new podacha/cat-noch-electronics.png',
                 subtitle: 'Телефон — это связь с родными, доступ к помощи и возможность найти работу',
                 fundAccepts: 'Рабочие смартфоны любых марок. Главное — телефон включается.',
                 fundRejects: 'Не принимают: нерабочие телефоны, кнопочные телефоны без интернета, планшеты и ноутбуки.',
@@ -2480,6 +2506,7 @@
                 name: 'Книги и журналы',
                 image: 'new podacha/magazine.png',
                 sliderImage: 'new podacha/slider magazine.png',
+                catImage: 'new podacha/cat-books-fiction.png',
                 subtitle: 'Библиотеки берут только конкретные книги — иначе не справятся с сортировкой',
                 fundAccepts: 'Художественная литература, познавательные книги и классика — от 2000 года издания, в хорошем состоянии. Авито сверяет каждую книгу со списком фонда перед отправкой.',
                 fundRejects: 'Не принимают: книги до 2000 года. Советские многотомные собрания сочинений. Учебники и справочники. Журналы и периодика. Книги с пятнами, надрывами, карандашными пометками.',
@@ -2493,6 +2520,7 @@
                 name: 'Книги для детей',
                 image: 'new podacha/book.png',
                 sliderImage: 'new podacha/slider book.png',
+                catImage: 'new podacha/cat-books-kids.png',
                 subtitle: 'Детских книг в сельских библиотеках почти нет — новые поступления редкость',
                 fundAccepts: 'Детские книги от 2000 года в хорошем состоянии: сказки, книги для чтения в начальной школе, познавательные книги о природе и науке.',
                 fundRejects: 'Не принимают: раскраски и книги-игрушки. Книги с вырванными страницами или разукрашенными иллюстрациями. Советские детские книги.',
@@ -2509,6 +2537,7 @@
                 name: 'Электроника',
                 image: 'new podacha/smartphone.png',
                 sliderImage: 'new podacha/slider smartphone.png',
+                catImage: 'new podacha/cat-dari-electronics.png',
                 subtitle: 'Ноутбук или планшет может стать рабочим инструментом для человека с инвалидностью',
                 fundAccepts: 'Рабочие ноутбуки от 2015 года, планшеты от 2017 года, смартфоны и телевизоры в хорошем состоянии. Техника передаётся конкретным семьям по запросу соцслужб.',
                 fundRejects: 'Не принимают: нерабочая техника. Ноутбуки до 2015 года — слишком медленные. Техника без зарядного устройства (по возможности приложите зарядку).',
@@ -2523,6 +2552,7 @@
                 name: 'Бытовая техника',
                 image: 'new podacha/oven.png',
                 sliderImage: 'new podacha/slider oven.png',
+                catImage: 'new podacha/cat-appliances.png',
                 subtitle: 'Небольшая техника закрывает базовые потребности семей, у которых её нет',
                 fundAccepts: 'Исправная небольшая бытовая техника: микроволновки, электрочайники, мультиварки. Передаётся семьям по спискам фонда.',
                 fundRejects: 'Не принимают: нерабочая техника. Крупная техника (холодильники, стиральные машины) — в этом пилоте не принимается. Утюги и фены — не в приоритете.',
@@ -2537,6 +2567,7 @@
                 name: 'Здоровье',
                 image: 'new podacha/kostili.png',
                 sliderImage: 'new podacha/slider kostili.png',
+                catImage: 'new podacha/cat-health.png',
                 subtitle: 'Средства реабилитации стоят дорого — б/у в хорошем состоянии закрывают реальную нужду',
                 fundAccepts: 'Исправные средства реабилитации: костыли, ходунки, трости, слуховые аппараты. Фонд уточнит детали передачи в чате.',
                 fundRejects: 'Не принимают: сломанные и требующие ремонта средства реабилитации. Кресла-коляски принимаются, но требуют отдельного согласования в чате.',
@@ -2797,6 +2828,15 @@
 
             // remove btn visible only from pack
             document.getElementById('cat-remove-btn').style.display = fromPack ? '' : 'none';
+
+            // hero image
+            const heroImg = document.getElementById('cat-hero-img');
+            if (cat.catImage) {
+                heroImg.src = cat.catImage;
+                heroImg.style.display = 'block';
+            } else {
+                heroImg.style.display = 'none';
+            }
 
             renderCatParams();
 
