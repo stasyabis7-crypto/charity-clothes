@@ -2027,6 +2027,7 @@
 
     <!-- Category sheet -->
     <div class="cat-sheet" id="cat-sheet">
+        <button class="sheet-close" onclick="closeCatSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
         <div class="cat-sheet-scroll" id="cat-sheet-scroll">
             <h2 class="cat-sheet-title" id="cat-sheet-title"></h2>
             <p class="cat-sheet-subtitle" id="cat-sheet-subtitle"></p>
@@ -2070,6 +2071,7 @@
     <!-- Size guide sub-sheet -->
     <div class="size-guide-overlay" id="size-guide-overlay" onclick="closeSizeGuide()"></div>
     <div class="size-guide-sheet" id="size-guide-sheet">
+        <button class="sheet-close" onclick="closeSizeGuide()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
         <h2 class="size-guide-title" id="size-guide-title">Таблица размеров</h2>
         <table class="size-guide-table" id="size-guide-table"></table>
     </div>
@@ -2288,6 +2290,8 @@
             window.location.href = 'ads.html?tab=drafts&toast=1';
         }
 
+        const selectedFundId = Number(sessionStorage.getItem('selectedFundId') || '1');
+
         const PHOTO_FILES = {
             1: 'new podacha/fond 1 photo 1.png',
             2: 'new podacha/fond 1 photo 2.png',
@@ -2296,7 +2300,9 @@
             5: 'new podacha/fond 1 photo 5.png',
             6: 'new podacha/fond 1 photo 6.png',
             7: 'new podacha/fond 1 photo 7.png',
-            8: 'new podacha/fond 1 photo 8.png'
+            8: 'new podacha/fond 1 photo 8.png',
+            9: 'new podacha/fond 2 photo 1.png',
+            10: 'new podacha/fond 4 photo 2.png',
         };
 
         const PHOTO_TO_NEED = {
@@ -2312,7 +2318,13 @@
 
         // ===== CATEGORY SYSTEM (Part 7 & 8) =====
 
-        const PHOTO_TO_CATEGORY = {
+        const PHOTO_TO_CATEGORY = selectedFundId === 2 ? {
+            'new podacha/fond 1 photo 4.png': 'men-clothes',
+            'new podacha/fond 1 photo 5.png': 'men-clothes',
+            'new podacha/fond 1 photo 6.png': 'men-clothes',
+            'new podacha/fond 2 photo 1.png': 'bags',
+            'new podacha/fond 4 photo 2.png': 'electronics',
+        } : {
             'new podacha/fond 1 photo 1.png': 'children-clothes',
             'new podacha/fond 1 photo 2.png': 'children-clothes',
             'new podacha/fond 1 photo 3.png': 'children-clothes',
@@ -2323,9 +2335,11 @@
             'new podacha/fond 1 photo 8.png': 'kitchen',
         };
 
-        const CATEGORY_ORDER = ['children-clothes','seasonal-clothes','adult-shoes','textile','kitchen'];
+        const CATEGORY_ORDER = selectedFundId === 2
+            ? ['men-clothes','men-shoes','bags','electronics']
+            : ['children-clothes','seasonal-clothes','adult-shoes','textile','kitchen'];
 
-        const CATEGORIES = {
+        const CATEGORIES_RKK = {
             'children-clothes': {
                 name: 'Детская одежда и обувь',
                 image: 'new podacha/children.png',
@@ -2404,6 +2418,62 @@
             }
         };
 
+        const CATEGORIES_NOCH = {
+            'men-clothes': {
+                name: 'Одежда',
+                image: 'new podacha/puh.png',
+                sliderImage: 'new podacha/slider season.png',
+                subtitle: 'Мужской одежды на складе фонда постоянно не хватает — особенно осенью и зимой',
+                fundAccepts: 'Только мужская одежда в хорошем состоянии: тёмных и ярких цветов, без дыр и катышков. Верхняя одежда, джинсы, свитеры, толстовки.',
+                fundRejects: 'Не принимают: светлая одежда, женская и детская одежда, домашняя одежда и пижамы, вещи с дырками и катышками.',
+                subtypes: [
+                    { id: 'outerwear', label: 'Верхняя одежда', params: ['gender-men-fixed','type-seasonal','size-seasonal-men','season-seasonal','condition-good'] },
+                    { id: 'jeans', label: 'Джинсы и брюки', params: ['gender-men-fixed','size-seasonal-men','condition-good'] },
+                    { id: 'sweaters', label: 'Свитеры и джемперы', params: ['gender-men-fixed','size-seasonal-men','condition-good'] },
+                    { id: 'hoodies', label: 'Толстовки и флиски', params: ['gender-men-fixed','size-seasonal-men','condition-good'] },
+                ],
+            },
+            'men-shoes': {
+                name: 'Обувь',
+                image: 'new podacha/boots.png',
+                sliderImage: 'new podacha/slider boots.png',
+                subtitle: 'Крепкая обувь нужна круглый год — люди без жилья проводят на ногах весь день',
+                fundAccepts: 'Только мужская обувь с целой подошвой, в хорошем состоянии: ботинки, кроссовки, зимние сапоги. Размеры 40–46.',
+                fundRejects: 'Не принимают: женская обувь, обувь с расклеенной подошвой, с дырками, домашние тапочки.',
+                subtypes: [
+                    { id: 'boots', label: 'Ботинки', params: ['gender-men-fixed','size-shoes-men','condition-good'] },
+                    { id: 'sneakers', label: 'Кроссовки', params: ['gender-men-fixed','size-shoes-men','condition-good'] },
+                    { id: 'winter-boots', label: 'Зимние сапоги', params: ['gender-men-fixed','size-shoes-men','condition-good'] },
+                ],
+            },
+            'bags': {
+                name: 'Сумки и аксессуары',
+                image: 'new podacha/bag.png',
+                sliderImage: 'new podacha/slider bag.png',
+                subtitle: 'Рюкзак — единственный способ хранить все вещи, когда нет дома',
+                fundAccepts: 'Вместительные рюкзаки с целыми лямками и рабочими молниями, в хорошем состоянии.',
+                fundRejects: 'Не принимают: маленькие городские рюкзаки и клатчи, рюкзаки с поломанными молниями или оторванными лямками.',
+                subtypes: [
+                    { id: 'backpack', label: 'Рюкзак', params: ['condition-good'] },
+                    { id: 'waist-bag', label: 'Поясная сумка', params: ['condition-good'] },
+                    { id: 'shoulder-bag', label: 'Сумка через плечо', params: ['condition-good'] },
+                ],
+            },
+            'electronics': {
+                name: 'Электроника',
+                image: 'new podacha/smartphone.png',
+                sliderImage: 'new podacha/slider smartphone.png',
+                subtitle: 'Телефон — это связь с родными, доступ к помощи и возможность найти работу',
+                fundAccepts: 'Рабочие смартфоны любых марок. Главное — телефон включается.',
+                fundRejects: 'Не принимают: нерабочие телефоны, кнопочные телефоны без интернета, планшеты и ноутбуки.',
+                subtypes: [
+                    { id: 'smartphone', label: 'Смартфон', params: ['condition-good','works'] },
+                ],
+            },
+        };
+
+        const CATEGORIES = selectedFundId === 2 ? CATEGORIES_NOCH : CATEGORIES_RKK;
+
         const PARAMS_CONFIG = {
             // legacy (kept for compatibility)
             gender: { label: 'Пол', required: true, type: 'chips', options: ['Мужской','Женский','Унисекс'], multi: true },
@@ -2419,19 +2489,19 @@
             condition: { label: 'Состояние', required: true, type: 'checkboxes', options: ['Отличное','Хорошее','Удовлетворительное'] },
             // new params for RKK subtypes
             'gender-kids': { label: 'Пол', required: true, type: 'chips', options: ['Мальчик','Девочка','Унисекс'], multi: true },
-            'size-kids-shoes': { label: 'Размер', required: true, type: 'chips', options: ['20–23','24–27','28–31','32–35','36–38'], multi: true },
+            'size-kids-shoes': { label: 'Размер', required: true, type: 'chips', options: ['20–23','24–27','28–31','32–35','36–38'], multi: true, sizeGuide: 'kids-shoes' },
             'season-no-demi': { label: 'Сезон', required: true, type: 'chips', options: ['Зима','Весна/осень','Лето'], multi: true },
             'condition-good': { label: 'Состояние', required: true, type: 'chips', options: ['Хорошее','Отличное'], multi: true },
             'type-clothing-kids': { label: 'Тип одежды', required: true, type: 'select', options: ['Верхняя одежда','Базовая одежда','Бельё и домашняя одежда'] },
             'type-clothes-men': { label: 'Тип одежды', required: true, type: 'select', options: ['Футболки и рубашки','Свитеры и джемперы','Брюки и джинсы','Другое'] },
             'type-clothes-women': { label: 'Тип одежды', required: true, type: 'select', options: ['Футболки и блузки','Свитеры и джемперы','Брюки и джинсы','Платья и юбки','Другое'] },
             'type-seasonal': { label: 'Тип', required: true, type: 'chips', options: ['Куртка','Пуховик','Пальто','Ветровка'], multi: true },
-            'size-seasonal-men': { label: 'Размер', required: true, type: 'chips', options: ['S','M','L','XL','XXL'], multi: true },
-            'size-seasonal-women': { label: 'Размер', required: true, type: 'chips', options: ['XS','S','M','L','XL','XXL'], multi: true },
+            'size-seasonal-men': { label: 'Размер', required: true, type: 'chips', options: ['S','M','L','XL','XXL'], multi: true, sizeGuide: 'men-clothes' },
+            'size-seasonal-women': { label: 'Размер', required: true, type: 'chips', options: ['XS','S','M','L','XL','XXL'], multi: true, sizeGuide: 'women-clothes' },
             'season-seasonal': { label: 'Сезон', required: true, type: 'chips', options: ['Зима','Весна/осень','Демисезон'], multi: true },
             'type-shoes-new': { label: 'Тип', required: true, type: 'chips', options: ['Ботинки','Кроссовки','Зимние сапоги','Другое'], multi: true },
-            'size-shoes-men': { label: 'Размер', required: true, type: 'chips', options: ['40','41','42','43','44','45','46'], multi: true },
-            'size-shoes-women': { label: 'Размер', required: true, type: 'chips', options: ['36','37','38','39','40','41'], multi: true },
+            'size-shoes-men': { label: 'Размер', required: true, type: 'chips', options: ['40','41','42','43','44','45','46'], multi: true, sizeGuide: 'shoes-men' },
+            'size-shoes-women': { label: 'Размер', required: true, type: 'chips', options: ['36','37','38','39','40','41'], multi: true, sizeGuide: 'shoes-women' },
             'size-bedding': { label: 'Размер', required: true, type: 'chips', options: ['1,5-спальное','2-спальное','Евро'], multi: false },
             'type-towels': { label: 'Тип', required: true, type: 'chips', options: ['Банное','Для рук','Для лица'], multi: true },
             'qty-towels': { label: 'Количество', required: true, type: 'chips', options: ['1','2–3','Комплект'], multi: false },
@@ -2439,6 +2509,9 @@
             'qty-plates': { label: 'Количество', required: true, type: 'chips', options: ['1–2 предмета','3–5 предметов','Комплект'], multi: false },
             'type-pots': { label: 'Тип', required: true, type: 'chips', options: ['Кастрюля','Сковородка','Оба'], multi: false },
             'qty-cutlery': { label: 'Количество', required: true, type: 'chips', options: ['На 1 персону','На 2–3 персоны','На 4 и больше'], multi: false },
+            // Ночlежka params
+            'gender-men-fixed': { label: 'Пол', required: true, type: 'chips-fixed', options: ['Мужской'], multi: false },
+            'works': { label: 'Работает', required: true, type: 'chips', options: ['Да','Нет'], multi: false },
         };
 
         const SIZE_GUIDES = {
@@ -2456,6 +2529,31 @@
                 title: 'Таблица размеров обуви',
                 headers: ['Размер EU','Размер RU','Длина стопы (см)'],
                 rows: [['35-37','35-37','22-24'],['38-40','38-40','24-26'],['41-43','41-43','26-28'],['44-46','44-46','28-30'],['47+','47+','30+']]
+            },
+            'kids-shoes': {
+                title: 'Детская обувь — размеры',
+                headers: ['Размер EU','Примерный возраст','Длина стопы (см)'],
+                rows: [['20–23','1.5–3 г','12–15'],['24–27','3–5 л','15–18'],['28–31','5–7 л','18–20'],['32–35','7–9 л','20–22'],['36–38','9–11 л','22–24']]
+            },
+            'men-clothes': {
+                title: 'Мужская одежда — размеры',
+                headers: ['Размер','Грудь (см)','Талия (см)'],
+                rows: [['S','88–92','78–82'],['M','92–96','82–86'],['L','96–100','86–90'],['XL','100–104','90–94'],['XXL','104–108','94–98']]
+            },
+            'women-clothes': {
+                title: 'Женская одежда — размеры',
+                headers: ['Размер','Грудь (см)','Талия (см)'],
+                rows: [['XS','80–84','60–64'],['S','84–88','64–68'],['M','88–92','68–72'],['L','92–96','72–76'],['XL','96–100','76–80'],['XXL','100–104','80–84']]
+            },
+            'shoes-men': {
+                title: 'Мужская обувь — размеры',
+                headers: ['Размер EU','Длина стопы (см)'],
+                rows: [['40','25.5'],['41','26.5'],['42','27'],['43','27.5'],['44','28'],['45','29'],['46','30']]
+            },
+            'shoes-women': {
+                title: 'Женская обувь — размеры',
+                headers: ['Размер EU','Длина стопы (см)'],
+                rows: [['36','23'],['37','23.5'],['38','24'],['39','24.5'],['40','25'],['41','26']]
             }
         };
 
@@ -2588,6 +2686,16 @@
                     const val = saved[key];
                     catDraft[key] = Array.isArray(val) ? [...val] : val;
                 }
+            });
+            // ensure chips-fixed params are filled for any already-selected subtypes
+            (catDraft.selectedSubtypes || []).forEach(subtypeId => {
+                const sub = (cat.subtypes || []).find(s => s.id === subtypeId);
+                if (sub) sub.params.forEach(p => {
+                    const cfg0 = PARAMS_CONFIG[p];
+                    if (cfg0 && cfg0.type === 'chips-fixed' && !catDraft[p + '__' + subtypeId]) {
+                        catDraft[p + '__' + subtypeId] = [...cfg0.options];
+                    }
+                });
             });
 
             document.getElementById('cat-sheet-title').textContent = cat.name;
@@ -2723,6 +2831,15 @@
                 if (sub) sub.params.forEach(p => { delete catDraft[p + '__' + subtypeId]; });
             } else {
                 catDraft.selectedSubtypes.push(subtypeId);
+                // auto-fill chips-fixed params so validation counts them
+                const cat0 = CATEGORIES[activeCatId];
+                const sub0 = (cat0.subtypes || []).find(s => s.id === subtypeId);
+                if (sub0) sub0.params.forEach(p => {
+                    const cfg0 = PARAMS_CONFIG[p];
+                    if (cfg0 && cfg0.type === 'chips-fixed') {
+                        catDraft[p + '__' + subtypeId] = [...cfg0.options];
+                    }
+                });
             }
             // re-render the params area
             const cat = CATEGORIES[activeCatId];
@@ -2806,6 +2923,13 @@
                 `;
                 container.appendChild(block);
                 renderCondList(nsId, cfg);
+            } else if (cfg.type === 'chips-fixed') {
+                block.innerHTML = `
+                    <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
+                    <div class="chips-row">${cfg.options.map(opt => `<button class="chip active" disabled>${opt}</button>`).join('')}</div>
+                `;
+                container.appendChild(block);
+                catDraft[nsId] = [...cfg.options];
             }
         }
 
@@ -2999,7 +3123,7 @@
                     const subParts = [];
                     subtype.params.forEach(paramId => {
                         const cfg = getParamConfig(paramId);
-                        if (!cfg) return;
+                        if (!cfg || cfg.type === 'chips-fixed') return;
                         const val = catDraft[paramId + '__' + subtypeId];
                         if (!val || !val.length) return;
                         subParts.push(`${cfg.label}: ${val.join(', ')}`);
