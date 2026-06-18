@@ -1764,6 +1764,35 @@
             text-align: left;
         }
         .size-guide-table th { font-weight: 700; }
+
+        /* fund items body */
+        .fund-items-body { display: none; padding: 0 16px 14px; }
+        .fund-items-body.open { display: block; }
+        .fund-accepts-text { font-size: 15px; font-weight: 400; line-height: 22px; color: #1A1A1A; }
+        .fund-rejects-text { margin-top: 8px; font-size: 15px; font-weight: 400; line-height: 22px; color: #767676; }
+
+        /* subtypes */
+        .subtype-block { margin-top: 20px; }
+        .subtype-section-label {
+            font-size: 21px;
+            font-weight: 700;
+            color: #1A1A1A;
+            line-height: 26px;
+            margin-bottom: 0;
+            padding-top: 8px;
+        }
+
+        .subtype-section {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid #E8E8E8;
+        }
+
+        .subtype-section:first-child {
+            border-top: none;
+            margin-top: 16px;
+            padding-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -2000,14 +2029,22 @@
     <div class="cat-sheet" id="cat-sheet">
         <div class="cat-sheet-scroll" id="cat-sheet-scroll">
             <h2 class="cat-sheet-title" id="cat-sheet-title"></h2>
-            <p class="cat-sheet-subtitle">Заполните немного данных, по которым фонды смогут оценить состояние вещей и понять, кому они могут подойти</p>
+            <p class="cat-sheet-subtitle" id="cat-sheet-subtitle"></p>
 
             <div class="fund-items-wrap">
                 <div class="fund-items-card" id="fund-items-card" onclick="toggleFundItems()">
-                    <span class="fund-items-card-text">Посмотрите, что именно принимает фонд в этой категории</span>
+                    <span class="fund-items-card-text">Что принимает фонд</span>
                     <img class="fund-items-arrow" id="fund-items-arrow" src="arrow down.svg" width="20" height="20" alt="">
                 </div>
-                <ul class="fund-items-list" id="fund-items-list"></ul>
+                <div class="fund-items-body" id="fund-items-body">
+                    <p class="fund-accepts-text" id="fund-accepts-text"></p>
+                    <p class="fund-rejects-text" id="fund-rejects-text"></p>
+                </div>
+            </div>
+
+            <div class="subtype-block" id="subtypes-block" style="display:none;">
+                <div class="param-label">Подтип <span class="param-required">*</span></div>
+                <div class="chips-row" id="subtypes-chips"></div>
             </div>
 
             <div id="cat-params"></div>
@@ -2286,57 +2323,92 @@
             'new podacha/fond 1 photo 8.png': 'kitchen',
         };
 
-        const CATEGORY_ORDER = ['children-clothes','basic-clothes','seasonal-clothes','adult-shoes','textile','kitchen'];
+        const CATEGORY_ORDER = ['children-clothes','seasonal-clothes','adult-shoes','textile','kitchen'];
 
         const CATEGORIES = {
             'children-clothes': {
                 name: 'Детская одежда и обувь',
                 image: 'new podacha/children.png',
                 sliderImage: 'new podacha/slider children.png',
-                params: ['gender','size-children','season','type-clothing','condition'],
-                fundItems: ['Детская одежда','Детская обувь'],
+                subtitle: 'Детские вещи — самое востребованное после ЧС: семьи эвакуируются без вещей',
+                fundAccepts: 'Детская одежда и обувь в хорошем состоянии, размеры 80–152. Вещи для мальчиков и девочек любого сезона.',
+                fundRejects: 'Не принимают: рваные вещи и вещи с пятнами, нижнее бельё б/у, одежда размером меньше 80 — нужна только новая.',
+                subtypes: [
+                    { id: 'clothing', label: 'Одежда', params: ['gender-kids','size-children','season','type-clothing-kids'] },
+                    { id: 'shoes', label: 'Обувь', params: ['gender-kids','size-kids-shoes','season-no-demi','condition-good'] },
+                ],
             },
             'basic-clothes': {
                 name: 'Базовая одежда',
                 image: 'new podacha/base.png',
                 sliderImage: 'new podacha/slider base.png',
-                params: ['gender','size-clothes','season','type-clothing','condition'],
-                fundItems: ['Базовые футболки','Спортивный костюм','Нижнее бельё: майки, трусы, носки, ночные рубашки'],
+                subtitle: 'Взрослая одежда нужна людям, которые ушли из дома в чём были',
+                fundAccepts: 'Базовая повседневная одежда для взрослых в хорошем состоянии: футболки, свитеры, брюки, джинсы. Мужское и женское.',
+                fundRejects: 'Не принимают: нижнее бельё б/у, вещи с дырками, катышками, стойкими пятнами, домашняя и пижамная одежда.',
+                subtypes: [
+                    { id: 'men', label: 'Мужская', params: ['size-clothes','type-clothes-men','condition-good'] },
+                    { id: 'women', label: 'Женская', params: ['size-clothes','type-clothes-women','condition-good'] },
+                ],
             },
             'seasonal-clothes': {
                 name: 'Сезонная одежда',
                 image: 'new podacha/puh.png',
                 sliderImage: 'new podacha/slider season.png',
-                params: ['gender','size-clothes','season','type-clothing','condition'],
-                fundItems: ['Мужская и женская сезонная одежда, в том числе больших размеров: куртки, пуховики, ветровки'],
+                subtitle: 'Тёплые вещи особенно нужны при эвакуации в холодное время года',
+                fundAccepts: 'Верхняя одежда для взрослых в хорошем состоянии: куртки, пуховики, пальто. Мужское и женское, любые размеры.',
+                fundRejects: 'Не принимают: вещи с повреждениями подкладки или молнии, очень светлая одежда, лёгкая летняя одежда в зимний сбор.',
+                subtypes: [
+                    { id: 'men', label: 'Мужская', params: ['type-seasonal','size-seasonal-men','season-seasonal','condition-good'] },
+                    { id: 'women', label: 'Женская', params: ['type-seasonal','size-seasonal-women','season-seasonal','condition-good'] },
+                    { id: 'unisex', label: 'Унисекс', params: ['type-seasonal','size-clothes','season-seasonal','condition-good'] },
+                ],
             },
             'adult-shoes': {
                 name: 'Обувь для взрослых',
                 image: 'new podacha/boots.png',
                 sliderImage: 'new podacha/slider boots.png',
-                params: ['gender','size-shoes','season','type-shoes','condition'],
-                fundItems: ['Резиновые тапки 35-46 размера','Кроссовки разных размеров унисекс'],
+                subtitle: 'Обувь изнашивается быстро — особенно при вынужденном переезде',
+                fundAccepts: 'Мужская и женская обувь в хорошем состоянии: ботинки, кроссовки, сапоги. Любые размеры.',
+                fundRejects: 'Не принимают: обувь с расклеенной или сильно стёртой подошвой, обувь на каблуке выше 5 см, домашняя обувь и тапочки.',
+                subtypes: [
+                    { id: 'men', label: 'Мужская', params: ['type-shoes-new','size-shoes-men','condition-good'] },
+                    { id: 'women', label: 'Женская', params: ['type-shoes-new','size-shoes-women','condition-good'] },
+                    { id: 'unisex', label: 'Унисекс', params: ['type-shoes-new','size-shoes-men','condition-good'] },
+                ],
             },
             'textile': {
                 name: 'Текстиль',
                 image: 'new podacha/textile.png',
                 sliderImage: 'new podacha/slider textile.png',
-                params: ['type-textile','condition'],
-                fundItems: ['Постельное бельё','Плед','Одеяло','Подушка для сна','Махровые полотенца 70/140 и 50/90','Вафельное полотенце 40/60'],
+                subtitle: 'Постельное бельё и полотенца нужны с первого дня в новом месте',
+                fundAccepts: 'Постельное бельё, полотенца, пледы и одеяла в хорошем состоянии. Чистые, без стойких запахов.',
+                fundRejects: 'Не принимают: постельное бельё с пятнами или разрывами, б/у подушки, шторы и скатерти.',
+                subtypes: [
+                    { id: 'bedding', label: 'Постельное бельё', params: ['size-bedding','condition-good'] },
+                    { id: 'towels', label: 'Полотенца', params: ['type-towels','qty-towels','condition-good'] },
+                    { id: 'blanket', label: 'Плед / одеяло', params: ['type-blanket','condition-good'] },
+                ],
             },
             'kitchen': {
                 name: 'Посуда и кухня',
                 image: 'new podacha/kitchen.png',
                 sliderImage: 'new podacha/slider litchen.png',
-                params: ['type-kitchen','completeness','condition'],
-                fundItems: ['Набор кастрюль','Набор столовой посуды','Набор столовых приборов','Кухонный нож','Разделочная доска','Половник','Сковорода','Чайник электрический или обычный','СВЧ','Мультиварка','Электрическая или газовая плитка'],
+                subtitle: 'Базовый кухонный набор помогает обустроить временное жильё',
+                fundAccepts: 'Посуда в хорошем состоянии: тарелки, кружки, кастрюли, сковородки. Столовые приборы комплектом.',
+                fundRejects: 'Не принимают: посуда с трещинами и сколами, разрозненные предметы (одна тарелка), кухонная техника — принимается отдельно.',
+                subtypes: [
+                    { id: 'plates', label: 'Тарелки и кружки', params: ['qty-plates','condition-good'] },
+                    { id: 'pots', label: 'Кастрюли и сковородки', params: ['type-pots','condition-good'] },
+                    { id: 'cutlery', label: 'Столовые приборы', params: ['qty-cutlery','condition-good'] },
+                ],
             }
         };
 
         const PARAMS_CONFIG = {
+            // legacy (kept for compatibility)
             gender: { label: 'Пол', required: true, type: 'chips', options: ['Мужской','Женский','Унисекс'], multi: true },
-            'size-clothes': { label: 'Размер', required: true, type: 'chips', options: ['XS','S','M','L','XL','XXL','XXXL'], multi: true, sizeGuide: 'clothes' },
-            'size-children': { label: 'Размер', required: true, type: 'chips', options: ['80-86','86-92','92-98','98-104','110-116','122-128','134-140','146-152'], multi: true, sizeGuide: 'children' },
+            'size-clothes': { label: 'Размер', required: true, type: 'chips', options: ['XS','S','M','L','XL','XXL'], multi: true, sizeGuide: 'clothes' },
+            'size-children': { label: 'Размер', required: true, type: 'chips', options: ['80–86','86–92','92–98','98–104','110–116','122–128','134–140','146–152'], multi: true, sizeGuide: 'children' },
             'size-shoes': { label: 'Размер', required: true, type: 'chips', options: ['35-37','38-40','41-43','44-46','47+'], multi: true, sizeGuide: 'shoes' },
             season: { label: 'Сезон', required: true, type: 'chips', options: ['Зима','Весна/осень','Лето','Демисезон'], multi: true },
             'type-clothing': { label: 'Тип одежды', required: true, type: 'select', options: ['Верхняя одежда','Свитера и кофты','Футболки и майки','Рубашки и блузки','Брюки и джинсы','Платья и юбки','Спортивный костюм','Нижнее бельё'] },
@@ -2345,6 +2417,28 @@
             'type-kitchen': { label: 'Тип', required: true, type: 'select', options: ['Кастрюли','Сковороды','Посуда и тарелки','Столовые приборы','Электроприборы'] },
             completeness: { label: 'Комплектность', required: true, type: 'chips', options: ['Полный комплект','Неполный'], multi: false },
             condition: { label: 'Состояние', required: true, type: 'checkboxes', options: ['Отличное','Хорошее','Удовлетворительное'] },
+            // new params for RKK subtypes
+            'gender-kids': { label: 'Пол', required: true, type: 'chips', options: ['Мальчик','Девочка','Унисекс'], multi: true },
+            'size-kids-shoes': { label: 'Размер', required: true, type: 'chips', options: ['20–23','24–27','28–31','32–35','36–38'], multi: true },
+            'season-no-demi': { label: 'Сезон', required: true, type: 'chips', options: ['Зима','Весна/осень','Лето'], multi: true },
+            'condition-good': { label: 'Состояние', required: true, type: 'chips', options: ['Хорошее','Отличное'], multi: true },
+            'type-clothing-kids': { label: 'Тип одежды', required: true, type: 'select', options: ['Верхняя одежда','Базовая одежда','Бельё и домашняя одежда'] },
+            'type-clothes-men': { label: 'Тип одежды', required: true, type: 'select', options: ['Футболки и рубашки','Свитеры и джемперы','Брюки и джинсы','Другое'] },
+            'type-clothes-women': { label: 'Тип одежды', required: true, type: 'select', options: ['Футболки и блузки','Свитеры и джемперы','Брюки и джинсы','Платья и юбки','Другое'] },
+            'type-seasonal': { label: 'Тип', required: true, type: 'chips', options: ['Куртка','Пуховик','Пальто','Ветровка'], multi: true },
+            'size-seasonal-men': { label: 'Размер', required: true, type: 'chips', options: ['S','M','L','XL','XXL'], multi: true },
+            'size-seasonal-women': { label: 'Размер', required: true, type: 'chips', options: ['XS','S','M','L','XL','XXL'], multi: true },
+            'season-seasonal': { label: 'Сезон', required: true, type: 'chips', options: ['Зима','Весна/осень','Демисезон'], multi: true },
+            'type-shoes-new': { label: 'Тип', required: true, type: 'chips', options: ['Ботинки','Кроссовки','Зимние сапоги','Другое'], multi: true },
+            'size-shoes-men': { label: 'Размер', required: true, type: 'chips', options: ['40','41','42','43','44','45','46'], multi: true },
+            'size-shoes-women': { label: 'Размер', required: true, type: 'chips', options: ['36','37','38','39','40','41'], multi: true },
+            'size-bedding': { label: 'Размер', required: true, type: 'chips', options: ['1,5-спальное','2-спальное','Евро'], multi: false },
+            'type-towels': { label: 'Тип', required: true, type: 'chips', options: ['Банное','Для рук','Для лица'], multi: true },
+            'qty-towels': { label: 'Количество', required: true, type: 'chips', options: ['1','2–3','Комплект'], multi: false },
+            'type-blanket': { label: 'Тип', required: true, type: 'chips', options: ['Плед','Одеяло'], multi: true },
+            'qty-plates': { label: 'Количество', required: true, type: 'chips', options: ['1–2 предмета','3–5 предметов','Комплект'], multi: false },
+            'type-pots': { label: 'Тип', required: true, type: 'chips', options: ['Кастрюля','Сковородка','Оба'], multi: false },
+            'qty-cutlery': { label: 'Количество', required: true, type: 'chips', options: ['На 1 персону','На 2–3 персоны','На 4 и больше'], multi: false },
         };
 
         const SIZE_GUIDES = {
@@ -2482,29 +2576,22 @@
             const cat = CATEGORIES[catId];
             const saved = loadCatSelections()[catId] || {};
 
-            // init draft from saved or defaults
+            // init draft: restore all saved values including namespaced subtype params
             catDraft = {
-                gender: saved.gender ? [...saved.gender] : [],
-                'size-clothes': saved['size-clothes'] ? [...saved['size-clothes']] : [],
-                'size-children': saved['size-children'] ? [...saved['size-children']] : [],
-                'size-shoes': saved['size-shoes'] ? [...saved['size-shoes']] : [],
-                season: saved.season ? [...saved.season] : [],
-                'type-clothing': saved['type-clothing'] ? [...saved['type-clothing']] : [],
-                'type-shoes': saved['type-shoes'] ? [...saved['type-shoes']] : [],
-                'type-textile': saved['type-textile'] ? [...saved['type-textile']] : [],
-                'type-kitchen': saved['type-kitchen'] ? [...saved['type-kitchen']] : [],
-                completeness: saved.completeness ? [...saved.completeness] : [],
-                condition: saved.condition ? [...saved.condition] : [],
+                selectedSubtypes: saved.selectedSubtypes ? [...saved.selectedSubtypes] : [],
                 desc: saved.desc || '',
+                _descManual: false,
                 photos: saved.photos ? [...saved.photos] : getPhotosForCategory(catId),
             };
+            Object.keys(saved).forEach(key => {
+                if (!['selectedSubtypes','desc','photos','_saved','_descManual'].includes(key)) {
+                    const val = saved[key];
+                    catDraft[key] = Array.isArray(val) ? [...val] : val;
+                }
+            });
 
             document.getElementById('cat-sheet-title').textContent = cat.name;
-
-            // fund items list
-            const fundList = document.getElementById('fund-items-list');
-            fundList.classList.remove('open');
-            fundList.innerHTML = cat.fundItems.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('fund-items-body').classList.remove('open');
             document.getElementById('fund-items-arrow').classList.remove('open');
 
             // remove btn visible only from pack
@@ -2540,10 +2627,15 @@
 
         function toggleFundItems() {
             fundItemsOpen = !fundItemsOpen;
-            const list = document.getElementById('fund-items-list');
+            const body = document.getElementById('fund-items-body');
             const arrow = document.getElementById('fund-items-arrow');
-            list.classList.toggle('open', fundItemsOpen);
+            body.classList.toggle('open', fundItemsOpen);
             arrow.classList.toggle('open', fundItemsOpen);
+        }
+
+        function getParamConfig(nsParamId) {
+            const baseId = nsParamId.split('__')[0];
+            return PARAMS_CONFIG[baseId] || PARAMS_CONFIG[nsParamId];
         }
 
         function renderCatParams() {
@@ -2551,45 +2643,31 @@
             const container = document.getElementById('cat-params');
             container.innerHTML = '';
 
-            cat.params.forEach(paramId => {
-                const cfg = PARAMS_CONFIG[paramId];
-                if (!cfg) return;
-                const block = document.createElement('div');
-                block.className = 'param-block';
+            // Dynamic subtitle
+            const subtitleEl = document.getElementById('cat-sheet-subtitle');
+            if (subtitleEl) subtitleEl.textContent = cat.subtitle || '';
 
-                if (cfg.type === 'chips') {
-                    const hasGuide = cfg.sizeGuide;
-                    block.innerHTML = `
-                        <div class="param-label">
-                            ${cfg.label}<span class="param-required">*</span>
-                            ${hasGuide ? `<button class="param-question-btn" onclick="openSizeGuide('${cfg.sizeGuide}')"><img src="new category/Question Filled.svg" width="21" height="21" alt=""></button>` : ''}
-                        </div>
-                        <div class="chips-row" id="chips-${paramId}"></div>
-                    `;
-                    container.appendChild(block);
-                    renderChips(paramId, cfg);
-                } else if (cfg.type === 'select') {
-                    block.innerHTML = `
-                        <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
-                        <button class="type-selector" id="sel-${paramId}" onclick="openTypeSheet('${paramId}')">
-                            <span id="sel-label-${paramId}">Выберите</span>
-                            <img src="arrow down.svg" width="20" height="20" alt="">
-                        </button>
-                        <div class="type-chips-row" id="type-chips-${paramId}"></div>
-                    `;
-                    container.appendChild(block);
-                    renderTypeChips(paramId);
-                } else if (cfg.type === 'checkboxes') {
-                    block.innerHTML = `
-                        <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
-                        <div id="cond-list-${paramId}"></div>
-                    `;
-                    container.appendChild(block);
-                    renderCondList(paramId, cfg);
-                }
-            });
+            // Accept/reject text
+            const acceptEl = document.getElementById('fund-accepts-text');
+            const rejectEl = document.getElementById('fund-rejects-text');
+            if (acceptEl) acceptEl.textContent = cat.fundAccepts || '';
+            if (rejectEl) rejectEl.textContent = cat.fundRejects || '';
 
-            // Photos param
+            // Subtypes block
+            const subtypesBlock = document.getElementById('subtypes-block');
+            if (cat.subtypes && cat.subtypes.length) {
+                subtypesBlock.style.display = '';
+                renderSubtypesChips(cat);
+                // Render each selected subtype's params
+                (catDraft.selectedSubtypes || []).forEach(subtypeId => {
+                    const subtype = cat.subtypes.find(s => s.id === subtypeId);
+                    if (subtype) renderSubtypeSection(subtype, container);
+                });
+            } else {
+                subtypesBlock.style.display = 'none';
+            }
+
+            // Photos block
             const photosBlock = document.createElement('div');
             photosBlock.className = 'param-block';
             photosBlock.id = 'photos-param-block';
@@ -2597,12 +2675,12 @@
             container.appendChild(photosBlock);
             renderCatPhotos();
 
-            // Description param
+            // Description block
             const descBlock = document.createElement('div');
             descBlock.className = 'param-block';
             descBlock.innerHTML = `
                 <div class="param-label">Описание вещей</div>
-                <textarea class="desc-textarea" id="cat-desc-input" placeholder="Например: 3 кофты, из хлопка, без потёртостей" style="margin-top:0;">${catDraft.desc}</textarea>
+                <textarea class="desc-textarea" id="cat-desc-input" placeholder="Например: 3 кофты, из хлопка, без потёртостей" style="margin-top:0;">${catDraft.desc || ''}</textarea>
             `;
             container.appendChild(descBlock);
             const catDescEl = document.getElementById('cat-desc-input');
@@ -2612,13 +2690,123 @@
                 this.style.height = 'auto';
                 this.style.height = this.scrollHeight + 'px';
             });
-            // initial resize
             setTimeout(() => {
                 catDescEl.style.height = 'auto';
                 catDescEl.style.height = catDescEl.scrollHeight + 'px';
             }, 0);
 
             updateCatSaveBtn();
+        }
+
+        function renderSubtypesChips(cat) {
+            const row = document.getElementById('subtypes-chips');
+            if (!row) return;
+            row.innerHTML = '';
+            cat.subtypes.forEach(subtype => {
+                const isActive = (catDraft.selectedSubtypes || []).includes(subtype.id);
+                const btn = document.createElement('button');
+                btn.className = 'chip' + (isActive ? ' active' : '');
+                btn.textContent = subtype.label;
+                btn.onclick = () => toggleSubtype(subtype.id);
+                row.appendChild(btn);
+            });
+        }
+
+        function toggleSubtype(subtypeId) {
+            if (!catDraft.selectedSubtypes) catDraft.selectedSubtypes = [];
+            const idx = catDraft.selectedSubtypes.indexOf(subtypeId);
+            if (idx !== -1) {
+                catDraft.selectedSubtypes.splice(idx, 1);
+                // clear subtype's param values
+                const cat = CATEGORIES[activeCatId];
+                const sub = (cat.subtypes || []).find(s => s.id === subtypeId);
+                if (sub) sub.params.forEach(p => { delete catDraft[p + '__' + subtypeId]; });
+            } else {
+                catDraft.selectedSubtypes.push(subtypeId);
+            }
+            // re-render the params area
+            const cat = CATEGORIES[activeCatId];
+            const container = document.getElementById('cat-params');
+            container.innerHTML = '';
+            (catDraft.selectedSubtypes || []).forEach(stId => {
+                const sub = cat.subtypes.find(s => s.id === stId);
+                if (sub) renderSubtypeSection(sub, container);
+            });
+            // re-add photos + desc
+            const photosBlock = document.createElement('div');
+            photosBlock.className = 'param-block';
+            photosBlock.id = 'photos-param-block';
+            photosBlock.innerHTML = `<div class="param-label">Фотографии<span class="param-required">*</span></div>`;
+            container.appendChild(photosBlock);
+            renderCatPhotos();
+            const descBlock = document.createElement('div');
+            descBlock.className = 'param-block';
+            descBlock.innerHTML = `
+                <div class="param-label">Описание вещей</div>
+                <textarea class="desc-textarea" id="cat-desc-input" placeholder="Например: 3 кофты, из хлопка, без потёртостей" style="margin-top:0;">${catDraft.desc || ''}</textarea>
+            `;
+            container.appendChild(descBlock);
+            const ta = document.getElementById('cat-desc-input');
+            if (ta) {
+                ta.addEventListener('input', function() {
+                    catDraft.desc = this.value;
+                    catDraft._descManual = true;
+                    this.style.height = 'auto';
+                    this.style.height = this.scrollHeight + 'px';
+                });
+                setTimeout(() => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }, 0);
+            }
+            renderSubtypesChips(cat);
+            autoBuildCatDesc();
+            updateCatSaveBtn();
+        }
+
+        function renderSubtypeSection(subtype, container) {
+            const header = document.createElement('div');
+            header.className = 'subtype-section';
+            header.innerHTML = `<div class="subtype-section-label">${subtype.label}</div>`;
+            container.appendChild(header);
+            subtype.params.forEach(paramId => {
+                renderParamBlockNs(paramId, subtype.id, container);
+            });
+        }
+
+        function renderParamBlockNs(paramId, subtypeId, container) {
+            const cfg = getParamConfig(paramId);
+            if (!cfg) return;
+            const nsId = paramId + '__' + subtypeId;
+            const block = document.createElement('div');
+            block.className = 'param-block';
+            if (cfg.type === 'chips') {
+                const hasGuide = cfg.sizeGuide;
+                block.innerHTML = `
+                    <div class="param-label">
+                        ${cfg.label}<span class="param-required">*</span>
+                        ${hasGuide ? `<button class="param-question-btn" onclick="openSizeGuide('${cfg.sizeGuide}')"><img src="new category/Question Filled.svg" width="21" height="21" alt=""></button>` : ''}
+                    </div>
+                    <div class="chips-row" id="chips-${nsId}"></div>
+                `;
+                container.appendChild(block);
+                renderChips(nsId, cfg);
+            } else if (cfg.type === 'select') {
+                block.innerHTML = `
+                    <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
+                    <button class="type-selector" id="sel-${nsId}" onclick="openTypeSheet('${nsId}')">
+                        <span id="sel-label-${nsId}">Выберите</span>
+                        <img src="arrow down.svg" width="20" height="20" alt="">
+                    </button>
+                    <div class="type-chips-row" id="type-chips-${nsId}"></div>
+                `;
+                container.appendChild(block);
+                renderTypeChips(nsId);
+            } else if (cfg.type === 'checkboxes') {
+                block.innerHTML = `
+                    <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
+                    <div id="cond-list-${nsId}"></div>
+                `;
+                container.appendChild(block);
+                renderCondList(nsId, cfg);
+            }
         }
 
         function renderChips(paramId, cfg) {
@@ -2643,7 +2831,7 @@
                 if (!multi) catDraft[paramId] = [opt];
                 else catDraft[paramId].push(opt);
             }
-            const cfg = PARAMS_CONFIG[paramId];
+            const cfg = getParamConfig(paramId);
             renderChips(paramId, cfg);
             autoBuildCatDesc();
             updateCatSaveBtn();
@@ -2699,7 +2887,7 @@
             const idx = catDraft[paramId].indexOf(opt);
             if (idx !== -1) catDraft[paramId].splice(idx, 1);
             else catDraft[paramId].push(opt);
-            const cfg = PARAMS_CONFIG[paramId];
+            const cfg = getParamConfig(paramId);
             renderCondList(paramId, cfg);
             autoBuildCatDesc();
             updateCatSaveBtn();
@@ -2804,32 +2992,49 @@
         function autoBuildCatDesc() {
             const cat = CATEGORIES[activeCatId];
             const parts = [];
-            cat.params.forEach(paramId => {
-                const cfg = PARAMS_CONFIG[paramId];
-                if (!cfg) return;
-                const val = catDraft[paramId];
-                if (!val || !val.length) return;
-                if (cfg.type === 'checkboxes') parts.push(`Состояние: ${val.join(', ')}`);
-                else if (cfg.type === 'chips') parts.push(`${cfg.label}: ${val.join(', ')}`);
-                else if (cfg.type === 'select') parts.push(`${cfg.label}: ${val.join(', ')}`);
-            });
+            if (cat.subtypes && (catDraft.selectedSubtypes || []).length) {
+                (catDraft.selectedSubtypes || []).forEach(subtypeId => {
+                    const subtype = cat.subtypes.find(s => s.id === subtypeId);
+                    if (!subtype) return;
+                    const subParts = [];
+                    subtype.params.forEach(paramId => {
+                        const cfg = getParamConfig(paramId);
+                        if (!cfg) return;
+                        const val = catDraft[paramId + '__' + subtypeId];
+                        if (!val || !val.length) return;
+                        subParts.push(`${cfg.label}: ${val.join(', ')}`);
+                    });
+                    if (subParts.length) parts.push(`${subtype.label}:\n${subParts.join('\n')}`);
+                });
+            }
             const ta = document.getElementById('cat-desc-input');
             if (ta && !catDraft._descManual) {
-                ta.value = parts.join('\n');
+                ta.value = parts.join('\n\n');
                 ta.style.height = 'auto';
                 ta.style.height = ta.scrollHeight + 'px';
             }
-            catDraft.desc = ta ? ta.value : parts.join('\n');
+            catDraft.desc = ta ? ta.value : parts.join('\n\n');
         }
 
         function isCatDraftValid() {
             const cat = CATEGORIES[activeCatId];
-            return cat.params.every(paramId => {
-                const cfg = PARAMS_CONFIG[paramId];
-                if (!cfg || !cfg.required) return true;
-                const val = catDraft[paramId];
-                return val && val.length > 0;
-            }) && (catDraft.photos || []).length > 0;
+            const hasPhotos = (catDraft.photos || []).length > 0;
+            if (cat.subtypes && cat.subtypes.length) {
+                const selected = catDraft.selectedSubtypes || [];
+                if (!selected.length) return false;
+                const allParamsFilled = selected.every(subtypeId => {
+                    const subtype = cat.subtypes.find(s => s.id === subtypeId);
+                    if (!subtype) return false;
+                    return subtype.params.every(paramId => {
+                        const cfg = getParamConfig(paramId);
+                        if (!cfg || !cfg.required) return true;
+                        const val = catDraft[paramId + '__' + subtypeId];
+                        return val && val.length > 0;
+                    });
+                });
+                return allParamsFilled && hasPhotos;
+            }
+            return hasPhotos;
         }
 
         function updateCatSaveBtn() {
@@ -2889,7 +3094,7 @@
         // Type sub-sheet
         function openTypeSheet(paramId) {
             activeTypeParam = paramId;
-            const cfg = PARAMS_CONFIG[paramId];
+            const cfg = getParamConfig(paramId);
             document.getElementById('type-sub-title').textContent = cfg.label;
             renderTypeSubList(paramId, cfg);
             document.getElementById('type-sub-overlay').classList.add('open');
@@ -2929,7 +3134,7 @@
             const idx = catDraft[paramId].indexOf(opt);
             if (idx !== -1) catDraft[paramId].splice(idx, 1);
             else catDraft[paramId].push(opt);
-            renderTypeSubList(paramId, PARAMS_CONFIG[paramId]);
+            renderTypeSubList(paramId, getParamConfig(paramId));
         }
 
         // Size guide
@@ -3593,9 +3798,7 @@
             const _cat = CATEGORIES[activeCatId];
             if (_cat) {
                 document.getElementById('cat-sheet-title').textContent = _cat.name;
-                const _fundList = document.getElementById('fund-items-list');
-                _fundList.classList.remove('open');
-                _fundList.innerHTML = _cat.fundItems.map(i => `<li>${i}</li>`).join('');
+                document.getElementById('fund-items-body').classList.remove('open');
                 document.getElementById('fund-items-arrow').classList.remove('open');
                 document.getElementById('cat-remove-btn').style.display = catFromPack ? '' : 'none';
                 renderCatParams();
