@@ -2293,20 +2293,18 @@
         const selectedFundId = Number(sessionStorage.getItem('selectedFundId') || '1');
 
         const PHOTO_FILES = {
+            // Fund 1 — РКК
             1: 'new podacha/fond 1 photo 1.png',
             2: 'new podacha/fond 1 photo 2.png',
-            3: 'new podacha/fond 1 photo 3.png',
-            4: 'new podacha/fond 1 photo 4.png',
-            5: 'new podacha/fond 1 photo 5.png',
-            6: 'new podacha/fond 1 photo 6.png',
-            7: 'new podacha/fond 1 photo 7.png',
-            8: 'new podacha/fond 1 photo 8.png',
+            // Fund 2 — Ночлежка
             9: 'new podacha/fond 2 photo 1.png',
-            10: 'new podacha/fond 4 photo 2.png',
+            15: 'new podacha/fond 2 photo 2.png',
+            // Fund 3 — Миллион книг
             11: 'new podacha/fond 3 photo 1.png',
             12: 'new podacha/fond 3 photo 2.png',
-            13: 'new podacha/fond 4 photo 5.png',
-            14: 'new podacha/fond 4 photo 4.png',
+            // Fund 4 — Дари надежду
+            16: 'new podacha/fond 4 photo 1.png',
+            10: 'new podacha/fond 4 photo 2.png',
         };
 
         const PHOTO_TO_NEED = {
@@ -2323,27 +2321,17 @@
         // ===== CATEGORY SYSTEM (Part 7 & 8) =====
 
         const PHOTO_TO_CATEGORY = selectedFundId === 2 ? {
-            'new podacha/fond 1 photo 4.png': 'men-clothes',
-            'new podacha/fond 1 photo 5.png': 'men-clothes',
-            'new podacha/fond 1 photo 6.png': 'men-clothes',
             'new podacha/fond 2 photo 1.png': 'bags',
-            'new podacha/fond 4 photo 2.png': 'electronics',
+            'new podacha/fond 2 photo 2.png': 'men-clothes',
         } : selectedFundId === 3 ? {
             'new podacha/fond 3 photo 1.png': 'books-fiction',
             'new podacha/fond 3 photo 2.png': 'books-kids',
         } : selectedFundId === 4 ? {
-            'new podacha/fond 4 photo 2.png': 'tech-electronics',
-            'new podacha/fond 4 photo 5.png': 'appliances',
-            'new podacha/fond 4 photo 4.png': 'health',
+            'new podacha/fond 4 photo 1.png': 'tech-electronics',
+            'new podacha/fond 4 photo 2.png': 'health',
         } : {
             'new podacha/fond 1 photo 1.png': 'children-clothes',
             'new podacha/fond 1 photo 2.png': 'children-clothes',
-            'new podacha/fond 1 photo 3.png': 'children-clothes',
-            'new podacha/fond 1 photo 4.png': 'basic-clothes',
-            'new podacha/fond 1 photo 5.png': 'seasonal-clothes',
-            'new podacha/fond 1 photo 6.png': 'adult-shoes',
-            'new podacha/fond 1 photo 7.png': 'textile',
-            'new podacha/fond 1 photo 8.png': 'kitchen',
         };
 
         const CATEGORY_ORDER = selectedFundId === 2
@@ -2502,7 +2490,7 @@
                 ],
             },
             'books-kids': {
-                name: 'Товары для детей',
+                name: 'Книги для детей',
                 image: 'new podacha/book.png',
                 sliderImage: 'new podacha/slider book.png',
                 subtitle: 'Детских книг в сельских библиотеках почти нет — новые поступления редкость',

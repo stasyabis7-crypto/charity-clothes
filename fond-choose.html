@@ -174,7 +174,28 @@
             4: { name: 'Дари надежду', sub: 'Техника и средства реабилитации для семей, у которых их нет', logo: 'new podacha/dari nad.png' }
         };
 
+        const PHOTO_ID_TO_FUND = {
+            1: 1, 2: 1,       // fond 1 photo 1-2 → РКК
+            9: 2, 15: 2,      // fond 2 photo 1-2 → Ночлежка
+            11: 3, 12: 3,     // fond 3 photo 1-2 → Миллион книг
+            16: 4, 10: 4,     // fond 4 photo 1-2 → Дари надежду
+        };
+
         let selectedId = Number(sessionStorage.getItem('selectedFundId') || '1');
+
+        // Auto-detect fund from already-selected photos
+        (function() {
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            for (const id of photos) {
+                const fundId = PHOTO_ID_TO_FUND[Number(id)];
+                if (fundId) {
+                    selectedId = fundId;
+                    sessionStorage.setItem('selectedFundId', String(fundId));
+                    break;
+                }
+            }
+        })();
+
         let lastTap = { id: 0, time: 0 };
 
         function render() {

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Благотворительные объявления</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            max-width: 430px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .landing-header {
+            position: fixed;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 100%; max-width: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px;
+            z-index: 80;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .landing-header.scrolled {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .landing-header img.logo { height: 28px; }
+        .landing-header img.menu { width: 24px; height: 24px; }
+
+        /* ── HERO ── */
+        .landing-hero {
+            background: linear-gradient(180deg, #C9DAFF 0%, #DCCEFF 100%);
+            padding-top: 72px;
+        }
+        .landing-hero-text {
+            padding: 0 16px 20px;
+        }
+        .landing-title {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #1A1A1A;
+        }
+        .landing-sub {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #1A1A1A;
+        }
+        .landing-find-btn {
+            margin-top: 20px;
+            width: 100%;
+            background: #fff;
+            border: none;
+            border-radius: 18px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            color: #1A1A1A;
+            cursor: pointer;
+        }
+        .landing-find-btn:active { opacity: 0.8; }
+        .landing-hero-img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ── HOW TO GET HELP ── */
+        .landing-how {
+            padding: 32px 16px 24px;
+            background: #fff;
+        }
+        .landing-how-title {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #1A1A1A;
+            margin-bottom: 24px;
+        }
+        .landing-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .landing-step:last-child { margin-bottom: 0; }
+        .landing-step img {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+        .landing-step-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 20px;
+            color: #1A1A1A;
+        }
+        .landing-step-desc {
+            margin-top: 2px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #1A1A1A;
+        }
+
+        /* ── LISTINGS ── */
+        .landing-listings {
+            padding: 0 16px 40px;
+            background: #fff;
+        }
+        .listings-header {
+            padding-top: 8px;
+            margin-bottom: 14px;
+        }
+        .listings-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1A1A1A;
+        }
+        .listings-header h2 span {
+            color: #AFAFAF;
+            font-weight: 800;
+        }
+        .listings-search {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .search-input {
+            flex: 1;
+            background: #F2F2F2;
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .search-input img { width: 16px; height: 16px; opacity: 0.5; }
+        .search-input span {
+            font-size: 15px;
+            color: #AFAFAF;
+        }
+        .filter-btn {
+            width: 48px; height: 48px;
+            background: #F2F2F2;
+            border: none;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .filter-btn img { width: 20px; height: 20px; }
+        .filter-btn:active { opacity: 0.7; }
+        .listings-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .listings-tab {
+            background: #F2F2F2;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: pointer;
+        }
+        .listings-tab.active {
+            background: #1A1A1A;
+            color: #fff;
+            font-weight: 500;
+        }
+        .listings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .listing-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .listing-card-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px 12px 0 0;
+        }
+        .listing-card-body {
+            padding: 6px 2px 4px;
+        }
+        .listing-card-title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ── FILTER OVERLAY & SHEET ── */
+        .filter-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+        }
+        .filter-overlay.open { display: block; }
+
+        .filter-sheet {
+            position: fixed;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%; max-width: 430px;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            z-index: 201;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+        }
+        .filter-sheet.open { transform: translateX(-50%) translateY(0); }
+
+        .filter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 16px 0;
+            flex-shrink: 0;
+        }
+        .filter-close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .filter-close-btn img { width: 24px; height: 24px; }
+        .filter-header-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+        .filter-reset-btn {
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: #AFAFAF;
+            cursor: pointer;
+        }
+
+        .filter-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        .filter-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 12px;
+        }
+        .filter-dropdown {
+            width: 100%;
+            background: #F2F2F2;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: #AFAFAF;
+            cursor: pointer;
+            text-align: left;
+        }
+        .filter-dropdown.selected { color: #1A1A1A; }
+        .filter-dropdown img { width: 16px; height: 16px; opacity: 0.5; flex-shrink: 0; }
+        .filter-location {
+            width: 100%;
+            background: #F2F2F2;
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 15px;
+            color: #1A1A1A;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .filter-location span { color: #AFAFAF; }
+
+        .filter-chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .filter-chip {
+            background: #F2F2F2;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1A1A1A;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .filter-chip.active {
+            background: #1A1A1A;
+            color: #fff;
+        }
+        .filter-chip img { width: 14px; height: 14px; }
+        .filter-chip.active img { filter: brightness(0) invert(1); }
+
+        .filter-sort-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #F2F2F2;
+            cursor: pointer;
+        }
+        .filter-sort-item:last-child { border-bottom: none; }
+        .filter-sort-label {
+            font-size: 15px;
+            color: #1A1A1A;
+        }
+        .filter-radio {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: #F2F2F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .filter-radio.active {
+            background: #1A1A1A;
+        }
+        .filter-radio.active::after {
+            content: '';
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .filter-param-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+            margin-top: 16px;
+        }
+        .filter-param-label:first-child { margin-top: 0; }
+
+        .filter-submit-wrap {
+            padding: 12px 16px 28px;
+            flex-shrink: 0;
+        }
+        .filter-submit {
+            width: 100%;
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            padding: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .filter-submit:active { opacity: 0.85; }
+
+        /* ── CAT PICKER SUB-SHEET ── */
+        .cat-picker-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 300;
+        }
+        .cat-picker-overlay.open { display: block; }
+        .cat-picker-sheet {
+            position: fixed;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%; max-width: 430px;
+            background: #fff;
+            border-radius: 28px 28px 0 0;
+            z-index: 301;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
+        }
+        .cat-picker-sheet.open { transform: translateX(-50%) translateY(0); }
+        .cat-picker-title {
+            font-size: 17px;
+            font-weight: 700;
+            padding: 20px 16px 0;
+            flex-shrink: 0;
+        }
+        .cat-picker-list {
+            overflow-y: auto;
+            padding: 12px 0 28px;
+        }
+        .cat-picker-item {
+            padding: 15px 16px;
+            font-size: 15px;
+            color: #1A1A1A;
+            cursor: pointer;
+            border-bottom: 1px solid #F2F2F2;
+        }
+        .cat-picker-item:last-child { border-bottom: none; }
+        .cat-picker-item:active { background: #F8F8F8; }
+        .cat-picker-item.selected {
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="landing-header" id="landing-header">
+        <img class="logo" src="new podacha/Logotype [Symbol+Text].svg" alt="Avito">
+        <img class="menu" src="new podacha/Menu.png" alt="">
+    </header>
+
+    <!-- HERO -->
+    <section class="landing-hero">
+        <div class="landing-hero-text">
+            <h1 class="landing-title">Благотворительные объявления</h1>
+            <p class="landing-sub">Мы в Авито собрали для вас товары для помощи людям и теперь найти полезные вещи с доставкой стало ещё удобнее</p>
+            <button class="landing-find-btn" onclick="document.getElementById('listings').scrollIntoView({behavior:'smooth'})">Найти объявление</button>
+        </div>
+        <img class="landing-hero-img" src="new podacha/banner landing.png" alt="">
+    </section>
+
+    <!-- HOW TO GET HELP -->
+    <section class="landing-how">
+        <h2 class="landing-how-title">Как получить помощь</h2>
+        <div class="landing-step">
+            <img src="new podacha/ad.png" alt="">
+            <div>
+                <div class="landing-step-title">Найдите объявление</div>
+                <div class="landing-step-desc">Найдите понравившийся товар на этой странице и договоритесь о передаче вещей с продавцом</div>
+            </div>
+        </div>
+        <div class="landing-step">
+            <img src="new podacha/cart.png" alt="">
+            <div>
+                <div class="landing-step-title">Оформите Авито Доставку</div>
+                <div class="landing-step-desc">Она будет бесплатной рядом с зоной происшествия</div>
+            </div>
+        </div>
+        <div class="landing-step">
+            <img src="new podacha/check arrow.png" alt="">
+            <div>
+                <div class="landing-step-title">Заберите заказ</div>
+                <div class="landing-step-desc">Для получения нужен код из Авито и паспорт, в постамате — только код</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LISTINGS -->
+    <section class="landing-listings" id="listings">
+        <div class="listings-header">
+            <h2>Подходящие объявления <span id="listings-count">229</span></h2>
+        </div>
+        <div class="listings-search">
+            <div class="search-input">
+                <img src="icons header/search.svg" alt="">
+                <span>Поиск по объявлениям</span>
+            </div>
+            <button class="filter-btn" onclick="openFilterSheet()">
+                <img src="new podacha/filters.svg" alt="">
+            </button>
+        </div>
+        <div class="listings-tabs">
+            <button class="listings-tab active">Новые</button>
+            <button class="listings-tab">Просмотрено</button>
+            <button class="listings-tab">В процессе</button>
+        </div>
+        <div class="listings-grid" id="listings-grid"></div>
+    </section>
+
+    <!-- FILTER OVERLAY & SHEET -->
+    <div class="filter-overlay" id="filter-overlay" onclick="closeFilterSheet()"></div>
+    <div class="filter-sheet" id="filter-sheet">
+        <div class="filter-header">
+            <button class="filter-close-btn" onclick="closeFilterSheet()">
+                <img src="sheets materials/CloseButton.svg" alt="">
+            </button>
+            <span class="filter-header-title">Фильтры</span>
+            <button class="filter-reset-btn" onclick="resetFilters()">Сбросить</button>
+        </div>
+        <div class="filter-scroll">
+            <!-- Категории -->
+            <div class="filter-section">
+                <div class="filter-section-title">Категории</div>
+                <button class="filter-dropdown" id="cat-dropdown" onclick="openCatPicker()">
+                    <span id="cat-dropdown-label">Выбрать</span>
+                    <img src="arrow down.svg" alt="">
+                </button>
+                <div id="cat-params-filter"></div>
+            </div>
+            <!-- Где искать -->
+            <div class="filter-section">
+                <div class="filter-section-title">Где искать</div>
+                <div class="filter-location">
+                    <span>Нижний Новгород, <span>район, метро, радиус</span></span>
+                    <img src="arrow down.svg" alt="" style="width:16px;height:16px;opacity:0.5;">
+                </div>
+            </div>
+            <!-- Рейтинг продавца -->
+            <div class="filter-section">
+                <div class="filter-section-title">Рейтинг продавца</div>
+                <div class="filter-chips-row" id="rating-chips">
+                    <button class="filter-chip" onclick="toggleRatingChip(this,'3')">3 <img src="new podacha/star.svg" alt=""></button>
+                    <button class="filter-chip" onclick="toggleRatingChip(this,'3-4')">3–4 <img src="new podacha/star.svg" alt=""></button>
+                    <button class="filter-chip" onclick="toggleRatingChip(this,'4-5')">4–5 <img src="new podacha/star.svg" alt=""></button>
+                    <button class="filter-chip" onclick="toggleRatingChip(this,'5')">5 <img src="new podacha/star.svg" alt=""></button>
+                </div>
+            </div>
+            <!-- Сортировка -->
+            <div class="filter-section">
+                <div class="filter-section-title">Сортировка</div>
+                <div id="sort-list">
+                    <div class="filter-sort-item" onclick="setSort('default',this)">
+                        <span class="filter-sort-label">По умолчанию</span>
+                        <div class="filter-radio active" id="sort-default"></div>
+                    </div>
+                    <div class="filter-sort-item" onclick="setSort('date',this)">
+                        <span class="filter-sort-label">По дате</span>
+                        <div class="filter-radio" id="sort-date"></div>
+                    </div>
+                    <div class="filter-sort-item" onclick="setSort('distance',this)">
+                        <span class="filter-sort-label">По удалённости</span>
+                        <div class="filter-radio" id="sort-distance"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:8px;"></div>
+        </div>
+        <div class="filter-submit-wrap">
+            <button class="filter-submit" id="filter-submit" onclick="applyFilter()">Показать 229 объявлений</button>
+        </div>
+    </div>
+
+    <!-- CATEGORY PICKER SUB-SHEET -->
+    <div class="cat-picker-overlay" id="cat-picker-overlay" onclick="closeCatPicker()"></div>
+    <div class="cat-picker-sheet" id="cat-picker-sheet">
+        <div class="cat-picker-title">Категория</div>
+        <div class="cat-picker-list" id="cat-picker-list"></div>
+    </div>
+
+    <script>
+        const fondId = Number(sessionStorage.getItem('selectedFundId') || '1');
+
+        const FUND_LISTINGS = {
+            1: [
+                { photo: 'new podacha/fond 1 photo 1.png', name: 'Детская куртка зимняя, размер 110–116, хорошее состояние' },
+                { photo: 'new podacha/fond 1 photo 2.png', name: 'Детский комплект одежды, размер 92–98, унисекс' },
+                { photo: 'new podacha/fond 1 photo 1.png', name: 'Детская одежда, размер 104, осень-зима' },
+                { photo: 'new podacha/fond 1 photo 2.png', name: 'Детская куртка, размер 122, хорошее состояние' },
+            ],
+            2: [
+                { photo: 'new podacha/fond 2 photo 1.png', name: 'Рюкзак вместительный, целые лямки и молнии' },
+                { photo: 'new podacha/fond 2 photo 2.png', name: 'Мужская куртка тёмная, размер L, хорошее состояние' },
+                { photo: 'new podacha/fond 2 photo 1.png', name: 'Сумка через плечо, рабочие молнии' },
+                { photo: 'new podacha/fond 2 photo 2.png', name: 'Мужской пуховик, размер XL, отличное состояние' },
+            ],
+            3: [
+                { photo: 'new podacha/fond 3 photo 1.png', name: 'Художественная литература, проза, 5 книг от 2015 года' },
+                { photo: 'new podacha/fond 3 photo 2.png', name: 'Детские книги, сказки, 3–6 лет, 3 книги' },
+                { photo: 'new podacha/fond 3 photo 1.png', name: 'Познавательные книги о природе и науке, 2019 год' },
+                { photo: 'new podacha/fond 3 photo 2.png', name: 'Книги для школьников 7–10 лет, хорошее состояние' },
+            ],
+            4: [
+                { photo: 'new podacha/fond 4 photo 1.png', name: 'Ноутбук рабочий, 2018 год, хорошее состояние' },
+                { photo: 'new podacha/fond 4 photo 2.png', name: 'Костыли локтевые, хорошее состояние' },
+                { photo: 'new podacha/fond 4 photo 1.png', name: 'Смартфон рабочий, 2020 год выпуска' },
+                { photo: 'new podacha/fond 4 photo 2.png', name: 'Ходунки, хорошее состояние' },
+            ],
+        };
+
+        const FUND_CATEGORIES = {
+            1: {
+                'Детская одежда и обувь': [
+                    { label: 'Пол', options: ['Мальчик','Девочка','Унисекс'] },
+                    { label: 'Размер', options: ['80–86','86–92','92–98','98–104','110–116','122–128','134–140','146–152'] },
+                    { label: 'Сезон', options: ['Зима','Весна/осень','Лето','Демисезон'] },
+                ],
+                'Сезонная одежда': [
+                    { label: 'Пол', options: ['Мужская','Женская','Унисекс'] },
+                    { label: 'Тип', options: ['Куртка','Пуховик','Пальто','Ветровка'] },
+                    { label: 'Размер', options: ['XS','S','M','L','XL','XXL'] },
+                ],
+                'Обувь для взрослых': [
+                    { label: 'Пол', options: ['Мужская','Женская'] },
+                    { label: 'Тип', options: ['Ботинки','Кроссовки','Зимние сапоги','Другое'] },
+                    { label: 'Размер', options: ['36','37','38','39','40','41','42','43','44','45','46'] },
+                ],
+                'Текстиль': [
+                    { label: 'Подтип', options: ['Постельное бельё','Полотенца','Плед / одеяло'] },
+                ],
+                'Посуда и кухня': [
+                    { label: 'Подтип', options: ['Тарелки и кружки','Кастрюли и сковородки','Столовые приборы'] },
+                ],
+            },
+            2: {
+                'Одежда': [
+                    { label: 'Подтип', options: ['Верхняя одежда','Джинсы и брюки','Свитеры и джемперы','Толстовки и флиски'] },
+                    { label: 'Размер', options: ['S','M','L','XL','XXL'] },
+                ],
+                'Обувь': [
+                    { label: 'Подтип', options: ['Ботинки','Кроссовки','Зимние сапоги'] },
+                    { label: 'Размер', options: ['40','41','42','43','44','45','46'] },
+                ],
+                'Сумки и аксессуары': [
+                    { label: 'Подтип', options: ['Рюкзак','Поясная сумка','Сумка через плечо'] },
+                ],
+                'Электроника': [],
+            },
+            3: {
+                'Книги и журналы': [
+                    { label: 'Подтип', options: ['Художественная литература','Познавательные книги','Классика'] },
+                    { label: 'Год издания', options: ['2000–2009','2010–2019','2020 и новее'] },
+                ],
+                'Книги для детей': [
+                    { label: 'Подтип', options: ['Книги для малышей','Книги для школьников','Познавательные для детей'] },
+                    { label: 'Возраст', options: ['0–3 года','3–6 лет','7–10 лет','11–14 лет'] },
+                ],
+            },
+            4: {
+                'Электроника': [
+                    { label: 'Подтип', options: ['Ноутбук','Планшет','Смартфон','Телевизор'] },
+                ],
+                'Бытовая техника': [
+                    { label: 'Подтип', options: ['Микроволновка','Электрочайник','Мультиварка','Другое'] },
+                ],
+                'Здоровье': [
+                    { label: 'Подтип', options: ['Костыли','Ходунки','Трость','Слуховой аппарат','Другое'] },
+                ],
+            },
+        };
+
+        // State
+        let selectedCategory = null;
+        let selectedSort = 'default';
+        let isFiltered = false;
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('landing-header');
+            if (header) header.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // Render listings
+        function renderListings(count) {
+            const grid = document.getElementById('listings-grid');
+            const allListings = FUND_LISTINGS[fondId] || FUND_LISTINGS[1];
+            const items = count === 'all' ? allListings : allListings.slice(0, 2);
+            document.getElementById('listings-count').textContent = count === 'all' ? '229' : '2';
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'listing-card';
+                card.innerHTML = `
+                    <img class="listing-card-img" src="${item.photo}" alt="">
+                    <div class="listing-card-body">
+                        <div class="listing-card-title">${item.name}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter sheet
+        function openFilterSheet() {
+            document.getElementById('filter-overlay').classList.add('open');
+            document.getElementById('filter-sheet').classList.add('open');
+        }
+        function closeFilterSheet() {
+            document.getElementById('filter-overlay').classList.remove('open');
+            document.getElementById('filter-sheet').classList.remove('open');
+        }
+
+        // Category picker
+        function openCatPicker() {
+            const cats = FUND_CATEGORIES[fondId] || FUND_CATEGORIES[1];
+            const list = document.getElementById('cat-picker-list');
+            list.innerHTML = '';
+            Object.keys(cats).forEach(catName => {
+                const item = document.createElement('div');
+                item.className = 'cat-picker-item' + (selectedCategory === catName ? ' selected' : '');
+                item.textContent = catName;
+                item.onclick = () => selectCategory(catName);
+                list.appendChild(item);
+            });
+            document.getElementById('cat-picker-overlay').classList.add('open');
+            document.getElementById('cat-picker-sheet').classList.add('open');
+        }
+        function closeCatPicker() {
+            document.getElementById('cat-picker-overlay').classList.remove('open');
+            document.getElementById('cat-picker-sheet').classList.remove('open');
+        }
+
+        function selectCategory(catName) {
+            selectedCategory = catName;
+            const btn = document.getElementById('cat-dropdown');
+            const label = document.getElementById('cat-dropdown-label');
+            label.textContent = catName;
+            btn.classList.add('selected');
+            renderCatParams(catName);
+            updateSubmitBtn();
+            closeCatPicker();
+        }
+
+        function renderCatParams(catName) {
+            const cats = FUND_CATEGORIES[fondId] || FUND_CATEGORIES[1];
+            const params = cats[catName] || [];
+            const container = document.getElementById('cat-params-filter');
+            container.innerHTML = '';
+            params.forEach(param => {
+                const labelEl = document.createElement('div');
+                labelEl.className = 'filter-param-label';
+                labelEl.textContent = param.label;
+                container.appendChild(labelEl);
+
+                const row = document.createElement('div');
+                row.className = 'filter-chips-row';
+                row.style.marginBottom = '4px';
+                param.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-chip';
+                    btn.textContent = opt;
+                    btn.onclick = () => {
+                        btn.classList.toggle('active');
+                        updateSubmitBtn();
+                    };
+                    row.appendChild(btn);
+                });
+                container.appendChild(row);
+            });
+        }
+
+        function toggleRatingChip(btn) {
+            document.querySelectorAll('#rating-chips .filter-chip').forEach(c => {
+                if (c !== btn) c.classList.remove('active');
+            });
+            btn.classList.toggle('active');
+            updateSubmitBtn();
+        }
+
+        function setSort(val) {
+            selectedSort = val;
+            document.querySelectorAll('#sort-list .filter-radio').forEach(r => r.classList.remove('active'));
+            document.getElementById('sort-' + val).classList.add('active');
+        }
+
+        function updateSubmitBtn() {
+            const hasFilter = selectedCategory !== null ||
+                document.querySelectorAll('#rating-chips .filter-chip.active').length > 0 ||
+                document.querySelectorAll('#cat-params-filter .filter-chip.active').length > 0;
+            const btn = document.getElementById('filter-submit');
+            btn.textContent = hasFilter ? 'Показать 2 объявления' : 'Показать 229 объявлений';
+            isFiltered = hasFilter;
+        }
+
+        function applyFilter() {
+            closeFilterSheet();
+            if (isFiltered) {
+                renderListings('filtered');
+            } else {
+                renderListings('all');
+            }
+        }
+
+        function resetFilters() {
+            selectedCategory = null;
+            isFiltered = false;
+            document.getElementById('cat-dropdown-label').textContent = 'Выбрать';
+            document.getElementById('cat-dropdown').classList.remove('selected');
+            document.getElementById('cat-params-filter').innerHTML = '';
+            document.querySelectorAll('.filter-chip.active').forEach(c => c.classList.remove('active'));
+            setSort('default');
+            document.getElementById('filter-submit').textContent = 'Показать 229 объявлений';
+        }
+
+        // Init
+        renderListings('all');
+    </script>
+</body>
+</html>
