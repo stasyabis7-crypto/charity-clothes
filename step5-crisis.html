@@ -2303,6 +2303,10 @@
             8: 'new podacha/fond 1 photo 8.png',
             9: 'new podacha/fond 2 photo 1.png',
             10: 'new podacha/fond 4 photo 2.png',
+            11: 'new podacha/fond 3 photo 1.png',
+            12: 'new podacha/fond 3 photo 2.png',
+            13: 'new podacha/fond 4 photo 5.png',
+            14: 'new podacha/fond 4 photo 4.png',
         };
 
         const PHOTO_TO_NEED = {
@@ -2324,6 +2328,13 @@
             'new podacha/fond 1 photo 6.png': 'men-clothes',
             'new podacha/fond 2 photo 1.png': 'bags',
             'new podacha/fond 4 photo 2.png': 'electronics',
+        } : selectedFundId === 3 ? {
+            'new podacha/fond 3 photo 1.png': 'books-fiction',
+            'new podacha/fond 3 photo 2.png': 'books-kids',
+        } : selectedFundId === 4 ? {
+            'new podacha/fond 4 photo 2.png': 'tech-electronics',
+            'new podacha/fond 4 photo 5.png': 'appliances',
+            'new podacha/fond 4 photo 4.png': 'health',
         } : {
             'new podacha/fond 1 photo 1.png': 'children-clothes',
             'new podacha/fond 1 photo 2.png': 'children-clothes',
@@ -2337,6 +2348,10 @@
 
         const CATEGORY_ORDER = selectedFundId === 2
             ? ['men-clothes','men-shoes','bags','electronics']
+            : selectedFundId === 3
+            ? ['books-fiction','books-kids']
+            : selectedFundId === 4
+            ? ['tech-electronics','appliances','health']
             : ['children-clothes','seasonal-clothes','adult-shoes','textile','kitchen'];
 
         const CATEGORIES_RKK = {
@@ -2472,7 +2487,82 @@
             },
         };
 
-        const CATEGORIES = selectedFundId === 2 ? CATEGORIES_NOCH : CATEGORIES_RKK;
+        const CATEGORIES_MIL = {
+            'books-fiction': {
+                name: 'Книги и журналы',
+                image: 'new podacha/magazine.png',
+                sliderImage: 'new podacha/slider magazine.png',
+                subtitle: 'Библиотеки берут только конкретные книги — иначе не справятся с сортировкой',
+                fundAccepts: 'Художественная литература, познавательные книги и классика — от 2000 года издания, в хорошем состоянии. Авито сверяет каждую книгу со списком фонда перед отправкой.',
+                fundRejects: 'Не принимают: книги до 2000 года. Советские многотомные собрания сочинений. Учебники и справочники. Журналы и периодика. Книги с пятнами, надрывами, карандашными пометками.',
+                subtypes: [
+                    { id: 'fiction', label: 'Художественная литература', params: ['genre-fiction','year-book','condition-good','qty-books'] },
+                    { id: 'cognitive', label: 'Познавательные книги', params: ['topic-cognitive','year-book','condition-good','qty-books'] },
+                    { id: 'classic', label: 'Классика', params: ['year-book','condition-good','qty-books'] },
+                ],
+            },
+            'books-kids': {
+                name: 'Товары для детей',
+                image: 'new podacha/book.png',
+                sliderImage: 'new podacha/slider book.png',
+                subtitle: 'Детских книг в сельских библиотеках почти нет — новые поступления редкость',
+                fundAccepts: 'Детские книги от 2000 года в хорошем состоянии: сказки, книги для чтения в начальной школе, познавательные книги о природе и науке.',
+                fundRejects: 'Не принимают: раскраски и книги-игрушки. Книги с вырванными страницами или разукрашенными иллюстрациями. Советские детские книги.',
+                subtypes: [
+                    { id: 'toddlers', label: 'Книги для малышей', params: ['age-toddlers','year-book','condition-good','qty-books'] },
+                    { id: 'schoolers', label: 'Книги для школьников', params: ['age-schoolers','year-book','condition-good','qty-books'] },
+                    { id: 'cognitive-kids', label: 'Познавательные для детей', params: ['topic-cognitive','age-kids','year-book','condition-good','qty-books'] },
+                ],
+            },
+        };
+
+        const CATEGORIES_DARI = {
+            'tech-electronics': {
+                name: 'Электроника',
+                image: 'new podacha/smartphone.png',
+                sliderImage: 'new podacha/slider smartphone.png',
+                subtitle: 'Ноутбук или планшет может стать рабочим инструментом для человека с инвалидностью',
+                fundAccepts: 'Рабочие ноутбуки от 2015 года, планшеты от 2017 года, смартфоны и телевизоры в хорошем состоянии. Техника передаётся конкретным семьям по запросу соцслужб.',
+                fundRejects: 'Не принимают: нерабочая техника. Ноутбуки до 2015 года — слишком медленные. Техника без зарядного устройства (по возможности приложите зарядку).',
+                subtypes: [
+                    { id: 'laptop', label: 'Ноутбук', params: ['year-laptop','condition-good','works'] },
+                    { id: 'tablet', label: 'Планшет', params: ['year-tablet','condition-good','works'] },
+                    { id: 'smartphone', label: 'Смартфон', params: ['year-phone','condition-good','works'] },
+                    { id: 'tv', label: 'Телевизор', params: ['tv-diagonal','condition-good','works'] },
+                ],
+            },
+            'appliances': {
+                name: 'Бытовая техника',
+                image: 'new podacha/oven.png',
+                sliderImage: 'new podacha/slider oven.png',
+                subtitle: 'Небольшая техника закрывает базовые потребности семей, у которых её нет',
+                fundAccepts: 'Исправная небольшая бытовая техника: микроволновки, электрочайники, мультиварки. Передаётся семьям по спискам фонда.',
+                fundRejects: 'Не принимают: нерабочая техника. Крупная техника (холодильники, стиральные машины) — в этом пилоте не принимается. Утюги и фены — не в приоритете.',
+                subtypes: [
+                    { id: 'microwave', label: 'Микроволновка', params: ['condition-good','works'] },
+                    { id: 'kettle', label: 'Электрочайник', params: ['condition-good','works'] },
+                    { id: 'multicooker', label: 'Мультиварка', params: ['condition-good','works'] },
+                    { id: 'other-appliance', label: 'Другое', params: ['type-other-text','condition-good','works'] },
+                ],
+            },
+            'health': {
+                name: 'Здоровье',
+                image: 'new podacha/kostili.png',
+                sliderImage: 'new podacha/slider kostili.png',
+                subtitle: 'Средства реабилитации стоят дорого — б/у в хорошем состоянии закрывают реальную нужду',
+                fundAccepts: 'Исправные средства реабилитации: костыли, ходунки, трости, слуховые аппараты. Фонд уточнит детали передачи в чате.',
+                fundRejects: 'Не принимают: сломанные и требующие ремонта средства реабилитации. Кресла-коляски принимаются, но требуют отдельного согласования в чате.',
+                subtypes: [
+                    { id: 'crutches', label: 'Костыли', params: ['type-crutches','condition-good'] },
+                    { id: 'walker', label: 'Ходунки', params: ['condition-good'] },
+                    { id: 'cane', label: 'Трость', params: ['condition-good'] },
+                    { id: 'hearing-aid', label: 'Слуховой аппарат', params: ['condition-good','works'] },
+                    { id: 'other-health', label: 'Другое', params: ['type-other-text','condition-good'] },
+                ],
+            },
+        };
+
+        const CATEGORIES = selectedFundId === 2 ? CATEGORIES_NOCH : selectedFundId === 3 ? CATEGORIES_MIL : selectedFundId === 4 ? CATEGORIES_DARI : CATEGORIES_RKK;
 
         const PARAMS_CONFIG = {
             // legacy (kept for compatibility)
@@ -2509,9 +2599,24 @@
             'qty-plates': { label: 'Количество', required: true, type: 'chips', options: ['1–2 предмета','3–5 предметов','Комплект'], multi: false },
             'type-pots': { label: 'Тип', required: true, type: 'chips', options: ['Кастрюля','Сковородка','Оба'], multi: false },
             'qty-cutlery': { label: 'Количество', required: true, type: 'chips', options: ['На 1 персону','На 2–3 персоны','На 4 и больше'], multi: false },
-            // Ночlежka params
+            // Ночлежка params
             'gender-men-fixed': { label: 'Пол', required: true, type: 'chips-fixed', options: ['Мужской'], multi: false },
             'works': { label: 'Работает', required: true, type: 'chips', options: ['Да','Нет'], multi: false },
+            // Дари надежду params
+            'year-laptop': { label: 'Год выпуска', required: true, type: 'chips', options: ['До 2015','2015–2019','2020 и новее'], multi: false },
+            'year-tablet': { label: 'Год выпуска', required: true, type: 'chips', options: ['До 2017','2017–2020','2021 и новее'], multi: false },
+            'year-phone': { label: 'Год выпуска', required: true, type: 'chips', options: ['До 2018','2018–2021','2022 и новее'], multi: false },
+            'tv-diagonal': { label: 'Диагональ', required: true, type: 'chips', options: ['До 32"','32–43"','Больше 43"'], multi: false },
+            'type-crutches': { label: 'Тип', required: true, type: 'chips', options: ['Подмышечные','Локтевые'], multi: false },
+            'type-other-text': { label: 'Тип', required: true, type: 'text-input', placeholder: 'Напишите, что именно' },
+            // Миллион книг params
+            'genre-fiction': { label: 'Жанр', required: true, type: 'chips', options: ['Проза','Фантастика','Детектив','Поэзия'], multi: true },
+            'year-book': { label: 'Год издания', required: true, type: 'chips', options: ['2000–2009','2010–2019','2020 и новее'], multi: false },
+            'qty-books': { label: 'Количество', required: true, type: 'chips', options: ['1','2–5','Больше 5'], multi: false },
+            'topic-cognitive': { label: 'Тема', required: true, type: 'chips', options: ['Природа и наука','История','Искусство','Другое'], multi: true },
+            'age-toddlers': { label: 'Возраст', required: true, type: 'chips', options: ['0–3 года','3–6 лет'], multi: true },
+            'age-schoolers': { label: 'Возраст', required: true, type: 'chips', options: ['7–10 лет','11–14 лет'], multi: true },
+            'age-kids': { label: 'Возраст', required: true, type: 'chips', options: ['0–6 лет','7–10 лет','11–14 лет'], multi: true },
         };
 
         const SIZE_GUIDES = {
@@ -2930,6 +3035,18 @@
                 `;
                 container.appendChild(block);
                 catDraft[nsId] = [...cfg.options];
+            } else if (cfg.type === 'text-input') {
+                block.innerHTML = `
+                    <div class="param-label">${cfg.label}<span class="param-required">*</span></div>
+                    <textarea class="desc-textarea" id="txt-${nsId}" placeholder="${cfg.placeholder || ''}" style="margin-top:0;"></textarea>
+                `;
+                container.appendChild(block);
+                const ta = block.querySelector('textarea');
+                if (catDraft[nsId]) { ta.value = catDraft[nsId]; }
+                ta.addEventListener('input', function() {
+                    catDraft[nsId] = this.value;
+                    updateCatSaveBtn();
+                });
             }
         }
 
@@ -3126,7 +3243,11 @@
                         if (!cfg || cfg.type === 'chips-fixed') return;
                         const val = catDraft[paramId + '__' + subtypeId];
                         if (!val || !val.length) return;
-                        subParts.push(`${cfg.label}: ${val.join(', ')}`);
+                        if (cfg.type === 'text-input') {
+                            subParts.push(`${cfg.label}: ${val}`);
+                        } else {
+                            subParts.push(`${cfg.label}: ${val.join(', ')}`);
+                        }
                     });
                     if (subParts.length) parts.push(`${subtype.label}:\n${subParts.join('\n')}`);
                 });
