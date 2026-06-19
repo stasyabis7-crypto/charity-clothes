@@ -4003,7 +4003,7 @@
                 }
             });
             const parts = [base];
-            if (catBlocks.length) parts.push('Также готов передать\n\n' + catBlocks.join('\n\n'));
+            if (catBlocks.length) parts.push((base ? 'Также готов передать' : 'Готов передать') + '\n\n' + catBlocks.join('\n\n'));
             ta.value = parts.filter(Boolean).join('\n\n');
             resizeTextarea();
             persistCategories();
