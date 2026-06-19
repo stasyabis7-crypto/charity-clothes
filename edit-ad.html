@@ -1110,7 +1110,7 @@
 
         const COLLECTIONS = {
             family: {
-                route: 'step5.html',
+                route: 'step5-crisis.html',
                 title: 'Для семей с детьми',
                 sub: 'Собираем вещи на помощь многодетным семьям',
                 image: 'sbor 1 new.png',
@@ -1467,7 +1467,7 @@
             sessionStorage.setItem('hasDraft', '1');
             sessionStorage.removeItem('adCategories');
             sessionStorage.removeItem('charityNeedSelections');
-            window.location.href = selectedCollection === 0 ? 'step5.html' : 'step5-crisis.html';
+            window.location.href = selectedCollection === 0 ? 'step5-crisis.html' : 'step5-crisis.html';
         }
 
         function loadSelections() {
