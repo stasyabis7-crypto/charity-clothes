@@ -175,10 +175,13 @@
         };
 
         const PHOTO_ID_TO_FUND = {
-            1: 1, 2: 1,       // fond 1 photo 1-2 → РКК
-            9: 2, 15: 2,      // fond 2 photo 1-2 → Ночлежка
-            11: 3, 12: 3,     // fond 3 photo 1-2 → Миллион книг
-            16: 4, 10: 4,     // fond 4 photo 1-2 → Дари надежду
+            1: 1, 2: 1,             // fond 1 photo 1-2 → РКК
+            3: 2, 4: 2,             // fond 2 photo 1-2 → Ночлежка
+            5: 3, 6: 3,             // fond 3 photo 1-2 → Миллион книг
+            7: 4, 8: 4,             // fond 4 photo 1-2 → Дари надежду
+            9: 2, 15: 2,            // legacy IDs → Ночлежка
+            11: 3, 12: 3,           // legacy IDs → Миллион книг
+            16: 4, 10: 4,           // legacy IDs → Дари надежду
         };
 
         let selectedId = Number(sessionStorage.getItem('selectedFundId') || '1');

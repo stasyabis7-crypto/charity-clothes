@@ -714,6 +714,7 @@
             max-height: 88vh;
             overflow-y: auto;
             position: relative;
+            -webkit-overflow-scrolling: touch;
         }
 
         .sheet-drag {
@@ -727,15 +728,18 @@
         .sheet-close {
             position: absolute;
             right: 16px;
-            top: 22px;
+            top: 16px;
             border: none;
-            background: transparent;
+            background: #fff;
+            border-radius: 50%;
             cursor: pointer;
-            width: 28px;
-            height: 28px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 20;
+            flex-shrink: 0;
         }
 
         .sheet-close img { width: 24px; height: 24px; }
@@ -1013,23 +1017,29 @@
             background: #fff;
             border-radius: 28px 28px 0 0;
             z-index: 201;
-            overflow: hidden;
             transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
             max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .info-sheet.active { transform: translateX(-50%) translateY(0); }
+        .info-sheet-scroll {
+            flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
-        .info-sheet.active { transform: translateX(-50%) translateY(0); }
 
         .info-sheet-image-wrap { position: relative; width: 100%; }
         .info-sheet-photo { width: 100%; height: auto; display: block; }
         .info-sheet-close {
             position: absolute;
-            top: 24px; right: 24px;
-            width: 24px; height: 24px;
-            background: none; border: none;
+            top: 16px; right: 16px;
+            width: 40px; height: 40px;
+            background: #fff; border: none;
+            border-radius: 50%;
             padding: 0; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
+            z-index: 20;
         }
         .info-sheet-body { padding: 16px 16px 0; }
         .info-sheet-title {
@@ -1368,9 +1378,7 @@
         }
 
         .cat-sheet .sheet-close {
-            background: rgba(255,255,255,0.85);
-            border-radius: 50%;
-            backdrop-filter: blur(4px);
+            background: #fff;
         }
 
         .cat-sheet-title {
@@ -1951,11 +1959,12 @@
 
     <!-- Info bottom sheet -->
     <div class="info-sheet" id="info-sheet">
+        <button class="info-sheet-close" onclick="closeSheet()">
+            <img src="new category/CloseButton.svg" width="24" height="24" alt="">
+        </button>
+        <div class="info-sheet-scroll">
         <div class="info-sheet-image-wrap">
             <img class="info-sheet-photo" src="new category/photo sheet.png" alt="">
-            <button class="info-sheet-close" onclick="closeSheet()">
-                <img src="new category/CloseButton.svg" width="24" height="24" alt="">
-            </button>
         </div>
         <div class="info-sheet-body">
             <h2 class="info-sheet-title">Передавайте вещи благотворительным фондам</h2>
@@ -1991,6 +2000,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -2318,29 +2328,29 @@
 
         const PHOTO_FILES = {
             // Fund 1 — РКК
-            1: 'new podacha/fond 1 photo 1.png',
-            2: 'new podacha/fond 1 photo 2.png',
+            1: 'new podacha/fond 1 photo 1.png?v=2',
+            2: 'new podacha/fond 1 photo 2.png?v=2',
             // Fund 2 — Ночлежка (new IDs from step2-choose)
-            3: 'new podacha/fond 2 photo 1.png',
-            4: 'new podacha/fond 2 photo 2.png',
+            3: 'new podacha/fond 2 photo 1.png?v=2',
+            4: 'new podacha/fond 2 photo 2.png?v=2',
             // Fund 3 — Миллион книг
-            5: 'new podacha/fond 3 photo 1.png',
-            6: 'new podacha/fond 3 photo 2.png',
+            5: 'new podacha/fond 3 photo 1.png?v=2',
+            6: 'new podacha/fond 3 photo 2.png?v=2',
             // Fund 4 — Дари надежду
-            7: 'new podacha/fond 4 photo 1.png',
-            8: 'new podacha/fond 4 photo 2.png',
+            7: 'new podacha/fond 4 photo 1.png?v=2',
+            8: 'new podacha/fond 4 photo 2.png?v=2',
             // Legacy IDs (kept for backward compat)
-            9: 'new podacha/fond 2 photo 1.png',
-            15: 'new podacha/fond 2 photo 2.png',
-            11: 'new podacha/fond 3 photo 1.png',
-            12: 'new podacha/fond 3 photo 2.png',
-            16: 'new podacha/fond 4 photo 1.png',
-            10: 'new podacha/fond 4 photo 2.png',
+            9: 'new podacha/fond 2 photo 1.png?v=2',
+            15: 'new podacha/fond 2 photo 2.png?v=2',
+            11: 'new podacha/fond 3 photo 1.png?v=2',
+            12: 'new podacha/fond 3 photo 2.png?v=2',
+            16: 'new podacha/fond 4 photo 1.png?v=2',
+            10: 'new podacha/fond 4 photo 2.png?v=2',
         };
 
         const PHOTO_TO_NEED = {
-            'new podacha/fond 1 photo 1.png': 'adult-clothes',
-            'new podacha/fond 1 photo 2.png': 'adult-clothes',
+            'new podacha/fond 1 photo 1.png?v=2': 'adult-clothes',
+            'new podacha/fond 1 photo 2.png?v=2': 'adult-clothes',
             'new podacha/fond 1 photo 3.png': 'kids-clothes',
             'new podacha/fond 1 photo 4.png': 'kids-clothes',
             'new podacha/fond 1 photo 5.png': 'adult-clothes',
@@ -2352,17 +2362,17 @@
         // ===== CATEGORY SYSTEM (Part 7 & 8) =====
 
         const PHOTO_TO_CATEGORY = selectedFundId === 2 ? {
-            'new podacha/fond 2 photo 1.png': 'bags',
-            'new podacha/fond 2 photo 2.png': 'men-clothes',
+            'new podacha/fond 2 photo 1.png?v=2': 'bags',
+            'new podacha/fond 2 photo 2.png?v=2': 'men-clothes',
         } : selectedFundId === 3 ? {
-            'new podacha/fond 3 photo 1.png': 'books-fiction',
-            'new podacha/fond 3 photo 2.png': 'books-kids',
+            'new podacha/fond 3 photo 1.png?v=2': 'books-fiction',
+            'new podacha/fond 3 photo 2.png?v=2': 'books-kids',
         } : selectedFundId === 4 ? {
-            'new podacha/fond 4 photo 1.png': 'tech-electronics',
-            'new podacha/fond 4 photo 2.png': 'health',
+            'new podacha/fond 4 photo 1.png?v=2': 'tech-electronics',
+            'new podacha/fond 4 photo 2.png?v=2': 'health',
         } : {
-            'new podacha/fond 1 photo 1.png': 'children-clothes',
-            'new podacha/fond 1 photo 2.png': 'children-clothes',
+            'new podacha/fond 1 photo 1.png?v=2': 'children-clothes',
+            'new podacha/fond 1 photo 2.png?v=2': 'children-clothes',
         };
 
         const CATEGORY_ORDER = selectedFundId === 2
@@ -3695,14 +3705,14 @@
         };
 
         const PHOTO_TO_FUND = {
-            'new podacha/fond 1 photo 1.png': 1,
-            'new podacha/fond 1 photo 2.png': 1,
-            'new podacha/fond 1 photo 3.png': 1,
-            'new podacha/fond 1 photo 4.png': 1,
-            'new podacha/fond 1 photo 5.png': 1,
-            'new podacha/fond 1 photo 6.png': 1,
-            'new podacha/fond 1 photo 7.png': 1,
-            'new podacha/fond 1 photo 8.png': 1
+            'new podacha/fond 1 photo 1.png?v=2': 1,
+            'new podacha/fond 1 photo 2.png?v=2': 1,
+            'new podacha/fond 2 photo 1.png?v=2': 2,
+            'new podacha/fond 2 photo 2.png?v=2': 2,
+            'new podacha/fond 3 photo 1.png?v=2': 3,
+            'new podacha/fond 3 photo 2.png?v=2': 3,
+            'new podacha/fond 4 photo 1.png?v=2': 4,
+            'new podacha/fond 4 photo 2.png?v=2': 4,
         };
 
         function getSelectedFund() {
