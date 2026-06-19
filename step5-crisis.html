@@ -1196,6 +1196,10 @@
             font-weight: 700;
             line-height: 22px;
             color: #000;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .cat-sub-text {
@@ -1822,7 +1826,7 @@
     </header>
 
     <section class="hero">
-        <img class="hero-bg" src="new podacha/banner podacha.png?v=2" alt="">
+        <img class="hero-bg" src="new podacha/banner podacha.png?v=3" alt="">
         <div class="hero-content">
             <h1 class="intro-title">Передавайте вещи благотворительным фондам</h1>
             <p class="intro-subtitle">Проверьте данные бесплатного объявления и выберите вещи, которые хотите положить в благотворительный пакет</p>
@@ -2316,13 +2320,20 @@
             // Fund 1 — РКК
             1: 'new podacha/fond 1 photo 1.png',
             2: 'new podacha/fond 1 photo 2.png',
-            // Fund 2 — Ночлежка
+            // Fund 2 — Ночлежка (new IDs from step2-choose)
+            3: 'new podacha/fond 2 photo 1.png',
+            4: 'new podacha/fond 2 photo 2.png',
+            // Fund 3 — Миллион книг
+            5: 'new podacha/fond 3 photo 1.png',
+            6: 'new podacha/fond 3 photo 2.png',
+            // Fund 4 — Дари надежду
+            7: 'new podacha/fond 4 photo 1.png',
+            8: 'new podacha/fond 4 photo 2.png',
+            // Legacy IDs (kept for backward compat)
             9: 'new podacha/fond 2 photo 1.png',
             15: 'new podacha/fond 2 photo 2.png',
-            // Fund 3 — Миллион книг
             11: 'new podacha/fond 3 photo 1.png',
             12: 'new podacha/fond 3 photo 2.png',
-            // Fund 4 — Дари надежду
             16: 'new podacha/fond 4 photo 1.png',
             10: 'new podacha/fond 4 photo 2.png',
         };
@@ -2737,13 +2748,14 @@
             });
 
             const hasPhotos = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]').length > 0;
+            const userPickedFund = !!sessionStorage.getItem('userPickedFund');
 
-            document.getElementById('pack-subtitle').style.display = hasPhotos ? '' : 'none';
-            document.getElementById('pack-subtitle-empty').style.display = hasPhotos ? 'none' : '';
+            document.getElementById('pack-subtitle').style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
+            document.getElementById('pack-subtitle-empty').style.display = (!hasPhotos || userPickedFund) ? '' : 'none';
             const addMoreTitle = document.getElementById('add-more-title');
             const addMoreSub = document.getElementById('add-more-sub');
-            if (addMoreTitle) addMoreTitle.style.display = hasPhotos ? '' : 'none';
-            if (addMoreSub) addMoreSub.style.display = hasPhotos ? '' : 'none';
+            if (addMoreTitle) addMoreTitle.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
+            if (addMoreSub) addMoreSub.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
 
             // Main pack cards
             const packCards = document.getElementById('pack-cards');

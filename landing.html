@@ -41,9 +41,16 @@
         .landing-hero {
             background: linear-gradient(180deg, #C9DAFF 0%, #DCCEFF 100%);
             padding-top: 72px;
+            display: grid;
+        }
+        .landing-hero > * {
+            grid-column: 1;
+            grid-row: 1;
         }
         .landing-hero-text {
+            align-self: start;
             padding: 0 16px 20px;
+            z-index: 1;
         }
         .landing-title {
             font-size: 32px;
@@ -75,6 +82,7 @@
         .landing-hero-img {
             width: 100%;
             display: block;
+            align-self: end;
         }
 
         /* ── HOW TO GET HELP ── */
@@ -281,13 +289,14 @@
         }
 
         .filter-section {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         .filter-section-title {
             font-size: 18px;
             font-weight: 700;
             color: #1A1A1A;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            padding-top: 4px;
         }
         .filter-dropdown {
             width: 100%;
@@ -327,10 +336,10 @@
         .filter-chip {
             background: #F2F2F2;
             border: none;
-            border-radius: 12px;
-            padding: 8px 14px;
+            border-radius: 14px;
+            padding: 12px 18px;
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 400;
             color: #1A1A1A;
             cursor: pointer;
@@ -819,6 +828,7 @@
             document.querySelectorAll('.filter-chip.active').forEach(c => c.classList.remove('active'));
             setSort('default');
             document.getElementById('filter-submit').textContent = 'Показать 229 объявлений';
+            renderListings('all');
         }
 
         // Init
