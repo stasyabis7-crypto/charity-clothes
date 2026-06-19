@@ -3412,7 +3412,11 @@
 
                 const sel = loadCatSelections();
                 // Remove category's photos from global selectedPhotos too
-                const catPhotos = new Set(((sel[catId] || {}).photos || []).map(Number));
+                // Use catDraft.photos (current open state) OR saved photos, whichever has content
+                const catPhotoList = (catDraft && catDraft.photos && catDraft.photos.length)
+                    ? catDraft.photos
+                    : ((sel[catId] || {}).photos || []);
+                const catPhotos = new Set(catPhotoList.map(Number));
                 if (catPhotos.size) {
                     const global = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]')
                         .filter(p => !catPhotos.has(Number(p)));
