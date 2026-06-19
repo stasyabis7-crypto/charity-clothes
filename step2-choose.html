@@ -274,6 +274,8 @@
 
             sessionStorage.setItem('selectedPhotos', JSON.stringify(selected));
             sessionStorage.setItem('catPhotoEditTakenPhotos', JSON.stringify(taken));
+            sessionStorage.removeItem('initialPackCategories');
+            sessionStorage.removeItem('selectedFundId');
             render();
         }
 
