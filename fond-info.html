@@ -291,7 +291,7 @@
     </div>
 
     <div class="bottom-bar">
-        <button class="donate-btn">Сделать пожертвование</button>
+        <button class="donate-btn" onclick="selectThisFund()">Выбрать фонд</button>
     </div>
 
     <script>
@@ -355,6 +355,14 @@
 
         function goBack() {
             window.location.href = returnPage;
+        }
+
+        function selectThisFund() {
+            sessionStorage.setItem('selectedFundId', String(fundId));
+            sessionStorage.setItem('userPickedFund', '1');
+            sessionStorage.removeItem('initialPackCategories');
+            sessionStorage.removeItem('selectedPhotos');
+            window.location.href = 'step5-crisis.html';
         }
 
         function closeAll() {
