@@ -1141,6 +1141,7 @@
 
         function openPhotoEdit() {
             sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
+            sessionStorage.setItem('step5_scrollY', String(window.scrollY));
             window.location.href = 'step2-choose.html';
         }
 
@@ -1575,6 +1576,13 @@
         setupMainFields();
         renderCollection();
         renderNeeds();
+
+        const _savedScroll = parseInt(sessionStorage.getItem('step5_scrollY') || '0', 10);
+        if (_savedScroll) {
+            sessionStorage.removeItem('step5_scrollY');
+            requestAnimationFrame(() => window.scrollTo(0, _savedScroll));
+        }
+
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
         }, { passive: true });
