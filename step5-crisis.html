@@ -2324,8 +2324,6 @@
             window.location.href = 'ads.html?tab=drafts&toast=1';
         }
 
-        const selectedFundId = Number(sessionStorage.getItem('selectedFundId') || '1');
-
         const PHOTO_FILES = {
             // Fund 1 — РКК
             1: 'new podacha/fond 1 photo 1.png?v=2',
@@ -2347,6 +2345,22 @@
             16: 'new podacha/fond 4 photo 1.png?v=2',
             10: 'new podacha/fond 4 photo 2.png?v=2',
         };
+
+        // Auto-detect fund from selected photos before building PHOTO_TO_CATEGORY
+        if (!sessionStorage.getItem('selectedFundId')) {
+            const _fundByFile = {
+                'new podacha/fond 2 photo 1.png?v=2': 2, 'new podacha/fond 2 photo 2.png?v=2': 2,
+                'new podacha/fond 3 photo 1.png?v=2': 3, 'new podacha/fond 3 photo 2.png?v=2': 3,
+                'new podacha/fond 4 photo 1.png?v=2': 4, 'new podacha/fond 4 photo 2.png?v=2': 4,
+            };
+            const _photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            for (const _id of _photos) {
+                const _fid = _fundByFile[PHOTO_FILES[Number(_id)]];
+                if (_fid) { sessionStorage.setItem('selectedFundId', String(_fid)); break; }
+            }
+        }
+
+        const selectedFundId = Number(sessionStorage.getItem('selectedFundId') || '1');
 
         const PHOTO_TO_NEED = {
             'new podacha/fond 1 photo 1.png?v=2': 'adult-clothes',
