@@ -1939,8 +1939,8 @@
             </section>
 
             <div class="add-more-block" id="add-more-block">
-                <h3 class="add-more-title" id="add-more-title">Добавьте ещё, если есть</h3>
-                <p class="add-more-sub" id="add-more-sub">В фонде нам рассказали, что ещё сейчас собирают в помощь людям</p>
+                <h3 class="add-more-title" id="add-more-title">В фонде нам рассказали, что ещё сейчас собирают в помощь людям</h3>
+                <p class="add-more-sub" id="add-more-sub">Добавьте ещё, если есть</p>
                 <div class="add-more-slider-wrap">
                     <div class="add-more-slider" id="add-more-slider"></div>
                 </div>
@@ -2807,12 +2807,43 @@
             return result;
         }
 
+        function autoFillFromListingFlow(packCatIds) {
+            const mainDesc = sessionStorage.getItem('mainDesc');
+            if (!mainDesc || !packCatIds.length) return;
+            if (sessionStorage.getItem('listingFlowAutoFilled')) return;
+            const sel = loadCatSelections();
+            packCatIds.forEach(catId => {
+                if (sel[catId] && sel[catId]._saved) return;
+                const cat = CATEGORIES[catId];
+                if (!cat) return;
+                const autoData = { selectedSubtypes: [], desc: mainDesc, _saved: true, photos: getPhotosForCategory(catId) };
+                if (cat.subtypes && cat.subtypes.length) {
+                    const firstSub = cat.subtypes[0];
+                    autoData.selectedSubtypes = [firstSub.id];
+                    firstSub.params.forEach(paramId => {
+                        const cfg = PARAMS_CONFIG[paramId];
+                        if (!cfg || !cfg.required) return;
+                        const nsId = paramId + '__' + firstSub.id;
+                        if (cfg.type === 'chips' || cfg.type === 'chips-fixed') {
+                            autoData[nsId] = cfg.multi ? [...cfg.options] : [cfg.options[0]];
+                        } else if (cfg.type === 'select') {
+                            autoData[nsId] = [cfg.options[0]];
+                        }
+                    });
+                }
+                sel[catId] = autoData;
+            });
+            saveCatSelections(sel);
+            sessionStorage.setItem('listingFlowAutoFilled', '1');
+        }
+
         function renderPackSection() {
             // Derive pack categories only on first load; store so re-renders don't react to photo changes
             let packCatIds = JSON.parse(sessionStorage.getItem('initialPackCategories') || 'null');
             if (packCatIds === null) {
                 packCatIds = getActiveCategoriesFromPhotos();
                 sessionStorage.setItem('initialPackCategories', JSON.stringify(packCatIds));
+                autoFillFromListingFlow(packCatIds);
             }
 
             // Also include categories explicitly saved via slider (not in initial list)
@@ -2822,15 +2853,29 @@
             });
 
             const hasPhotos = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]').length > 0;
+            const fromListingFlow = !!sessionStorage.getItem('mainDesc');
             const userPickedFund = !!sessionStorage.getItem('userPickedFund');
+            const autoFilled = !!sessionStorage.getItem('listingFlowAutoFilled');
 
             const packTitleEl = document.getElementById('pack-title');
-            if (packTitleEl) packTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Мы заметили по фото, что ваши вещи подходят фонду' : 'Что кладёте в пакет?';
+            const showPhotoTitle = (hasPhotos && !userPickedFund) || (fromListingFlow && !userPickedFund);
+            if (packTitleEl) packTitleEl.textContent = showPhotoTitle ? 'Мы заметили по фото, что ваши вещи подходят фонду' : 'Что кладёте в пакет?';
             const fundTitleEl = document.getElementById('fund-title');
-            if (fundTitleEl) fundTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Этому фонду подойдут ваши вещи' : 'Кому хотите помочь?';
+            if (fundTitleEl) fundTitleEl.textContent = showPhotoTitle ? 'Этому фонду подойдут ваши вещи' : 'Кому хотите помочь?';
 
-            document.getElementById('pack-subtitle').style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
-            document.getElementById('pack-subtitle-empty').style.display = (!hasPhotos || userPickedFund) ? '' : 'none';
+            const packSubtitleEl = document.getElementById('pack-subtitle');
+            const packSubtitleEmptyEl = document.getElementById('pack-subtitle-empty');
+            if (fromListingFlow && !userPickedFund) {
+                if (hasPhotos) {
+                    if (packSubtitleEl) { packSubtitleEl.textContent = 'И уже положили выбранные вещи в благотворительный пакет'; packSubtitleEl.style.display = ''; }
+                } else {
+                    if (packSubtitleEl) packSubtitleEl.style.display = 'none';
+                }
+                if (packSubtitleEmptyEl) packSubtitleEmptyEl.style.display = 'none';
+            } else {
+                if (packSubtitleEl) packSubtitleEl.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
+                if (packSubtitleEmptyEl) packSubtitleEmptyEl.style.display = (!hasPhotos || userPickedFund) ? '' : 'none';
+            }
             const addMoreTitle = document.getElementById('add-more-title');
             const addMoreSub = document.getElementById('add-more-sub');
             if (addMoreTitle) addMoreTitle.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
@@ -2899,9 +2944,8 @@
                 desc: saved.desc || '',
                 _descManual: false,
                 photos: (() => {
-                    const own = new Set(getPhotosForCategory(catId).map(Number));
                     if (saved.photos && saved.photos.length) {
-                        // keep saved photos that either belong to this category or were manually added (not in any other category's territory)
+                        // filter out photos now owned by other saved categories
                         const allSel = loadCatSelections();
                         const otherOwned = new Set();
                         Object.entries(allSel).forEach(([cid, d]) => {
@@ -2909,7 +2953,9 @@
                         });
                         return saved.photos.map(Number).filter(p => !otherOwned.has(p));
                     }
-                    return getPhotosForCategory(catId);
+                    // auto-assign photos only for recommended (initial pack) categories
+                    const initCats = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
+                    return initCats.includes(catId) ? getPhotosForCategory(catId) : [];
                 })(),
             };
             Object.keys(saved).forEach(key => {

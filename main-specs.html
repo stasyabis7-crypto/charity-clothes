@@ -135,45 +135,44 @@
         const CHEVRON = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
         const SPECS = {
-            't-shirts': [
-                { label: 'Тип одежды', value: 'Футболка' },
+            'children': [
+                { label: 'Тип одежды', value: 'Детская одежда' },
                 { label: 'Бренд', value: 'H&M', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
-                { label: 'Цвет', value: 'Белый' },
+                { label: 'Цвет', value: 'Разноцветный' },
                 { label: 'Для кого', value: 'Для девочек' }
             ],
-            'homewear': [
-                { label: 'Тип одежды', value: 'Домашний комплект' },
+            'bags': [
+                { label: 'Тип', value: 'Сумка' },
                 { label: 'Бренд', value: 'Без бренда', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
-                { label: 'Цвет', value: 'Розовый' },
-                { label: 'Для кого', value: 'Для девочек' }
+                { label: 'Цвет', value: 'Чёрный' }
             ],
-            'suits': [
-                { label: 'Тип одежды', value: 'Пиджак' },
-                { label: 'Бренд', value: 'Zara Kids', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
+            'outerwear': [
+                { label: 'Тип одежды', value: 'Куртка' },
+                { label: 'Бренд', value: 'Без бренда', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
                 { label: 'Цвет', value: 'Синий' },
-                { label: 'Для кого', value: 'Для девочек' }
+                { label: 'Для кого', value: 'Для взрослых' }
             ],
             'books': [
                 { label: 'Тип', value: 'Книга' },
                 { label: 'Год издания', value: '2010–2019' },
                 { label: 'Состояние', value: 'Отличное' }
             ],
-            'rehab': [
-                { label: 'Тип', value: 'Костыли' },
-                { label: 'Состояние', value: 'Хорошее' }
-            ],
             'electronics': [
                 { label: 'Тип', value: 'Смартфон' },
                 { label: 'Бренд', value: 'Samsung', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
                 { label: 'Объём памяти', value: '128 ГБ' },
                 { label: 'Состояние', value: 'Хорошее' }
+            ],
+            'rehab': [
+                { label: 'Тип', value: 'Костыли' },
+                { label: 'Состояние', value: 'Хорошее' }
             ]
         };
 
         const PHOTO_TO_SPEC = {
-            1: 't-shirts',  2: 'homewear',
-            3: 'books',     4: 'books',
-            5: 'rehab',     6: 'electronics',
+            1: 'children',  2: 'children',
+            3: 'bags',      4: 'outerwear',
+            5: 'books',     6: 'books',
             7: 'electronics', 8: 'rehab'
         };
 
@@ -185,12 +184,12 @@
                 const key = PHOTO_TO_SPEC[Number(id)];
                 if (key) return key;
             }
-            return 't-shirts';
+            return 'children';
         }
 
         function render() {
             const cat = getSpecKey();
-            const specs = SPECS[cat] || SPECS['t-shirts'];
+            const specs = SPECS[cat] || SPECS['children'];
             const list = document.getElementById('specs-list');
             list.innerHTML = specs.map(s => `
                 <div class="spec-section">
