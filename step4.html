@@ -395,6 +395,18 @@
                 name: 'Пиджаки и костюмы',
                 path: 'Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек'
             },
+            'books': {
+                name: 'Книги и журналы',
+                path: 'Хобби и отдых&nbsp;• Книги и журналы'
+            },
+            'rehab': {
+                name: 'Реабилитационное оборудование',
+                path: 'Товары для красоты и здоровья&nbsp;• Медицинские товары'
+            },
+            'electronics': {
+                name: 'Телефоны',
+                path: 'Электроника&nbsp;• Телефоны'
+            },
             'charity': {
                 name: 'Вещи на благотворительность 💙',
                 path: 'Личные вещи&nbsp;• Одежда, обувь и аксессуары&nbsp;• Для дома и дачи&nbsp;• Книги',
@@ -402,10 +414,11 @@
             }
         };
 
-        // photo id → avito category
+        // photo id → avito category (IDs 1-8; 7-8 unmapped → show all)
         const PHOTO_TO_CAT = {
-            1: 't-shirts', 2: 'homewear',
-            3: 'suits', 4: 'suits', 9: 'suits', 15: 'suits',
+            1: 't-shirts',  2: 'homewear',
+            3: 'books',     4: 'books',
+            5: 'rehab',     6: 'electronics'
         };
 
         let selectedCat = sessionStorage.getItem('mainCategory') || null;

@@ -2826,7 +2826,7 @@
             const userPickedFund = !!sessionStorage.getItem('userPickedFund');
 
             const packTitleEl = document.getElementById('pack-title');
-            if (packTitleEl) packTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Мы заметили, что ваша вещь нужна фонду' : 'Что кладёте в пакет?';
+            if (packTitleEl) packTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Мы заметили по фото, что ваши вещи подходят фонду' : 'Что кладёте в пакет?';
             const fundTitleEl = document.getElementById('fund-title');
             if (fundTitleEl) fundTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Этому фонду подойдут ваши вещи' : 'Кому хотите помочь?';
 

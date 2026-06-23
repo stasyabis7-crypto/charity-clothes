@@ -152,12 +152,28 @@
                 { label: 'Бренд', value: 'Zara Kids', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
                 { label: 'Цвет', value: 'Синий' },
                 { label: 'Для кого', value: 'Для девочек' }
+            ],
+            'books': [
+                { label: 'Тип', value: 'Книга' },
+                { label: 'Год издания', value: '2010–2019' },
+                { label: 'Состояние', value: 'Отличное' }
+            ],
+            'rehab': [
+                { label: 'Тип', value: 'Костыли' },
+                { label: 'Состояние', value: 'Хорошее' }
+            ],
+            'electronics': [
+                { label: 'Тип', value: 'Смартфон' },
+                { label: 'Бренд', value: 'Samsung', helper: 'Выберите «Без бренда», если марка не указана. Или «Другой», если бренда нет в списке.' },
+                { label: 'Объём памяти', value: '128 ГБ' },
+                { label: 'Состояние', value: 'Хорошее' }
             ]
         };
 
         const PHOTO_TO_SPEC = {
-            1: 't-shirts', 2: 'homewear',
-            3: 'suits', 4: 'suits', 9: 'suits', 15: 'suits'
+            1: 't-shirts',  2: 'homewear',
+            3: 'books',     4: 'books',
+            5: 'rehab',     6: 'electronics'
         };
 
         function getSpecKey() {
