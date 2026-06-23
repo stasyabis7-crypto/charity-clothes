@@ -1867,7 +1867,7 @@
         <span class="save-exit" onclick="saveAndExit()">Сохранить и выйти</span>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="hero-section">
         <img class="hero-bg" src="new podacha/banner podacha.png?v=4" alt="">
         <div class="hero-content">
             <h1 class="intro-title">Передавайте вещи благотворительным фондам</h1>
@@ -1875,7 +1875,7 @@
         </div>
     </section>
 
-    <section class="how-section">
+    <section class="how-section" id="how-section">
         <h2 class="how-section-title">Как это работает</h2>
         <div class="how-banners-carousel">
             <div class="info-banner">
@@ -1933,13 +1933,13 @@
             <section class="section" id="pack-section">
                 <h2 class="compact-title" id="pack-title">Что кладёте в пакет?</h2>
                 <p class="section-sub" id="pack-subtitle">Мы увидели, что у вас есть подходящие вещи</p>
-                <p class="section-sub" id="pack-subtitle-empty" style="display:none;">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
+                <p class="section-sub" id="pack-subtitle-empty" style="display:none;">В фонде нам рассказали, что ещё сейчас собирают в помощь людям</p>
                 <div id="pack-cards"></div>
             </section>
 
             <div class="add-more-block" id="add-more-block">
                 <h3 class="add-more-title" id="add-more-title">Добавьте ещё, если есть</h3>
-                <p class="add-more-sub" id="add-more-sub">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
+                <p class="add-more-sub" id="add-more-sub">В фонде нам рассказали, что ещё сейчас собирают в помощь людям</p>
                 <div class="add-more-slider-wrap">
                     <div class="add-more-slider" id="add-more-slider"></div>
                 </div>
@@ -2945,6 +2945,8 @@
 
         function showStep(step) {
             currentStep = step;
+            document.getElementById('hero-section').style.display = step === 1 ? '' : 'none';
+            document.getElementById('how-section').style.display = step === 1 ? '' : 'none';
             document.getElementById('step1-sections').style.display = step === 1 ? '' : 'none';
             document.getElementById('step2-sections').style.display = step === 2 ? '' : 'none';
             document.getElementById('step1-btn').style.display = step === 1 ? '' : 'none';
