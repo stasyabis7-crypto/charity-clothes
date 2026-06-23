@@ -2029,8 +2029,7 @@
             Продолжить
         </button>
         <button class="continue-btn active" id="step2-btn" onclick="goToDelivery()" style="display:none;">
-            <img src="new category/Icon charity.svg" width="30" height="30" alt="">
-            Передать вещи
+            Разместить объявление
         </button>
     </div>
 
@@ -4179,7 +4178,6 @@
 
         function autoBuildDescription() {
             const ta = document.getElementById('desc-textarea');
-            const base = buildRememberedDescription();
             const catSel = loadCatSelections();
             const catBlocks = [];
             Object.entries(catSel).forEach(([catId, data]) => {
@@ -4188,9 +4186,7 @@
                     catBlocks.push((cat ? cat.name + ':\n' : '') + data.desc);
                 }
             });
-            const parts = [base];
-            if (catBlocks.length) parts.push((base ? 'Также готов передать' : 'Готов передать') + '\n\n' + catBlocks.join('\n\n'));
-            ta.value = parts.filter(Boolean).join('\n\n');
+            ta.value = catBlocks.length ? 'Готов передать\n\n' + catBlocks.join('\n\n') : '';
             resizeTextarea();
             persistCategories();
         }
