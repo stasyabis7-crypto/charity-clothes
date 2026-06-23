@@ -2808,9 +2808,11 @@
         }
 
         function autoFillFromListingFlow(packCatIds) {
-            const mainDesc = sessionStorage.getItem('mainDesc');
-            if (!mainDesc || !packCatIds.length) return;
+            if (!sessionStorage.getItem('listingFlowEntry')) return; // only from listing flow, not step4
+            sessionStorage.removeItem('listingFlowEntry'); // consume immediately
+            if (!packCatIds.length) return;
             if (sessionStorage.getItem('listingFlowAutoFilled')) return;
+            const mainDesc = sessionStorage.getItem('mainDesc') || '';
             const sel = loadCatSelections();
             let anyFilled = false;
             packCatIds.forEach(catId => {
@@ -2859,7 +2861,7 @@
             });
 
             const hasPhotos = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]').length > 0;
-            const fromListingFlow = !!sessionStorage.getItem('mainDesc');
+            const fromListingFlow = !!sessionStorage.getItem('listingFlowAutoFilled');
             const userPickedFund = !!sessionStorage.getItem('userPickedFund');
             const autoFilled = !!sessionStorage.getItem('listingFlowAutoFilled');
 
