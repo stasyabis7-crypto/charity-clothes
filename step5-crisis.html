@@ -105,6 +105,7 @@
 
         .section { margin-top: 32px; }
         .section:first-child { margin-top: 24px; }
+        #step2-sections { padding-top: 84px; }
 
         .section-title {
             font-size: 21px;
@@ -1952,6 +1953,11 @@
                 <p class="section-sub">Мы заполнили их автоматически — отредактируйте если нужно</p>
             </section>
 
+            <section class="section" id="step2-cats-section" style="display:none;">
+                <h2 class="section-title">Вещи в пакете</h2>
+                <div id="step2-cats-list" style="display:flex;flex-direction:column;gap:12px;margin-top:12px;"></div>
+            </section>
+
             <section class="section">
                 <h2 class="section-title">Фотографии</h2>
                 <div class="photos-grid" id="photos-grid"></div>
@@ -2917,7 +2923,7 @@
             document.getElementById('fund-items-arrow').classList.remove('open');
 
             // remove btn visible only from pack
-            document.getElementById('cat-remove-btn').style.display = fromPack ? '' : 'none';
+            document.getElementById('cat-remove-btn').style.display = (fromPack && currentStep !== 2) ? '' : 'none';
 
             // hero image
             const heroImg = document.getElementById('cat-hero-img');
@@ -2951,6 +2957,7 @@
             document.getElementById('step2-sections').style.display = step === 2 ? '' : 'none';
             document.getElementById('step1-btn').style.display = step === 1 ? '' : 'none';
             document.getElementById('step2-btn').style.display = step === 2 ? '' : 'none';
+            if (step === 2) renderStep2Cats();
             window.scrollTo(0, 0);
         }
 
@@ -3460,6 +3467,35 @@
             return hasPhotos;
         }
 
+        function renderStep2Cats() {
+            const list = document.getElementById('step2-cats-list');
+            const section = document.getElementById('step2-cats-section');
+            if (!list || !section) return;
+            const catSel = loadCatSelections();
+            const savedCats = Object.entries(catSel).filter(([, data]) => data && data._saved);
+            list.innerHTML = '';
+            savedCats.forEach(([catId, data]) => {
+                const cat = CATEGORIES[catId];
+                if (!cat) return;
+                const card = document.createElement('div');
+                card.className = 'cat-card';
+                card.onclick = () => openCatSheet(catId, true);
+                card.style.position = 'relative';
+                card.innerHTML = `
+                    <div class="cat-img-wrap">
+                        <img class="cat-img" src="${cat.image}" alt="">
+                    </div>
+                    <div class="cat-info">
+                        <div class="cat-name">${cat.name}</div>
+                        <div class="cat-sub-text done">Вещи лежат в пакете</div>
+                    </div>
+                    <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
+                `;
+                list.appendChild(card);
+            });
+            section.style.display = savedCats.length ? '' : 'none';
+        }
+
         function updateCatSaveBtn() {
             // button is always active; no-op
         }
@@ -3511,7 +3547,11 @@
             saveCatSelections(sel);
             closeCatSheet();
             showSaveToast();
-            renderPackSection();
+            if (currentStep === 2) {
+                renderStep2Cats();
+            } else {
+                renderPackSection();
+            }
             renderPhotos();
             updateContinueState();
             autoBuildDescription();
@@ -4260,7 +4300,7 @@
                 document.getElementById('cat-sheet-title').textContent = _cat.name;
                 document.getElementById('fund-items-body').classList.remove('open');
                 document.getElementById('fund-items-arrow').classList.remove('open');
-                document.getElementById('cat-remove-btn').style.display = catFromPack ? '' : 'none';
+                document.getElementById('cat-remove-btn').style.display = (catFromPack && currentStep !== 2) ? '' : 'none';
                 renderCatParams();
                 document.getElementById('cat-overlay').classList.add('open');
                 document.getElementById('cat-sheet').classList.add('open');
