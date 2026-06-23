@@ -2898,7 +2898,19 @@
                 selectedSubtypes: saved.selectedSubtypes ? [...saved.selectedSubtypes] : [],
                 desc: saved.desc || '',
                 _descManual: false,
-                photos: saved.photos ? [...saved.photos] : getPhotosForCategory(catId),
+                photos: (() => {
+                    const own = new Set(getPhotosForCategory(catId).map(Number));
+                    if (saved.photos && saved.photos.length) {
+                        // keep saved photos that either belong to this category or were manually added (not in any other category's territory)
+                        const allSel = loadCatSelections();
+                        const otherOwned = new Set();
+                        Object.entries(allSel).forEach(([cid, d]) => {
+                            if (cid !== catId && d && d.photos) d.photos.forEach(p => otherOwned.add(Number(p)));
+                        });
+                        return saved.photos.map(Number).filter(p => !otherOwned.has(p));
+                    }
+                    return getPhotosForCategory(catId);
+                })(),
             };
             Object.keys(saved).forEach(key => {
                 if (!['selectedSubtypes','desc','photos','_saved','_descManual'].includes(key)) {
@@ -3398,15 +3410,21 @@
             // Photos from other categories — shown as "taken" in picker
             const allCatSel = loadCatSelections();
             const catPhotosSet = new Set(catPhotos);
-            const takenPhotos = [];
+            const takenSet = new Set();
+            // from saved categories
             Object.entries(allCatSel).forEach(([cid, data]) => {
                 if (cid !== activeCatId && data && data.photos) {
-                    data.photos.forEach(p => {
-                        const n = Number(p);
-                        if (!catPhotosSet.has(n) && !takenPhotos.includes(n)) takenPhotos.push(n);
-                    });
+                    data.photos.forEach(p => takenSet.add(Number(p)));
                 }
             });
+            // from unsaved pack categories (auto-detected but not yet saved)
+            const initCats = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
+            initCats.forEach(cid => {
+                if (cid !== activeCatId && !allCatSel[cid]) {
+                    getPhotosForCategory(cid).forEach(p => takenSet.add(Number(p)));
+                }
+            });
+            const takenPhotos = [...takenSet].filter(p => !catPhotosSet.has(p));
             sessionStorage.setItem('catPhotoEditTakenPhotos', JSON.stringify(takenPhotos));
             sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
             sessionStorage.setItem('step5crisis_scrollY', String(window.scrollY));
