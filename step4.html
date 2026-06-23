@@ -414,28 +414,27 @@
             }
         };
 
-        // photo id → avito category (IDs 1-8; 7-8 unmapped → show all)
         const PHOTO_TO_CAT = {
             1: 't-shirts',  2: 'homewear',
             3: 'books',     4: 'books',
-            5: 'rehab',     6: 'electronics'
+            5: 'rehab',     6: 'electronics',
+            7: 'electronics', 8: 'rehab'
         };
 
         let selectedCat = sessionStorage.getItem('mainCategory') || null;
 
         function getVisibleCats() {
             const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            if (!photos.length) return Object.keys(CAT_DEFS);
             const seen = new Set();
             const matched = [];
             photos.forEach(id => {
                 const cat = PHOTO_TO_CAT[Number(id)];
                 if (cat && !seen.has(cat)) { seen.add(cat); matched.push(cat); }
             });
-            // always include charity
+            // always include charity, always last
             if (!seen.has('charity')) matched.push('charity');
-            // if no non-charity match found, show all categories
-            const hasRegular = matched.some(id => id !== 'charity');
-            return hasRegular ? matched : Object.keys(CAT_DEFS);
+            return matched;
         }
 
         function renderCategoryList() {

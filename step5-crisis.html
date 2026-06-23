@@ -2898,7 +2898,7 @@
                 selectedSubtypes: saved.selectedSubtypes ? [...saved.selectedSubtypes] : [],
                 desc: saved.desc || '',
                 _descManual: false,
-                photos: saved.photos ? [...saved.photos] : (fromPack ? getPhotosForCategory(catId) : JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]').map(Number)),
+                photos: saved.photos ? [...saved.photos] : getPhotosForCategory(catId),
             };
             Object.keys(saved).forEach(key => {
                 if (!['selectedSubtypes','desc','photos','_saved','_descManual'].includes(key)) {
