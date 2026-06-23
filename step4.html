@@ -424,6 +424,20 @@
         const CAT_IDS = ['t-shirts', 'homewear', 'suits', 'charity'];
         let selectedCat = sessionStorage.getItem('mainCategory') || null;
 
+        // Auto-select category from photos if no selection yet
+        if (!selectedCat) {
+            const PHOTO_TO_CAT = { 1: 't-shirts', 2: 'homewear' };
+            const _photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            for (const _id of _photos) {
+                const _cat = PHOTO_TO_CAT[Number(_id)];
+                if (_cat) {
+                    selectedCat = _cat;
+                    sessionStorage.setItem('mainCategory', _cat);
+                    break;
+                }
+            }
+        }
+
         function selectCat(id) {
             selectedCat = selectedCat === id ? null : id;
             if (selectedCat) sessionStorage.setItem('mainCategory', selectedCat);

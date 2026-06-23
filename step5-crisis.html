@@ -1643,7 +1643,7 @@
 
         .cat-save-btn {
             width: 100%;
-            background: #C4C4C4;
+            background: #1A1A1A;
             color: #fff;
             border: none;
             border-radius: 16px;
@@ -1651,11 +1651,15 @@
             font-family: 'Inter', sans-serif;
             font-size: 15px;
             font-weight: 400;
-            cursor: default;
-        }
-        .cat-save-btn.active {
-            background: #1A1A1A;
             cursor: pointer;
+        }
+        .cat-save-btn:active { opacity: 0.8; }
+
+        .param-block.error .chips-row > .chip:not(.active) {
+            border: 1.5px solid #FF4053;
+        }
+        .param-block.error .type-selector {
+            border: 1.5px solid #FF4053;
         }
 
         .cat-remove-btn {
@@ -1825,12 +1829,39 @@
             margin-top: 16px;
             padding-top: 0;
         }
+
+        /* ===== HOW IT WORKS SECTION ===== */
+        .how-section {
+            padding: 24px 0 0;
+            background: #fff;
+        }
+
+        .how-section-title {
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 26px;
+            padding: 0 16px;
+            margin-bottom: 16px;
+            color: #1A1A1A;
+        }
+
+        .how-banners-carousel {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0 16px 24px;
+        }
+
+        .how-banners-carousel::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <a href="step4.html">
+        <a href="javascript:void(0)" onclick="handleBack()">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="save-exit" onclick="saveAndExit()">Сохранить и выйти</span>
@@ -1841,117 +1872,157 @@
         <div class="hero-content">
             <h1 class="intro-title">Передавайте вещи благотворительным фондам</h1>
             <p class="intro-subtitle">Проверьте данные бесплатного объявления и выберите вещи, которые хотите положить в благотворительный пакет</p>
-            <button class="hero-how-btn" id="hero-how-btn" type="button" onclick="return openHeroSheet(event)" ontouchend="return openHeroSheet(event)">Как это работает</button>
+        </div>
+    </section>
+
+    <section class="how-section">
+        <h2 class="how-section-title">Как это работает</h2>
+        <div class="how-banners-carousel">
+            <div class="info-banner">
+                <img class="info-banner-image" src="new category/img 1.png" alt="">
+                <div class="info-banner-text">
+                    <div class="info-banner-title">Это не продажа вещей</div>
+                    <div class="info-banner-subtitle">Вы сможете бесплатно передать вещи фондам на благотворительность</div>
+                </div>
+            </div>
+            <div class="info-banner">
+                <img class="info-banner-image" src="new category/img 2.png" alt="">
+                <div class="info-banner-text">
+                    <div class="info-banner-title">Увидят только фонды</div>
+                    <div class="info-banner-subtitle">Объявление видят только сотрудники проверенных организаций</div>
+                </div>
+            </div>
+            <div class="info-banner">
+                <img class="info-banner-image" src="new category/img 3.png" alt="">
+                <div class="info-banner-text">
+                    <div class="info-banner-title">Ответ за 3 дня</div>
+                    <div class="info-banner-subtitle">Если вещи подойдут вам напишут в чат Авито и договорятся о сделке</div>
+                </div>
+            </div>
+            <div class="info-banner">
+                <img class="info-banner-image" src="new category/img 4.png" alt="">
+                <div class="info-banner-text">
+                    <div class="info-banner-title">Доставка за счёт Авито</div>
+                    <div class="info-banner-subtitle">Авито отправит вещи и пришлёт уведомление, когда фонд их получит</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <main class="content">
-        <section class="section">
-            <h2 class="compact-title">Кому хотите помочь?</h2>
-            <div class="fund-card" onclick="openFundSelection()">
-                <img class="fund-logo" id="fund-logo" src="new podacha/RKK.png" alt="">
-                <div class="fund-info">
-                    <div class="fund-name-row">
-                        <span class="fund-name" id="fund-name">Российский Красный Крест</span>
-                        <button class="fund-question-btn" onclick="openFundPage(event)">
-                            <img src="new category/Question Filled.svg" width="21" height="21" alt="">
-                        </button>
+        <div id="step1-sections">
+            <section class="section">
+                <h2 class="compact-title" id="fund-title">Кому хотите помочь?</h2>
+                <div class="fund-card" onclick="openFundSelection()">
+                    <img class="fund-logo" id="fund-logo" src="new podacha/RKK.png" alt="">
+                    <div class="fund-info">
+                        <div class="fund-name-row">
+                            <span class="fund-name" id="fund-name">Российский Красный Крест</span>
+                            <button class="fund-question-btn" onclick="openFundPage(event)">
+                                <img src="new category/Question Filled.svg" width="21" height="21" alt="">
+                            </button>
+                        </div>
+                        <div class="fund-sub" id="fund-sub">Помощь людям, пострадавшим от паводков в Дагестане</div>
                     </div>
-                    <div class="fund-sub" id="fund-sub">Помощь людям, пострадавшим от паводков в Дагестане</div>
+                    <button class="fund-dataview" onclick="openFundSelection(event)">
+                        <img src="new podacha/DataView.svg" width="24" height="24" alt="">
+                    </button>
                 </div>
-                <button class="fund-dataview" onclick="openFundSelection(event)">
-                    <img src="new podacha/DataView.svg" width="24" height="24" alt="">
-                </button>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="pack-section">
-            <h2 class="compact-title">Что кладёте в пакет?</h2>
-            <p class="section-sub" id="pack-subtitle">Мы увидели, что у вас есть подходящие вещи</p>
-            <p class="section-sub" id="pack-subtitle-empty" style="display:none;">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
-            <div id="pack-cards"></div>
-        </section>
+            <section class="section" id="pack-section">
+                <h2 class="compact-title" id="pack-title">Что кладёте в пакет?</h2>
+                <p class="section-sub" id="pack-subtitle">Мы увидели, что у вас есть подходящие вещи</p>
+                <p class="section-sub" id="pack-subtitle-empty" style="display:none;">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
+                <div id="pack-cards"></div>
+            </section>
 
-        <div class="add-more-block" id="add-more-block">
-            <h3 class="add-more-title" id="add-more-title">Добавьте ещё, если есть</h3>
-            <p class="add-more-sub" id="add-more-sub">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
-            <div class="add-more-slider-wrap">
-                <div class="add-more-slider" id="add-more-slider"></div>
+            <div class="add-more-block" id="add-more-block">
+                <h3 class="add-more-title" id="add-more-title">Добавьте ещё, если есть</h3>
+                <p class="add-more-sub" id="add-more-sub">В фонде нам рассказали, что сейчас собирают в помощь людям</p>
+                <div class="add-more-slider-wrap">
+                    <div class="add-more-slider" id="add-more-slider"></div>
+                </div>
             </div>
         </div>
 
-        <section class="section">
-            <h2 class="section-title">Проверьте данные объявления</h2>
-            <p class="section-sub">Мы заполнили их автоматически — отредактируйте если нужно</p>
-        </section>
+        <div id="step2-sections" style="display:none;">
+            <section class="section">
+                <h2 class="section-title">Проверьте данные объявления</h2>
+                <p class="section-sub">Мы заполнили их автоматически — отредактируйте если нужно</p>
+            </section>
 
-        <section class="section">
-            <h2 class="section-title">Фотографии</h2>
-            <div class="photos-grid" id="photos-grid"></div>
-        </section>
+            <section class="section">
+                <h2 class="section-title">Фотографии</h2>
+                <div class="photos-grid" id="photos-grid"></div>
+            </section>
 
-        <section class="section">
-            <h2 class="section-title">Название</h2>
-            <div class="field-row dark">
-                <input class="field" id="title-display" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
-                <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Описание вещей</h2>
-            <textarea class="desc-textarea" id="desc-textarea" placeholder="Например: 3 кофты, из хлопка, без потёртостей"></textarea>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Адрес</h2>
-            <div class="field-row dark">
-                <span>Москва, Чонгарский б-р, 7</span>
-                <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></span>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Авито Доставка</h2>
-            <p class="delivery-copy">Фонды смогут оформить бесплатную доставку. Вам не нужно платить за отправку.</p>
-            <div class="toggle-row">
-                <div class="toggle-static"></div>
-                <div>
-                    <div class="toggle-title">В постамат</div>
-                    <div class="toggle-sub">5Post</div>
-                </div>
-            </div>
-            <div class="toggle-row">
-                <div class="toggle-static"></div>
-                <div>
-                    <div class="toggle-title">В пункт выдачи</div>
-                    <div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" style="padding-bottom:24px;">
-            <h2 class="section-title">Контакты</h2>
-            <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявление с нужными им вещами, узнают подробности и договорятся о сделке</p>
-            <div class="section" style="margin-top:24px;">
-                <h2 class="minor-title">Телефон</h2>
-                <p class="contacts-copy">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span style="color:#767676;text-decoration:underline;">Подробнее</span></p>
+            <section class="section">
+                <h2 class="section-title">Название</h2>
                 <div class="field-row dark">
-                    <span>8 200 614-53-63</span>
+                    <input class="field" id="title-display" autocomplete="off" style="margin:0;padding:0;background:transparent;min-height:56px;flex:1;min-width:0;">
+                    <button class="clear-btn" id="title-clear-btn" onclick="clearTitle()"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></button>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Описание вещей</h2>
+                <textarea class="desc-textarea" id="desc-textarea" placeholder="Например: 3 кофты, из хлопка, без потёртостей"></textarea>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Адрес</h2>
+                <div class="field-row dark">
+                    <span>Москва, Чонгарский б-р, 7</span>
                     <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></span>
                 </div>
-            </div>
-            <div class="section" style="margin-top:24px;">
-                <h2 class="minor-title">Способ связи</h2>
-                <div class="radio-row" onclick="setContactMethod(0)"><span class="radio active" id="cm-0"></span><span>Звонки и сообщения</span></div>
-                <div class="radio-row" onclick="setContactMethod(1)"><span class="radio" id="cm-1"></span><span>Только звонки</span></div>
-                <div class="radio-row" onclick="setContactMethod(2)"><span class="radio" id="cm-2"></span><span>Только сообщения</span></div>
-            </div>
-        </section>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Авито Доставка</h2>
+                <p class="delivery-copy">Фонды смогут оформить бесплатную доставку. Вам не нужно платить за отправку.</p>
+                <div class="toggle-row">
+                    <div class="toggle-static"></div>
+                    <div>
+                        <div class="toggle-title">В постамат</div>
+                        <div class="toggle-sub">5Post</div>
+                    </div>
+                </div>
+                <div class="toggle-row">
+                    <div class="toggle-static"></div>
+                    <div>
+                        <div class="toggle-title">В пункт выдачи</div>
+                        <div class="toggle-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" style="padding-bottom:24px;">
+                <h2 class="section-title">Контакты</h2>
+                <p class="contacts-copy">Фонды свяжутся с вами, когда увидят объявление с нужными им вещами, узнают подробности и договорятся о сделке</p>
+                <div class="section" style="margin-top:24px;">
+                    <h2 class="minor-title">Телефон</h2>
+                    <p class="contacts-copy">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span style="color:#767676;text-decoration:underline;">Подробнее</span></p>
+                    <div class="field-row dark">
+                        <span>8 200 614-53-63</span>
+                        <span class="clear-btn"><img src="sheets materials/CloseButton.svg" width="20" height="20" alt=""></span>
+                    </div>
+                </div>
+                <div class="section" style="margin-top:24px;">
+                    <h2 class="minor-title">Способ связи</h2>
+                    <div class="radio-row" onclick="setContactMethod(0)"><span class="radio active" id="cm-0"></span><span>Звонки и сообщения</span></div>
+                    <div class="radio-row" onclick="setContactMethod(1)"><span class="radio" id="cm-1"></span><span>Только звонки</span></div>
+                    <div class="radio-row" onclick="setContactMethod(2)"><span class="radio" id="cm-2"></span><span>Только сообщения</span></div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <div class="bottom-bar">
-        <button class="continue-btn" id="continue-btn" onclick="goToDelivery()">
+        <button class="continue-btn active" id="step1-btn" onclick="proceedToStep2()">
+            Продолжить
+        </button>
+        <button class="continue-btn active" id="step2-btn" onclick="goToDelivery()" style="display:none;">
             <img src="new category/Icon charity.svg" width="30" height="30" alt="">
             Передать вещи
         </button>
@@ -2050,7 +2121,7 @@
 
     <!-- Save toast -->
     <div id="save-toast">
-        Изменения сохранены
+        <span id="save-toast-msg">Изменения сохранены</span>
         <button id="save-toast-close" onclick="hideSaveToast()">
             <img src="new category/CloseButton.svg" width="20" height="20" alt="">
         </button>
@@ -2402,43 +2473,39 @@
 
         const CATEGORIES_RKK = {
             'children-clothes': {
-                name: 'Детская одежда и обувь',
+                name: 'Детская одежда',
                 image: 'new podacha/children.png',
                 sliderImage: 'new podacha/slider children.png',
                 catImage: 'new podacha/cat-children-clothes.png',
                 subtitle: 'Детские вещи — самое востребованное после ЧС: семьи эвакуируются без вещей',
-                fundAccepts: 'Детская одежда и обувь в хорошем состоянии, размеры 80–152. Вещи для мальчиков и девочек любого сезона.',
-                fundRejects: 'Не принимают: рваные вещи и вещи с пятнами, нижнее бельё б/у, одежда размером меньше 80 — нужна только новая.',
+                fundAccepts: 'Детская одежда в хорошем состоянии, размеры 80–152, для мальчиков и девочек.',
+                fundRejects: 'Не принимают: рваные вещи и вещи с пятнами, нижнее бельё б/у.',
                 subtypes: [
-                    { id: 'clothing', label: 'Одежда', params: ['gender-kids','size-children','season','type-clothing-kids'] },
-                    { id: 'shoes', label: 'Обувь', params: ['gender-kids','size-kids-shoes','season-no-demi','condition-good'] },
+                    { id: 'clothing', label: 'Одежда', params: ['gender-kids','size-children','condition-good'] },
                 ],
             },
             'basic-clothes': {
-                name: 'Базовая одежда',
+                name: 'Одежда для взрослых',
                 image: 'new podacha/base.png',
                 sliderImage: 'new podacha/slider base.png',
                 catImage: 'new podacha/cat-basic-clothes.png',
                 subtitle: 'Взрослая одежда нужна людям, которые ушли из дома в чём были',
-                fundAccepts: 'Базовая повседневная одежда для взрослых в хорошем состоянии: футболки, свитеры, брюки, джинсы. Мужское и женское.',
-                fundRejects: 'Не принимают: нижнее бельё б/у, вещи с дырками, катышками, стойкими пятнами, домашняя и пижамная одежда.',
+                fundAccepts: 'Одежда для взрослых в хорошем состоянии: свитеры, брюки, джинсы. Мужское и женское.',
+                fundRejects: 'Не принимают: нижнее бельё б/у, вещи с дырками, катышками, стойкими пятнами.',
                 subtypes: [
-                    { id: 'men', label: 'Мужская', params: ['size-clothes','type-clothes-men','condition-good'] },
-                    { id: 'women', label: 'Женская', params: ['size-clothes','type-clothes-women','condition-good'] },
+                    { id: 'adults', label: 'Одежда', params: ['gender','size-clothes','condition-good'] },
                 ],
             },
             'seasonal-clothes': {
-                name: 'Сезонная одежда',
+                name: 'Тёплая одежда',
                 image: 'new podacha/puh.png',
                 sliderImage: 'new podacha/slider season.png',
                 catImage: 'new podacha/cat-seasonal-clothes.png',
                 subtitle: 'Тёплые вещи особенно нужны при эвакуации в холодное время года',
-                fundAccepts: 'Верхняя одежда для взрослых в хорошем состоянии: куртки, пуховики, пальто. Мужское и женское, любые размеры.',
-                fundRejects: 'Не принимают: вещи с повреждениями подкладки или молнии, очень светлая одежда, лёгкая летняя одежда в зимний сбор.',
+                fundAccepts: 'Верхняя одежда для взрослых в хорошем состоянии: куртки, пуховики, пальто.',
+                fundRejects: 'Не принимают: вещи с повреждениями подкладки или молнии.',
                 subtypes: [
-                    { id: 'men', label: 'Мужская', params: ['type-seasonal','size-seasonal-men','season-seasonal','condition-good'] },
-                    { id: 'women', label: 'Женская', params: ['type-seasonal','size-seasonal-women','season-seasonal','condition-good'] },
-                    { id: 'unisex', label: 'Унисекс', params: ['type-seasonal','size-clothes','season-seasonal','condition-good'] },
+                    { id: 'outerwear', label: 'Одежда', params: ['gender','size-clothes','condition-good'] },
                 ],
             },
             'adult-shoes': {
@@ -2447,129 +2514,112 @@
                 sliderImage: 'new podacha/slider boots.png',
                 catImage: 'new podacha/cat-adult-shoes.png',
                 subtitle: 'Обувь изнашивается быстро — особенно при вынужденном переезде',
-                fundAccepts: 'Мужская и женская обувь в хорошем состоянии: ботинки, кроссовки, сапоги. Любые размеры.',
-                fundRejects: 'Не принимают: обувь с расклеенной или сильно стёртой подошвой, обувь на каблуке выше 5 см, домашняя обувь и тапочки.',
+                fundAccepts: 'Мужская и женская обувь в хорошем состоянии: ботинки, кроссовки, сапоги.',
+                fundRejects: 'Не принимают: обувь с расклеенной подошвой, домашние тапочки.',
                 subtypes: [
-                    { id: 'men', label: 'Мужская', params: ['type-shoes-new','size-shoes-men','condition-good'] },
-                    { id: 'women', label: 'Женская', params: ['type-shoes-new','size-shoes-women','condition-good'] },
-                    { id: 'unisex', label: 'Унисекс', params: ['type-shoes-new','size-shoes-men','condition-good'] },
+                    { id: 'shoes', label: 'Обувь', params: ['gender','size-shoes','condition-good'] },
                 ],
             },
             'textile': {
-                name: 'Текстиль',
+                name: 'Одеяла',
                 image: 'new podacha/textile.png',
                 sliderImage: 'new podacha/slider textile.png',
                 catImage: 'new podacha/cat-textile.png',
-                subtitle: 'Постельное бельё и полотенца нужны с первого дня в новом месте',
-                fundAccepts: 'Постельное бельё, полотенца, пледы и одеяла в хорошем состоянии. Чистые, без стойких запахов.',
-                fundRejects: 'Не принимают: постельное бельё с пятнами или разрывами, б/у подушки, шторы и скатерти.',
+                subtitle: 'Одеяла и пледы нужны с первого дня во временном жилье',
+                fundAccepts: 'Одеяла и пледы в хорошем состоянии. Чистые, без стойких запахов.',
+                fundRejects: 'Не принимают: б/у подушки, постельное бельё с пятнами.',
                 subtypes: [
-                    { id: 'bedding', label: 'Постельное бельё', params: ['size-bedding','condition-good'] },
-                    { id: 'towels', label: 'Полотенца', params: ['type-towels','qty-towels','condition-good'] },
-                    { id: 'blanket', label: 'Плед / одеяло', params: ['type-blanket','condition-good'] },
+                    { id: 'blanket', label: 'Одеяло', params: ['condition-good'] },
                 ],
             },
             'kitchen': {
-                name: 'Посуда и кухня',
+                name: 'Посуда',
                 image: 'new podacha/kitchen.png',
                 sliderImage: 'new podacha/slider litchen.png',
                 catImage: 'new podacha/cat-kitchen.png',
-                subtitle: 'Базовый кухонный набор помогает обустроить временное жильё',
-                fundAccepts: 'Посуда в хорошем состоянии: тарелки, кружки, кастрюли, сковородки. Столовые приборы комплектом.',
-                fundRejects: 'Не принимают: посуда с трещинами и сколами, разрозненные предметы (одна тарелка), кухонная техника — принимается отдельно.',
+                subtitle: 'Базовый набор посуды помогает обустроить временное жильё',
+                fundAccepts: 'Посуда в хорошем состоянии: тарелки, кружки, кастрюли.',
+                fundRejects: 'Не принимают: посуда с трещинами и сколами.',
                 subtypes: [
-                    { id: 'plates', label: 'Тарелки и кружки', params: ['qty-plates','condition-good'] },
-                    { id: 'pots', label: 'Кастрюли и сковородки', params: ['type-pots','condition-good'] },
-                    { id: 'cutlery', label: 'Столовые приборы', params: ['qty-cutlery','condition-good'] },
+                    { id: 'dishes', label: 'Посуда', params: ['condition-good'] },
                 ],
             }
         };
 
         const CATEGORIES_NOCH = {
             'men-clothes': {
-                name: 'Одежда',
+                name: 'Мужская одежда',
                 image: 'new podacha/puh.png',
                 sliderImage: 'new podacha/slider season.png',
                 catImage: 'new podacha/cat-men-clothes.png',
                 subtitle: 'Мужской одежды на складе фонда постоянно не хватает — особенно осенью и зимой',
-                fundAccepts: 'Только мужская одежда в хорошем состоянии: тёмных и ярких цветов, без дыр и катышков. Верхняя одежда, джинсы, свитеры, толстовки.',
-                fundRejects: 'Не принимают: светлая одежда, женская и детская одежда, домашняя одежда и пижамы, вещи с дырками и катышками.',
+                fundAccepts: 'Только мужская одежда в хорошем состоянии: без дыр и катышков. Верхняя одежда, джинсы, свитеры, толстовки.',
+                fundRejects: 'Не принимают: светлая одежда, женская и детская одежда, домашняя одежда и пижамы.',
                 subtypes: [
-                    { id: 'outerwear', label: 'Верхняя одежда', params: ['gender-men-fixed','type-seasonal','size-seasonal-men','season-seasonal','condition-good'] },
-                    { id: 'jeans', label: 'Джинсы и брюки', params: ['gender-men-fixed','size-seasonal-men','condition-good'] },
-                    { id: 'sweaters', label: 'Свитеры и джемперы', params: ['gender-men-fixed','size-seasonal-men','condition-good'] },
-                    { id: 'hoodies', label: 'Толстовки и флиски', params: ['gender-men-fixed','size-seasonal-men','condition-good'] },
+                    { id: 'men', label: 'Одежда', params: ['size-seasonal-men','condition-good'] },
                 ],
             },
             'men-shoes': {
-                name: 'Обувь',
+                name: 'Мужская обувь',
                 image: 'new podacha/boots.png',
                 sliderImage: 'new podacha/slider boots.png',
                 catImage: 'new podacha/cat-men-shoes.png',
                 subtitle: 'Крепкая обувь нужна круглый год — люди без жилья проводят на ногах весь день',
-                fundAccepts: 'Только мужская обувь с целой подошвой, в хорошем состоянии: ботинки, кроссовки, зимние сапоги. Размеры 40–46.',
-                fundRejects: 'Не принимают: женская обувь, обувь с расклеенной подошвой, с дырками, домашние тапочки.',
+                fundAccepts: 'Только мужская обувь с целой подошвой, в хорошем состоянии. Размеры 40–46.',
+                fundRejects: 'Не принимают: обувь с расклеенной подошвой, домашние тапочки.',
                 subtypes: [
-                    { id: 'boots', label: 'Ботинки', params: ['gender-men-fixed','size-shoes-men','condition-good'] },
-                    { id: 'sneakers', label: 'Кроссовки', params: ['gender-men-fixed','size-shoes-men','condition-good'] },
-                    { id: 'winter-boots', label: 'Зимние сапоги', params: ['gender-men-fixed','size-shoes-men','condition-good'] },
+                    { id: 'shoes', label: 'Обувь', params: ['size-shoes-men','condition-good'] },
                 ],
             },
             'bags': {
-                name: 'Сумки и аксессуары',
+                name: 'Сумки',
                 image: 'new podacha/bag.png',
                 sliderImage: 'new podacha/slider bag.png',
                 catImage: 'new podacha/cat-bags.png',
                 subtitle: 'Рюкзак — единственный способ хранить все вещи, когда нет дома',
                 fundAccepts: 'Вместительные рюкзаки с целыми лямками и рабочими молниями, в хорошем состоянии.',
-                fundRejects: 'Не принимают: маленькие городские рюкзаки и клатчи, рюкзаки с поломанными молниями или оторванными лямками.',
+                fundRejects: 'Не принимают: рюкзаки с поломанными молниями или оторванными лямками.',
                 subtypes: [
-                    { id: 'backpack', label: 'Рюкзак', params: ['condition-good'] },
-                    { id: 'waist-bag', label: 'Поясная сумка', params: ['condition-good'] },
-                    { id: 'shoulder-bag', label: 'Сумка через плечо', params: ['condition-good'] },
+                    { id: 'bag', label: 'Сумка', params: ['condition-good'] },
                 ],
             },
             'electronics': {
-                name: 'Электроника',
+                name: 'Смартфон',
                 image: 'new podacha/smartphone.png',
                 sliderImage: 'new podacha/slider smartphone.png',
                 catImage: 'new podacha/cat-noch-electronics.png',
                 subtitle: 'Телефон — это связь с родными, доступ к помощи и возможность найти работу',
                 fundAccepts: 'Рабочие смартфоны любых марок. Главное — телефон включается.',
-                fundRejects: 'Не принимают: нерабочие телефоны, кнопочные телефоны без интернета, планшеты и ноутбуки.',
+                fundRejects: 'Не принимают: нерабочие телефоны, кнопочные телефоны без интернета.',
                 subtypes: [
-                    { id: 'smartphone', label: 'Смартфон', params: ['condition-good','works'] },
+                    { id: 'phone', label: 'Смартфон', params: ['condition-good','works'] },
                 ],
             },
         };
 
         const CATEGORIES_MIL = {
             'books-fiction': {
-                name: 'Книги и журналы',
+                name: 'Книги',
                 image: 'new podacha/magazine.png',
                 sliderImage: 'new podacha/slider magazine.png',
                 catImage: 'new podacha/cat-books-fiction.png',
                 subtitle: 'Библиотеки берут только конкретные книги — иначе не справятся с сортировкой',
-                fundAccepts: 'Художественная литература, познавательные книги и классика — от 2000 года издания, в хорошем состоянии. Авито сверяет каждую книгу со списком фонда перед отправкой.',
-                fundRejects: 'Не принимают: книги до 2000 года. Советские многотомные собрания сочинений. Учебники и справочники. Журналы и периодика. Книги с пятнами, надрывами, карандашными пометками.',
+                fundAccepts: 'Художественная литература и классика от 2000 года издания, в хорошем состоянии.',
+                fundRejects: 'Не принимают: книги до 2000 года, учебники, журналы, книги с пятнами или надрывами.',
                 subtypes: [
-                    { id: 'fiction', label: 'Художественная литература', params: ['genre-fiction','year-book','condition-good','qty-books'] },
-                    { id: 'cognitive', label: 'Познавательные книги', params: ['topic-cognitive','year-book','condition-good','qty-books'] },
-                    { id: 'classic', label: 'Классика', params: ['year-book','condition-good','qty-books'] },
+                    { id: 'book', label: 'Книга', params: ['year-book','condition-good','qty-books'] },
                 ],
             },
             'books-kids': {
-                name: 'Книги для детей',
+                name: 'Детские книги',
                 image: 'new podacha/book.png',
                 sliderImage: 'new podacha/slider book.png',
                 catImage: 'new podacha/cat-books-kids.png',
                 subtitle: 'Детских книг в сельских библиотеках почти нет — новые поступления редкость',
-                fundAccepts: 'Детские книги от 2000 года в хорошем состоянии: сказки, книги для чтения в начальной школе, познавательные книги о природе и науке.',
-                fundRejects: 'Не принимают: раскраски и книги-игрушки. Книги с вырванными страницами или разукрашенными иллюстрациями. Советские детские книги.',
+                fundAccepts: 'Детские книги от 2000 года в хорошем состоянии: сказки, книги для школьников.',
+                fundRejects: 'Не принимают: раскраски, книги с вырванными страницами, советские детские книги.',
                 subtypes: [
-                    { id: 'toddlers', label: 'Книги для малышей', params: ['age-toddlers','year-book','condition-good','qty-books'] },
-                    { id: 'schoolers', label: 'Книги для школьников', params: ['age-schoolers','year-book','condition-good','qty-books'] },
-                    { id: 'cognitive-kids', label: 'Познавательные для детей', params: ['topic-cognitive','age-kids','year-book','condition-good','qty-books'] },
+                    { id: 'kids-book', label: 'Детская книга', params: ['age-kids','year-book','condition-good','qty-books'] },
                 ],
             },
         };
@@ -2581,13 +2631,10 @@
                 sliderImage: 'new podacha/slider smartphone.png',
                 catImage: 'new podacha/cat-dari-electronics.png',
                 subtitle: 'Ноутбук или планшет может стать рабочим инструментом для человека с инвалидностью',
-                fundAccepts: 'Рабочие ноутбуки от 2015 года, планшеты от 2017 года, смартфоны и телевизоры в хорошем состоянии. Техника передаётся конкретным семьям по запросу соцслужб.',
-                fundRejects: 'Не принимают: нерабочая техника. Ноутбуки до 2015 года — слишком медленные. Техника без зарядного устройства (по возможности приложите зарядку).',
+                fundAccepts: 'Рабочие ноутбуки, планшеты, смартфоны и телевизоры в хорошем состоянии.',
+                fundRejects: 'Не принимают: нерабочая техника. По возможности приложите зарядку.',
                 subtypes: [
-                    { id: 'laptop', label: 'Ноутбук', params: ['year-laptop','condition-good','works'] },
-                    { id: 'tablet', label: 'Планшет', params: ['year-tablet','condition-good','works'] },
-                    { id: 'smartphone', label: 'Смартфон', params: ['year-phone','condition-good','works'] },
-                    { id: 'tv', label: 'Телевизор', params: ['tv-diagonal','condition-good','works'] },
+                    { id: 'device', label: 'Устройство', params: ['type-device','condition-good','works'] },
                 ],
             },
             'appliances': {
@@ -2596,29 +2643,22 @@
                 sliderImage: 'new podacha/slider oven.png',
                 catImage: 'new podacha/cat-appliances.png',
                 subtitle: 'Небольшая техника закрывает базовые потребности семей, у которых её нет',
-                fundAccepts: 'Исправная небольшая бытовая техника: микроволновки, электрочайники, мультиварки. Передаётся семьям по спискам фонда.',
-                fundRejects: 'Не принимают: нерабочая техника. Крупная техника (холодильники, стиральные машины) — в этом пилоте не принимается. Утюги и фены — не в приоритете.',
+                fundAccepts: 'Исправная бытовая техника: микроволновки, электрочайники, мультиварки.',
+                fundRejects: 'Не принимают: нерабочая техника, крупная техника (холодильники, стиральные машины).',
                 subtypes: [
-                    { id: 'microwave', label: 'Микроволновка', params: ['condition-good','works'] },
-                    { id: 'kettle', label: 'Электрочайник', params: ['condition-good','works'] },
-                    { id: 'multicooker', label: 'Мультиварка', params: ['condition-good','works'] },
-                    { id: 'other-appliance', label: 'Другое', params: ['type-other-text','condition-good','works'] },
+                    { id: 'appliance', label: 'Техника', params: ['type-appliance','condition-good','works'] },
                 ],
             },
             'health': {
-                name: 'Здоровье',
+                name: 'Средства реабилитации',
                 image: 'new podacha/kostili.png',
                 sliderImage: 'new podacha/slider kostili.png',
                 catImage: 'new podacha/cat-health.png',
                 subtitle: 'Средства реабилитации стоят дорого — б/у в хорошем состоянии закрывают реальную нужду',
-                fundAccepts: 'Исправные средства реабилитации: костыли, ходунки, трости, слуховые аппараты. Фонд уточнит детали передачи в чате.',
-                fundRejects: 'Не принимают: сломанные и требующие ремонта средства реабилитации. Кресла-коляски принимаются, но требуют отдельного согласования в чате.',
+                fundAccepts: 'Исправные средства реабилитации: костыли, ходунки, трости, слуховые аппараты.',
+                fundRejects: 'Не принимают: сломанные средства реабилитации.',
                 subtypes: [
-                    { id: 'crutches', label: 'Костыли', params: ['type-crutches','condition-good'] },
-                    { id: 'walker', label: 'Ходунки', params: ['condition-good'] },
-                    { id: 'cane', label: 'Трость', params: ['condition-good'] },
-                    { id: 'hearing-aid', label: 'Слуховой аппарат', params: ['condition-good','works'] },
-                    { id: 'other-health', label: 'Другое', params: ['type-other-text','condition-good'] },
+                    { id: 'rehab', label: 'Средство реабилитации', params: ['condition-good'] },
                 ],
             },
         };
@@ -2670,6 +2710,8 @@
             'tv-diagonal': { label: 'Диагональ', required: true, type: 'chips', options: ['До 32"','32–43"','Больше 43"'], multi: false },
             'type-crutches': { label: 'Тип', required: true, type: 'chips', options: ['Подмышечные','Локтевые'], multi: false },
             'type-other-text': { label: 'Тип', required: true, type: 'text-input', placeholder: 'Напишите, что именно' },
+            'type-device': { label: 'Тип устройства', required: true, type: 'chips', options: ['Ноутбук','Планшет','Смартфон','Телевизор'], multi: false },
+            'type-appliance': { label: 'Тип техники', required: true, type: 'chips', options: ['Микроволновка','Чайник','Мультиварка','Другое'], multi: false },
             // Миллион книг params
             'genre-fiction': { label: 'Жанр', required: true, type: 'chips', options: ['Проза','Фантастика','Детектив','Поэзия'], multi: true },
             'year-book': { label: 'Год издания', required: true, type: 'chips', options: ['2000–2009','2010–2019','2020 и новее'], multi: false },
@@ -2776,6 +2818,11 @@
 
             const hasPhotos = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]').length > 0;
             const userPickedFund = !!sessionStorage.getItem('userPickedFund');
+
+            const packTitleEl = document.getElementById('pack-title');
+            if (packTitleEl) packTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Мы заметили, что ваша вещь нужна фонду' : 'Что кладёте в пакет?';
+            const fundTitleEl = document.getElementById('fund-title');
+            if (fundTitleEl) fundTitleEl.textContent = (hasPhotos && !userPickedFund) ? 'Этому фонду подойдут ваши вещи' : 'Кому хотите помочь?';
 
             document.getElementById('pack-subtitle').style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
             document.getElementById('pack-subtitle-empty').style.display = (!hasPhotos || userPickedFund) ? '' : 'none';
@@ -2894,8 +2941,41 @@
             document.body.style.overflow = '';
         }
 
-        function showSaveToast() {
+        let currentStep = 1;
+
+        function showStep(step) {
+            currentStep = step;
+            document.getElementById('step1-sections').style.display = step === 1 ? '' : 'none';
+            document.getElementById('step2-sections').style.display = step === 2 ? '' : 'none';
+            document.getElementById('step1-btn').style.display = step === 1 ? '' : 'none';
+            document.getElementById('step2-btn').style.display = step === 2 ? '' : 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function proceedToStep2() {
+            const hasCatSelections = Object.keys(loadCatSelections()).length > 0;
+            const hasOldSelections = Object.keys(loadSelections()).length > 0;
+            if (!hasCatSelections && !hasOldSelections) {
+                showSaveToast('Положите хотя бы одну категорию вещей в пакет, чтобы продолжить');
+                return;
+            }
+            persistAll();
+            autoBuildDescription();
+            showStep(2);
+        }
+
+        function handleBack() {
+            if (currentStep === 2) {
+                showStep(1);
+            } else {
+                window.location.href = 'step4.html';
+            }
+        }
+
+        function showSaveToast(msg) {
             const toast = document.getElementById('save-toast');
+            const msgEl = document.getElementById('save-toast-msg');
+            if (msgEl) msgEl.textContent = msg || 'Изменения сохранены';
             clearTimeout(toast._hideTimer);
             toast.style.display = 'block';
             requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('visible')));
@@ -3164,6 +3244,11 @@
             }
             const cfg = getParamConfig(paramId);
             renderChips(paramId, cfg);
+            // clear error when user makes a selection
+            if (catDraft[paramId] && catDraft[paramId].length) {
+                const chipsRow = document.getElementById('chips-' + paramId);
+                if (chipsRow) chipsRow.closest('.param-block')?.classList.remove('error');
+            }
             autoBuildCatDesc();
             updateCatSaveBtn();
         }
@@ -3374,12 +3459,41 @@
         }
 
         function updateCatSaveBtn() {
-            const btn = document.getElementById('cat-save-btn');
-            if (btn) btn.classList.toggle('active', isCatDraftValid());
+            // button is always active; no-op
+        }
+
+        function highlightInvalidParams() {
+            const cat = CATEGORIES[activeCatId];
+            if (!cat || !cat.subtypes || !cat.subtypes.length) return;
+            const selected = catDraft.selectedSubtypes || [];
+            selected.forEach(subtypeId => {
+                const subtype = cat.subtypes.find(s => s.id === subtypeId);
+                if (!subtype) return;
+                subtype.params.forEach(paramId => {
+                    const cfg = getParamConfig(paramId);
+                    if (!cfg || !cfg.required) return;
+                    const nsId = paramId + '__' + subtypeId;
+                    const val = catDraft[nsId];
+                    if (!val || !val.length) {
+                        const chipsRow = document.getElementById('chips-' + nsId);
+                        if (chipsRow) chipsRow.closest('.param-block')?.classList.add('error');
+                        const selector = document.getElementById('sel-' + nsId);
+                        if (selector) selector.closest('.param-block')?.classList.add('error');
+                    }
+                });
+            });
+            if (!(catDraft.photos || []).length) {
+                const photosBlock = document.getElementById('photos-param-block');
+                if (photosBlock) photosBlock.classList.add('error');
+            }
         }
 
         function saveCatSheet() {
-            if (!isCatDraftValid()) return;
+            if (!isCatDraftValid()) {
+                highlightInvalidParams();
+                showSaveToast('Заполните обязательные поля, чтобы сохранить');
+                return;
+            }
             autoBuildCatDesc(); // ensure catDraft.desc reflects current textarea before saving
             const sel = loadCatSelections();
 
@@ -4081,15 +4195,10 @@
         }
 
         function updateContinueState() {
-            const hasOldSelections = Object.keys(loadSelections()).length > 0;
-            const hasCatSelections = Object.keys(loadCatSelections()).length > 0;
-            document.getElementById('continue-btn').classList.toggle('active', hasOldSelections || hasCatSelections);
+            // no-op: step1 button is always active; validation happens in proceedToStep2
         }
 
         function goToDelivery() {
-            const hasOldSelections = Object.keys(loadSelections()).length > 0;
-            const hasCatSelections = Object.keys(loadCatSelections()).length > 0;
-            if (!hasOldSelections && !hasCatSelections) return;
             persistAll();
             window.location.href = currentCollection === 'crisis' ? 'success-crisis.html' : 'success.html';
         }

@@ -67,6 +67,8 @@
             border-radius: 12px;
             padding: 14px 16px;
             gap: 8px;
+            pointer-events: none;
+            cursor: default;
         }
 
         .spec-value {
@@ -153,8 +155,21 @@
             ]
         };
 
+        const PHOTO_TO_SPEC = { 1: 't-shirts', 2: 'homewear' };
+
+        function getSpecKey() {
+            const cat = sessionStorage.getItem('mainCategory');
+            if (cat && SPECS[cat]) return cat;
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            for (const id of photos) {
+                const key = PHOTO_TO_SPEC[Number(id)];
+                if (key) return key;
+            }
+            return 't-shirts';
+        }
+
         function render() {
-            const cat = sessionStorage.getItem('mainCategory') || 't-shirts';
+            const cat = getSpecKey();
             const specs = SPECS[cat] || SPECS['t-shirts'];
             const list = document.getElementById('specs-list');
             list.innerHTML = specs.map(s => `
@@ -162,7 +177,6 @@
                     <span class="spec-label">${s.label}</span>
                     <div class="spec-field">
                         <span class="spec-value">${s.value}</span>
-                        ${CHEVRON}
                     </div>
                     ${s.helper ? `<p class="spec-helper">${s.helper}</p>` : ''}
                 </div>
