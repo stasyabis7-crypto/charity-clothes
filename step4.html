@@ -314,7 +314,7 @@
 <body>
 
     <header class="header">
-        <a href="step3.html">
+        <a href="javascript:void(0)" onclick="history.back()">
             <img src="step 2 materials/back.svg" width="48" height="48" alt="">
         </a>
         <span class="save-exit">Сохранить и выйти</span>
@@ -323,46 +323,7 @@
     <h1 class="page-title">Выберите категорию</h1>
     <p class="page-subtitle">Важно выбрать верную категорию для вашего товара</p>
 
-    <div class="category-list">
-
-        <div class="category-item clickable" onclick="selectCat('t-shirts')">
-            <div class="category-text">
-                <div class="category-name">Футболки и майки</div>
-                <div class="category-path">Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек</div>
-            </div>
-            <img class="checkbox-img" id="cb-t-shirts" src="step 4 materials/Checkmark off.png" alt="">
-        </div>
-
-        <div class="category-item clickable" onclick="selectCat('homewear')">
-            <div class="category-text">
-                <div class="category-name">Домашняя одежда</div>
-                <div class="category-path">Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек&nbsp;• Бельё и домашняя одежда</div>
-            </div>
-            <img class="checkbox-img" id="cb-homewear" src="step 4 materials/Checkmark off.png" alt="">
-        </div>
-
-        <div class="category-item clickable" onclick="selectCat('suits')">
-            <div class="category-text">
-                <div class="category-name">Пиджаки и костюмы</div>
-                <div class="category-path">Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек</div>
-            </div>
-            <img class="checkbox-img" id="cb-suits" src="step 4 materials/Checkmark off.png" alt="">
-        </div>
-
-        <div class="category-item clickable" onclick="selectCat('charity')">
-            <div class="category-text">
-                <div class="category-name">
-                    Вещи на благотворительность 💙
-                    <button class="question-btn" id="question-btn" onclick="openSheet(event)" aria-label="Подробнее">
-                        <img src="new category/Question Filled.svg" width="24" height="24" alt="">
-                    </button>
-                </div>
-                <div class="category-path">Личные вещи&nbsp;• Одежда, обувь и аксессуары&nbsp;• Для дома и дачи&nbsp;• Книги</div>
-            </div>
-            <img class="checkbox-img" id="cb-charity" src="step 4 materials/Checkmark off.png" alt="">
-        </div>
-
-    </div>
+    <div class="category-list" id="category-list"></div>
 
     <div class="bottom-bar" id="bottom-bar">
         <button class="continue-btn" onclick="goNext()">Продолжить</button>
@@ -421,38 +382,93 @@
     </div>
 
     <script>
-        const CAT_IDS = ['t-shirts', 'homewear', 'suits', 'charity'];
+        const CAT_DEFS = {
+            't-shirts': {
+                name: 'Футболки и майки',
+                path: 'Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек'
+            },
+            'homewear': {
+                name: 'Домашняя одежда',
+                path: 'Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек&nbsp;• Бельё и домашняя одежда'
+            },
+            'suits': {
+                name: 'Пиджаки и костюмы',
+                path: 'Личные вещи&nbsp;• Детская одежда и обувь&nbsp;• Для девочек'
+            },
+            'charity': {
+                name: 'Вещи на благотворительность 💙',
+                path: 'Личные вещи&nbsp;• Одежда, обувь и аксессуары&nbsp;• Для дома и дачи&nbsp;• Книги',
+                question: true
+            }
+        };
+
+        // photo id → avito category
+        const PHOTO_TO_CAT = {
+            1: 't-shirts', 2: 'homewear',
+            3: 'suits', 4: 'suits', 9: 'suits', 15: 'suits',
+        };
+
         let selectedCat = sessionStorage.getItem('mainCategory') || null;
 
-        // Auto-select category from photos if no selection yet
-        if (!selectedCat) {
-            const PHOTO_TO_CAT = { 1: 't-shirts', 2: 'homewear' };
-            const _photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
-            for (const _id of _photos) {
-                const _cat = PHOTO_TO_CAT[Number(_id)];
-                if (_cat) {
-                    selectedCat = _cat;
-                    sessionStorage.setItem('mainCategory', _cat);
-                    break;
+        function getVisibleCats() {
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            const seen = new Set();
+            const matched = [];
+            photos.forEach(id => {
+                const cat = PHOTO_TO_CAT[Number(id)];
+                if (cat && !seen.has(cat)) { seen.add(cat); matched.push(cat); }
+            });
+            // always include charity
+            if (!seen.has('charity')) matched.push('charity');
+            // if no non-charity match found, show all categories
+            const hasRegular = matched.some(id => id !== 'charity');
+            return hasRegular ? matched : Object.keys(CAT_DEFS);
+        }
+
+        function renderCategoryList() {
+            const ids = getVisibleCats();
+            // auto-select first non-charity match if nothing selected yet
+            if (!selectedCat) {
+                const first = ids.find(id => id !== 'charity');
+                if (first) {
+                    selectedCat = first;
+                    sessionStorage.setItem('mainCategory', first);
                 }
             }
+            const list = document.getElementById('category-list');
+            list.innerHTML = ids.map(id => {
+                const def = CAT_DEFS[id];
+                const nameInner = def.question
+                    ? `${def.name} <button class="question-btn" onclick="openSheet(event)" aria-label="Подробнее"><img src="new category/Question Filled.svg" width="24" height="24" alt=""></button>`
+                    : def.name;
+                return `
+                    <div class="category-item clickable" onclick="selectCat('${id}')">
+                        <div class="category-text">
+                            <div class="category-name">${nameInner}</div>
+                            <div class="category-path">${def.path}</div>
+                        </div>
+                        <img class="checkbox-img" id="cb-${id}" src="step 4 materials/Checkmark off.png" alt="">
+                    </div>
+                `;
+            }).join('');
+            updateCheckmarks();
+        }
+
+        function updateCheckmarks() {
+            document.querySelectorAll('.checkbox-img').forEach(cb => {
+                const id = cb.id.replace('cb-', '');
+                cb.src = selectedCat === id
+                    ? 'step 4 materials/Checkmark on.png'
+                    : 'step 4 materials/Checkmark off.png';
+            });
+            document.getElementById('bottom-bar').style.display = selectedCat ? 'block' : 'none';
         }
 
         function selectCat(id) {
             selectedCat = selectedCat === id ? null : id;
             if (selectedCat) sessionStorage.setItem('mainCategory', selectedCat);
             else sessionStorage.removeItem('mainCategory');
-            render();
-        }
-
-        function render() {
-            CAT_IDS.forEach(id => {
-                const cb = document.getElementById('cb-' + id);
-                if (cb) cb.src = selectedCat === id
-                    ? 'step 4 materials/Checkmark on.png'
-                    : 'step 4 materials/Checkmark off.png';
-            });
-            document.getElementById('bottom-bar').style.display = selectedCat ? 'block' : 'none';
+            updateCheckmarks();
         }
 
         function goNext() {
@@ -485,7 +501,7 @@
             setTimeout(() => goNext(), 300);
         }
 
-        render();
+        renderCategoryList();
 
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
