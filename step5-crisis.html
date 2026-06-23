@@ -2812,11 +2812,14 @@
             if (!mainDesc || !packCatIds.length) return;
             if (sessionStorage.getItem('listingFlowAutoFilled')) return;
             const sel = loadCatSelections();
+            let anyFilled = false;
             packCatIds.forEach(catId => {
                 if (sel[catId] && sel[catId]._saved) return;
                 const cat = CATEGORIES[catId];
                 if (!cat) return;
-                const autoData = { selectedSubtypes: [], desc: mainDesc, _saved: true, photos: getPhotosForCategory(catId) };
+                const catPhotos = getPhotosForCategory(catId);
+                if (!catPhotos.length) return; // only auto-fill if photos are available
+                const autoData = { selectedSubtypes: [], desc: mainDesc, _saved: true, photos: catPhotos };
                 if (cat.subtypes && cat.subtypes.length) {
                     const firstSub = cat.subtypes[0];
                     autoData.selectedSubtypes = [firstSub.id];
@@ -2832,9 +2835,12 @@
                     });
                 }
                 sel[catId] = autoData;
+                anyFilled = true;
             });
-            saveCatSelections(sel);
-            sessionStorage.setItem('listingFlowAutoFilled', '1');
+            if (anyFilled) {
+                saveCatSelections(sel);
+                sessionStorage.setItem('listingFlowAutoFilled', '1');
+            }
         }
 
         function renderPackSection() {
@@ -2924,7 +2930,7 @@
                 slider.appendChild(item);
             });
 
-            document.getElementById('add-more-block').style.display = (sliderCats.length || !hasPhotos) ? '' : 'none';
+            document.getElementById('add-more-block').style.display = ((hasPhotos && !userPickedFund) || sliderCats.length) ? '' : 'none';
 
             updateContinueState();
         }
@@ -3766,6 +3772,16 @@
         function deletePhoto(id) {
             const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]').filter(p => Number(p) !== Number(id));
             sessionStorage.setItem('selectedPhotos', JSON.stringify(photos));
+            const sel = loadCatSelections();
+            let changed = false;
+            Object.keys(sel).forEach(catId => {
+                if (sel[catId] && sel[catId].photos) {
+                    const before = sel[catId].photos.length;
+                    sel[catId].photos = sel[catId].photos.filter(p => Number(p) !== Number(id));
+                    if (sel[catId].photos.length !== before) changed = true;
+                }
+            });
+            if (changed) saveCatSelections(sel);
             renderPhotos();
         }
 
