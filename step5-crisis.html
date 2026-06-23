@@ -2918,7 +2918,7 @@
                 });
             });
 
-            document.getElementById('cat-sheet-title').textContent = cat.name;
+            document.getElementById('cat-sheet-title').textContent = 'Заполните данные по вещам в категории «' + cat.name + '»';
             document.getElementById('fund-items-body').classList.remove('open');
             document.getElementById('fund-items-arrow').classList.remove('open');
 
@@ -3016,9 +3016,8 @@
             const container = document.getElementById('cat-params');
             container.innerHTML = '';
 
-            // Dynamic subtitle
             const subtitleEl = document.getElementById('cat-sheet-subtitle');
-            if (subtitleEl) subtitleEl.textContent = cat.subtitle || '';
+            if (subtitleEl) subtitleEl.textContent = 'По этим данным фонды смогут понять, что вы положили в благотворительный пакет';
 
             // Accept/reject text
             const acceptEl = document.getElementById('fund-accepts-text');
@@ -4297,7 +4296,7 @@
             fundItemsOpen = false;
             const _cat = CATEGORIES[activeCatId];
             if (_cat) {
-                document.getElementById('cat-sheet-title').textContent = _cat.name;
+                document.getElementById('cat-sheet-title').textContent = 'Заполните данные по вещам в категории «' + _cat.name + '»';
                 document.getElementById('fund-items-body').classList.remove('open');
                 document.getElementById('fund-items-arrow').classList.remove('open');
                 document.getElementById('cat-remove-btn').style.display = (catFromPack && currentStep !== 2) ? '' : 'none';
