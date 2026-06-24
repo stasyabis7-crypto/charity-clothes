@@ -105,7 +105,8 @@
 
         .section { margin-top: 32px; }
         .section:first-child { margin-top: 24px; }
-        #step2-sections { padding-top: 84px; }
+        #step2-new-sections { padding-top: 84px; }
+        #step3-sections { padding-top: 84px; }
 
         .section-title {
             font-size: 21px;
@@ -1580,57 +1581,73 @@
             color: #000;
         }
 
-        /* cat sheet photos */
-        .cat-photos-grid {
+        /* Inline photo picker inside cat sheet */
+        .inline-photo-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
             margin-top: 10px;
-            position: relative;
         }
 
-        .cat-photos-grid.collapsed { max-height: 210px; overflow: hidden; }
+        .inline-photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
 
-        .cat-photos-gradient {
+        .inline-photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.15s;
+        }
+
+        .inline-photo-item.selected img { opacity: 0.85; }
+
+        .inline-photo-item.selected::after {
+            content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(to bottom, transparent, #fff);
+            inset: 0;
+            border: 3px solid #1A1A1A;
+            border-radius: 20px;
             pointer-events: none;
         }
 
-        .cat-show-all-btn {
-            display: block;
-            width: 100%;
-            margin-top: 8px;
-            background: #F4F4F4;
-            border: none;
-            border-radius: 16px;
-            padding: 12px 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            color: #000;
-            cursor: pointer;
+        .inline-photo-item.taken img { opacity: 0.55; }
+
+        .inline-photo-item.taken::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 3px solid #9E9E9E;
+            border-radius: 20px;
+            pointer-events: none;
         }
 
-        .cat-add-photo-btn {
-            aspect-ratio: 1;
-            border-radius: 20px;
-            background: #F4F4F4;
-            border: none;
+        .inline-photo-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #1A1A1A;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 400;
-            color: #000;
-            cursor: pointer;
+            border: 2px solid #fff;
+        }
+
+        .inline-photo-badge.taken {
+            background: #9E9E9E;
+            font-size: 10px;
         }
 
         .cat-sheet-bottom {
@@ -1948,7 +1965,7 @@
         <div id="step2-new-sections" style="display:none;">
             <section class="section" style="margin-top:24px;">
                 <h2 class="section-title">Вы можете добавить в объявление товары из разных категорий</h2>
-                <p class="section-sub" style="margin-top:6px;">Фонды нам рассказали, что собирают прямо сейчас.</p>
+                <p class="section-sub" style="margin-top:6px;">Фонды нам рассказали, что ещё собирают прямо сейчас</p>
                 <div id="step2-cat-chips" style="margin-top:12px;display:flex;flex-direction:column;gap:10px;"></div>
             </section>
         </div>
@@ -2784,7 +2801,6 @@
         let catDraft = {}; // { gender:[], size:[], season:[], type:[], condition:[], desc:'', photos:[] }
         let fundItemsOpen = false;
         let activeTypeParam = null;
-        let catPhotosExpanded = false;
 
         function loadCatSelections() {
             return JSON.parse(sessionStorage.getItem('catSelections') || '{}');
@@ -2839,7 +2855,7 @@
                         if (!cfg || !cfg.required) return;
                         const nsId = paramId + '__' + firstSub.id;
                         if (cfg.type === 'chips' || cfg.type === 'chips-fixed') {
-                            autoData[nsId] = cfg.multi ? [...cfg.options] : [cfg.options[0]];
+                            autoData[nsId] = [cfg.options[0]];
                         } else if (cfg.type === 'select') {
                             autoData[nsId] = [cfg.options[0]];
                         }
@@ -2883,28 +2899,50 @@
             // Main pack cards
             const packCards = document.getElementById('pack-cards');
             packCards.innerHTML = '';
-            packCatIds.forEach(catId => {
-                const cat = CATEGORIES[catId];
-                if (!cat) return;
-                const saved = catSel[catId];
-                const isFilled = saved && saved._saved;
-                const card = document.createElement('div');
-                card.className = 'cat-card';
-                card.onclick = () => openCatSheet(catId, true);
-                card.style.position = 'relative';
-                card.innerHTML = `
-                    <div class="cat-img-wrap">
-                        <img class="cat-img" src="${cat.image}" alt="">
-                        ${!isFilled ? '<img class="cat-badge" src="new podacha/Badge.svg" alt="">' : ''}
-                    </div>
-                    <div class="cat-info">
-                        <div class="cat-name">${cat.name}</div>
-                        <div class="cat-sub-text ${isFilled ? 'done' : 'red'}">${isFilled ? 'Вещи лежат в пакете' : 'Кратко расскажите про вещи'}</div>
-                    </div>
-                    <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
-                `;
-                packCards.appendChild(card);
-            });
+            if (userPickedFund) {
+                // User chose a different fund — show all fund categories as gray "Добавить в посылку" cards
+                CATEGORY_ORDER.forEach(catId => {
+                    const cat = CATEGORIES[catId];
+                    if (!cat) return;
+                    const card = document.createElement('div');
+                    card.className = 'cat-card';
+                    card.onclick = () => openCatSheet(catId, false);
+                    card.innerHTML = `
+                        <div class="cat-img-wrap">
+                            <img class="cat-img" src="${cat.sliderImage || cat.image}" alt="">
+                        </div>
+                        <div class="cat-info">
+                            <div class="cat-name">${cat.name}</div>
+                            <div class="cat-sub-text done">Добавить в посылку</div>
+                        </div>
+                        <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
+                    `;
+                    packCards.appendChild(card);
+                });
+            } else {
+                packCatIds.forEach(catId => {
+                    const cat = CATEGORIES[catId];
+                    if (!cat) return;
+                    const saved = catSel[catId];
+                    const isFilled = saved && saved._saved;
+                    const card = document.createElement('div');
+                    card.className = 'cat-card';
+                    card.onclick = () => openCatSheet(catId, true);
+                    card.style.position = 'relative';
+                    card.innerHTML = `
+                        <div class="cat-img-wrap">
+                            <img class="cat-img" src="${cat.image}" alt="">
+                            ${!isFilled ? '<img class="cat-badge" src="new podacha/Badge.svg" alt="">' : ''}
+                        </div>
+                        <div class="cat-info">
+                            <div class="cat-name">${cat.name}</div>
+                            <div class="cat-sub-text ${isFilled ? 'done' : 'red'}">${isFilled ? 'Вещи лежат в пакете' : 'Кратко расскажите про вещи'}</div>
+                        </div>
+                        <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
+                    `;
+                    packCards.appendChild(card);
+                });
+            }
 
             // Add-more slider: all categories NOT in pack
             const slider = document.getElementById('add-more-slider');
@@ -2932,7 +2970,6 @@
             activeCatId = catId;
             catFromPack = fromPack;
             fundItemsOpen = false;
-            catPhotosExpanded = false;
 
             const cat = CATEGORIES[catId];
             const saved = loadCatSelections()[catId] || {};
@@ -3029,7 +3066,13 @@
                 showSaveToast('Положите хотя бы одну категорию вещей в пакет, чтобы продолжить');
                 return;
             }
-            showStep(2);
+            if (!!sessionStorage.getItem('userPickedFund')) {
+                persistAll();
+                autoBuildDescription();
+                showStep(3);
+            } else {
+                showStep(2);
+            }
         }
 
         function proceedToStep3() {
@@ -3040,7 +3083,11 @@
 
         function handleBack() {
             if (currentStep === 3) {
-                showStep(2);
+                if (!!sessionStorage.getItem('userPickedFund')) {
+                    showStep(1);
+                } else {
+                    showStep(2);
+                }
             } else if (currentStep === 2) {
                 showStep(1);
             } else {
@@ -3387,104 +3434,69 @@
         function renderCatPhotos() {
             const block = document.getElementById('photos-param-block');
             if (!block) return;
-            // clear old photo content
-            ['cat-photos-grid-wrap', 'cat-photos-show-btn', 'cat-no-photos-btn'].forEach(id => {
-                const el = block.querySelector('#' + id);
-                if (el) el.remove();
-            });
 
-            const photos = catDraft.photos || [];
-            if (photos.length === 0) {
-                const addBtn = document.createElement('button');
-                addBtn.id = 'cat-no-photos-btn';
-                addBtn.className = 'cat-show-all-btn';
-                addBtn.innerHTML = `<img src="step 2 materials/Camera.svg" width="20" height="20" alt="" style="vertical-align:middle;margin-right:6px;">Добавить фото`;
-                addBtn.onclick = openCatPhotoEdit;
-                block.appendChild(addBtn);
-                return;
-            }
-
-            const wrap = document.createElement('div');
-            wrap.id = 'cat-photos-grid-wrap';
-
-            const grid = document.createElement('div');
-            grid.className = 'cat-photos-grid' + (!catPhotosExpanded && photos.length > 4 ? ' collapsed' : '');
-
-            photos.forEach((pid, i) => {
-                const cell = document.createElement('div');
-                cell.className = 'photo-cell';
-                cell.innerHTML = `
-                    <img src="${photoSrc(pid)}" class="photo-img" alt="">
-                    <button class="delete-btn" onclick="deleteCatPhoto(${pid})">
-                        <img src="step 2 materials/Icon delete.svg" width="24" height="24" alt="">
-                    </button>
-                `;
-                grid.appendChild(cell);
-            });
-
-            if (catPhotosExpanded || photos.length <= 4) {
-                const addCell = document.createElement('button');
-                addCell.className = 'photo-cell add-cell';
-                addCell.onclick = openCatPhotoEdit;
-                addCell.innerHTML = `<img src="step 2 materials/Camera.svg" width="24" height="24" alt=""><span>Добавить</span>`;
-                grid.appendChild(addCell);
-            } else {
-                const grad = document.createElement('div');
-                grad.className = 'cat-photos-gradient';
-                grid.appendChild(grad);
-            }
-
-            wrap.appendChild(grid);
-
-            if (!catPhotosExpanded && photos.length > 4) {
-                const showBtn = document.createElement('button');
-                showBtn.className = 'cat-show-all-btn';
-                showBtn.style.marginTop = '8px';
-                showBtn.textContent = 'Показать все';
-                showBtn.onclick = () => { catPhotosExpanded = true; renderCatPhotos(); };
-                wrap.appendChild(showBtn);
-            }
-
-            block.appendChild(wrap);
-        }
-
-        function deleteCatPhoto(pid) {
-            catDraft.photos = (catDraft.photos || []).filter(p => Number(p) !== Number(pid));
-            renderCatPhotos();
-            updateCatSaveBtn();
-        }
-
-        function openCatPhotoEdit() {
-            sessionStorage.setItem('catPhotoEditId', activeCatId);
-            sessionStorage.setItem('catPhotoEditDraft', JSON.stringify(catDraft));
-            sessionStorage.setItem('catPhotoEditFromPack', catFromPack ? '1' : '0');
-            // Save global photos so we can restore them on return
-            sessionStorage.setItem('globalSelectedPhotos', sessionStorage.getItem('selectedPhotos') || '[]');
-            // Pre-select only the category's current photos in the chooser
-            const catPhotos = (catDraft.photos || []).map(Number);
-            sessionStorage.setItem('selectedPhotos', JSON.stringify(catPhotos));
-            // Photos from other categories — shown as "taken" in picker
+            // Build taken set from other saved categories
             const allCatSel = loadCatSelections();
-            const catPhotosSet = new Set(catPhotos);
             const takenSet = new Set();
-            // from saved categories
             Object.entries(allCatSel).forEach(([cid, data]) => {
                 if (cid !== activeCatId && data && data.photos) {
                     data.photos.forEach(p => takenSet.add(Number(p)));
                 }
             });
-            // from unsaved pack categories (auto-detected but not yet saved)
+            // Also mark photos auto-assigned to other unsaved initial pack categories
             const initCats = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
             initCats.forEach(cid => {
                 if (cid !== activeCatId && !allCatSel[cid]) {
                     getPhotosForCategory(cid).forEach(p => takenSet.add(Number(p)));
                 }
             });
-            const takenPhotos = [...takenSet].filter(p => !catPhotosSet.has(p));
-            sessionStorage.setItem('catPhotoEditTakenPhotos', JSON.stringify(takenPhotos));
-            sessionStorage.setItem('photoReturnPage', CURRENT_PAGE);
-            sessionStorage.setItem('step5crisis_scrollY', String(window.scrollY));
-            window.location.href = 'step2-choose.html';
+
+            const catPhotos = (catDraft.photos || []).map(Number);
+            const catPhotosSet = new Set(catPhotos);
+
+            // Keep the label, replace everything else
+            const label = block.querySelector('.param-label');
+            block.innerHTML = '';
+            if (label) block.appendChild(label);
+
+            const grid = document.createElement('div');
+            grid.className = 'inline-photo-grid';
+
+            for (let id = 1; id <= 8; id++) {
+                const inSelected = catPhotosSet.has(id);
+                const inTaken = takenSet.has(id) && !inSelected;
+
+                const item = document.createElement('div');
+                item.className = 'inline-photo-item' + (inSelected ? ' selected' : inTaken ? ' taken' : '');
+                item.onclick = () => toggleInlineCatPhoto(id);
+
+                const img = document.createElement('img');
+                img.src = PHOTO_FILES[id];
+                item.appendChild(img);
+
+                if (inSelected || inTaken) {
+                    const badge = document.createElement('span');
+                    badge.className = 'inline-photo-badge' + (inTaken ? ' taken' : '');
+                    badge.textContent = inSelected ? (catPhotos.indexOf(id) + 1) : '✕';
+                    item.appendChild(badge);
+                }
+
+                grid.appendChild(item);
+            }
+
+            block.appendChild(grid);
+        }
+
+        function toggleInlineCatPhoto(id) {
+            const catPhotos = catDraft.photos || [];
+            const idx = catPhotos.map(Number).indexOf(id);
+            if (idx !== -1) {
+                catDraft.photos = catPhotos.filter((_, i) => i !== idx);
+            } else {
+                catDraft.photos = [...catPhotos, id];
+            }
+            renderCatPhotos();
+            updateCatSaveBtn();
         }
 
         function autoBuildCatDesc() {
@@ -3543,7 +3555,12 @@
             const container = document.getElementById('step2-cat-chips');
             if (!container) return;
             container.innerHTML = '';
+            const userPickedFund = !!sessionStorage.getItem('userPickedFund');
+            const initialPackCats = userPickedFund
+                ? []
+                : JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
             CATEGORY_ORDER.forEach(catId => {
+                if (initialPackCats.includes(catId)) return;
                 const cat = CATEGORIES[catId];
                 if (!cat) return;
                 const card = document.createElement('div');
@@ -4363,28 +4380,6 @@
         if (heroHowBtn) {
             heroHowBtn.addEventListener('click', openHeroSheet);
         }
-        // Restore category sheet after photo selection
-        const _catPhotoEditId = sessionStorage.getItem('catPhotoEditId');
-        if (_catPhotoEditId) {
-            const _draft = JSON.parse(sessionStorage.getItem('catPhotoEditDraft') || '{}');
-            const _fromPack = sessionStorage.getItem('catPhotoEditFromPack') !== '0';
-            // photos in selectedPhotos are now the user's choice for this category
-            _draft.photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]').map(Number);
-            // restore global selectedPhotos that was overwritten before navigating
-            const _globalPhotos = sessionStorage.getItem('globalSelectedPhotos');
-            if (_globalPhotos) {
-                sessionStorage.setItem('selectedPhotos', _globalPhotos);
-                sessionStorage.removeItem('globalSelectedPhotos');
-            }
-            sessionStorage.removeItem('catPhotoEditId');
-            sessionStorage.removeItem('catPhotoEditDraft');
-            sessionStorage.removeItem('catPhotoEditFromPack');
-            sessionStorage.removeItem('catPhotoEditTakenPhotos');
-            catDraft = _draft;
-            activeCatId = _catPhotoEditId;
-            catFromPack = _fromPack;
-        }
-
         renderPhotos();
         setupMainFields();
         renderCollection();
@@ -4395,23 +4390,6 @@
         if (_savedScroll) {
             sessionStorage.removeItem('step5crisis_scrollY');
             requestAnimationFrame(() => window.scrollTo(0, _savedScroll));
-        }
-
-        if (_catPhotoEditId) {
-            // reopen category sheet after photo edit
-            catPhotosExpanded = false;
-            fundItemsOpen = false;
-            const _cat = CATEGORIES[activeCatId];
-            if (_cat) {
-                document.getElementById('cat-sheet-title').textContent = 'Заполните данные по вещам в категории «' + _cat.name + '»';
-                document.getElementById('fund-items-body').classList.remove('open');
-                document.getElementById('fund-items-arrow').classList.remove('open');
-                document.getElementById('cat-remove-btn').style.display = (catFromPack && currentStep !== 2) ? '' : 'none';
-                renderCatParams();
-                document.getElementById('cat-overlay').classList.add('open');
-                document.getElementById('cat-sheet').classList.add('open');
-                document.body.style.overflow = 'hidden';
-            }
         }
         function updateHeaderScroll() {
             const header = document.querySelector('.header');
