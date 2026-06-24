@@ -1584,7 +1584,7 @@
         /* Inline photo picker inside cat sheet */
         .inline-photo-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             margin-top: 10px;
         }
@@ -1603,6 +1603,22 @@
             object-fit: cover;
             display: block;
             transition: opacity 0.15s;
+        }
+
+        .inline-photo-item.add-cell {
+            background: #F4F4F4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            overflow: visible;
+        }
+
+        .inline-photo-item.add-cell img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
         }
 
         .inline-photo-item.selected img { opacity: 0.85; }
@@ -3491,10 +3507,9 @@
 
             // "Add photo" cell
             const addCell = document.createElement('div');
-            addCell.className = 'inline-photo-item';
-            addCell.style.cssText = 'background:#F4F4F4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;';
+            addCell.className = 'inline-photo-item add-cell';
             addCell.onclick = () => { catPhotoPickerOpen = true; renderCatPhotos(); };
-            addCell.innerHTML = `<img src="step 2 materials/Camera.svg" width="24" height="24" alt=""><span style="font-size:12px;color:#1A1A1A;font-family:Inter,sans-serif;">Добавить</span>`;
+            addCell.innerHTML = `<img src="step 2 materials/Camera.svg" alt=""><span style="font-size:12px;color:#1A1A1A;font-family:Inter,sans-serif;">Добавить</span>`;
             grid.appendChild(addCell);
 
             block.appendChild(grid);
