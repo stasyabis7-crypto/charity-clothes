@@ -1222,6 +1222,7 @@
         }
         .cat-sub-text.red { color: #FF4053; }
         .cat-sub-text.done { color: #9E9E9E; }
+        .cat-sub-text.filled { color: #1A1A1A; }
 
         /* ADD MORE BLOCK */
         .add-more-block {
@@ -2917,10 +2918,11 @@
             const packCards = document.getElementById('pack-cards');
             packCards.innerHTML = '';
             if (userPickedFund) {
-                // User chose a different fund — show all fund categories as gray "Добавить в посылку" cards
+                // User chose a different fund — show all fund categories as cards
                 CATEGORY_ORDER.forEach(catId => {
                     const cat = CATEGORIES[catId];
                     if (!cat) return;
+                    const isFilled = catSel[catId] && catSel[catId]._saved;
                     const card = document.createElement('div');
                     card.className = 'cat-card';
                     card.onclick = () => openCatSheet(catId, false);
@@ -2930,7 +2932,7 @@
                         </div>
                         <div class="cat-info">
                             <div class="cat-name">${cat.name}</div>
-                            <div class="cat-sub-text done">Добавить в посылку</div>
+                            <div class="cat-sub-text ${isFilled ? 'filled' : 'done'}">${isFilled ? 'Вещи лежат в посылке' : 'Добавить в посылку'}</div>
                         </div>
                         <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
                     `;
@@ -2953,7 +2955,7 @@
                         </div>
                         <div class="cat-info">
                             <div class="cat-name">${cat.name}</div>
-                            <div class="cat-sub-text ${isFilled ? 'done' : 'red'}">${isFilled ? 'Вещи лежат в пакете' : 'Кратко расскажите про вещи'}</div>
+                            <div class="cat-sub-text ${isFilled ? 'filled' : 'red'}">${isFilled ? 'Вещи лежат в посылке' : 'Кратко расскажите про вещи'}</div>
                         </div>
                         <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
                     `;
@@ -3627,10 +3629,12 @@
             const initialPackCats = userPickedFund
                 ? []
                 : JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
+            const catSel = loadCatSelections();
             CATEGORY_ORDER.forEach(catId => {
                 if (initialPackCats.includes(catId)) return;
                 const cat = CATEGORIES[catId];
                 if (!cat) return;
+                const isFilled = catSel[catId] && catSel[catId]._saved;
                 const card = document.createElement('div');
                 card.className = 'cat-card';
                 card.style.cursor = 'pointer';
@@ -3641,7 +3645,7 @@
                     </div>
                     <div class="cat-info">
                         <div class="cat-name">${cat.name}</div>
-                        <div class="cat-sub-text done">Добавить в посылку</div>
+                        <div class="cat-sub-text ${isFilled ? 'filled' : 'done'}">${isFilled ? 'Вещи лежат в посылке' : 'Добавить в посылку'}</div>
                     </div>
                     <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
                 `;
@@ -3669,7 +3673,7 @@
                     </div>
                     <div class="cat-info">
                         <div class="cat-name">${cat.name}</div>
-                        <div class="cat-sub-text done">Вещи лежат в пакете</div>
+                        <div class="cat-sub-text filled">Вещи лежат в посылке</div>
                     </div>
                     <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
                 `;
