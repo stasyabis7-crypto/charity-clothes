@@ -1933,12 +1933,10 @@
 
             <section class="section" id="pack-section">
                 <h2 class="compact-title" id="pack-title">Что кладёте в пакет?</h2>
-                <p class="section-sub" id="pack-subtitle">Мы увидели, что у вас есть подходящие вещи</p>
-                <p class="section-sub" id="pack-subtitle-empty" style="display:none;">В фонде нам рассказали, что ещё сейчас собирают в помощь людям</p>
                 <div id="pack-cards"></div>
             </section>
 
-            <div class="add-more-block" id="add-more-block">
+            <div class="add-more-block" id="add-more-block" style="display:none;">
                 <h3 class="add-more-title" id="add-more-title">В фонде нам рассказали, что ещё сейчас собирают в помощь людям</h3>
                 <p class="add-more-sub" id="add-more-sub">Добавьте ещё, если есть</p>
                 <div class="add-more-slider-wrap">
@@ -1947,15 +1945,23 @@
             </div>
         </div>
 
-        <div id="step2-sections" style="display:none;">
+        <div id="step2-new-sections" style="display:none;">
+            <section class="section" style="margin-top:24px;">
+                <h2 class="section-title">Вы можете добавить в объявление товары из разных категорий</h2>
+                <p class="section-sub" style="margin-top:6px;">Фонды нам рассказали, что собирают прямо сейчас.</p>
+                <div id="step2-cat-chips" style="margin-top:12px;display:flex;flex-direction:column;gap:10px;"></div>
+            </section>
+        </div>
+
+        <div id="step3-sections" style="display:none;">
             <section class="section">
                 <h2 class="section-title">Проверьте данные объявления</h2>
                 <p class="section-sub">Мы заполнили их автоматически — отредактируйте если нужно</p>
             </section>
 
-            <section class="section" id="step2-cats-section" style="display:none;">
-                <h2 class="section-title">Вещи в пакете</h2>
-                <div id="step2-cats-list" style="display:flex;flex-direction:column;gap:12px;margin-top:12px;"></div>
+            <section class="section" id="step3-cats-section" style="display:none;">
+                <h2 class="section-title">Вещи в благотворительной посылке</h2>
+                <div id="step3-cats-list" style="display:flex;flex-direction:column;gap:12px;margin-top:12px;"></div>
             </section>
 
             <section class="section">
@@ -2026,6 +2032,9 @@
 
     <div class="bottom-bar">
         <button class="continue-btn active" id="step1-btn" onclick="proceedToStep2()">
+            Продолжить
+        </button>
+        <button class="continue-btn active" id="step2-new-btn" onclick="proceedToStep3()" style="display:none;">
             Продолжить
         </button>
         <button class="continue-btn active" id="step2-btn" onclick="goToDelivery()" style="display:none;">
@@ -2871,24 +2880,6 @@
             const fundTitleEl = document.getElementById('fund-title');
             if (fundTitleEl) fundTitleEl.textContent = showPhotoTitle ? 'Этому фонду подойдут ваши вещи' : 'Кому хотите помочь?';
 
-            const packSubtitleEl = document.getElementById('pack-subtitle');
-            const packSubtitleEmptyEl = document.getElementById('pack-subtitle-empty');
-            if (fromListingFlow && !userPickedFund) {
-                if (hasPhotos) {
-                    if (packSubtitleEl) { packSubtitleEl.textContent = 'И уже положили выбранные вещи в благотворительный пакет'; packSubtitleEl.style.display = ''; }
-                } else {
-                    if (packSubtitleEl) packSubtitleEl.style.display = 'none';
-                }
-                if (packSubtitleEmptyEl) packSubtitleEmptyEl.style.display = 'none';
-            } else {
-                if (packSubtitleEl) packSubtitleEl.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
-                if (packSubtitleEmptyEl) packSubtitleEmptyEl.style.display = (!hasPhotos || userPickedFund) ? '' : 'none';
-            }
-            const addMoreTitle = document.getElementById('add-more-title');
-            const addMoreSub = document.getElementById('add-more-sub');
-            if (addMoreTitle) addMoreTitle.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
-            if (addMoreSub) addMoreSub.style.display = (hasPhotos && !userPickedFund) ? '' : 'none';
-
             // Main pack cards
             const packCards = document.getElementById('pack-cards');
             packCards.innerHTML = '';
@@ -2932,7 +2923,7 @@
                 slider.appendChild(item);
             });
 
-            document.getElementById('add-more-block').style.display = ((hasPhotos && !userPickedFund) || sliderCats.length) ? '' : 'none';
+            document.getElementById('add-more-block').style.display = 'none';
 
             updateContinueState();
         }
@@ -2988,7 +2979,7 @@
             document.getElementById('fund-items-arrow').classList.remove('open');
 
             // remove btn visible only from pack
-            document.getElementById('cat-remove-btn').style.display = (fromPack && currentStep !== 2) ? '' : 'none';
+            document.getElementById('cat-remove-btn').style.display = (fromPack && currentStep === 1) ? '' : 'none';
 
             // hero image
             const heroImg = document.getElementById('cat-hero-img');
@@ -3019,10 +3010,15 @@
             document.getElementById('hero-section').style.display = step === 1 ? '' : 'none';
             document.getElementById('how-section').style.display = step === 1 ? '' : 'none';
             document.getElementById('step1-sections').style.display = step === 1 ? '' : 'none';
-            document.getElementById('step2-sections').style.display = step === 2 ? '' : 'none';
+            document.getElementById('step2-new-sections').style.display = step === 2 ? '' : 'none';
+            document.getElementById('step3-sections').style.display = step === 3 ? '' : 'none';
             document.getElementById('step1-btn').style.display = step === 1 ? '' : 'none';
-            document.getElementById('step2-btn').style.display = step === 2 ? '' : 'none';
-            if (step === 2) renderStep2Cats();
+            document.getElementById('step2-new-btn').style.display = step === 2 ? '' : 'none';
+            document.getElementById('step2-btn').style.display = step === 3 ? '' : 'none';
+            const addMoreBlock = document.getElementById('add-more-block');
+            if (addMoreBlock) addMoreBlock.style.display = 'none';
+            if (step === 2) renderStep2NewCategories();
+            if (step === 3) renderStep3Cats();
             window.scrollTo(0, 0);
         }
 
@@ -3033,13 +3029,19 @@
                 showSaveToast('Положите хотя бы одну категорию вещей в пакет, чтобы продолжить');
                 return;
             }
-            persistAll();
-            autoBuildDescription();
             showStep(2);
         }
 
+        function proceedToStep3() {
+            persistAll();
+            autoBuildDescription();
+            showStep(3);
+        }
+
         function handleBack() {
-            if (currentStep === 2) {
+            if (currentStep === 3) {
+                showStep(2);
+            } else if (currentStep === 2) {
                 showStep(1);
             } else {
                 window.location.href = 'step4.html';
@@ -3537,9 +3539,34 @@
             return hasPhotos;
         }
 
-        function renderStep2Cats() {
-            const list = document.getElementById('step2-cats-list');
-            const section = document.getElementById('step2-cats-section');
+        function renderStep2NewCategories() {
+            const container = document.getElementById('step2-cat-chips');
+            if (!container) return;
+            container.innerHTML = '';
+            CATEGORY_ORDER.forEach(catId => {
+                const cat = CATEGORIES[catId];
+                if (!cat) return;
+                const card = document.createElement('div');
+                card.className = 'cat-card';
+                card.style.cursor = 'pointer';
+                card.onclick = () => openCatSheet(catId, false);
+                card.innerHTML = `
+                    <div class="cat-img-wrap">
+                        <img class="cat-img" src="${cat.sliderImage || cat.image}" alt="">
+                    </div>
+                    <div class="cat-info">
+                        <div class="cat-name">${cat.name}</div>
+                        <div class="cat-sub-text done">Добавить в посылку</div>
+                    </div>
+                    <img class="cat-arrow" src="new podacha/DataView.svg" alt="">
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderStep3Cats() {
+            const list = document.getElementById('step3-cats-list');
+            const section = document.getElementById('step3-cats-section');
             if (!list || !section) return;
             const catSel = loadCatSelections();
             const savedCats = Object.entries(catSel).filter(([, data]) => data && data._saved);
@@ -3617,8 +3644,10 @@
             saveCatSelections(sel);
             closeCatSheet();
             showSaveToast();
-            if (currentStep === 2) {
-                renderStep2Cats();
+            if (currentStep === 3) {
+                renderStep3Cats();
+            } else if (currentStep === 2) {
+                renderStep2NewCategories();
             } else {
                 renderPackSection();
             }
