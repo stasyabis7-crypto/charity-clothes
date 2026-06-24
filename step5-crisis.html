@@ -2801,6 +2801,7 @@
         let catDraft = {}; // { gender:[], size:[], season:[], type:[], condition:[], desc:'', photos:[] }
         let fundItemsOpen = false;
         let activeTypeParam = null;
+        let catPhotoPickerOpen = false;
 
         function loadCatSelections() {
             return JSON.parse(sessionStorage.getItem('catSelections') || '{}');
@@ -2970,6 +2971,7 @@
             activeCatId = catId;
             catFromPack = fromPack;
             fundItemsOpen = false;
+            catPhotoPickerOpen = false;
 
             const cat = CATEGORIES[catId];
             const saved = loadCatSelections()[catId] || {};
@@ -3038,6 +3040,7 @@
             document.getElementById('cat-overlay').classList.remove('open');
             document.getElementById('cat-sheet').classList.remove('open');
             document.body.style.overflow = '';
+            catPhotoPickerOpen = false;
         }
 
         let currentStep = 1;
@@ -3431,11 +3434,7 @@
             updateCatSaveBtn();
         }
 
-        function renderCatPhotos() {
-            const block = document.getElementById('photos-param-block');
-            if (!block) return;
-
-            // Build taken set from other saved categories
+        function buildTakenSet() {
             const allCatSel = loadCatSelections();
             const takenSet = new Set();
             Object.entries(allCatSel).forEach(([cid, data]) => {
@@ -3443,24 +3442,72 @@
                     data.photos.forEach(p => takenSet.add(Number(p)));
                 }
             });
-            // Also mark photos auto-assigned to other unsaved initial pack categories
             const initCats = JSON.parse(sessionStorage.getItem('initialPackCategories') || '[]');
             initCats.forEach(cid => {
                 if (cid !== activeCatId && !allCatSel[cid]) {
                     getPhotosForCategory(cid).forEach(p => takenSet.add(Number(p)));
                 }
             });
+            return takenSet;
+        }
 
-            const catPhotos = (catDraft.photos || []).map(Number);
-            const catPhotosSet = new Set(catPhotos);
+        function renderCatPhotos() {
+            const block = document.getElementById('photos-param-block');
+            if (!block) return;
 
-            // Keep the label, replace everything else
             const label = block.querySelector('.param-label');
             block.innerHTML = '';
             if (label) block.appendChild(label);
 
+            if (catPhotoPickerOpen) {
+                renderCatPhotoPickerInto(block);
+            } else {
+                renderCatPhotoThumbsInto(block);
+            }
+        }
+
+        function renderCatPhotoThumbsInto(block) {
+            const catPhotos = (catDraft.photos || []).map(Number);
+
             const grid = document.createElement('div');
             grid.className = 'inline-photo-grid';
+            grid.style.marginTop = '10px';
+
+            catPhotos.forEach((id, i) => {
+                const item = document.createElement('div');
+                item.className = 'inline-photo-item selected';
+
+                const img = document.createElement('img');
+                img.src = PHOTO_FILES[id];
+                item.appendChild(img);
+
+                const badge = document.createElement('span');
+                badge.className = 'inline-photo-badge';
+                badge.textContent = i + 1;
+                item.appendChild(badge);
+
+                grid.appendChild(item);
+            });
+
+            // "Add photo" cell
+            const addCell = document.createElement('div');
+            addCell.className = 'inline-photo-item';
+            addCell.style.cssText = 'background:#F4F4F4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;';
+            addCell.onclick = () => { catPhotoPickerOpen = true; renderCatPhotos(); };
+            addCell.innerHTML = `<img src="step 2 materials/Camera.svg" width="24" height="24" alt=""><span style="font-size:12px;color:#1A1A1A;font-family:Inter,sans-serif;">Добавить</span>`;
+            grid.appendChild(addCell);
+
+            block.appendChild(grid);
+        }
+
+        function renderCatPhotoPickerInto(block) {
+            const catPhotos = (catDraft.photos || []).map(Number);
+            const catPhotosSet = new Set(catPhotos);
+            const takenSet = buildTakenSet();
+
+            const grid = document.createElement('div');
+            grid.className = 'inline-photo-grid';
+            grid.style.marginTop = '10px';
 
             for (let id = 1; id <= 8; id++) {
                 const inSelected = catPhotosSet.has(id);
@@ -3485,6 +3532,12 @@
             }
 
             block.appendChild(grid);
+
+            const doneBtn = document.createElement('button');
+            doneBtn.textContent = 'Готово';
+            doneBtn.style.cssText = 'margin-top:12px;width:100%;background:#1A1A1A;color:#fff;border:none;border-radius:14px;padding:14px;font-family:Inter,sans-serif;font-size:15px;font-weight:400;cursor:pointer;';
+            doneBtn.onclick = () => { catPhotoPickerOpen = false; renderCatPhotos(); };
+            block.appendChild(doneBtn);
         }
 
         function toggleInlineCatPhoto(id) {
@@ -4365,6 +4418,11 @@
 
         function goToDelivery() {
             persistAll();
+            sessionStorage.removeItem('catSelections');
+            sessionStorage.removeItem('initialPackCategories');
+            sessionStorage.removeItem('selectedFundId');
+            sessionStorage.removeItem('userPickedFund');
+            sessionStorage.removeItem('selectedPhotos');
             window.location.href = currentCollection === 'crisis' ? 'success-crisis.html' : 'success.html';
         }
 
