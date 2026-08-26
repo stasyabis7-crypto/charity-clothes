@@ -37,9 +37,11 @@ main{padding:8px 16px 24px}
 .sheet-content{padding:16px 16px 0;overflow-y:auto}
 .sheet-title{margin:0;padding-right:40px;font-size:26px;line-height:30px;font-weight:700}
 .sheet-footer{padding:10px;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
-.size-chart-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #ebeae8;font-size:15px;line-height:20px}
-.size-chart-row:last-child{border-bottom:0}
-.size-chart-row .sz{font-weight:700}
+.size-chart-card{padding:16px 0;border-bottom:1px solid #ebeae8}
+.size-chart-card:last-child{border-bottom:0}
+.size-chart-size{font-size:18px;line-height:22px;font-weight:700;margin-bottom:6px}
+.size-chart-detail{display:flex;justify-content:space-between;gap:12px;font-size:14px;line-height:20px;color:#757575;padding:2px 0}
+.size-chart-detail span:last-child{color:#111}
 .photo-tile,.add-photo{position:relative;aspect-ratio:1;min-width:0;overflow:hidden;border:0;border-radius:16px;padding:0;cursor:pointer}
 .photo-tile img.photo-img{width:100%;height:100%;object-fit:cover}
 .photo-delete{position:absolute;right:8px;bottom:8px;width:36px;height:36px;padding:0;border:0;background:none}
@@ -72,24 +74,47 @@ const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская оде
 const PRESETS={
   clothingKids:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мальчиков','Для девочек','Унисекс']},
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['80–92','98–116','122–140','146–152'],sizeChart:[{size:'80–92',value:'1–2 года'},{size:'98–116',value:'3–5 лет'},{size:'122–140',value:'6–9 лет'},{size:'146–152',value:'10–12 лет'}]},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['80–92','98–116','122–140','146–152'],sizeChart:[
+      {size:'80–92',short:'1–2 года',details:[['Возраст','1–2 года'],['Рост, см','80–92'],['Обхват груди, см','51–53']]},
+      {size:'98–116',short:'3–6 лет',details:[['Возраст','3–6 лет'],['Рост, см','98–116'],['Обхват груди, см','55–59']]},
+      {size:'122–140',short:'7–10 лет',details:[['Возраст','7–10 лет'],['Рост, см','122–140'],['Обхват груди, см','63–68']]},
+      {size:'146–152',short:'11–12 лет',details:[['Возраст','11–12 лет'],['Рост, см','146–152'],['Обхват груди, см','72–76']]}
+    ]},
     {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Весна–осень','Лето','Всесезонная']},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']}
   ],
   clothingAdult:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['XS','S','M','L','XL','XXL'],sizeChart:[{size:'XS',value:'40–42'},{size:'S',value:'44–46'},{size:'M',value:'48–50'},{size:'L',value:'52–54'},{size:'XL',value:'56–58'},{size:'XXL',value:'60 и больше'}]},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['XS','S','M','L','XL','XXL'],sizeChart:[
+      {size:'XS',short:'40–42',details:[['Российский размер','40–42'],['Обхват груди, см','82–85'],['Обхват талии, см','62–65'],['Обхват бёдер, см','88–91']]},
+      {size:'S',short:'44–46',details:[['Российский размер','44–46'],['Обхват груди, см','88–92'],['Обхват талии, см','68–73'],['Обхват бёдер, см','94–98']]},
+      {size:'M',short:'48–50',details:[['Российский размер','48–50'],['Обхват груди, см','96–100'],['Обхват талии, см','76–82'],['Обхват бёдер, см','100–104']]},
+      {size:'L',short:'52–54',details:[['Российский размер','52–54'],['Обхват груди, см','104–108'],['Обхват талии, см','86–92'],['Обхват бёдер, см','108–112']]},
+      {size:'XL',short:'56–58',details:[['Российский размер','56–58'],['Обхват груди, см','112–116'],['Обхват талии, см','96–102'],['Обхват бёдер, см','116–120']]},
+      {size:'XXL',short:'60 и больше',details:[['Российский размер','60 и больше'],['Обхват груди, см','120 и больше'],['Обхват талии, см','106 и больше'],['Обхват бёдер, см','124 и больше']]}
+    ]},
     {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Весна–осень','Лето','Всесезонная']},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']}
   ],
   footwear:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер обуви',options:['36–37','38–39','40–41','42–43','44+'],sizeChart:[{size:'36–37',value:'23–23,5 см'},{size:'38–39',value:'24–25 см'},{size:'40–41',value:'25,5–26,5 см'},{size:'42–43',value:'27–28 см'},{size:'44+',value:'28,5 см и больше'}]},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер обуви',options:['36–37','38–39','40–41','42–43','44+'],sizeChart:[
+      {size:'36–37',short:'23–23,5 см',details:[['Длина стопы, см','23–23,5'],['US','6–6,5'],['UK','3,5–4']]},
+      {size:'38–39',short:'24–25 см',details:[['Длина стопы, см','24–25'],['US','7–8'],['UK','4,5–5,5']]},
+      {size:'40–41',short:'25,5–26,5 см',details:[['Длина стопы, см','25,5–26,5'],['US','8,5–9,5'],['UK','6–7']]},
+      {size:'42–43',short:'27–28 см',details:[['Длина стопы, см','27–28'],['US','10–11'],['UK','7,5–8,5']]},
+      {size:'44+',short:'28,5 см и больше',details:[['Длина стопы, см','28,5 и больше'],['US','11,5 и больше'],['UK','9 и больше']]}
+    ]},
     {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Демисезон','Лето']},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
   ],
   bedding:[
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер',options:['1,5-спальное','2-спальное','Евро','Другое'],sizeChart:[{size:'1,5-спальное',value:'150×200 см'},{size:'2-спальное',value:'180×200 см'},{size:'Евро',value:'200×220 см'},{size:'Другое',value:'нестандартный размер'}]},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер',options:['1,5-спальное','2-спальное','Евро','Другое'],sizeChart:[
+      {size:'1,5-спальное',short:'150×200 см',details:[['Простыня, см','150×214'],['Пододеяльник, см','145×210'],['Наволочки, см','50×70, 2 шт']]},
+      {size:'2-спальное',short:'180×200 см',details:[['Простыня, см','180×214'],['Пододеяльник, см','175×210'],['Наволочки, см','50×70, 2 шт']]},
+      {size:'Евро',short:'200×220 см',details:[['Простыня, см','220×240'],['Пододеяльник, см','200×220'],['Наволочки, см','50×70, 2 шт']]},
+      {size:'Другое',short:'нестандартный размер',details:[['Комплектность','уточняется в описании']]}
+    ]},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
   ],
   dishes:[
@@ -150,7 +175,7 @@ if(sessionStorage.getItem('catPhotoEditId')){
 
 const savedValues=JSON.parse(sessionStorage.getItem('categoryFieldData_'+category)||'{}');
 const values={};
-fieldsFor(category).forEach(f=>{values[f.key]=savedValues[f.key]||(f.type==='checkbox'?[]:null)});
+fieldsFor(category).forEach(f=>{values[f.key]=savedValues[f.key]||((f.type==='checkbox'||f.type==='size')?[]:null)});
 
 document.getElementById('page-title').textContent=category;
 
@@ -164,8 +189,9 @@ function renderChips(field){
   return wrap;
 }
 function renderSizeSelect(field){
-  const btn=document.createElement('button');btn.type='button';btn.className='size-select'+(values[field.key]?' has-value':'');
-  btn.innerHTML=`<span>${values[field.key]||field.placeholder}</span><img src="arrow down.svg" alt="">`;
+  const chosen=values[field.key];
+  const btn=document.createElement('button');btn.type='button';btn.className='size-select'+(chosen.length?' has-value':'');
+  btn.innerHTML=`<span>${chosen.length?chosen.join(', '):field.placeholder}</span><img src="arrow down.svg" alt="">`;
   btn.onclick=()=>openSizePickSheet(field);
   return btn;
 }
@@ -225,28 +251,30 @@ function renderFooter(){
     :'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button>';
 }
 let sizePickField=null;
-let sizePickValue=null;
+let sizePickValues=[];
+function shortFor(field,opt){const e=(field.sizeChart||[]).find(s=>s.size===opt);return e?e.short:''}
 function renderSizePickList(){
   const list=document.getElementById('size-pick-list');
   list.innerHTML='';
   sizePickField.options.forEach(opt=>{
     const row=document.createElement('button');row.type='button';row.className='checkbox-row';
-    const checked=sizePickValue===opt;
-    row.innerHTML=`<img src="step 6 materials/checkbox ${checked?'on':'off'}.png" alt=""><span>${opt}</span>`;
-    row.onclick=()=>{sizePickValue=checked?null:opt;renderSizePickList()};
+    const checked=sizePickValues.includes(opt);
+    const short=shortFor(sizePickField,opt);
+    row.innerHTML=`<img src="step 6 materials/checkbox ${checked?'on':'off'}.png" alt=""><span>${short?`${opt}, ${short}`:opt}</span>`;
+    row.onclick=()=>{const i=sizePickValues.indexOf(opt);if(i>-1)sizePickValues.splice(i,1);else sizePickValues.push(opt);renderSizePickList()};
     list.appendChild(row);
   });
 }
 function openSizePickSheet(field){
-  sizePickField=field;sizePickValue=values[field.key];
+  sizePickField=field;sizePickValues=[...values[field.key]];
   renderSizePickList();
   document.getElementById('size-pick-sheet').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeSizePickSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('size-pick-sheet').classList.remove('open');document.body.style.overflow=''}
-function confirmSizePick(){values[sizePickField.key]=sizePickValue;closeSizePickSheet();renderFields()}
+function confirmSizePick(){values[sizePickField.key]=sizePickValues;closeSizePickSheet();renderFields()}
 function openSizeChartSheet(field){
-  document.getElementById('size-chart-body').innerHTML=(field.sizeChart||[]).map(r=>`<div class="size-chart-row"><span class="sz">${r.size}</span><span>${r.value}</span></div>`).join('');
+  document.getElementById('size-chart-body').innerHTML=(field.sizeChart||[]).map(r=>`<div class="size-chart-card"><div class="size-chart-size">${r.size}</div>${(r.details||[]).map(([k,v])=>`<div class="size-chart-detail"><span>${k}</span><span>${v}</span></div>`).join('')}</div>`).join('');
   document.getElementById('size-chart-sheet').classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -264,7 +292,7 @@ function validate(){
   let ok=true;let firstInvalid=null;
   fieldsFor(category).forEach(f=>{
     const val=values[f.key];
-    const valid=f.type==='checkbox'?val.length>0:!!val;
+    const valid=(f.type==='checkbox'||f.type==='size')?val.length>0:!!val;
     const box=document.querySelector(`.field[data-key="${f.key}"]`);
     box.classList.toggle('field-error',!valid);
     if(!valid){ok=false;firstInvalid=firstInvalid||box}
