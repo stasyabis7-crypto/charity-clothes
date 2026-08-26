@@ -46,8 +46,8 @@ main{padding:8px 16px 24px}
 .size-chart-detail span:last-child{color:#111}
 .photo-tile,.add-photo{position:relative;aspect-ratio:1;min-width:0;overflow:hidden;border:0;border-radius:16px;padding:0;cursor:pointer}
 .photo-tile img.photo-img{width:100%;height:100%;object-fit:cover}
-.photo-delete{position:absolute;right:8px;bottom:8px;width:36px;height:36px;padding:0;border:0;background:none}
-.photo-delete img{width:36px;height:36px}
+.photo-delete{position:absolute;right:8px;bottom:8px;width:44px;height:44px;padding:0;border:0;background:none}
+.photo-delete img{width:44px;height:44px}
 .add-photo{background:#f2f1f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:box-shadow .15s}
 .add-photo img{width:32px;height:32px}
 .add-photo span{font-size:15px;line-height:20px}
@@ -293,6 +293,7 @@ function closeSizeChartSheet(e){if(e&&e.target!==e.currentTarget)return;document
 function addPhotos(){
   const own=photos;
   const others=allPhotos.filter(id=>!own.includes(id));
+  sessionStorage.setItem('categoryFieldData_'+category,JSON.stringify(values));
   sessionStorage.setItem('catPhotoEditId',category);
   sessionStorage.setItem('selectedPhotos',JSON.stringify(own));
   sessionStorage.setItem('catPhotoEditTakenPhotos',JSON.stringify(others));
@@ -350,6 +351,7 @@ function removeFromParcel(){
   history.back();
 }
 function goBack(){
+  if(mode==='add')sessionStorage.removeItem('categoryFieldData_'+category);
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
   history.back();
