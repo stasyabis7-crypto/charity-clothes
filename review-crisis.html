@@ -146,6 +146,6 @@ renderContactMethods();
 
 function clearInput(id){const el=document.getElementById(id);el.value='';el.focus()}
 function toggleSwitch(id){document.getElementById(id).classList.toggle('on')}
-function publish(){location.href='success-crisis.html'}
+function publish(){sessionStorage.setItem('adTitle',document.getElementById('title-input').value);location.href='success-crisis.html'}
 </script>
 </body></html>

@@ -31,18 +31,18 @@ main{padding:0 16px}
 <main>
 <img class="illustration" src="new-podaca-V3/success/checkmark-illustration.png" alt="">
 <h1 class="title">Отлично!<br>Всё получилось</h1>
-<div class="notice"><img src="new-podaca-V3/success/checkmark-small.svg" alt=""><p><span class="link">Название объявления</span> опубликуется после проверки. Обычно она идёт от 2 до 30 минут</p></div>
+<div class="notice"><img src="new-podaca-V3/success/checkmark-small.svg" alt=""><p><a class="link" id="ad-title-link" href="ads.html"></a> опубликуется после проверки. Обычно она идёт от 2 до 30 минут</p></div>
 <h2 class="next-title">Что делать дальше</h2>
 <div class="next-scroll">
 <div class="next-card"><img src="new-podaca-V3/success/icon-chat.png" alt=""><p>Фонд напишет вам в чате</p></div>
 <div class="next-card"><img src="new-podaca-V3/success/icon-deal.png" alt=""><p>Договоритесь о сделке</p></div>
 <div class="next-card"><img src="new-podaca-V3/success/icon-send.png" alt=""><p>Отправьте вещи</p></div>
-<div class="next-card"><img src="new-podaca-V3/success/icon-badge.svg" alt=""><p>Значки на XL-объявлении</p></div>
 </div>
 </main>
 </div>
 <div class="footer"><div class="footer-inner"><button class="continue" onclick="finish()">Мои объявления</button></div></div>
 <script>
+document.getElementById('ad-title-link').textContent=sessionStorage.getItem('adTitle')||'Ваше объявление';
 function finish(){
   var keysToRemove=['selectedPhotos','selectedFundId','userPickedFund','initialPackCategories','catSelections','catDraft','mainCategory','adCollection','prevPage','catPhotoEditId','catPhotoEditTakenPhotos','photoReturnPage','viewFundId','fundInfoReturn','charityNeedSelections','mainDesc','adTitle','adDesc','adPrice','adCategories','hasDraft','catPhotoEditDraft','catPhotoEditFromPack','step5crisis_scrollY','globalSelectedPhotos','listingFlowAutoFilled','listingFlowEntry','photoCategoryOverrides','categoryDetailsCategory','categoryDetailsMode','pendingCategory','editingParcelCategory'];
   keysToRemove.forEach(function(k){sessionStorage.removeItem(k)});
