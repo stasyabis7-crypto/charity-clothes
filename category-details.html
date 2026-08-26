@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Категория вещей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}button{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}.header{height:64px;padding:8px 16px;display:flex;align-items:center;gap:8px}.back{width:40px;height:40px;flex-shrink:0;padding:8px;border:0;background:none;cursor:pointer}.back img{width:24px;height:24px}.header-title{flex:1;text-align:center;margin:0 -48px;font-size:16px;line-height:20px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+main{padding:8px 16px 24px}
+.field{margin-top:16px}
+.field-label{margin:0 0 12px;font-size:16px;line-height:20px;font-weight:700}
+.chips-wrap{display:flex;flex-wrap:wrap;gap:6px;border-radius:16px;transition:box-shadow .15s}
+.chip{padding:14px 16px;border:0;border-radius:16px;background:#f2f1f0;color:#111;font-size:15px;line-height:20px;cursor:pointer}
+.chip.selected{background:#141414;color:#fff}
+.checkbox-list{display:flex;flex-direction:column;border-radius:16px;transition:box-shadow .15s}
+.checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 0;border:0;background:none;cursor:pointer;text-align:left;width:100%}
+.checkbox-row img{width:20px;height:20px;flex-shrink:0}
+.checkbox-row span{font-size:15px;line-height:20px}
+.field.field-error .chips-wrap,.field.field-error .checkbox-list{box-shadow:0 0 0 2px #ff4053}
+.field.field-error .field-label{color:#ff4053}
+.photos-grid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-radius:16px;transition:box-shadow .15s}
+.photos-grid.field-error{box-shadow:0 0 0 2px #ff4053;padding:4px}
+.photo-tile,.add-photo{position:relative;aspect-ratio:1;min-width:0;overflow:hidden;border:0;border-radius:16px;padding:0;cursor:pointer}
+.photo-tile img.photo-img{width:100%;height:100%;object-fit:cover}
+.photo-delete{position:absolute;right:8px;bottom:8px;width:36px;height:36px;padding:0;border:0;background:none}
+.photo-delete img{width:36px;height:36px}
+.add-photo{background:#f2f1f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.add-photo img{width:32px;height:32px}
+.add-photo span{font-size:15px;line-height:20px}
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;display:flex;gap:6px;border-radius:24px 24px 0 0;background:#fff;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
+.footer-inner{max-width:600px;margin:0 auto;width:100%;display:flex;gap:6px}
+.btn{flex:1;min-height:52px;border:0;border-radius:16px;font-size:15px;line-height:20px;cursor:pointer}
+.btn-primary{background:#141414;color:#fff}
+.btn-secondary{background:#f2f1f0;color:#111}
+.toast{position:fixed;left:16px;right:16px;bottom:80px;z-index:30;margin:0 auto;max-width:480px;padding:16px 20px;border-radius:28px;background:#ff4053;color:#fff;font-size:15px;line-height:20px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 24px rgba(0,0,0,.12);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="header"><button class="back" onclick="goBack()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><h1 class="header-title" id="page-title"></h1><span style="width:40px"></span></header>
+<main id="fields-root"></main>
+</div>
+<div class="footer"><div class="footer-inner" id="footer-buttons"></div></div>
+<div class="toast" id="toast">Заполните данные категории</div>
+<script>
+const PHOTO_FILES={1:'new podacha/fond 1 photo 1.png?v=2',2:'new podacha/fond 1 photo 2.png?v=2',3:'new podacha/fond 2 photo 1.png?v=2',4:'new podacha/fond 2 photo 2.png?v=2',5:'new podacha/fond 3 photo 1.png?v=2',6:'new podacha/fond 3 photo 2.png?v=2',7:'new podacha/fond 4 photo 1.png?v=2',8:'new podacha/fond 4 photo 2.png?v=2'};
+const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
+
+const PRESETS={
+  clothingKids:[
+    {key:'pol',type:'chips',label:'Пол',options:['Для мальчиков','Для девочек','Унисекс']},
+    {key:'razmer',type:'chips',label:'Размер',options:['80–92','98–116','122–140','146–152']},
+    {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Весна–осень','Лето','Всесезонная']},
+    {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']}
+  ],
+  clothingAdult:[
+    {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
+    {key:'razmer',type:'chips',label:'Размер',options:['XS','S','M','L','XL','XXL']},
+    {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Весна–осень','Лето','Всесезонная']},
+    {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']}
+  ],
+  footwear:[
+    {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
+    {key:'razmer',type:'chips',label:'Размер',options:['36–37','38–39','40–41','42–43','44+']},
+    {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Демисезон','Лето']},
+    {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
+  ],
+  bedding:[
+    {key:'razmer',type:'chips',label:'Размер',options:['1,5-спальное','2-спальное','Евро','Другое']},
+    {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
+  ],
+  dishes:[
+    {key:'tip',type:'chips',label:'Тип посуды',options:['Тарелки','Кружки','Столовые приборы','Наборы']},
+    {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
+  ],
+  hygiene:[
+    {key:'tip',type:'chips',label:'Тип средств',options:['Мыло и гели','Шампуни','Зубные щётки и паста','Прочее']},
+    {key:'sostoyanie',type:'chips',label:'Состояние упаковки',options:['Новое, в упаковке','Начатое']}
+  ],
+  booksChild:[
+    {key:'vozrast',type:'chips',label:'Возраст читателя',options:['0–3 года','4–7 лет','8–12 лет']},
+    {key:'sostoyanie',type:'chips',label:'Общее состояние',options:['Как новая','Хорошее','Есть потертости']}
+  ],
+  booksGeneric:[
+    {key:'sostoyanie',type:'chips',label:'Общее состояние',options:['Как новая','Хорошее','Есть потертости']}
+  ],
+  rehab:[
+    {key:'tip',type:'chips',label:'Тип изделия',options:['Трости','Ходунки','Инвалидные коляски','Прочее']},
+    {key:'sostoyanie',type:'chips',label:'Состояние',options:['Рабочее состояние','Требует мелкого ремонта']}
+  ]
+};
+const CATEGORY_PRESET={'Детская одежда':'clothingKids','Тёплая одежда':'clothingAdult','Одежда для взрослых':'clothingAdult','Тёплые вещи':'clothingAdult','Обувь для взрослых':'footwear','Обувь':'footwear','Одеяла':'bedding','Постельное бельё':'bedding','Посуда':'dishes','Средства гигиены':'hygiene','Детская литература':'booksChild','Художественная литература':'booksGeneric','Учебная литература':'booksGeneric','Энциклопедии':'booksGeneric','Средства реабилитации':'rehab'};
+function fieldsFor(category){return PRESETS[CATEGORY_PRESET[category]]||PRESETS.booksGeneric}
+
+function photoCategoryOverrides(){return JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}')}
+function categoryOfPhoto(id,overrides){return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
+
+let category=sessionStorage.getItem('categoryDetailsCategory');
+let mode=sessionStorage.getItem('categoryDetailsMode');
+if(!category){
+  const editing=sessionStorage.getItem('editingParcelCategory');
+  const adding=sessionStorage.getItem('pendingCategory');
+  category=editing||adding;
+  mode=editing?'edit':'add';
+  if(category){sessionStorage.setItem('categoryDetailsCategory',category);sessionStorage.setItem('categoryDetailsMode',mode)}
+}
+sessionStorage.removeItem('editingParcelCategory');
+sessionStorage.removeItem('pendingCategory');
+if(!category){location.href='step5-crisis.html'}
+
+let allPhotos=JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').map(Number);
+let overrides=photoCategoryOverrides();
+let photos=allPhotos.filter(id=>categoryOfPhoto(id,overrides)===category);
+
+if(sessionStorage.getItem('catPhotoEditId')){
+  const own=JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').map(Number);
+  const taken=JSON.parse(sessionStorage.getItem('catPhotoEditTakenPhotos')||'[]').map(Number);
+  allPhotos=[...taken,...own];
+  sessionStorage.setItem('selectedPhotos',JSON.stringify(allPhotos));
+  overrides=photoCategoryOverrides();
+  own.forEach(id=>{overrides[id]=category});
+  sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
+  sessionStorage.removeItem('catPhotoEditId');
+  sessionStorage.removeItem('catPhotoEditTakenPhotos');
+  photos=allPhotos.filter(id=>categoryOfPhoto(id,overrides)===category);
+}
+
+const savedValues=JSON.parse(sessionStorage.getItem('categoryFieldData_'+category)||'{}');
+const values={};
+fieldsFor(category).forEach(f=>{values[f.key]=savedValues[f.key]||(f.type==='checkbox'?[]:null)});
+
+document.getElementById('page-title').textContent=category;
+
+function renderChips(field){
+  const wrap=document.createElement('div');wrap.className='chips-wrap';
+  field.options.forEach(opt=>{
+    const btn=document.createElement('button');btn.type='button';btn.className='chip'+(values[field.key]===opt?' selected':'');btn.textContent=opt;
+    btn.onclick=()=>{values[field.key]=opt;renderFields()};
+    wrap.appendChild(btn);
+  });
+  return wrap;
+}
+function renderCheckboxes(field){
+  const wrap=document.createElement('div');wrap.className='checkbox-list';
+  field.options.forEach(opt=>{
+    const row=document.createElement('button');row.type='button';row.className='checkbox-row';
+    const checked=values[field.key].includes(opt);
+    row.innerHTML=`<img src="step 6 materials/checkbox ${checked?'on':'off'}.png" alt=""><span>${opt}</span>`;
+    row.onclick=()=>{const arr=values[field.key];const i=arr.indexOf(opt);if(i>-1)arr.splice(i,1);else arr.push(opt);renderFields()};
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+function renderPhotos(){
+  const wrap=document.createElement('div');wrap.className='photos-grid';wrap.id='photos-field';
+  photos.forEach(id=>{
+    const tile=document.createElement('div');tile.className='photo-tile';
+    tile.innerHTML=`<img class="photo-img" src="${PHOTO_FILES[id]}" alt=""><button type="button" class="photo-delete" aria-label="Удалить"><img src="step 2 materials/delete.svg" alt=""></button>`;
+    tile.querySelector('.photo-delete').onclick=()=>{photos=photos.filter(p=>p!==id);renderFields()};
+    wrap.appendChild(tile);
+  });
+  const add=document.createElement('button');add.type='button';add.className='add-photo';add.innerHTML='<img src="step 2 materials/Camera.svg" alt=""><span>Добавить</span>';add.onclick=addPhotos;
+  wrap.appendChild(add);
+  return wrap;
+}
+function renderFields(){
+  const root=document.getElementById('fields-root');
+  root.innerHTML='';
+  fieldsFor(category).forEach(f=>{
+    const box=document.createElement('div');box.className='field';box.dataset.key=f.key;
+    const label=document.createElement('p');label.className='field-label';label.textContent=f.label;
+    box.appendChild(label);
+    box.appendChild(f.type==='chips'?renderChips(f):renderCheckboxes(f));
+    root.appendChild(box);
+  });
+  const photoLabel=document.createElement('div');photoLabel.className='field';
+  photoLabel.innerHTML='<p class="field-label">Фотографии</p>';
+  root.appendChild(photoLabel);
+  root.appendChild(renderPhotos());
+  renderFooter();
+}
+function renderFooter(){
+  const el=document.getElementById('footer-buttons');
+  el.innerHTML=mode==='edit'
+    ?'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button><button type="button" class="btn btn-secondary" onclick="removeFromParcel()">Убрать из посылки</button>'
+    :'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button>';
+}
+function addPhotos(){
+  const own=photos;
+  const others=allPhotos.filter(id=>!own.includes(id));
+  sessionStorage.setItem('catPhotoEditId',category);
+  sessionStorage.setItem('selectedPhotos',JSON.stringify(own));
+  sessionStorage.setItem('catPhotoEditTakenPhotos',JSON.stringify(others));
+  sessionStorage.setItem('photoReturnPage','category-details.html');
+  location.href='step2-choose.html';
+}
+function validate(){
+  let ok=true;let firstInvalid=null;
+  fieldsFor(category).forEach(f=>{
+    const val=values[f.key];
+    const valid=f.type==='chips'?!!val:val.length>0;
+    const box=document.querySelector(`.field[data-key="${f.key}"]`);
+    box.classList.toggle('field-error',!valid);
+    if(!valid){ok=false;firstInvalid=firstInvalid||box}
+  });
+  const photosBox=document.getElementById('photos-field');
+  const photosValid=photos.length>0;
+  photosBox.classList.toggle('field-error',!photosValid);
+  if(!photosValid){ok=false;firstInvalid=firstInvalid||photosBox}
+  if(!ok){showToast();firstInvalid.scrollIntoView({behavior:'smooth',block:'center'})}
+  return ok;
+}
+let toastTimer=null;
+function showToast(){
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+function persistParcel(){
+  const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
+  const merged=[...others,...photos];
+  overrides=photoCategoryOverrides();
+  photos.forEach(id=>{overrides[id]=category});
+  sessionStorage.setItem('selectedPhotos',JSON.stringify(merged));
+  sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
+}
+function save(){
+  if(!validate())return;
+  sessionStorage.setItem('categoryFieldData_'+category,JSON.stringify(values));
+  persistParcel();
+  sessionStorage.removeItem('categoryDetailsCategory');
+  sessionStorage.removeItem('categoryDetailsMode');
+  location.href='step5-crisis.html';
+}
+function removeFromParcel(){
+  const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
+  overrides=photoCategoryOverrides();
+  photos.forEach(id=>{delete overrides[id]});
+  sessionStorage.setItem('selectedPhotos',JSON.stringify(others));
+  sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
+  sessionStorage.removeItem('categoryFieldData_'+category);
+  sessionStorage.removeItem('categoryDetailsCategory');
+  sessionStorage.removeItem('categoryDetailsMode');
+  location.href='step5-crisis.html';
+}
+function goBack(){
+  sessionStorage.removeItem('categoryDetailsCategory');
+  sessionStorage.removeItem('categoryDetailsMode');
+  location.href='step5-crisis.html';
+}
+renderFields();
+</script>
+</body></html>
