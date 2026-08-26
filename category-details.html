@@ -145,16 +145,19 @@ function categoryOfPhoto(id,overrides){return overrides[id]||PHOTO_CATEGORIES[id
 
 let category=sessionStorage.getItem('categoryDetailsCategory');
 let mode=sessionStorage.getItem('categoryDetailsMode');
+let returnPage=sessionStorage.getItem('categoryDetailsReturn')||'step5-crisis.html';
 if(!category){
   const editing=sessionStorage.getItem('editingParcelCategory');
   const adding=sessionStorage.getItem('pendingCategory');
   category=editing||adding;
   mode=editing?'edit':'add';
-  if(category){sessionStorage.setItem('categoryDetailsCategory',category);sessionStorage.setItem('categoryDetailsMode',mode)}
+  returnPage=sessionStorage.getItem('categoryDetailsReturnFrom')||'step5-crisis.html';
+  if(category){sessionStorage.setItem('categoryDetailsCategory',category);sessionStorage.setItem('categoryDetailsMode',mode);sessionStorage.setItem('categoryDetailsReturn',returnPage)}
 }
 sessionStorage.removeItem('editingParcelCategory');
 sessionStorage.removeItem('pendingCategory');
-if(!category){location.href='step5-crisis.html'}
+sessionStorage.removeItem('categoryDetailsReturnFrom');
+if(!category){location.href=returnPage}
 
 let allPhotos=JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').map(Number);
 let overrides=photoCategoryOverrides();
@@ -175,7 +178,16 @@ if(sessionStorage.getItem('catPhotoEditId')){
 
 const savedValues=JSON.parse(sessionStorage.getItem('categoryFieldData_'+category)||'{}');
 const values={};
-fieldsFor(category).forEach(f=>{values[f.key]=savedValues[f.key]||((f.type==='checkbox'||f.type==='size')?[]:null)});
+fieldsFor(category).forEach(f=>{
+  let v=savedValues[f.key];
+  if(f.type==='checkbox'||f.type==='size'){
+    if(v==null)v=[];
+    else if(!Array.isArray(v))v=[v];
+  }else if(Array.isArray(v)){
+    v=v[0]||null;
+  }
+  values[f.key]=v==null?(f.type==='checkbox'||f.type==='size'?[]:null):v;
+});
 
 document.getElementById('page-title').textContent=category;
 
@@ -325,7 +337,8 @@ function save(){
   persistParcel();
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
-  location.href='step5-crisis.html';
+  sessionStorage.removeItem('categoryDetailsReturn');
+  location.href=returnPage;
 }
 function removeFromParcel(){
   const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
@@ -336,12 +349,14 @@ function removeFromParcel(){
   sessionStorage.removeItem('categoryFieldData_'+category);
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
-  location.href='step5-crisis.html';
+  sessionStorage.removeItem('categoryDetailsReturn');
+  location.href=returnPage;
 }
 function goBack(){
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
-  location.href='step5-crisis.html';
+  sessionStorage.removeItem('categoryDetailsReturn');
+  location.href=returnPage;
 }
 renderFields();
 </script>
