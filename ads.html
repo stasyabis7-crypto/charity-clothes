@@ -490,6 +490,44 @@
             `;
         }
 
+        function renderPublishedCharityAd() {
+            const existing = document.getElementById('charity-active-item');
+            if (existing) existing.remove();
+            if (sessionStorage.getItem('hasPublishedCharityAd') !== '1') return;
+            const PHOTO_FILES = {
+                1: 'new podacha/fond 1 photo 1.png?v=2', 2: 'new podacha/fond 1 photo 2.png?v=2',
+                3: 'new podacha/fond 2 photo 1.png?v=2', 4: 'new podacha/fond 2 photo 2.png?v=2',
+                5: 'new podacha/fond 3 photo 1.png?v=2', 6: 'new podacha/fond 3 photo 2.png?v=2',
+                7: 'new podacha/fond 4 photo 1.png?v=2', 8: 'new podacha/fond 4 photo 2.png?v=2'
+            };
+            const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
+            const photoSrc = PHOTO_FILES[Number(photos[0])] || 'optimized/ui/img-drafts.jpg';
+            const title = sessionStorage.getItem('adTitle') || 'Благотворительный пакет вещей';
+            const item = document.createElement('div');
+            item.className = 'ad-item';
+            item.id = 'charity-active-item';
+            item.style.cursor = 'pointer';
+            item.onclick = function () { window.location.href = 'step5-crisis.html'; };
+            item.innerHTML = `
+                <img src="${photoSrc}" class="ad-photo" alt="">
+                <div class="ad-content">
+                    <div class="ad-title-row">
+                        <span class="ad-title ad-title-single">${escHtml(title)}</span>
+                        <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
+                    </div>
+                    <div class="ad-price">Бесплатно</div>
+                    <div class="ad-days">На проверке</div>
+                    <div class="ad-badge-row">
+                        <span class="charity-badge">Добрые вещи</span>
+                    </div>
+                </div>
+            `;
+            const list = document.querySelector('#content-active .ads-list');
+            list.insertBefore(item, list.firstChild);
+            const countEl = document.querySelector('.tab[data-tab="active"] .tab-count');
+            if (countEl) countEl.textContent = String(list.querySelectorAll('.ad-item').length);
+        }
+
         function updateDraftsCount() {
             const countEl = document.getElementById('drafts-count');
             countEl.textContent = sessionStorage.getItem('hasDraft') === '1' ? '1' : '';
@@ -507,7 +545,8 @@
         }
 
         function startNewAd() {
-            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice'].forEach(k => sessionStorage.removeItem(k));
+            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice','hasPublishedCharityAd','selectedFundId','photoCategoryOverrides'].forEach(k => sessionStorage.removeItem(k));
+            Object.keys(sessionStorage).filter(k => k.indexOf('categoryFieldData_') === 0).forEach(k => sessionStorage.removeItem(k));
             window.location.href = 'step1.html';
         }
 
@@ -520,6 +559,7 @@
         const initTab = params.get('tab') || 'active';
 
         updateDraftsCount();
+        renderPublishedCharityAd();
         switchTab(initTab);
 
         if (params.get('toast') === '1') {

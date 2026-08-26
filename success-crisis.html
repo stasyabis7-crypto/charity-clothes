@@ -44,9 +44,9 @@ main{padding:0 16px}
 <script>
 document.getElementById('ad-title-link').textContent=sessionStorage.getItem('adTitle')||'Ваше объявление';
 function finish(){
-  var keysToRemove=['selectedPhotos','selectedFundId','userPickedFund','initialPackCategories','catSelections','catDraft','mainCategory','adCollection','prevPage','catPhotoEditId','catPhotoEditTakenPhotos','photoReturnPage','viewFundId','fundInfoReturn','charityNeedSelections','mainDesc','adTitle','adDesc','adPrice','adCategories','hasDraft','catPhotoEditDraft','catPhotoEditFromPack','step5crisis_scrollY','globalSelectedPhotos','listingFlowAutoFilled','listingFlowEntry','photoCategoryOverrides','categoryDetailsCategory','categoryDetailsMode','pendingCategory','editingParcelCategory'];
+  sessionStorage.setItem('hasPublishedCharityAd','1');
+  var keysToRemove=['userPickedFund','initialPackCategories','catSelections','catDraft','mainCategory','adCollection','prevPage','catPhotoEditId','catPhotoEditTakenPhotos','photoReturnPage','viewFundId','fundInfoReturn','charityNeedSelections','mainDesc','adDesc','adPrice','adCategories','hasDraft','catPhotoEditDraft','catPhotoEditFromPack','step5crisis_scrollY','globalSelectedPhotos','listingFlowAutoFilled','listingFlowEntry','categoryDetailsCategory','categoryDetailsMode','pendingCategory','editingParcelCategory'];
   keysToRemove.forEach(function(k){sessionStorage.removeItem(k)});
-  Object.keys(sessionStorage).filter(function(k){return k.indexOf('categoryFieldData_')===0}).forEach(function(k){sessionStorage.removeItem(k)});
   window.location.href='ads.html';
 }
 </script>
