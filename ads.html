@@ -507,18 +507,20 @@
             item.className = 'ad-item';
             item.id = 'charity-active-item';
             item.style.cursor = 'pointer';
-            item.onclick = function () { window.location.href = 'step5-crisis.html'; };
+            item.onclick = function () { window.location.href = 'ad-page.html'; };
             item.innerHTML = `
                 <img src="${photoSrc}" class="ad-photo" alt="">
                 <div class="ad-content">
                     <div class="ad-title-row">
                         <span class="ad-title ad-title-single">${escHtml(title)}</span>
-                        <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
+                        <a href="step5-crisis.html" style="flex-shrink:0;margin-top:1px;" onclick="event.stopPropagation()">
+                            <img src="step 0 icons/Edit.svg" width="20" height="20" class="ad-edit" alt="">
+                        </a>
                     </div>
                     <div class="ad-price">Бесплатно</div>
                     <div class="ad-days">На проверке</div>
                     <div class="ad-badge-row">
-                        <span class="charity-badge">Добрые вещи</span>
+                        <span class="charity-badge">Благотворительность</span>
                     </div>
                 </div>
             `;
@@ -545,7 +547,7 @@
         }
 
         function startNewAd() {
-            ['adTitle','adDesc','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice','hasPublishedCharityAd','selectedFundId','photoCategoryOverrides'].forEach(k => sessionStorage.removeItem(k));
+            ['adTitle','adDesc','adDescText','adAddress','adNumber','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice','hasPublishedCharityAd','selectedFundId','photoCategoryOverrides'].forEach(k => sessionStorage.removeItem(k));
             Object.keys(sessionStorage).filter(k => k.indexOf('categoryFieldData_') === 0).forEach(k => sessionStorage.removeItem(k));
             window.location.href = 'step1.html';
         }

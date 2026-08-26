@@ -118,7 +118,7 @@ const parcelList=document.getElementById('parcel-list');
 categoryNames.forEach(category=>{
   const row=document.createElement('button');row.type='button';row.className='parcel-row';
   row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);location.href='category-details.html'};
-  row.innerHTML=`<span class="parcel-thumb"></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="new-podaca-V3/EditOutline.svg" alt="Изменить">`;
+  row.innerHTML=`<span class="parcel-thumb"></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="new-podaca-V3/Edit Outline.svg" alt="Изменить">`;
   parcelList.appendChild(row);
 });
 
@@ -151,6 +151,6 @@ renderContactMethods();
 
 function clearInput(id){const el=document.getElementById(id);el.value='';el.focus()}
 function toggleSwitch(id){document.getElementById(id).classList.toggle('on')}
-function publish(){sessionStorage.setItem('adTitle',document.getElementById('title-input').value);location.href='success-crisis.html'}
+function publish(){sessionStorage.setItem('adTitle',document.getElementById('title-input').value);sessionStorage.setItem('adAddress',document.getElementById('address-input').value);sessionStorage.setItem('adDescText',document.getElementById('desc-input').value);location.href='success-crisis.html'}
 </script>
 </body></html>
