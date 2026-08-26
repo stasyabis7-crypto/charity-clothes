@@ -145,19 +145,16 @@ function categoryOfPhoto(id,overrides){return overrides[id]||PHOTO_CATEGORIES[id
 
 let category=sessionStorage.getItem('categoryDetailsCategory');
 let mode=sessionStorage.getItem('categoryDetailsMode');
-let returnPage=sessionStorage.getItem('categoryDetailsReturn')||'step5-crisis.html';
 if(!category){
   const editing=sessionStorage.getItem('editingParcelCategory');
   const adding=sessionStorage.getItem('pendingCategory');
   category=editing||adding;
   mode=editing?'edit':'add';
-  returnPage=sessionStorage.getItem('categoryDetailsReturnFrom')||'step5-crisis.html';
-  if(category){sessionStorage.setItem('categoryDetailsCategory',category);sessionStorage.setItem('categoryDetailsMode',mode);sessionStorage.setItem('categoryDetailsReturn',returnPage)}
+  if(category){sessionStorage.setItem('categoryDetailsCategory',category);sessionStorage.setItem('categoryDetailsMode',mode)}
 }
 sessionStorage.removeItem('editingParcelCategory');
 sessionStorage.removeItem('pendingCategory');
-sessionStorage.removeItem('categoryDetailsReturnFrom');
-if(!category){location.href=returnPage}
+if(!category){history.back()}
 
 let allPhotos=JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').map(Number);
 let overrides=photoCategoryOverrides();
@@ -298,7 +295,7 @@ function addPhotos(){
   sessionStorage.setItem('selectedPhotos',JSON.stringify(own));
   sessionStorage.setItem('catPhotoEditTakenPhotos',JSON.stringify(others));
   sessionStorage.setItem('photoReturnPage','category-details.html');
-  location.href='step2-choose.html';
+  location.replace('step2-choose.html');
 }
 function validate(){
   let ok=true;let firstInvalid=null;
@@ -337,8 +334,7 @@ function save(){
   persistParcel();
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
-  sessionStorage.removeItem('categoryDetailsReturn');
-  location.href=returnPage;
+  history.back();
 }
 function removeFromParcel(){
   const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
@@ -349,14 +345,12 @@ function removeFromParcel(){
   sessionStorage.removeItem('categoryFieldData_'+category);
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
-  sessionStorage.removeItem('categoryDetailsReturn');
-  location.href=returnPage;
+  history.back();
 }
 function goBack(){
   sessionStorage.removeItem('categoryDetailsCategory');
   sessionStorage.removeItem('categoryDetailsMode');
-  sessionStorage.removeItem('categoryDetailsReturn');
-  location.href=returnPage;
+  history.back();
 }
 renderFields();
 </script>

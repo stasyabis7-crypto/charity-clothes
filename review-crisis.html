@@ -112,7 +112,7 @@ document.getElementById('parcel-label').textContent=`Моя посылка (${ca
 const parcelList=document.getElementById('parcel-list');
 categoryNames.forEach(category=>{
   const row=document.createElement('button');row.type='button';row.className='parcel-row';
-  row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);sessionStorage.setItem('categoryDetailsReturnFrom','review-crisis.html');location.href='category-details.html'};
+  row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);location.href='category-details.html'};
   row.innerHTML=`<span class="parcel-thumb"></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="step 0 icons/Edit.svg" alt="Изменить">`;
   parcelList.appendChild(row);
 });

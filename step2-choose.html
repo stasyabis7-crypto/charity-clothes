@@ -320,7 +320,7 @@
         function goToDone() {
             const returnPage = sessionStorage.getItem('photoReturnPage') || 'step2-end.html';
             sessionStorage.removeItem('photoReturnPage');
-            window.location.href = returnPage;
+            window.location.replace(returnPage);
         }
 
         render();
