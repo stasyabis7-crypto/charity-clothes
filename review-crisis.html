@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Проверьте данные объявления</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}button,input,textarea{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-ExtraBold.ttf') format('truetype');font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Black.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:'CoFo Avito Text',Arial,sans-serif}button,input,textarea{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}
 .header{height:72px;padding:8px 16px;display:flex;align-items:center;justify-content:space-between}.back{width:40px;height:40px;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.save{padding:10px 0;border:0;background:none;color:#757575;font-size:15px;line-height:20px;cursor:pointer}
 main{padding:8px 16px 24px}
 h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
@@ -113,7 +118,7 @@ const parcelList=document.getElementById('parcel-list');
 categoryNames.forEach(category=>{
   const row=document.createElement('button');row.type='button';row.className='parcel-row';
   row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);location.href='category-details.html'};
-  row.innerHTML=`<span class="parcel-thumb"></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="step 0 icons/Edit.svg" alt="Изменить">`;
+  row.innerHTML=`<span class="parcel-thumb"></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="new-podaca-V3/EditOutline.svg" alt="Изменить">`;
   parcelList.appendChild(row);
 });
 
