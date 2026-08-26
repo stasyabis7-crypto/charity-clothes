@@ -1,319 +1,53 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-    <title>Спасибо за помощь</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #fff;
-            max-width: 430px;
-            margin: 0 auto;
-            padding-bottom: 140px;
-        }
-
-        .header {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 16px;
-        }
-
-        .header-title {
-            font-size: 17px;
-            font-weight: 600;
-            color: #1A1A1A;
-            line-height: 24px;
-        }
-
-        .header-close {
-            position: absolute;
-            right: 16px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: default;
-            opacity: 0.35;
-        }
-
-        .main-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 32px 16px 0;
-            text-align: center;
-        }
-
-        .fond-img {
-            width: 263px;
-            height: 174px;
-            object-fit: contain;
-        }
-
-        .success-title {
-            margin-top: 16px;
-            font-size: 22px;
-            font-weight: 700;
-            color: #1A1A1A;
-            line-height: 28px;
-        }
-
-        .success-sub {
-            margin-top: 4px;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            line-height: 22px;
-            overflow-wrap: break-word;
-            max-width: 280px;
-        }
-
-        .view-btn {
-            margin-top: 24px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #F4F4F4;
-            border: none;
-            border-radius: 16px;
-            padding: 14px 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            color: #1A1A1A;
-            cursor: default;
-            pointer-events: none;
-        }
-        .view-btn img { filter: brightness(0); }
-
-        /* WHAT'S NEXT */
-        .what-next {
-            padding: 32px 16px 0;
-        }
-
-        .what-next-title {
-            font-size: 21px;
-            font-weight: 700;
-            line-height: 26px;
-            color: #1A1A1A;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-
-        .what-next-carousel {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            margin: 0 -16px;
-            padding: 0 16px 4px;
-        }
-
-        .what-next-carousel::-webkit-scrollbar { display: none; }
-
-        .what-next-banner {
-            flex-shrink: 0;
-            width: 280px;
-            background: #F2F1F0;
-            border-radius: 24px;
-            padding: 12px 16px 18px;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 12px;
-            scroll-snap-align: start;
-        }
-
-        .what-next-banner img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            flex-shrink: 0;
-        }
-
-        .what-next-banner-text { flex: 1; min-width: 0; }
-
-        .what-next-banner-title {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 20px;
-            color: #1A1A1A;
-        }
-
-        .what-next-banner-sub {
-            margin-top: 2px;
-            font-size: 15px;
-            font-weight: 400;
-            line-height: 22px;
-            color: #1A1A1A;
-        }
-
-        /* BOTTOM */
-        .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 430px;
-            background: #fff;
-            padding: 12px 16px 28px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 100;
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-        }
-
-        .btn-black {
-            display: block;
-            width: 100%;
-            background: #1A1A1A;
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            text-align: center;
-            cursor: pointer;
-        }
-        .btn-black:active { opacity: 0.8; }
-
-        .btn-gray {
-            display: block;
-            width: 100%;
-            background: #F4F4F4;
-            color: #1A1A1A;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            text-align: center;
-            cursor: default;
-            pointer-events: none;
-        }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Отлично! Всё получилось</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}button{font:inherit}body{padding-bottom:104px}.page{width:100%;max-width:520px;margin:auto}
+.status-spacer{height:53px}
+main{padding:0 16px}
+.illustration{display:block;width:100%;max-width:349px;margin:0 auto}
+.title{margin:12px 0 0;font-size:32px;line-height:36px;font-weight:800;text-align:center}
+.notice{display:flex;align-items:flex-start;gap:4px;margin-top:10px;padding:6px 0}
+.notice img{width:16px;height:20px;flex-shrink:0;margin-top:1px}
+.notice p{margin:0;font-size:15px;line-height:20px}
+.notice .link{color:#757575;text-decoration:underline}
+.next-title{margin:28px 0 0;font-size:21px;line-height:26px;font-weight:800}
+.next-scroll{margin-top:16px;display:flex;gap:6px;overflow-x:auto;padding:0 16px 4px;margin-left:-16px;margin-right:-16px;scrollbar-width:none}
+.next-scroll::-webkit-scrollbar{display:none}
+.next-card{flex-shrink:0;width:136px;padding:12px 12px 16px;border-radius:20px;background:#f2f1f0}
+.next-card img{width:48px;height:48px;display:block;border-radius:14px}
+.next-card p{margin:16px 0 0;font-size:15px;line-height:20px;font-weight:500}
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;border-radius:24px 24px 0 0;background:#fff;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 30px rgba(0,0,0,.12)}
+.footer-inner{max-width:520px;margin:0 auto}
+.continue{width:100%;min-height:52px;border:0;border-radius:16px;background:#141414;color:#fff;font-size:15px;line-height:20px;cursor:pointer}
+</style>
 </head>
 <body>
-
-    <header class="header">
-        <span class="header-title">Спасибо за помощь</span>
-        <button class="header-close">
-            <img src="new category/CloseButton.svg" width="24" height="24" alt="">
-        </button>
-    </header>
-
-    <div class="main-block">
-        <img class="fond-img" id="fond-img" src="new podacha/success fond 1.png" alt="">
-
-        <div class="success-title">Всё получилось!</div>
-        <div class="success-sub" id="success-sub">Опубликуем через минуту для фонда «»</div>
-
-    </div>
-
-    <section class="what-next">
-        <h2 class="what-next-title">Что будет дальше</h2>
-        <div class="what-next-carousel">
-            <div class="what-next-banner">
-                <img src="new category/img 1.png" alt="">
-                <div class="what-next-banner-text">
-                    <div class="what-next-banner-title">Фонд увидит объявление</div>
-                    <div class="what-next-banner-sub">Сотрудники фондов просматривают объявления и откликаются на подходящие вещи</div>
-                </div>
-            </div>
-            <div class="what-next-banner">
-                <img src="new category/img 2.png" alt="">
-                <div class="what-next-banner-text">
-                    <div class="what-next-banner-title">Фонд напишет вам в чат</div>
-                    <div class="what-next-banner-sub">Если вещи подойдут, с вами свяжутся в Авито Чате и договорятся о передаче</div>
-                </div>
-            </div>
-            <div class="what-next-banner">
-                <img src="new category/img 3.png" alt="">
-                <div class="what-next-banner-text">
-                    <div class="what-next-banner-title">Отнесите посылку в доставку</div>
-                    <div class="what-next-banner-sub">Упакуйте вещи и сдайте в ближайший пункт Авито Доставки. Это бесплатно</div>
-                </div>
-            </div>
-            <div class="what-next-banner">
-                <img src="new category/img 4.png" alt="">
-                <div class="what-next-banner-text">
-                    <div class="what-next-banner-title">Покажем, когда вещь получена</div>
-                    <div class="what-next-banner-sub">Пришлём уведомление, когда фонд заберёт посылку и вещь будет передана</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="bottom-bar">
-        <button class="btn-black" onclick="startNew()">Разместить ещё</button>
-        <button class="btn-gray">Мои объявления</button>
-    </div>
-
-    <script>
-        const FUNDS = {
-            1: 'Российский Красный Крест',
-            2: 'Ночлежка',
-            3: 'Миллион книг',
-            4: 'Дари надежду'
-        };
-
-        function fixHangingPrepositions(el) {
-            var NBSP = ' ';
-            var pattern = /(^|\s)(в|к|с|у|о|и|а|но|ни|на|до|из|за|по|от|не|да|бы|ли|же|то|об|со|ко|во|для|без|под|над|про|при|или|это|что|как|так|уже|ещё|раз|всё)\s/giu;
-            el.textContent = el.textContent.replace(pattern, function(_, before, prep) {
-                return before + prep + NBSP;
-            });
-        }
-
-        var fondId = Number(sessionStorage.getItem('selectedFundId') || '1');
-        var fondName = FUNDS[fondId] || FUNDS[1];
-
-        document.getElementById('fond-img').src = 'new podacha/success fond ' + fondId + '.png';
-
-        var subEl = document.getElementById('success-sub');
-        subEl.textContent = 'Опубликуем через минуту для фонда «' + fondName + '»';
-        fixHangingPrepositions(subEl);
-
-        function startNew() {
-            var keysToRemove = [
-                'selectedPhotos', 'selectedFundId', 'userPickedFund',
-                'initialPackCategories', 'catSelections', 'catDraft',
-                'mainCategory', 'adCollection', 'prevPage',
-                'catPhotoEditId', 'catPhotoEditTakenPhotos', 'photoReturnPage',
-                'viewFundId', 'fundInfoReturn',
-                'charityNeedSelections', 'mainDesc', 'adTitle', 'adDesc', 'adPrice',
-                'adCategories', 'hasDraft', 'catPhotoEditDraft',
-                'catPhotoEditFromPack', 'step5crisis_scrollY', 'globalSelectedPhotos',
-                'listingFlowAutoFilled', 'listingFlowEntry',
-                'photoCategoryOverrides', 'categoryDetailsCategory', 'categoryDetailsMode',
-                'pendingCategory', 'editingParcelCategory'
-            ];
-            keysToRemove.forEach(function(k) { sessionStorage.removeItem(k); });
-            Object.keys(sessionStorage).filter(function(k){return k.indexOf('categoryFieldData_')===0}).forEach(function(k){sessionStorage.removeItem(k)});
-            window.location.href = 'step1.html';
-        }
-    </script>
-
-</body>
-</html>
+<div class="page">
+<div class="status-spacer"></div>
+<main>
+<img class="illustration" src="new-podaca-V3/success/checkmark-illustration.png" alt="">
+<h1 class="title">Отлично!<br>Всё получилось</h1>
+<div class="notice"><img src="new-podaca-V3/success/checkmark-small.svg" alt=""><p><span class="link">Название объявления</span> опубликуется после проверки. Обычно она идёт от 2 до 30 минут</p></div>
+<h2 class="next-title">Что делать дальше</h2>
+<div class="next-scroll">
+<div class="next-card"><img src="new-podaca-V3/success/icon-chat.png" alt=""><p>Фонд напишет вам в чате</p></div>
+<div class="next-card"><img src="new-podaca-V3/success/icon-deal.png" alt=""><p>Договоритесь о сделке</p></div>
+<div class="next-card"><img src="new-podaca-V3/success/icon-send.png" alt=""><p>Отправьте вещи</p></div>
+<div class="next-card"><img src="new-podaca-V3/success/icon-badge.svg" alt=""><p>Значки на XL-объявлении</p></div>
+</div>
+</main>
+</div>
+<div class="footer"><div class="footer-inner"><button class="continue" onclick="finish()">Мои объявления</button></div></div>
+<script>
+function finish(){
+  var keysToRemove=['selectedPhotos','selectedFundId','userPickedFund','initialPackCategories','catSelections','catDraft','mainCategory','adCollection','prevPage','catPhotoEditId','catPhotoEditTakenPhotos','photoReturnPage','viewFundId','fundInfoReturn','charityNeedSelections','mainDesc','adTitle','adDesc','adPrice','adCategories','hasDraft','catPhotoEditDraft','catPhotoEditFromPack','step5crisis_scrollY','globalSelectedPhotos','listingFlowAutoFilled','listingFlowEntry','photoCategoryOverrides','categoryDetailsCategory','categoryDetailsMode','pendingCategory','editingParcelCategory'];
+  keysToRemove.forEach(function(k){sessionStorage.removeItem(k)});
+  Object.keys(sessionStorage).filter(function(k){return k.indexOf('categoryFieldData_')===0}).forEach(function(k){sessionStorage.removeItem(k)});
+  window.location.href='ads.html';
+}
+</script>
+</body></html>
