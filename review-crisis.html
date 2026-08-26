@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Проверьте данные объявления</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}button,input,textarea{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}
+.header{height:72px;padding:8px 16px;display:flex;align-items:center;justify-content:space-between}.back{width:40px;height:40px;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.save{padding:10px 0;border:0;background:none;color:#757575;font-size:15px;line-height:20px;cursor:pointer}
+main{padding:8px 16px 24px}
+h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
+.section{margin-top:24px}
+.field-label{margin:0 0 12px;font-size:16px;line-height:20px;font-weight:700}
+.input-wrap{position:relative}
+.text-input{width:100%;padding:15px 44px 15px 18px;border:0;border-radius:16px;background:#f2f1f0;color:#111;font-size:15px;line-height:20px}
+.input-clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:14px;height:20px;padding:0;border:0;background:none;cursor:pointer;display:flex;align-items:center}
+.input-clear img{width:14px;height:20px}
+.help-text{margin:8px 0 0;font-size:13px;line-height:18px;color:#757575}
+.parcel-row{width:100%;margin-top:12px;padding:0;border:0;background:none;display:grid;grid-template-columns:48px minmax(0,1fr) 20px;gap:12px;align-items:center;text-align:left;cursor:pointer}
+.parcel-row:first-child{margin-top:0}
+.parcel-thumb{width:48px;height:48px;border-radius:12px;object-fit:cover}
+.parcel-copy{min-width:0}
+.parcel-name{display:block;font-size:14px;line-height:18px;font-weight:700}
+.parcel-desc{display:block;margin-top:2px;font-size:13px;line-height:16px;color:#111}
+.parcel-edit{width:20px;height:20px}
+.photos-grid{margin-top:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.photo-tile{position:relative;aspect-ratio:1;overflow:hidden;border-radius:16px}
+.photo-tile img{width:100%;height:100%;object-fit:cover}
+.photo-badge{position:absolute;top:12px;left:12px;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.94);font-size:12px;line-height:16px}
+.textarea-input{width:100%;min-height:120px;padding:15px 44px 15px 18px;border:0;border-radius:16px;background:#f2f1f0;color:#111;font-size:15px;line-height:20px;resize:vertical}
+.switch-row{display:flex;align-items:center;gap:12px;padding:11px 0}
+.switch{position:relative;width:40px;height:21px;flex-shrink:0;border:0;padding:0;border-radius:12px;background:#e3e2e1;cursor:pointer;transition:background .15s}
+.switch.on{background:#141414}
+.switch .knob{position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:left .15s}
+.switch.on .knob{left:21px}
+.switch-copy{min-width:0}
+.switch-title{display:block;font-size:15px;line-height:20px}
+.switch-sub{display:block;margin-top:2px;font-size:13px;line-height:16px;color:#757575}
+.radio-row{display:flex;align-items:center;gap:12px;padding:11px 0;border:0;background:none;width:100%;text-align:left;cursor:pointer}
+.radio-row img{width:21px;height:21px;flex-shrink:0}
+.radio-row span{font-size:15px;line-height:20px}
+.desc-block{margin:8px 0 0;font-size:15px;line-height:20px}
+.link{color:#757575;text-decoration:underline}
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;border-radius:24px 24px 0 0;background:#fff;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
+.footer-inner{max-width:600px;margin:0 auto}
+.continue{width:100%;min-height:52px;border:0;border-radius:16px;background:#141414;color:#fff;font-size:15px;line-height:20px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="header"><button class="back" onclick="history.back()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><button class="save" onclick="location.href='ads.html?tab=drafts&toast=1'">Сохранить и выйти</button></header>
+<main>
+<h1>Проверьте данные объявления</h1>
+
+<section class="section"><p class="field-label">Название</p><div class="input-wrap"><input class="text-input" id="title-input" type="text"><button class="input-clear" onclick="clearInput('title-input')"><img src="new category/CloseButton.svg" alt=""></button></div></section>
+
+<section class="section"><p class="field-label" id="parcel-label"></p><div id="parcel-list"></div></section>
+
+<section class="section"><p class="field-label">Фотографии</p><div class="photos-grid" id="photos-grid"></div></section>
+
+<section class="section"><p class="field-label">Описание</p><div class="input-wrap"><textarea class="textarea-input" id="desc-input"></textarea><button class="input-clear" style="top:15px;transform:none" onclick="clearInput('desc-input')"><img src="new category/CloseButton.svg" alt=""></button></div></section>
+
+<section class="section"><p class="field-label">Адрес</p><div class="input-wrap"><input class="text-input" id="address-input" type="text" value="Москва, Чонгарский б-р, 7"><button class="input-clear" onclick="clearInput('address-input')"><img src="new category/CloseButton.svg" alt=""></button></div><p class="help-text">Укажите реальный адрес, откуда фонд сможет забрать вещи</p></section>
+
+<section class="section"><p class="field-label">Авито Доставка</p><p class="desc-block">Выберите, как фонды смогут забрать ваши вещи. Это бесплатно и безопасно: вам не нужно платить за отправку.</p>
+<div style="margin-top:12px">
+<div class="switch-row"><button class="switch on" id="switch-postamat" onclick="toggleSwitch('switch-postamat')"><span class="knob"></span></button><span class="switch-copy"><span class="switch-title">В постамат</span><span class="switch-sub">5Post</span></span></div>
+<div class="switch-row"><button class="switch on" id="switch-pvz" onclick="toggleSwitch('switch-pvz')"><span class="knob"></span></button><span class="switch-copy"><span class="switch-title">В пункт выдачи</span><span class="switch-sub">Почта России, Boxberry, СДЭК, Авито, DPD, Сберлогистика</span></span></div>
+</div>
+</section>
+
+<section class="section"><p class="field-label">Контакты</p><p class="desc-block">Фонды свяжутся с вами, когда увидят объявление с нужными им вещами, узнают подробности и договорятся о сделке</p>
+<div style="margin-top:24px"><p class="field-label">Телефон</p><p class="desc-block" style="margin-top:0">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span class="link">Подробнее</span></p><div class="input-wrap" style="margin-top:12px"><input class="text-input" id="phone-input" type="text" value="+7 900 000-00-00"><button class="input-clear" onclick="clearInput('phone-input')"><img src="new category/CloseButton.svg" alt=""></button></div></div>
+<div style="margin-top:24px"><p class="field-label">Способ связи</p><div id="contact-method-list"></div></div>
+</section>
+</main>
+</div>
+<div class="footer"><div class="footer-inner"><button class="continue" onclick="publish()">Разместить объявление</button></div></div>
+<script>
+const PHOTO_FILES={1:'new podacha/fond 1 photo 1.png?v=2',2:'new podacha/fond 1 photo 2.png?v=2',3:'new podacha/fond 2 photo 1.png?v=2',4:'new podacha/fond 2 photo 2.png?v=2',5:'new podacha/fond 3 photo 1.png?v=2',6:'new podacha/fond 3 photo 2.png?v=2',7:'new podacha/fond 4 photo 1.png?v=2',8:'new podacha/fond 4 photo 2.png?v=2'};
+const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
+const FUNDS={1:{name:'Российский Красный Крест'},2:{name:'Ночлежка'},3:{name:'Миллион книг'},4:{name:'Дари надежду'}};
+const CATEGORY_FIELD_ORDER={
+  'Детская одежда':['pol','razmer','sezon','sostoyanie'],'Тёплая одежда':['pol','razmer','sezon','sostoyanie'],
+  'Одежда для взрослых':['pol','razmer','sezon','sostoyanie'],'Тёплые вещи':['pol','razmer','sezon','sostoyanie'],
+  'Обувь для взрослых':['pol','razmer','sezon','sostoyanie'],'Обувь':['pol','razmer','sezon','sostoyanie'],
+  'Одеяла':['razmer','sostoyanie'],'Постельное бельё':['razmer','sostoyanie'],
+  'Посуда':['tip','sostoyanie'],'Средства гигиены':['tip','sostoyanie'],
+  'Детская литература':['vozrast','sostoyanie'],'Художественная литература':['sostoyanie'],
+  'Учебная литература':['sostoyanie'],'Энциклопедии':['sostoyanie'],'Средства реабилитации':['tip','sostoyanie']
+};
+
+function selectedPhotos(){const raw=sessionStorage.getItem('selectedPhotos');if(raw===null)return[1,2];return JSON.parse(raw).map(Number).filter(id=>PHOTO_FILES[id])}
+function categoryForPhoto(id){const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
+function parcelGroups(){const groups={};selectedPhotos().forEach(id=>{const c=categoryForPhoto(id);(groups[c]=groups[c]||[]).push(id)});return groups}
+function summarizeCategory(category){
+  const order=CATEGORY_FIELD_ORDER[category]||['sostoyanie'];
+  const values=JSON.parse(sessionStorage.getItem('categoryFieldData_'+category)||'{}');
+  const parts=[];
+  order.forEach(key=>{const v=values[key];if(Array.isArray(v)){if(v.length)parts.push(v.join(', '))}else if(v)parts.push(v)});
+  return parts.length?parts.join(', '):'Нажмите, чтобы указать характеристики';
+}
+
+const groups=parcelGroups();
+const categoryNames=Object.keys(groups);
+const fundId=Number(sessionStorage.getItem('selectedFundId'))||1;
+const fundName=(FUNDS[fundId]||FUNDS[1]).name;
+
+document.getElementById('title-input').value=categoryNames.length?`Пакет вещей: ${categoryNames.join(', ')}. Бесплатно`:'Пакет вещей. Бесплатно';
+document.getElementById('parcel-label').textContent=`Моя посылка (${categoryNames.length})`;
+
+const parcelList=document.getElementById('parcel-list');
+categoryNames.forEach(category=>{
+  const ids=groups[category];
+  const row=document.createElement('button');row.type='button';row.className='parcel-row';
+  row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);location.href='category-details.html'};
+  row.innerHTML=`<img class="parcel-thumb" src="${PHOTO_FILES[ids[0]]}" alt=""><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="step 0 icons/Edit.svg" alt="Изменить">`;
+  parcelList.appendChild(row);
+});
+
+const photosGrid=document.getElementById('photos-grid');
+const allPhotoIds=selectedPhotos();
+allPhotoIds.forEach((id,i)=>{
+  const tile=document.createElement('div');tile.className='photo-tile';
+  tile.innerHTML=`<img src="${PHOTO_FILES[id]}" alt="">${i===0?'<span class="photo-badge">Главная</span>':''}`;
+  photosGrid.appendChild(tile);
+});
+
+const descLines=['У меня в благотворительном пакете:'];
+categoryNames.forEach((category,i)=>{descLines.push(`${i+1}) ${category}, ${summarizeCategory(category)}`)});
+document.getElementById('desc-input').value=descLines.join('\n');
+
+const CONTACT_METHODS=['Звонки и сообщения','Только звонки','Только сообщения'];
+let contactMethod=CONTACT_METHODS[0];
+function renderContactMethods(){
+  const list=document.getElementById('contact-method-list');
+  list.innerHTML='';
+  CONTACT_METHODS.forEach(opt=>{
+    const row=document.createElement('button');row.type='button';row.className='radio-row';
+    const checked=contactMethod===opt;
+    row.innerHTML=`<img src="crisis help/Radio ${checked?'on':'off'}.png" alt=""><span>${opt}</span>`;
+    row.onclick=()=>{contactMethod=opt;renderContactMethods()};
+    list.appendChild(row);
+  });
+}
+renderContactMethods();
+
+function clearInput(id){const el=document.getElementById(id);el.value='';el.focus()}
+function toggleSwitch(id){document.getElementById(id).classList.toggle('on')}
+function publish(){location.href='success-crisis.html'}
+</script>
+</body></html>

@@ -305,9 +305,12 @@
                 'charityNeedSelections', 'mainDesc', 'adTitle', 'adDesc', 'adPrice',
                 'adCategories', 'hasDraft', 'catPhotoEditDraft',
                 'catPhotoEditFromPack', 'step5crisis_scrollY', 'globalSelectedPhotos',
-                'listingFlowAutoFilled', 'listingFlowEntry'
+                'listingFlowAutoFilled', 'listingFlowEntry',
+                'photoCategoryOverrides', 'categoryDetailsCategory', 'categoryDetailsMode',
+                'pendingCategory', 'editingParcelCategory'
             ];
             keysToRemove.forEach(function(k) { sessionStorage.removeItem(k); });
+            Object.keys(sessionStorage).filter(function(k){return k.indexOf('categoryFieldData_')===0}).forEach(function(k){sessionStorage.removeItem(k)});
             window.location.href = 'step1.html';
         }
     </script>
