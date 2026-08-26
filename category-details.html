@@ -27,7 +27,7 @@ main{padding:8px 16px 24px}
 .size-select img{width:12px;height:20px;flex-shrink:0}
 .field-error .size-select{box-shadow:0 0 0 1.5px #ff4053 inset}
 .photos-grid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.field-error.photos-grid{box-shadow:0 0 0 1.5px #ff4053 inset;border-radius:16px;padding:4px}
+.field-error.photos-grid .add-photo{box-shadow:0 0 0 1.5px #ff4053 inset}
 .sheet-overlay{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.42);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}
 .sheet-overlay.open{opacity:1;visibility:visible;transition:opacity .25s ease}
 .bottom-sheet{position:absolute;left:0;right:0;bottom:0;max-width:600px;min-width:320px;margin:0 auto;background:#fff;border-radius:28px 28px 0 0;overflow:hidden;display:flex;flex-direction:column;max-height:88vh;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1)}
@@ -46,7 +46,7 @@ main{padding:8px 16px 24px}
 .photo-tile img.photo-img{width:100%;height:100%;object-fit:cover}
 .photo-delete{position:absolute;right:8px;bottom:8px;width:36px;height:36px;padding:0;border:0;background:none}
 .photo-delete img{width:36px;height:36px}
-.add-photo{background:#f2f1f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.add-photo{background:#f2f1f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:box-shadow .15s}
 .add-photo img{width:32px;height:32px}
 .add-photo span{font-size:15px;line-height:20px}
 .footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;display:flex;gap:6px;border-radius:24px 24px 0 0;background:#fff;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
