@@ -5,21 +5,41 @@
 <title>Категория вещей</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}button{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}.header{height:64px;padding:8px 16px;display:flex;align-items:center;gap:8px}.back{width:40px;height:40px;flex-shrink:0;padding:8px;border:0;background:none;cursor:pointer}.back img{width:24px;height:24px}.header-title{flex:1;text-align:center;margin:0 -48px;font-size:16px;line-height:20px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}button{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}.header{height:64px;padding:8px 16px;display:flex;align-items:center;gap:8px}.back{width:40px;height:40px;flex-shrink:0;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.header-title{flex:1;text-align:center;margin:0 -48px;font-size:16px;line-height:20px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 main{padding:8px 16px 24px}
 .field{margin-top:16px}
 .field-label{margin:0 0 12px;font-size:16px;line-height:20px;font-weight:700}
-.chips-wrap{display:flex;flex-wrap:wrap;gap:6px;border-radius:16px;transition:box-shadow .15s}
-.chip{padding:14px 16px;border:0;border-radius:16px;background:#f2f1f0;color:#111;font-size:15px;line-height:20px;cursor:pointer}
+.field-label-row{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.field-label-row .field-label{margin:0;cursor:pointer}
+.hint-btn{width:20px;height:20px;flex-shrink:0;border-radius:50%;background:#c9c9c9;border:0;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.hint-btn img{width:8px;height:12px;filter:brightness(0) invert(1)}
+.chips-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:14px 16px;border:0;border-radius:16px;background:#f2f1f0;color:#111;font-size:15px;line-height:20px;cursor:pointer;transition:box-shadow .15s}
 .chip.selected{background:#141414;color:#fff}
-.checkbox-list{display:flex;flex-direction:column;border-radius:16px;transition:box-shadow .15s}
+.field-error .chip{box-shadow:0 0 0 1.5px #ff4053 inset}
+.checkbox-list{display:flex;flex-direction:column}
 .checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 0;border:0;background:none;cursor:pointer;text-align:left;width:100%}
-.checkbox-row img{width:20px;height:20px;flex-shrink:0}
+.checkbox-row img{width:20px;height:20px;flex-shrink:0;border-radius:6px;transition:box-shadow .15s}
 .checkbox-row span{font-size:15px;line-height:20px}
-.field.field-error .chips-wrap,.field.field-error .checkbox-list{box-shadow:0 0 0 2px #ff4053}
-.field.field-error .field-label{color:#ff4053}
-.photos-grid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-radius:16px;transition:box-shadow .15s}
-.photos-grid.field-error{box-shadow:0 0 0 2px #ff4053;padding:4px}
+.field-error .checkbox-row img{box-shadow:0 0 0 1.5px #ff4053}
+.size-select{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 18px;border:0;border-radius:16px;background:#f2f1f0;color:#757575;font-size:15px;line-height:20px;text-align:left;cursor:pointer;transition:box-shadow .15s}
+.size-select.has-value{color:#111}
+.size-select img{width:12px;height:20px;flex-shrink:0}
+.field-error .size-select{box-shadow:0 0 0 1.5px #ff4053 inset}
+.photos-grid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.field-error.photos-grid{box-shadow:0 0 0 1.5px #ff4053 inset;border-radius:16px;padding:4px}
+.sheet-overlay{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.42);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}
+.sheet-overlay.open{opacity:1;visibility:visible;transition:opacity .25s ease}
+.bottom-sheet{position:absolute;left:0;right:0;bottom:0;max-width:600px;min-width:320px;margin:0 auto;background:#fff;border-radius:28px 28px 0 0;overflow:hidden;display:flex;flex-direction:column;max-height:88vh;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1)}
+.sheet-overlay.open .bottom-sheet{transform:translateY(0)}
+.sheet-close{position:absolute;top:14px;right:20px;width:20px;height:30px;padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1}
+.sheet-close img{width:20px;height:28.57px}
+.sheet-content{padding:16px 16px 0;overflow-y:auto}
+.sheet-title{margin:0;padding-right:40px;font-size:26px;line-height:30px;font-weight:700}
+.sheet-footer{padding:10px;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
+.size-chart-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #ebeae8;font-size:15px;line-height:20px}
+.size-chart-row:last-child{border-bottom:0}
+.size-chart-row .sz{font-weight:700}
 .photo-tile,.add-photo{position:relative;aspect-ratio:1;min-width:0;overflow:hidden;border:0;border-radius:16px;padding:0;cursor:pointer}
 .photo-tile img.photo-img{width:100%;height:100%;object-fit:cover}
 .photo-delete{position:absolute;right:8px;bottom:8px;width:36px;height:36px;padding:0;border:0;background:none}
@@ -43,6 +63,8 @@ main{padding:8px 16px 24px}
 </div>
 <div class="footer"><div class="footer-inner" id="footer-buttons"></div></div>
 <div class="toast" id="toast">Заполните данные категории</div>
+<div class="sheet-overlay" id="size-pick-sheet" onclick="closeSizePickSheet(event)"><div class="bottom-sheet"><button class="sheet-close" onclick="closeSizePickSheet()" aria-label="Закрыть"><img src="new category/CloseButton.svg" alt=""></button><div class="sheet-content"><h2 class="sheet-title">Размер</h2><div class="checkbox-list" id="size-pick-list"></div></div><div class="sheet-footer"><button type="button" class="btn btn-primary" style="width:100%" onclick="confirmSizePick()">Выбрать</button></div></div></div>
+<div class="sheet-overlay" id="size-chart-sheet" onclick="closeSizeChartSheet(event)"><div class="bottom-sheet"><button class="sheet-close" onclick="closeSizeChartSheet()" aria-label="Закрыть"><img src="new category/CloseButton.svg" alt=""></button><div class="sheet-content"><h2 class="sheet-title">Таблица размеров</h2><div id="size-chart-body"></div></div><div class="sheet-footer"><button type="button" class="btn btn-primary" style="width:100%" onclick="closeSizeChartSheet()">Понятно</button></div></div></div>
 <script>
 const PHOTO_FILES={1:'new podacha/fond 1 photo 1.png?v=2',2:'new podacha/fond 1 photo 2.png?v=2',3:'new podacha/fond 2 photo 1.png?v=2',4:'new podacha/fond 2 photo 2.png?v=2',5:'new podacha/fond 3 photo 1.png?v=2',6:'new podacha/fond 3 photo 2.png?v=2',7:'new podacha/fond 4 photo 1.png?v=2',8:'new podacha/fond 4 photo 2.png?v=2'};
 const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
@@ -50,24 +72,24 @@ const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская оде
 const PRESETS={
   clothingKids:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мальчиков','Для девочек','Унисекс']},
-    {key:'razmer',type:'chips',label:'Размер',options:['80–92','98–116','122–140','146–152']},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['80–92','98–116','122–140','146–152'],sizeChart:[{size:'80–92',value:'1–2 года'},{size:'98–116',value:'3–5 лет'},{size:'122–140',value:'6–9 лет'},{size:'146–152',value:'10–12 лет'}]},
     {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Весна–осень','Лето','Всесезонная']},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']}
   ],
   clothingAdult:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
-    {key:'razmer',type:'chips',label:'Размер',options:['XS','S','M','L','XL','XXL']},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['XS','S','M','L','XL','XXL'],sizeChart:[{size:'XS',value:'40–42'},{size:'S',value:'44–46'},{size:'M',value:'48–50'},{size:'L',value:'52–54'},{size:'XL',value:'56–58'},{size:'XXL',value:'60 и больше'}]},
     {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Весна–осень','Лето','Всесезонная']},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']}
   ],
   footwear:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
-    {key:'razmer',type:'chips',label:'Размер',options:['36–37','38–39','40–41','42–43','44+']},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер обуви',options:['36–37','38–39','40–41','42–43','44+'],sizeChart:[{size:'36–37',value:'23–23,5 см'},{size:'38–39',value:'24–25 см'},{size:'40–41',value:'25,5–26,5 см'},{size:'42–43',value:'27–28 см'},{size:'44+',value:'28,5 см и больше'}]},
     {key:'sezon',type:'checkbox',label:'Сезон',options:['Зима','Демисезон','Лето']},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
   ],
   bedding:[
-    {key:'razmer',type:'chips',label:'Размер',options:['1,5-спальное','2-спальное','Евро','Другое']},
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер',options:['1,5-спальное','2-спальное','Евро','Другое'],sizeChart:[{size:'1,5-спальное',value:'150×200 см'},{size:'2-спальное',value:'180×200 см'},{size:'Евро',value:'200×220 см'},{size:'Другое',value:'нестандартный размер'}]},
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
   ],
   dishes:[
@@ -136,10 +158,16 @@ function renderChips(field){
   const wrap=document.createElement('div');wrap.className='chips-wrap';
   field.options.forEach(opt=>{
     const btn=document.createElement('button');btn.type='button';btn.className='chip'+(values[field.key]===opt?' selected':'');btn.textContent=opt;
-    btn.onclick=()=>{values[field.key]=opt;renderFields()};
+    btn.onclick=()=>{values[field.key]=(values[field.key]===opt?null:opt);renderFields()};
     wrap.appendChild(btn);
   });
   return wrap;
+}
+function renderSizeSelect(field){
+  const btn=document.createElement('button');btn.type='button';btn.className='size-select'+(values[field.key]?' has-value':'');
+  btn.innerHTML=`<span>${values[field.key]||field.placeholder}</span><img src="arrow down.svg" alt="">`;
+  btn.onclick=()=>openSizePickSheet(field);
+  return btn;
 }
 function renderCheckboxes(field){
   const wrap=document.createElement('div');wrap.className='checkbox-list';
@@ -169,9 +197,19 @@ function renderFields(){
   root.innerHTML='';
   fieldsFor(category).forEach(f=>{
     const box=document.createElement('div');box.className='field';box.dataset.key=f.key;
-    const label=document.createElement('p');label.className='field-label';label.textContent=f.label;
-    box.appendChild(label);
-    box.appendChild(f.type==='chips'?renderChips(f):renderCheckboxes(f));
+    if(f.type==='size'&&f.sizeChart){
+      const row=document.createElement('div');row.className='field-label-row';
+      const label=document.createElement('p');label.className='field-label';label.textContent=f.label;label.onclick=()=>openSizeChartSheet(f);
+      const hint=document.createElement('button');hint.type='button';hint.className='hint-btn';hint.setAttribute('aria-label','Таблица размеров');hint.innerHTML='<img src="new category/Question Filled.svg" alt="">';hint.onclick=()=>openSizeChartSheet(f);
+      row.appendChild(label);row.appendChild(hint);
+      box.appendChild(row);
+    }else{
+      const label=document.createElement('p');label.className='field-label';label.textContent=f.label;
+      box.appendChild(label);
+    }
+    if(f.type==='chips')box.appendChild(renderChips(f));
+    else if(f.type==='checkbox')box.appendChild(renderCheckboxes(f));
+    else if(f.type==='size')box.appendChild(renderSizeSelect(f));
     root.appendChild(box);
   });
   const photoLabel=document.createElement('div');photoLabel.className='field';
@@ -186,6 +224,33 @@ function renderFooter(){
     ?'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button><button type="button" class="btn btn-secondary" onclick="removeFromParcel()">Убрать из посылки</button>'
     :'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button>';
 }
+let sizePickField=null;
+let sizePickValue=null;
+function renderSizePickList(){
+  const list=document.getElementById('size-pick-list');
+  list.innerHTML='';
+  sizePickField.options.forEach(opt=>{
+    const row=document.createElement('button');row.type='button';row.className='checkbox-row';
+    const checked=sizePickValue===opt;
+    row.innerHTML=`<img src="step 6 materials/checkbox ${checked?'on':'off'}.png" alt=""><span>${opt}</span>`;
+    row.onclick=()=>{sizePickValue=checked?null:opt;renderSizePickList()};
+    list.appendChild(row);
+  });
+}
+function openSizePickSheet(field){
+  sizePickField=field;sizePickValue=values[field.key];
+  renderSizePickList();
+  document.getElementById('size-pick-sheet').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSizePickSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('size-pick-sheet').classList.remove('open');document.body.style.overflow=''}
+function confirmSizePick(){values[sizePickField.key]=sizePickValue;closeSizePickSheet();renderFields()}
+function openSizeChartSheet(field){
+  document.getElementById('size-chart-body').innerHTML=(field.sizeChart||[]).map(r=>`<div class="size-chart-row"><span class="sz">${r.size}</span><span>${r.value}</span></div>`).join('');
+  document.getElementById('size-chart-sheet').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSizeChartSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('size-chart-sheet').classList.remove('open');document.body.style.overflow=''}
 function addPhotos(){
   const own=photos;
   const others=allPhotos.filter(id=>!own.includes(id));
@@ -199,7 +264,7 @@ function validate(){
   let ok=true;let firstInvalid=null;
   fieldsFor(category).forEach(f=>{
     const val=values[f.key];
-    const valid=f.type==='chips'?!!val:val.length>0;
+    const valid=f.type==='checkbox'?val.length>0:!!val;
     const box=document.querySelector(`.field[data-key="${f.key}"]`);
     box.classList.toggle('field-error',!valid);
     if(!valid){ok=false;firstInvalid=firstInvalid||box}
