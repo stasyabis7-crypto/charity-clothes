@@ -38,16 +38,20 @@ let pendingFundId=null;
 function renderFundSelect(){const list=document.getElementById('fund-select-list');list.innerHTML='';Object.keys(FUNDS).forEach(idStr=>{const id=Number(idStr);const f=FUNDS[id];const row=document.createElement('button');row.type='button';row.className='fund-radio-row';row.onclick=()=>{pendingFundId=id;renderFundSelect()};row.innerHTML=`<img class="fund-logo" src="${f.logo}" alt=""><span class="fund-copy"><span class="fund-name">${f.name}</span><span class="fund-radio-desc">${FUND_TAGLINE[id]}</span></span><img class="fund-radio-check" src="step 4 materials/Checkmark ${id===pendingFundId?'on':'off'}.png" alt="">`;list.appendChild(row)})}
 function openFundSelectSheet(){pendingFundId=selectedFundId();renderFundSelect();document.getElementById('fund-select-sheet').classList.add('open');document.body.style.overflow='hidden';requestAnimationFrame(function(){updateFundSheetShadow('fund-select-sheet')})}
 function closeFundSelectSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('fund-select-sheet').classList.remove('open');document.body.style.overflow=''}
-function confirmFundSelect(){sessionStorage.setItem('selectedFundId',String(pendingFundId));sessionStorage.setItem('selectedPhotos','[]');sessionStorage.setItem('charityRecommendedCats','[]');sessionStorage.removeItem('editingParcelCategory');closeFundSelectSheet();renderFund();renderItems()}
+function confirmFundSelect(){sessionStorage.setItem('selectedFundId',String(pendingFundId));sessionStorage.setItem('selectedPhotos','[]');sessionStorage.removeItem('editingParcelCategory');closeFundSelectSheet();renderFund();renderItems()}
 function categoriesInParcel(){const set=new Set();selectedPhotos().forEach(id=>set.add(categoryForPhoto(id)));return set}
-// Categories that were in the parcel when this screen first opened (the
-// auto-recommended ones). Persisted so a category stays addable after the
-// user removes it, even when the fund's own list doesn't include it.
-if(sessionStorage.getItem('charityRecommendedCats')===null){sessionStorage.setItem('charityRecommendedCats',JSON.stringify([...categoriesInParcel()]))}
+// Auto-recommended categories are remembered PER FUND. A category that was
+// recommended from the photos while one fund was selected stays addable for
+// that fund only — switching to another fund never carries it over unless it
+// belongs to that fund's own list.
+function recCatsAll(){try{return JSON.parse(sessionStorage.getItem('charityRecommendedCatsByFund')||'{}')||{};}catch(e){return {};}}
+function recCatsFor(fid){return recCatsAll()[fid]||[];}
+function rememberRecCats(fid,cats){const m=recCatsAll();const set=new Set(m[fid]||[]);cats.forEach(c=>set.add(c));m[fid]=[...set];sessionStorage.setItem('charityRecommendedCatsByFund',JSON.stringify(m));}
+rememberRecCats(selectedFundId(),[...categoriesInParcel()]);
 function availableCategories(){
   const added=categoriesInParcel();
   const fundCats=(FUND_INFO[selectedFundId()]?.categories||[]).map(c=>c.title);
-  const initial=JSON.parse(sessionStorage.getItem('charityRecommendedCats')||'[]');
+  const initial=recCatsFor(selectedFundId());
   return [...fundCats,...initial.filter(t=>!fundCats.includes(t))].filter(t=>!added.has(t));
 }
 let pendingCategoryTitle=null;

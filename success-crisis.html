@@ -51,7 +51,7 @@ main{padding:0 16px}
 document.getElementById('ad-title-link').textContent=sessionStorage.getItem('adTitle')||'Ваше объявление';
 function finish(){
   sessionStorage.setItem('hasPublishedCharityAd','1');
-  var keysToRemove=['userPickedFund','initialPackCategories','charityRecommendedCats','catSelections','catDraft','mainCategory','adCollection','prevPage','catPhotoEditId','catPhotoEditTakenPhotos','photoReturnPage','viewFundId','fundInfoReturn','charityNeedSelections','mainDesc','adDesc','adPrice','adCategories','hasDraft','catPhotoEditDraft','catPhotoEditFromPack','step5crisis_scrollY','globalSelectedPhotos','listingFlowAutoFilled','listingFlowEntry','categoryDetailsCategory','categoryDetailsMode','pendingCategory','editingParcelCategory'];
+  var keysToRemove=['userPickedFund','initialPackCategories','charityRecommendedCatsByFund','catSelections','catDraft','mainCategory','adCollection','prevPage','catPhotoEditId','catPhotoEditTakenPhotos','photoReturnPage','viewFundId','fundInfoReturn','charityNeedSelections','mainDesc','adDesc','adPrice','adCategories','hasDraft','catPhotoEditDraft','catPhotoEditFromPack','step5crisis_scrollY','globalSelectedPhotos','listingFlowAutoFilled','listingFlowEntry','categoryDetailsCategory','categoryDetailsMode','pendingCategory','editingParcelCategory'];
   keysToRemove.forEach(function(k){sessionStorage.removeItem(k)});
   window.location.href='ads.html';
 }
