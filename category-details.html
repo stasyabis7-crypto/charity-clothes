@@ -165,7 +165,7 @@ if(!category){
 }
 sessionStorage.removeItem('editingParcelCategory');
 sessionStorage.removeItem('pendingCategory');
-if(!category){history.back()}
+if(!category){location.replace('step5-crisis.html')}
 
 let allPhotos=JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').map(Number);
 let overrides=photoCategoryOverrides();
@@ -356,13 +356,21 @@ function persistParcel(){
   sessionStorage.setItem('selectedPhotos',JSON.stringify(merged));
   sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
 }
+// Always return straight to the parcel screen. Never rely on history.back()
+// here: the category screen must be dismissable even when it is the first
+// entry in the tab's history (fresh open, reload, embedded preview).
+function returnToParcel(){
+  sessionStorage.removeItem('categoryDetailsCategory');
+  sessionStorage.removeItem('categoryDetailsMode');
+  sessionStorage.removeItem('catPhotoEditId');
+  sessionStorage.removeItem('catPhotoEditTakenPhotos');
+  location.replace('step5-crisis.html');
+}
 function save(){
   if(!validate())return;
   sessionStorage.setItem('categoryFieldData_'+category,JSON.stringify(values));
   persistParcel();
-  sessionStorage.removeItem('categoryDetailsCategory');
-  sessionStorage.removeItem('categoryDetailsMode');
-  history.back();
+  returnToParcel();
 }
 function removeFromParcel(){
   const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
@@ -371,15 +379,24 @@ function removeFromParcel(){
   sessionStorage.setItem('selectedPhotos',JSON.stringify(others));
   sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
   sessionStorage.removeItem('categoryFieldData_'+category);
-  sessionStorage.removeItem('categoryDetailsCategory');
-  sessionStorage.removeItem('categoryDetailsMode');
-  history.back();
+  returnToParcel();
 }
+// Header "Назад" = cancel. No validation, no error highlighting — those only
+// happen on Сохранить. When cancelling a brand-new category we also undo any
+// photos that were pulled into it, so the parcel shows no half-added card.
 function goBack(){
-  if(mode==='add')sessionStorage.removeItem('categoryFieldData_'+category);
-  sessionStorage.removeItem('categoryDetailsCategory');
-  sessionStorage.removeItem('categoryDetailsMode');
-  history.back();
+  if(mode==='add'){
+    sessionStorage.removeItem('categoryFieldData_'+category);
+    const ov=photoCategoryOverrides();
+    const drop=Object.keys(ov).filter(k=>ov[k]===category).map(Number);
+    if(drop.length){
+      const keep=JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').map(Number).filter(id=>!drop.includes(id));
+      drop.forEach(id=>{delete ov[id]});
+      sessionStorage.setItem('selectedPhotos',JSON.stringify(keep));
+      sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(ov));
+    }
+  }
+  returnToParcel();
 }
 document.querySelectorAll('.sheet-content').forEach(c=>{
   c.addEventListener('scroll',()=>updateSheetShadow(c),{passive:true});
