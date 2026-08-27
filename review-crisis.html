@@ -23,7 +23,7 @@ h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 .help-text{margin:8px 0 0;font-size:13px;line-height:18px;color:#757575}
 .parcel-row{width:100%;margin-top:12px;padding:0;border:0;background:none;display:grid;grid-template-columns:48px minmax(0,1fr) 20px;gap:12px;align-items:center;text-align:left;cursor:pointer}
 .parcel-row:first-child{margin-top:0}
-.parcel-thumb{width:48px;height:48px;border-radius:12px;background:#f2f1f0;flex-shrink:0}
+.parcel-thumb{width:48px;height:48px;border-radius:12px;background-color:#f2f1f0;background-size:cover;background-position:center;flex-shrink:0}
 .parcel-copy{min-width:0}
 .parcel-name{display:block;font-size:14px;line-height:18px;font-weight:700}
 .parcel-desc{display:block;margin-top:2px;font-size:13px;line-height:16px;color:#111}
@@ -86,6 +86,8 @@ h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 const PHOTO_FILES={1:'new podacha/fond 1 photo 1.png?v=2',2:'new podacha/fond 1 photo 2.png?v=2',3:'new podacha/fond 2 photo 1.png?v=2',4:'new podacha/fond 2 photo 2.png?v=2',5:'new podacha/fond 3 photo 1.png?v=2',6:'new podacha/fond 3 photo 2.png?v=2',7:'new podacha/fond 4 photo 1.png?v=2',8:'new podacha/fond 4 photo 2.png?v=2'};
 const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
 const FUNDS={1:{name:'Российский Красный Крест'},2:{name:'Ночлежка'},3:{name:'Миллион книг'},4:{name:'Дари надежду'}};
+const CATEGORY_IMG={'Детская одежда':'Российский Красный Крест/Детская одежда','Тёплая одежда':'Российский Красный Крест/Тёплая одежда','Обувь для взрослых':'Российский Красный Крест/Обувь для взрослых','Одеяла':'Российский Красный Крест/Одеяла','Посуда':'Российский Красный Крест/Посуда','Одежда для взрослых':'Ночлежка/Одежда для взрослых','Обувь':'Ночлежка/Обувь','Тёплые вещи':'Ночлежка/Тёплые вещи','Средства гигиены':'Ночлежка/Средства гигиены','Детская литература':'Миллион книг/Детская литература','Художественная литература':'Миллион книг/Художественная литература','Учебная литература':'Миллион книг/Учебная литература','Энциклопедии':'Миллион книг/Энциклопедии','Средства реабилитации':'Дари надежду/Средства реабилитации','Постельное бельё':'Дари надежду/Постельное бельё'};
+function categoryImage(title){const p=CATEGORY_IMG[title];return p?encodeURI('fond category photos/'+p+'/cover.png'):''}
 const CATEGORY_FIELD_ORDER={
   'Детская одежда':['pol','razmer','sezon','sostoyanie'],'Тёплая одежда':['pol','razmer','sezon','sostoyanie'],
   'Одежда для взрослых':['pol','razmer','sezon','sostoyanie'],'Тёплые вещи':['pol','razmer','sezon','sostoyanie'],
@@ -119,7 +121,8 @@ const parcelList=document.getElementById('parcel-list');
 categoryNames.forEach(category=>{
   const row=document.createElement('button');row.type='button';row.className='parcel-row';
   row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);location.href='category-details.html'};
-  row.innerHTML=`<span class="parcel-thumb"></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="new-podaca-V3/Edit Outline.svg" alt="Изменить">`;
+  const img=categoryImage(category);
+  row.innerHTML=`<span class="parcel-thumb"${img?` style="background-image:url('${img}')"`:''}></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="new-podaca-V3/Edit Outline.svg" alt="Изменить">`;
   parcelList.appendChild(row);
 });
 
