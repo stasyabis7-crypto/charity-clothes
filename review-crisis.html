@@ -12,6 +12,9 @@
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Black.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:'CoFo Avito Text',Arial,sans-serif}button,input,textarea{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}
 .header{height:72px;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .2s}.header.scrolled{box-shadow:0 2px 12px rgba(0,0,0,.08)}.back{width:40px;height:40px;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.save{padding:10px 0;border:0;background:none;color:#757575;font-size:15px;line-height:20px;cursor:pointer}
+.header-title{position:absolute;left:50%;transform:translateX(-50%);font-size:16px;line-height:20px;font-weight:700}
+.readonly-field{width:100%;padding:15px 18px;border-radius:16px;background:#f2f1f0;color:#757575;font-size:15px;line-height:20px}
+[hidden]{display:none!important}
 main{padding:8px 16px 24px}
 h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 .section{margin-top:24px}
@@ -54,9 +57,11 @@ h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 </head>
 <body>
 <div class="page">
-<header class="header"><button class="back" onclick="history.back()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><button class="save" onclick="location.href='ads.html?tab=drafts&toast=1'">Сохранить и выйти</button></header>
+<header class="header"><button class="back" onclick="history.back()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><span class="header-title" id="header-title" hidden>Редактирование</span><button class="save" id="save-exit" onclick="location.href='ads.html?tab=drafts&toast=1'">Сохранить и выйти</button></header>
 <main>
-<h1>Проверьте данные объявления</h1>
+<h1 id="page-title">Проверьте данные объявления</h1>
+
+<section class="section" id="edit-category-section" hidden><p class="field-label">Категория объявления</p><div class="readonly-field">Благотворительные товары</div></section>
 
 <section class="section"><p class="field-label">Название</p><div class="input-wrap"><input class="text-input" id="title-input" type="text"><button class="input-clear" onclick="clearInput('title-input')"><img src="new category/CloseButton.svg" alt=""></button></div></section>
 
@@ -155,7 +160,27 @@ renderContactMethods();
 
 function clearInput(id){const el=document.getElementById(id);el.value='';el.focus()}
 function toggleSwitch(id){document.getElementById(id).classList.toggle('on')}
-function publish(){sessionStorage.setItem('adTitle',document.getElementById('title-input').value);sessionStorage.setItem('adAddress',document.getElementById('address-input').value);sessionStorage.setItem('adDescText',document.getElementById('desc-input').value);location.href='success-crisis.html'}
+function saveFields(){sessionStorage.setItem('adTitle',document.getElementById('title-input').value);sessionStorage.setItem('adAddress',document.getElementById('address-input').value);sessionStorage.setItem('adDescText',document.getElementById('desc-input').value)}
+function publish(){saveFields();location.href='success-crisis.html'}
+function saveEdit(){saveFields();location.href=sessionStorage.getItem('editReturnPage')||'ad-page.html'}
+
+// Edit mode: same form, reframed as "Редактирование" and returning to the ad
+if(new URLSearchParams(location.search).get('edit')==='1'){
+  document.title='Редактирование';
+  document.getElementById('page-title').hidden=true;
+  document.getElementById('header-title').hidden=false;
+  document.getElementById('save-exit').hidden=true;
+  document.getElementById('edit-category-section').hidden=false;
+  const stored=sessionStorage.getItem('adTitle');
+  if(stored)document.getElementById('title-input').value=stored;
+  const savedAddr=sessionStorage.getItem('adAddress');
+  if(savedAddr)document.getElementById('address-input').value=savedAddr;
+  const savedDesc=sessionStorage.getItem('adDescText');
+  if(savedDesc)document.getElementById('desc-input').value=savedDesc;
+  const btn=document.querySelector('.footer .continue');
+  btn.textContent='Готово';
+  btn.setAttribute('onclick','saveEdit()');
+}
 function updateFooterShadow(){const el=document.querySelector('.footer');if(!el)return;el.classList.toggle('has-shadow',document.documentElement.scrollHeight-(window.scrollY+window.innerHeight)>4)}
 window.addEventListener('scroll',function(){document.querySelector('.header')?.classList.toggle('scrolled',window.scrollY>0);updateFooterShadow()},{passive:true});
 window.addEventListener('resize',updateFooterShadow);
