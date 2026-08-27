@@ -25,7 +25,8 @@ main{padding:0 16px}
 .next-card{flex-shrink:0;width:136px;padding:12px 12px 16px;border-radius:20px;background:#f2f1f0}
 .next-card img{width:48px;height:48px;display:block;border-radius:14px}
 .next-card p{margin:16px 0 0;font-size:15px;line-height:20px;font-weight:500}
-.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;border-radius:24px 24px 0 0;background:#fff;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 30px rgba(0,0,0,.12)}
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;border-radius:24px 24px 0 0;background:#fff;transition:box-shadow .2s}
+.footer.has-shadow{box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 30px rgba(0,0,0,.12)}
 .footer-inner{max-width:520px;margin:0 auto}
 .continue{width:100%;min-height:52px;border:0;border-radius:16px;background:#141414;color:#fff;font-size:15px;line-height:20px;cursor:pointer}
 </style>
@@ -54,5 +55,10 @@ function finish(){
   keysToRemove.forEach(function(k){sessionStorage.removeItem(k)});
   window.location.href='ads.html';
 }
+function updateFooterShadow(){var el=document.querySelector('.footer');if(!el)return;el.classList.toggle('has-shadow',document.documentElement.scrollHeight-(window.scrollY+window.innerHeight)>4)}
+window.addEventListener('scroll',updateFooterShadow,{passive:true});
+window.addEventListener('resize',updateFooterShadow);
+window.addEventListener('load',updateFooterShadow);
+updateFooterShadow();
 </script>
 </body></html>

@@ -229,8 +229,9 @@
             padding: 12px 16px 28px;
             z-index: 100;
             border-radius: 24px 24px 0 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+            transition: box-shadow .2s;
         }
+        .bottom-bar.has-shadow { box-shadow: 0 -4px 20px rgba(0,0,0,0.08); }
 
         .donate-btn {
             display: block;
@@ -371,6 +372,16 @@
         function closeAll() {
             window.location.href = 'step5-crisis.html';
         }
+
+        function updateBarShadow() {
+            var el = document.querySelector('.bottom-bar');
+            if (!el || getComputedStyle(el).display === 'none') { if (el) el.classList.remove('has-shadow'); return; }
+            el.classList.toggle('has-shadow', document.documentElement.scrollHeight - (window.scrollY + window.innerHeight) > 4);
+        }
+        window.addEventListener('scroll', updateBarShadow, { passive: true });
+        window.addEventListener('resize', updateBarShadow);
+        window.addEventListener('load', updateBarShadow);
+        updateBarShadow();
     </script>
 
 </body>

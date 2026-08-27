@@ -186,7 +186,9 @@
             background: #fff;
             padding: 12px 16px 28px;
             z-index: 100;
+            transition: box-shadow .2s;
         }
+        .bottom-bar.has-shadow { box-shadow: 0 -4px 20px rgba(0,0,0,0.08); }
 
         .continue-btn {
             display: block;
@@ -290,9 +292,18 @@
 
         renderPhotos();
 
+        function updateBarShadow() {
+            var el = document.querySelector('.bottom-bar');
+            if (!el || getComputedStyle(el).display === 'none') { if (el) el.classList.remove('has-shadow'); return; }
+            el.classList.toggle('has-shadow', document.documentElement.scrollHeight - (window.scrollY + window.innerHeight) > 4);
+        }
         window.addEventListener('scroll', function() {
             document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+            updateBarShadow();
         }, { passive: true });
+        window.addEventListener('resize', updateBarShadow);
+        window.addEventListener('load', updateBarShadow);
+        updateBarShadow();
     </script>
 
 </body>

@@ -26,6 +26,8 @@ main{padding:8px 16px 24px}
 .sheet-content>.checkbox-list{margin-top:16px}
 .checkbox-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding:0;border:0;background:none;cursor:pointer;text-align:left;width:100%}
 .checkbox-row:first-child{margin-top:0}
+.sheet-content .checkbox-row{margin-top:24px}
+.sheet-content .checkbox-row:first-child{margin-top:0}
 .checkbox-row img{width:20px;height:20px;flex-shrink:0;border-radius:6px;transition:box-shadow .15s}
 .checkbox-row span{font-size:15px;line-height:20px}
 .field-error .checkbox-row img{box-shadow:0 0 0 1.5px #ff4053}
@@ -41,9 +43,10 @@ main{padding:8px 16px 24px}
 .sheet-overlay.open .bottom-sheet{transform:translateY(0)}
 .sheet-close{position:absolute;top:14px;right:20px;width:20px;height:30px;padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1}
 .sheet-close img{width:20px;height:28.57px}
-.sheet-content{padding:16px 16px 0;overflow-y:auto}
+.sheet-content{padding:16px 16px 28px;overflow-y:auto}
 .sheet-title{margin:0;padding-right:40px;font-size:26px;line-height:30px;font-weight:700}
-.sheet-footer{padding:10px;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
+.sheet-footer{padding:10px;transition:box-shadow .2s}
+.sheet-footer.has-shadow{box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
 .size-chart-card{padding:16px 0;border-bottom:1px solid #ebeae8}
 .size-chart-card:last-child{border-bottom:0}
 .size-chart-size{font-size:18px;line-height:22px;font-weight:700;margin-bottom:6px}
@@ -56,7 +59,8 @@ main{padding:8px 16px 24px}
 .add-photo{background:#f2f1f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:box-shadow .15s}
 .add-photo img{width:32px;height:32px}
 .add-photo span{font-size:15px;line-height:20px}
-.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;display:flex;gap:6px;border-radius:24px 24px 0 0;background:#fff;box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px;display:flex;gap:6px;border-radius:24px 24px 0 0;background:#fff;transition:box-shadow .2s}
+.footer.has-shadow{box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}
 .footer-inner{max-width:600px;margin:0 auto;width:100%;display:flex;gap:6px}
 .btn{flex:1;min-height:52px;border:0;border-radius:16px;font-size:15px;line-height:20px;cursor:pointer}
 .btn-primary{background:#141414;color:#fff}
@@ -265,6 +269,20 @@ function renderFooter(){
   el.innerHTML=mode==='edit'
     ?'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button><button type="button" class="btn btn-secondary" onclick="removeFromParcel()">Убрать из посылки</button>'
     :'<button type="button" class="btn btn-primary" onclick="save()">Сохранить</button>';
+  updateFooterShadow();
+}
+function updateFooterShadow(){
+  const f=document.querySelector('.footer');
+  if(!f)return;
+  f.classList.toggle('has-shadow',document.documentElement.scrollHeight-(window.scrollY+window.innerHeight)>4);
+}
+function updateSheetShadow(content){
+  if(!content)return;
+  const footer=content.parentElement.querySelector('.sheet-footer');
+  if(!footer)return;
+  const canScroll=content.scrollHeight>content.clientHeight+1;
+  const atBottom=content.scrollTop+content.clientHeight>=content.scrollHeight-1;
+  footer.classList.toggle('has-shadow',canScroll&&!atBottom);
 }
 let sizePickField=null;
 let sizePickValues=[];
@@ -286,6 +304,7 @@ function openSizePickSheet(field){
   renderSizePickList();
   document.getElementById('size-pick-sheet').classList.add('open');
   document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>updateSheetShadow(document.querySelector('#size-pick-sheet .sheet-content')));
 }
 function closeSizePickSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('size-pick-sheet').classList.remove('open');document.body.style.overflow=''}
 function confirmSizePick(){values[sizePickField.key]=sizePickValues;closeSizePickSheet();renderFields()}
@@ -293,6 +312,7 @@ function openSizeChartSheet(field){
   document.getElementById('size-chart-body').innerHTML=(field.sizeChart||[]).map(r=>`<div class="size-chart-card"><div class="size-chart-size">${r.size}</div>${(r.details||[]).map(([k,v])=>`<div class="size-chart-detail"><span>${k}</span><span>${v}</span></div>`).join('')}</div>`).join('');
   document.getElementById('size-chart-sheet').classList.add('open');
   document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>updateSheetShadow(document.querySelector('#size-chart-sheet .sheet-content')));
 }
 function closeSizeChartSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('size-chart-sheet').classList.remove('open');document.body.style.overflow=''}
 function addPhotos(){
@@ -361,7 +381,13 @@ function goBack(){
   sessionStorage.removeItem('categoryDetailsMode');
   history.back();
 }
+document.querySelectorAll('.sheet-content').forEach(c=>{
+  c.addEventListener('scroll',()=>updateSheetShadow(c),{passive:true});
+});
 renderFields();
-window.addEventListener('scroll',function(){document.querySelector('.header')?.classList.toggle('scrolled',window.scrollY>0)},{passive:true});
+window.addEventListener('scroll',function(){document.querySelector('.header')?.classList.toggle('scrolled',window.scrollY>0);updateFooterShadow()},{passive:true});
+window.addEventListener('resize',updateFooterShadow);
+window.addEventListener('load',updateFooterShadow);
+updateFooterShadow();
 </script>
 </body></html>
