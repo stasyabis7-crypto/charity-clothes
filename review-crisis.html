@@ -11,7 +11,7 @@
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-ExtraBold.ttf') format('truetype');font-weight:800;font-style:normal;font-display:swap}
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Black.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:'CoFo Avito Text',Arial,sans-serif}button,input,textarea{font:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}
-.header{height:72px;padding:8px 16px;display:flex;align-items:center;justify-content:space-between}.back{width:40px;height:40px;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.save{padding:10px 0;border:0;background:none;color:#757575;font-size:15px;line-height:20px;cursor:pointer}
+.header{height:72px;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .2s}.header.scrolled{box-shadow:0 2px 12px rgba(0,0,0,.08)}.back{width:40px;height:40px;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.save{padding:10px 0;border:0;background:none;color:#757575;font-size:15px;line-height:20px;cursor:pointer}
 main{padding:8px 16px 24px}
 h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 .section{margin-top:24px}
@@ -152,5 +152,6 @@ renderContactMethods();
 function clearInput(id){const el=document.getElementById(id);el.value='';el.focus()}
 function toggleSwitch(id){document.getElementById(id).classList.toggle('on')}
 function publish(){sessionStorage.setItem('adTitle',document.getElementById('title-input').value);sessionStorage.setItem('adAddress',document.getElementById('address-input').value);sessionStorage.setItem('adDescText',document.getElementById('desc-input').value);location.href='success-crisis.html'}
+window.addEventListener('scroll',function(){document.querySelector('.header')?.classList.toggle('scrolled',window.scrollY>0)},{passive:true});
 </script>
 </body></html>

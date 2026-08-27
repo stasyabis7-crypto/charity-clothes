@@ -25,7 +25,14 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #fff;
+            transition: box-shadow 0.2s;
         }
+
+        .header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
         .save-exit {
             font-size: 15px;
@@ -224,6 +231,9 @@
             sessionStorage.setItem('prevPage', 'main-address.html');
             window.location.href = 'main-price.html';
         }
+        window.addEventListener('scroll', function() {
+            document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 0);
+        }, { passive: true });
     </script>
 
 </body>
