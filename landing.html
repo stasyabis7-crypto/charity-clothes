@@ -596,41 +596,24 @@
     <script>
         const fondId = Number(sessionStorage.getItem('selectedFundId') || '1');
 
-        /* ---- listings per fund (photo, title, price) ---- */
-        const FUND_LISTINGS = {
-            1: [
-                { photo: 'new podacha/fond 1 photo 1.png?v=2', name: 'Детская куртка зимняя, размер 110–116', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 1 photo 2.png?v=2', name: 'Детский комплект одежды, размер 92–98', price: '1 ₽' },
-                { photo: 'new podacha/fond 1 photo 1.png?v=2', name: 'Детская одежда, размер 104, осень-зима', price: '10 ₽' },
-                { photo: 'new podacha/fond 1 photo 2.png?v=2', name: 'Детская куртка, размер 122', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 1 photo 1.png?v=2', name: 'Комбинезон детский, размер 86', price: '1 ₽' },
-                { photo: 'new podacha/fond 1 photo 2.png?v=2', name: 'Тёплая кофта детская, размер 116', price: 'Бесплатно' },
-            ],
-            2: [
-                { photo: 'new podacha/fond 2 photo 1.png?v=2', name: 'Рюкзак вместительный, целые лямки', price: '1 ₽' },
-                { photo: 'new podacha/fond 2 photo 2.png?v=2', name: 'Мужская куртка тёмная, размер L', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 2 photo 1.png?v=2', name: 'Сумка через плечо, рабочие молнии', price: '1 ₽' },
-                { photo: 'new podacha/fond 2 photo 2.png?v=2', name: 'Мужской пуховик, размер XL', price: '10 ₽' },
-                { photo: 'new podacha/fond 2 photo 1.png?v=2', name: 'Ботинки мужские зимние, размер 43', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 2 photo 2.png?v=2', name: 'Свитер тёплый, размер L', price: '1 ₽' },
-            ],
-            3: [
-                { photo: 'new podacha/fond 3 photo 1.png?v=2', name: 'Художественная литература, проза, 5 книг', price: '1 ₽' },
-                { photo: 'new podacha/fond 3 photo 2.png?v=2', name: 'Детские книги, сказки, 3–6 лет, 3 книги', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 3 photo 1.png?v=2', name: 'Познавательные книги о природе, 2019 год', price: '10 ₽' },
-                { photo: 'new podacha/fond 3 photo 2.png?v=2', name: 'Книги для школьников 7–10 лет', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 3 photo 1.png?v=2', name: 'Энциклопедия для детей, комплект', price: '1 ₽' },
-                { photo: 'new podacha/fond 3 photo 2.png?v=2', name: 'Классика русской литературы, 4 тома', price: 'Бесплатно' },
-            ],
-            4: [
-                { photo: 'new podacha/fond 4 photo 1.png?v=2', name: 'Костыли локтевые, хорошее состояние', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 4 photo 2.png?v=2', name: 'Ходунки для взрослых, рабочие', price: '1 ₽' },
-                { photo: 'new podacha/fond 4 photo 1.png?v=2', name: 'Куртка женская, размер 52–54', price: 'Бесплатно' },
-                { photo: 'new podacha/fond 4 photo 2.png?v=2', name: 'Комплект постельного белья, евро', price: '10 ₽' },
-                { photo: 'new podacha/fond 4 photo 1.png?v=2', name: 'Трость регулируемая, новая', price: '1 ₽' },
-                { photo: 'new podacha/fond 4 photo 2.png?v=2', name: 'Ботинки ортопедические, размер 40', price: 'Бесплатно' },
-            ],
-        };
+        /* ---- listings: the same photo pool that's added when creating an ad ---- */
+        const LISTINGS = [
+            { photo: 'new podacha/fond 1 photo 1.png?v=2', name: 'Детская одежда, платья и юбки, рост 104–116', price: 'Бесплатно' },
+            { photo: 'new podacha/fond 1 photo 2.png?v=2', name: 'Детские шорты, 2 пары, рост 110–122', price: '1 ₽' },
+            { photo: 'new podacha/fond 2 photo 1.png?v=2', name: 'Сумка-шоппер чёрная, вместительная', price: '10 ₽' },
+            { photo: 'new podacha/fond 2 photo 2.png?v=2', name: 'Мужской пуховик тёмный, размер L', price: 'Бесплатно' },
+            { photo: 'new podacha/fond 3 photo 1.png?v=2', name: 'Журналы Forbes, подборка, 5 выпусков', price: '1 ₽' },
+            { photo: 'new podacha/fond 3 photo 2.png?v=2', name: 'Книга «Сказки для детей», твёрдая обложка', price: 'Бесплатно' },
+            { photo: 'new podacha/fond 4 photo 1.png?v=2', name: 'Смартфон рабочий, 2020 год, с зарядкой', price: '10 ₽' },
+            { photo: 'new podacha/fond 4 photo 2.png?v=2', name: 'Ходунки для взрослых, складные, рабочие', price: 'Бесплатно' },
+        ];
+        // which photos lead the grid for each fund (the rest follow, so every card is different)
+        const FUND_LEAD = { 1: [0, 1], 2: [2, 3], 3: [4, 5], 4: [6, 7] };
+        function fundListings() {
+            const lead = FUND_LEAD[fondId] || FUND_LEAD[1];
+            const rest = LISTINGS.map(function (_, i) { return i; }).filter(function (i) { return lead.indexOf(i) === -1; });
+            return lead.concat(rest).map(function (i) { return LISTINGS[i]; });
+        }
 
         /* ---- categories per fund (same list as the crisis flow) ---- */
         const FUND_CATS = {
@@ -716,7 +699,7 @@
 
         /* ---- listings ---- */
         function renderListings() {
-            const all = FUND_LISTINGS[fondId] || FUND_LISTINGS[1];
+            const all = fundListings();
             const items = expanded ? all : all.slice(0, 4);
             const grid = document.getElementById('ads-grid');
             grid.innerHTML = '';
