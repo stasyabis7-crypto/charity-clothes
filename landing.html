@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --check-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.6 7.4 5.6 10.3 11.4 3.7' fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
         body {
             font-family: 'Inter', sans-serif;
             background: #fff;
@@ -281,8 +284,10 @@
         .sub-sheet { z-index: 211; max-height: 74vh; }
 
         .sheet__nav {
+            position: relative;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 6px 8px 6px 6px;
             flex-shrink: 0;
         }
@@ -298,11 +303,14 @@
         }
         .sheet__nav-btn img { width: 24px; height: 24px; }
         .sheet__nav-title {
-            flex: 1;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
             font-size: 16px;
             font-weight: 700;
             color: #000;
+            pointer-events: none;
         }
         .sheet__reset {
             background: none;
@@ -396,17 +404,8 @@
             position: relative;
         }
         .f-check-row.active .f-check-box {
-            background: #141414;
+            background: #141414 var(--check-svg) center / 13px 13px no-repeat;
             border-color: #141414;
-        }
-        .f-check-row.active .f-check-box::after {
-            content: '';
-            position: absolute;
-            left: 50%; top: 50%;
-            width: 5px; height: 9px;
-            border: solid #fff;
-            border-width: 0 2px 2px 0;
-            transform: translate(-50%, -60%) rotate(45deg);
         }
         .f-check-label { font-size: 15px; font-weight: 500; line-height: 20px; color: #000; }
 
@@ -425,15 +424,8 @@
             background: #ebeae8;
             position: relative;
         }
-        .f-sort-row.active .f-mark { background: #141414; }
-        .f-sort-row.active .f-mark::after {
-            content: '';
-            position: absolute;
-            left: 50%; top: 50%;
-            width: 5px; height: 9px;
-            border: solid #fff;
-            border-width: 0 2px 2px 0;
-            transform: translate(-50%, -60%) rotate(45deg);
+        .f-sort-row.active .f-mark {
+            background: #141414 var(--check-svg) center / 13px 13px no-repeat;
         }
 
         .sheet__footer {
@@ -471,15 +463,9 @@
         .picker-item:active { background: #f6f5f4; }
         .picker-item.selected { font-weight: 600; }
         .picker-item .f-check-box { pointer-events: none; }
-        .picker-item.selected .f-check-box { background: #141414; border-color: #141414; }
-        .picker-item.selected .f-check-box::after {
-            content: '';
-            position: absolute;
-            left: 50%; top: 50%;
-            width: 5px; height: 9px;
-            border: solid #fff;
-            border-width: 0 2px 2px 0;
-            transform: translate(-50%, -60%) rotate(45deg);
+        .picker-item.selected .f-check-box {
+            background: #141414 var(--check-svg) center / 13px 13px no-repeat;
+            border-color: #141414;
         }
     </style>
 </head>
