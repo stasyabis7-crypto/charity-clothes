@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Проверьте данные объявления</title>
+<title>Проверьте, что всё заполнено верно</title>
 <style>
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
@@ -59,19 +59,19 @@ h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 <div class="page">
 <header class="header"><button class="back" onclick="history.back()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><span class="header-title" id="header-title" hidden>Редактирование</span><button class="save" id="save-exit" onclick="location.href='ads.html?tab=drafts&toast=1'">Сохранить и выйти</button></header>
 <main>
-<h1 id="page-title">Проверьте данные объявления</h1>
+<h1 id="page-title">Проверьте, что всё заполнено верно</h1>
 
 <section class="section" id="edit-category-section" hidden><p class="field-label">Категория объявления</p><div class="readonly-field">Благотворительные товары</div></section>
 
-<section class="section"><p class="field-label">Название</p><div class="input-wrap"><input class="text-input" id="title-input" type="text"><button class="input-clear" onclick="clearInput('title-input')"><img src="new category/CloseButton.svg" alt=""></button></div></section>
+<section class="section"><p class="field-label">Название объявления</p><div class="input-wrap"><input class="text-input" id="title-input" type="text"><button class="input-clear" onclick="clearInput('title-input')"><img src="new category/CloseButton.svg" alt=""></button></div></section>
 
 <section class="section"><p class="field-label" id="parcel-label"></p><div id="parcel-list"></div></section>
 
-<section class="section"><p class="field-label">Фотографии</p><div class="photos-grid" id="photos-grid"></div></section>
+<section class="section"><p class="field-label">Фото</p><div class="photos-grid" id="photos-grid"></div></section>
 
 <section class="section"><p class="field-label">Описание</p><div class="input-wrap"><textarea class="textarea-input" id="desc-input"></textarea><button class="input-clear" style="top:15px;transform:none" onclick="clearInput('desc-input')"><img src="new category/CloseButton.svg" alt=""></button></div></section>
 
-<section class="section"><p class="field-label">Адрес</p><div class="input-wrap"><input class="text-input" id="address-input" type="text" value="Москва, Чонгарский б-р, 7"><button class="input-clear" onclick="clearInput('address-input')"><img src="new category/CloseButton.svg" alt=""></button></div><p class="help-text">Укажите реальный адрес, откуда фонд сможет забрать вещи</p></section>
+<section class="section"><p class="field-label">Адрес</p><div class="input-wrap"><input class="text-input" id="address-input" type="text" value="Москва, Чонгарский б-р, 7"><button class="input-clear" onclick="clearInput('address-input')"><img src="new category/CloseButton.svg" alt=""></button></div><p class="help-text">Укажите реальный адрес, откуда покупатель сможет оформить доставку</p></section>
 
 <section class="section"><p class="field-label">Бесплатная Авито Доставка</p>
 <div style="margin-top:12px">
@@ -80,8 +80,8 @@ h1{margin:0;font-size:26px;line-height:30px;font-weight:700}
 </div>
 </section>
 
-<section class="section"><p class="field-label">Контакты</p><p class="desc-block">Фонды свяжутся с вами, когда увидят объявление с нужными им вещами, узнают подробности и договорятся о сделке</p>
-<div style="margin-top:24px"><p class="field-label">Телефон</p><p class="desc-block" style="margin-top:0">Чтобы ваш настоящий номер не попал в базы мошенников, мы показываем вместо него подменный, а звонки переводим вам. Эту защиту нельзя отключить. <span class="link">Подробнее</span></p><div class="input-wrap" style="margin-top:12px"><input class="text-input" id="phone-input" type="text" value="+7 900 000-00-00"><button class="input-clear" onclick="clearInput('phone-input')"><img src="new category/CloseButton.svg" alt=""></button></div></div>
+<section class="section"><p class="field-label">Контакты</p><p class="desc-block">Фонды свяжутся с вами, когда увидят объявления с нужными им вещами, узнают подробности и договорятся о сделке</p>
+<div style="margin-top:24px"><p class="field-label">Телефон</p><p class="desc-block" style="margin-top:0">Фонды не увидят ваш настоящий номер и не смогут написать сообщение вне Авито. Эту защиту нельзя отключить. <span class="link">Подробнее</span></p><div class="input-wrap" style="margin-top:12px"><input class="text-input" id="phone-input" type="text" value="8 200 614-53-63"><button class="input-clear" onclick="clearInput('phone-input')"><img src="new category/CloseButton.svg" alt=""></button></div></div>
 <div style="margin-top:24px"><p class="field-label">Способ связи</p><div id="contact-method-list"></div></div>
 </section>
 </main>
@@ -125,7 +125,7 @@ const fundId=Number(sessionStorage.getItem('selectedFundId'))||1;
 const fundName=(FUNDS[fundId]||FUNDS[1]).name;
 
 document.getElementById('title-input').value=categoryNames.length?`Пакет вещей: ${categoryNames.join(', ')}. Бесплатно`:'Пакет вещей. Бесплатно';
-document.getElementById('parcel-label').textContent=`Моя посылка (${categoryNames.length})`;
+document.getElementById('parcel-label').textContent='Что в посылке';
 
 const parcelList=document.getElementById('parcel-list');
 categoryNames.forEach(category=>{
