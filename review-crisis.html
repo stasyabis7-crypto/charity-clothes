@@ -130,7 +130,7 @@ document.getElementById('parcel-label').textContent=`Моя посылка (${ca
 const parcelList=document.getElementById('parcel-list');
 categoryNames.forEach(category=>{
   const row=document.createElement('button');row.type='button';row.className='parcel-row';
-  row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);location.href='category-details.html'};
+  row.onclick=()=>{sessionStorage.setItem('editingParcelCategory',category);sessionStorage.setItem('categoryReturnPage','review-crisis.html'+location.search);location.href='category-details.html'};
   const img=categoryImage(category);
   row.innerHTML=`<span class="parcel-thumb"${img?` style="background-image:url('${img}')"`:''}></span><span class="parcel-copy"><span class="parcel-name">${category}</span><span class="parcel-desc">${summarizeCategory(category)}</span></span><img class="parcel-edit" src="new-podaca-V3/Edit Outline.svg" alt="Изменить">`;
   parcelList.appendChild(row);

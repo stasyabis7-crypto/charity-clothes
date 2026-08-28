@@ -364,7 +364,9 @@ function returnToParcel(){
   sessionStorage.removeItem('categoryDetailsMode');
   sessionStorage.removeItem('catPhotoEditId');
   sessionStorage.removeItem('catPhotoEditTakenPhotos');
-  location.replace('step5-crisis.html');
+  const dest=sessionStorage.getItem('categoryReturnPage')||'step5-crisis.html';
+  sessionStorage.removeItem('categoryReturnPage');
+  location.replace(dest);
 }
 function save(){
   if(!validate())return;
