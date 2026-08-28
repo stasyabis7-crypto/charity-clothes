@@ -106,12 +106,17 @@ const CATEGORY_FIELD_ORDER={
 function selectedPhotos(){const raw=sessionStorage.getItem('selectedPhotos');if(raw===null)return[1,2];return JSON.parse(raw).map(Number).filter(id=>PHOTO_FILES[id])}
 function categoryForPhoto(id){const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
 function parcelGroups(){const groups={};selectedPhotos().forEach(id=>{const c=categoryForPhoto(id);(groups[c]=groups[c]||[]).push(id)});return groups}
-function summarizeCategory(category){
+// Filled characteristics of a category, or '' when nothing has been entered yet.
+function categoryChars(category){
   const order=CATEGORY_FIELD_ORDER[category]||['sostoyanie'];
   const values=JSON.parse(sessionStorage.getItem('categoryFieldData_'+category)||'{}');
   const parts=[];
   order.forEach(key=>{const v=values[key];if(Array.isArray(v)){if(v.length)parts.push(v.join(', '))}else if(v)parts.push(v)});
-  return parts.length?parts.join(', '):'Нажмите, чтобы указать характеристики';
+  return parts.join(', ');
+}
+// List row: fall back to a call-to-action prompt when the category is still empty.
+function summarizeCategory(category){
+  return categoryChars(category)||'Нажмите, чтобы указать характеристики';
 }
 
 const groups=parcelGroups();
@@ -139,9 +144,13 @@ allPhotoIds.forEach((id,i)=>{
   photosGrid.appendChild(tile);
 });
 
+// Description carries only categories whose characteristics are actually filled in.
 const descLines=['У меня в благотворительном пакете:'];
-categoryNames.forEach((category,i)=>{descLines.push(`${i+1}) ${category}, ${summarizeCategory(category)}`)});
-document.getElementById('desc-input').value=descLines.join('\n');
+categoryNames.forEach(category=>{
+  const chars=categoryChars(category);
+  if(chars)descLines.push(`${descLines.length}) ${category}, ${chars}`);
+});
+document.getElementById('desc-input').value=descLines.length>1?descLines.join('\n'):'';
 
 const CONTACT_METHODS=['Звонки и сообщения','Только звонки','Только сообщения'];
 let contactMethod=CONTACT_METHODS[0];
