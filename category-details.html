@@ -85,7 +85,7 @@ const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская оде
 const PRESETS={
   clothingKids:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мальчиков','Для девочек','Унисекс']},
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['80–92','98–116','122–140','146–152'],sizeChart:[
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Если не уверены, заполните примерно',options:['80–92','98–116','122–140','146–152'],sizeChart:[
       {size:'80–92',short:'1–2 года',details:[['Возраст','1–2 года'],['Рост, см','80–92'],['Обхват груди, см','51–53']]},
       {size:'98–116',short:'3–6 лет',details:[['Возраст','3–6 лет'],['Рост, см','98–116'],['Обхват груди, см','55–59']]},
       {size:'122–140',short:'7–10 лет',details:[['Возраст','7–10 лет'],['Рост, см','122–140'],['Обхват груди, см','63–68']]},
@@ -96,7 +96,7 @@ const PRESETS={
   ],
   clothingAdult:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер вещей',options:['XS','S','M','L','XL','XXL'],sizeChart:[
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Если не уверены, заполните примерно',options:['XS','S','M','L','XL','XXL'],sizeChart:[
       {size:'XS',short:'40–42',details:[['Российский размер','40–42'],['Обхват груди, см','82–85'],['Обхват талии, см','62–65'],['Обхват бёдер, см','88–91']]},
       {size:'S',short:'44–46',details:[['Российский размер','44–46'],['Обхват груди, см','88–92'],['Обхват талии, см','68–73'],['Обхват бёдер, см','94–98']]},
       {size:'M',short:'48–50',details:[['Российский размер','48–50'],['Обхват груди, см','96–100'],['Обхват талии, см','76–82'],['Обхват бёдер, см','100–104']]},
@@ -109,7 +109,7 @@ const PRESETS={
   ],
   footwear:[
     {key:'pol',type:'chips',label:'Пол',options:['Для мужчин','Для женщин','Унисекс']},
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер обуви',options:['36–37','38–39','40–41','42–43','44+'],sizeChart:[
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Если не уверены, заполните примерно',options:['36–37','38–39','40–41','42–43','44+'],sizeChart:[
       {size:'36–37',short:'23–23,5 см',details:[['Длина стопы, см','23–23,5'],['US','6–6,5'],['UK','3,5–4']]},
       {size:'38–39',short:'24–25 см',details:[['Длина стопы, см','24–25'],['US','7–8'],['UK','4,5–5,5']]},
       {size:'40–41',short:'25,5–26,5 см',details:[['Длина стопы, см','25,5–26,5'],['US','8,5–9,5'],['UK','6–7']]},
@@ -120,7 +120,7 @@ const PRESETS={
     {key:'sostoyanie',type:'chips',label:'Общее состояние вещей',options:['Новое','Отличное','Хорошее','Удовлетворительное']}
   ],
   bedding:[
-    {key:'razmer',type:'size',label:'Размер',placeholder:'Выберите примерный размер',options:['1,5-спальное','2-спальное','Евро','Другое'],sizeChart:[
+    {key:'razmer',type:'size',label:'Размер',placeholder:'Если не уверены, заполните примерно',options:['1,5-спальное','2-спальное','Евро','Другое'],sizeChart:[
       {size:'1,5-спальное',short:'150×200 см',details:[['Простыня, см','150×214'],['Пододеяльник, см','145×210'],['Наволочки, см','50×70, 2 шт']]},
       {size:'2-спальное',short:'180×200 см',details:[['Простыня, см','180×214'],['Пододеяльник, см','175×210'],['Наволочки, см','50×70, 2 шт']]},
       {size:'Евро',short:'200×220 см',details:[['Простыня, см','220×240'],['Пододеяльник, см','200×220'],['Наволочки, см','50×70, 2 шт']]},
@@ -259,7 +259,7 @@ function renderFields(){
     root.appendChild(box);
   });
   const photoLabel=document.createElement('div');photoLabel.className='field';
-  photoLabel.innerHTML='<p class="field-label">Фотографии</p>';
+  photoLabel.innerHTML='<p class="field-label">Фото</p>';
   root.appendChild(photoLabel);
   root.appendChild(renderPhotos());
   renderFooter();
