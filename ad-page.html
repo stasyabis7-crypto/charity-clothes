@@ -267,6 +267,43 @@
             line-height: 1.45;
         }
 
+        .props {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .prop-row {
+            display: flex;
+            gap: 4px;
+            align-items: baseline;
+        }
+
+        .prop-label {
+            flex-shrink: 0;
+            font-size: 16px;
+            line-height: 20px;
+            color: #858585;
+        }
+
+        .prop-value {
+            flex: 1;
+            min-width: 0;
+            font-size: 15px;
+            line-height: 20px;
+            color: #000;
+        }
+
+        .prop-all-row {
+            padding-top: 6px;
+        }
+
+        .props-all {
+            font-size: 16px;
+            line-height: 20px;
+            color: #0099F7;
+        }
+
         .detail-location {
             font-size: 15px;
             font-weight: 400;
@@ -505,14 +542,7 @@
 
     <!-- DETAILS -->
     <div class="details">
-        <div class="detail-row">
-            <div class="detail-label">Категория</div>
-            <div class="detail-value">Благотворительность</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Цена, ₽</div>
-            <div class="detail-value" id="ad-price-detail">Бесплатно</div>
-        </div>
+        <div class="props" id="props-list"></div>
         <div class="detail-row">
             <div class="ad-desc-block" id="ad-desc-display"></div>
         </div>
@@ -599,18 +629,43 @@
         const descText = sessionStorage.getItem('adDescText');
         const desc = descText != null ? descText : normalizeAdDescription(sessionStorage.getItem('adDesc') || '');
         document.getElementById('ad-desc-display').textContent = desc;
+
+        // ── CHARACTERISTICS ──
+        const PHOTO_CATEGORIES = {1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
+        const PROP_ROWS = [['pol','Пол'],['vozrast','Возраст'],['tip','Тип'],['razmer','Размер'],['sezon','Сезон'],['sostoyanie','Состояние']];
+        function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+        function categoryForPhoto(id){const ov=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return ov[id]||PHOTO_CATEGORIES[id]||'Вещи';}
+        function parcelCategories(){const set=new Set();JSON.parse(sessionStorage.getItem('selectedPhotos')||'[]').forEach(id=>set.add(categoryForPhoto(id)));return [...set];}
+        function renderProperties(){
+            const cats = parcelCategories();
+            const rows = [['Категория','Вещи для благотворительных фондов']];
+            if (cats.length) rows.push(['В объявлении', cats.join(', ')]);
+            const first = cats[0];
+            if (first) {
+                const data = JSON.parse(sessionStorage.getItem('categoryFieldData_' + first) || '{}');
+                PROP_ROWS.forEach(([key,label]) => {
+                    let v = data[key];
+                    if (Array.isArray(v)) v = v.filter(Boolean).join(', ');
+                    if (v) rows.push([label, v]);
+                });
+            }
+            document.getElementById('props-list').innerHTML =
+                rows.map(([l,v]) => `<div class="prop-row"><span class="prop-label">${esc(l)}:</span><span class="prop-value">${esc(v)}</span></div>`).join('') +
+                '<div class="prop-row prop-all-row"><span class="props-all">Все характеристики</span></div>';
+        }
+        renderProperties();
         const address = sessionStorage.getItem('adAddress');
         if (address) document.getElementById('ad-location-display').textContent = address + ' ›';
         const adPrice = formatAdPrice(sessionStorage.getItem('adPrice') || sessionStorage.getItem('mainPrice') || '');
         document.getElementById('ad-price-display').textContent = adPrice;
-        document.getElementById('ad-price-detail').textContent = adPrice;
         const packageCount = packageItemsCount();
         document.getElementById('ad-package-qty').textContent = `${packageCount} ${pluralPackageItems(packageCount)} в пакете`;
 
         const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         if (photos.length > 0) {
             document.getElementById('ad-main-photo').src = photoSrc(photos[0]);
-            document.getElementById('photo-counter').textContent = `1/${photos.length}`;
+            const counter = document.getElementById('photo-counter');
+            if (counter) counter.textContent = `1/${photos.length}`;
         }
 
         function openDotMenu() {
