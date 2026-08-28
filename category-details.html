@@ -35,6 +35,12 @@ main{padding:8px 16px 24px}
 .size-select.has-value{color:#111}
 .size-select img{width:12px;height:20px;flex-shrink:0}
 .field-error .size-select{box-shadow:0 0 0 1.5px #ff4053 inset}
+.wishes-btn{width:100%;margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 18px;border:0;border-radius:16px;background:#f2f1f0;color:#111;font-size:15px;line-height:20px;text-align:left;cursor:pointer}
+.wishes-btn img{width:12px;height:20px;flex-shrink:0}
+.sheet-content .accept-list{margin:12px 0 0;padding:0;list-style:none;font-size:15px;line-height:20px}
+.sheet-content .accept-list li{padding-left:16px;text-indent:-16px}
+.sheet-content .accept-list li::before{content:"— "}
+.sheet-content .reject-line{margin:12px 0 0;font-size:15px;line-height:20px}
 .photos-grid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .field-error.photos-grid .add-photo{box-shadow:0 0 0 1.5px #ff4053 inset}
 .sheet-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.42);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}
@@ -78,9 +84,15 @@ main{padding:8px 16px 24px}
 <div class="toast" id="toast">Заполните данные категории</div>
 <div class="sheet-overlay" id="size-pick-sheet" onclick="closeSizePickSheet(event)"><div class="bottom-sheet"><button class="sheet-close" onclick="closeSizePickSheet()" aria-label="Закрыть"><img src="new category/CloseButton.svg" alt=""></button><div class="sheet-content"><h2 class="sheet-title">Размер</h2><div class="checkbox-list" id="size-pick-list"></div></div><div class="sheet-footer"><button type="button" class="btn btn-primary" style="width:100%" onclick="confirmSizePick()">Выбрать</button></div></div></div>
 <div class="sheet-overlay" id="size-chart-sheet" onclick="closeSizeChartSheet(event)"><div class="bottom-sheet"><button class="sheet-close" onclick="closeSizeChartSheet()" aria-label="Закрыть"><img src="new category/CloseButton.svg" alt=""></button><div class="sheet-content"><h2 class="sheet-title">Таблица размеров</h2><div id="size-chart-body"></div></div><div class="sheet-footer"><button type="button" class="btn btn-primary" style="width:100%" onclick="closeSizeChartSheet()">Понятно</button></div></div></div>
+<div class="sheet-overlay" id="wishes-sheet" onclick="closeWishesSheet(event)"><div class="bottom-sheet"><button class="sheet-close" onclick="closeWishesSheet()" aria-label="Закрыть"><img src="new category/CloseButton.svg" alt=""></button><div class="sheet-content"><h2 class="sheet-title" id="wishes-title"></h2><ul class="accept-list" id="wishes-accept"></ul><p class="reject-line" id="wishes-reject"></p></div><div class="sheet-footer"><button type="button" class="btn btn-primary" style="width:100%" onclick="closeWishesSheet()">Закрыть</button></div></div></div>
 <script>
 const PHOTO_FILES={1:'new podacha/fond 1 photo 1.png?v=2',2:'new podacha/fond 1 photo 2.png?v=2',3:'new podacha/fond 2 photo 1.png?v=2',4:'new podacha/fond 2 photo 2.png?v=2',5:'new podacha/fond 3 photo 1.png?v=2',6:'new podacha/fond 3 photo 2.png?v=2',7:'new podacha/fond 4 photo 1.png?v=2',8:'new podacha/fond 4 photo 2.png?v=2'};
 const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
+
+// Fund requirements per category — mirrors FUND_INFO in step5-crisis.html.
+const FUND_INFO={1:{categories:[{title:'Детская одежда',accept:['В хорошем состоянии','Для мальчиков и девочек','Размеры 80—152'],reject:'Не принимают вещи рваные и с пятнами, ношеное нижнее бельё.'},{title:'Тёплая одежда',accept:['В хорошем состоянии','Куртки, свитеры, термобельё','Для взрослых и детей'],reject:'Не принимают сильно изношенные вещи, с порванными молниями и посторонним запахом.'},{title:'Обувь для взрослых',accept:['По сезону','В чистом виде, парами','Без деформации подошвы'],reject:'Не принимают обувь с дырами, стоптанную и без пары.'},{title:'Одеяла',accept:['Одеяла, пледы, постельное бельё','В чистом виде'],reject:'Не принимают вещи с пятнами, дырами и неприятным запахом.'},{title:'Посуда',accept:['Тарелки, кружки, столовые приборы','Без сколов и трещин'],reject:'Не принимают треснутую посуду и предметы с ржавчиной.'}]},2:{categories:[{title:'Одежда для взрослых',accept:['В хорошем состоянии','По сезону','Мужская и женская'],reject:'Не принимают порванную одежду и вещи с пятнами.'},{title:'Обувь',accept:['По сезону, парами','Крепкая, без сильного износа'],reject:'Не принимают обувь со стоптанной подошвой и без пары.'},{title:'Тёплые вещи',accept:['Куртки, шапки, перчатки, шарфы','В хорошем состоянии'],reject:'Не принимают лёгкие летние вещи не по сезону.'},{title:'Средства гигиены',accept:['Новые, в упаковке','Мыло, зубные щётки, шампуни'],reject:'Не принимают использованные и открытые средства гигиены.'}]},3:{categories:[{title:'Детская литература',accept:['Для детей от 0 до 12 лет','В хорошем состоянии'],reject:'Не принимают книги с вырванными страницами и повреждённой обложкой.'},{title:'Художественная литература',accept:['Романы, повести, сборники рассказов','Для подростков и взрослых'],reject:'Не принимают книги с плесенью и запахом сырости.'},{title:'Учебная литература',accept:['Учебники и пособия','Не старше 5 лет'],reject:'Не принимают устаревшие издания с испорченной обложкой.'},{title:'Энциклопедии',accept:['Справочники и энциклопедии','Полным комплектом'],reject:'Не принимают отдельные тома без набора.'}]},4:{categories:[{title:'Одежда для взрослых',accept:['В хорошем состоянии','По сезону','Больших размеров'],reject:'Не принимают одежду с дырами и пятнами.'},{title:'Средства реабилитации',accept:['Трости, ходунки, инвалидные коляски','В рабочем состоянии'],reject:'Не принимают сломанные и неисправные изделия.'},{title:'Постельное бельё',accept:['Комплекты постельного белья','В чистом виде'],reject:'Не принимают бельё с дырами и пятнами.'},{title:'Обувь',accept:['Ортопедическая и обычная','По сезону'],reject:'Не принимают стоптанную обувь.'}]}};
+const FUND_ID=Number(sessionStorage.getItem('selectedFundId'))||1;
+function categoryWishes(){const info=FUND_INFO[FUND_ID];return info?info.categories.find(c=>c.title===category)||null:null}
 
 const PRESETS={
   clothingKids:[
@@ -241,6 +253,11 @@ function renderPhotos(){
 function renderFields(){
   const root=document.getElementById('fields-root');
   root.innerHTML='';
+  if(categoryWishes()){
+    const w=document.createElement('button');w.type='button';w.className='wishes-btn';w.onclick=openWishesSheet;
+    w.innerHTML='<span>Пожелания к категории</span><img src="arrow down.svg" alt="">';
+    root.appendChild(w);
+  }
   fieldsFor(category).forEach(f=>{
     const box=document.createElement('div');box.className='field';box.dataset.key=f.key;
     if(f.type==='size'&&f.sizeChart){
@@ -315,6 +332,17 @@ function openSizeChartSheet(field){
   requestAnimationFrame(()=>updateSheetShadow(document.querySelector('#size-chart-sheet .sheet-content')));
 }
 function closeSizeChartSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('size-chart-sheet').classList.remove('open');document.body.style.overflow=''}
+function openWishesSheet(){
+  const w=categoryWishes();
+  if(!w)return;
+  document.getElementById('wishes-title').textContent=`Какая ${category.toLowerCase()} нужна фонду`;
+  document.getElementById('wishes-accept').innerHTML=w.accept.map(x=>`<li>${x}</li>`).join('');
+  document.getElementById('wishes-reject').textContent=w.reject;
+  document.getElementById('wishes-sheet').classList.add('open');
+  document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>updateSheetShadow(document.querySelector('#wishes-sheet .sheet-content')));
+}
+function closeWishesSheet(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('wishes-sheet').classList.remove('open');document.body.style.overflow=''}
 function addPhotos(){
   const own=photos;
   const others=allPhotos.filter(id=>!own.includes(id));
