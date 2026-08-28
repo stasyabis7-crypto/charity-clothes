@@ -237,21 +237,6 @@
             font-size: 18px;
         }
 
-        .how-banner {
-            margin: 10px 16px 0;
-            background: linear-gradient(90deg, #D7F1FF 0%, #E4F8FF 100%);
-            border-radius: 16px;
-            padding: 14px 14px 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-        .how-banner-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
-        .how-banner-text { flex: 1; min-width: 0; }
-        .how-banner-title { font-size: 15px; font-weight: 700; color: #1A1A1A; }
-        .how-banner-sub { margin-top: 3px; font-size: 13px; color: #1A1A1A; line-height: 1.35; }
-
         /* ── DIVIDER ── */
         .divider {
             height: 1px;
@@ -417,19 +402,6 @@
             cursor: pointer;
         }
 
-        .how-sheet .sheet-card { padding: 8px 16px 32px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .sheet-drag { width: 36px; height: 4px; border-radius: 4px; background: #D9D9D9; margin: 8px auto 20px; }
-        .sheet-close { position: absolute; right: 12px; top: 12px; background: none; border: none; padding: 0; cursor: pointer; }
-        .how-sheet-title { font-size: 22px; font-weight: 800; color: #1A1A1A; line-height: 1.15; margin-bottom: 18px; padding-right: 36px; }
-        .sheet-tabs { display: flex; border-bottom: 1px solid #EBEBEB; margin-bottom: 20px; }
-        .sheet-tab { padding: 0 0 10px; margin-right: 24px; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #9E9E9E; background: none; border: none; cursor: pointer; position: relative; white-space: nowrap; }
-        .sheet-tab.active { color: #1A1A1A; }
-        .sheet-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #1A1A1A; border-radius: 2px 2px 0 0; }
-        .how-step { display: flex; gap: 12px; margin-bottom: 18px; }
-        .how-step img { flex-shrink: 0; }
-        .how-step-title { font-size: 17px; font-weight: 700; color: #1A1A1A; line-height: 1.3; margin-bottom: 4px; }
-        .how-step-sub { font-size: 15px; color: #1A1A1A; line-height: 1.4; }
-
         .toast {
             display: none;
             position: fixed;
@@ -526,14 +498,6 @@
         <span class="znak-arrow">›</span>
     </div>
 
-    <div class="how-banner" onclick="openHowSheet()">
-        <img class="how-banner-img" src="how it works.png" alt="">
-        <div class="how-banner-text">
-            <div class="how-banner-title">Как это работает</div>
-            <div class="how-banner-sub">Кто заберёт вещи и что делать после размещения объявления</div>
-        </div>
-    </div>
-
     <div class="divider"></div>
 
     <!-- LOCATION -->
@@ -586,20 +550,6 @@
             </div>
 
             <button class="sheet-confirm-btn" id="unpublish-confirm-btn" onclick="confirmUnpublish()">Снять с публикации</button>
-        </div>
-    </div>
-
-    <div class="sheet-overlay how-sheet" id="how-sheet" onclick="closeHowSheet()">
-        <div class="sheet-card" onclick="event.stopPropagation()">
-            <div class="sheet-drag"></div>
-            <button class="sheet-close" onclick="closeHowSheet()"><img src="sheets materials/CloseButton.svg" width="24" height="24" alt=""></button>
-            <h2 class="how-sheet-title">Передача вещей<br>на благотворительность</h2>
-            <div class="sheet-tabs">
-                <button class="sheet-tab active" id="how-tab-how" onclick="switchHowSheetTab('how')">Как это работает</button>
-                <button class="sheet-tab" id="how-tab-benefits" onclick="switchHowSheetTab('benefits')">Почему это удобно</button>
-            </div>
-            <div class="sheet-pane" id="how-pane-how"></div>
-            <div class="sheet-pane" id="how-pane-benefits" style="display:none"></div>
         </div>
     </div>
 
@@ -661,52 +611,6 @@
         if (photos.length > 0) {
             document.getElementById('ad-main-photo').src = photoSrc(photos[0]);
             document.getElementById('photo-counter').textContent = `1/${photos.length}`;
-        }
-
-        const collection = sessionStorage.getItem('adCollection') || 'family';
-        const HOW_CONTENT = {
-            family: {
-                how: [
-                    { img: '1', title: 'Мы увидели, что ваши вещи могут подойти под активный сбор вещей на помощь людям в ЧС', sub: 'Посмотрите, правильно ли мы определили категорию вещей и отметьте те, которые готовы передать. Вы можете также посмотреть, какие еще вещи сейчас особенно нужны.' },
-                    { img: '2', title: 'Разместите объявление', sub: 'Цена объявления ставится минимум 10 ₽, чтобы была возможность отправить вещи Авито Доставкой людям в зоне ЧС' },
-                    { img: '3', title: 'Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о доставке.' }
-                ],
-                benefits: [
-                    { img: '4', title: 'Определяем, подходит ли ваша вещь для помощи в конкретных ситуациях', sub: 'Мы показываем только нужные фондам и людям вещи в зоне ЧС. Выбирайте только то, что готовы передать.' },
-                    { img: '5', title: 'Можно собрать несколько вещей в одно объявление', sub: 'Если кроме основной вещи у вас есть что-то еще из списка, отметьте это в объявлении и добавьте фотографии вещей. Так фонды смогут посмотреть, что у вас есть в пакете.' },
-                    { img: '6', title: 'Доставка для пострадавших — 1 ₽', sub: 'Люди из зоны ЧС смогут оформить Авито Доставку за 1 ₽ на товары из раздела «Добрые вещи».' }
-                ]
-            },
-            crisis: {
-                how: [
-                    { img: '1', title: 'Мы увидели, что ваши вещи могут подойти под активный сбор вещей на помощь людям в ЧС', sub: 'Посмотрите, правильно ли мы определили категорию вещей и отметьте те, которые готовы передать. Вы можете также посмотреть, какие еще вещи сейчас особенно нужны.' },
-                    { img: '2', title: 'Разместите объявление', sub: 'Цена объявления ставится минимум 10 ₽, чтобы была возможность отправить вещи Авито Доставкой людям в зоне ЧС' },
-                    { img: '3', title: 'Дождитесь сообщения в чате Авито', sub: 'Объявление увидят фонды и люди из зоны ЧС. Если вещи подойдут, вам напишут и договорятся о доставке.' }
-                ],
-                benefits: [
-                    { img: '4', title: 'Определяем, подходит ли ваша вещь для помощи в конкретных ситуациях', sub: 'Мы показываем только нужные фондам и людям вещи в зоне ЧС. Выбирайте только то, что готовы передать.' },
-                    { img: '5', title: 'Можно собрать несколько вещей в одно объявление', sub: 'Если кроме основной вещи у вас есть что-то еще из списка, отметьте это в объявлении и добавьте фотографии вещей. Так фонды смогут посмотреть, что у вас есть в пакете.' },
-                    { img: '6', title: 'Доставка для пострадавших — 1 ₽', sub: 'Люди из зоны ЧС смогут оформить Авито Доставку за 1 ₽ на товары из раздела «Добрые вещи».' }
-                ]
-            }
-        };
-        function renderHowSteps(steps) {
-            return steps.map(s => `<div class="how-step"><img src="sheets materials/${s.img}.png" width="64" height="64" alt=""><div><div class="how-step-title">${s.title}</div><div class="how-step-sub">${s.sub}</div></div></div>`).join('');
-        }
-        function openHowSheet() {
-            const content = HOW_CONTENT[collection] || HOW_CONTENT.family;
-            document.getElementById('how-pane-how').innerHTML = renderHowSteps(content.how);
-            document.getElementById('how-pane-benefits').innerHTML = renderHowSteps(content.benefits);
-            switchHowSheetTab('how');
-            document.getElementById('how-sheet').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeHowSheet() { document.getElementById('how-sheet').classList.remove('open'); document.body.style.overflow = ''; }
-        function switchHowSheetTab(tab) {
-            document.querySelectorAll('#how-sheet .sheet-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('#how-sheet .sheet-pane').forEach(p => p.style.display = 'none');
-            document.getElementById('how-tab-' + tab).classList.add('active');
-            document.getElementById('how-pane-' + tab).style.display = 'block';
         }
 
         function openDotMenu() {
