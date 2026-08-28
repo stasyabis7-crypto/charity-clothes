@@ -319,6 +319,7 @@ function addPhotos(){
   const own=photos;
   const others=allPhotos.filter(id=>!own.includes(id));
   sessionStorage.setItem('categoryFieldData_'+category,JSON.stringify(values));
+  sessionStorage.removeItem('categoryComplete_'+category);
   sessionStorage.setItem('catPhotoEditId',category);
   sessionStorage.setItem('selectedPhotos',JSON.stringify(own));
   sessionStorage.setItem('catPhotoEditTakenPhotos',JSON.stringify(others));
@@ -371,6 +372,7 @@ function returnToParcel(){
 function save(){
   if(!validate())return;
   sessionStorage.setItem('categoryFieldData_'+category,JSON.stringify(values));
+  sessionStorage.setItem('categoryComplete_'+category,'1');
   persistParcel();
   returnToParcel();
 }
@@ -381,6 +383,7 @@ function removeFromParcel(){
   sessionStorage.setItem('selectedPhotos',JSON.stringify(others));
   sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
   sessionStorage.removeItem('categoryFieldData_'+category);
+  sessionStorage.removeItem('categoryComplete_'+category);
   returnToParcel();
 }
 // Header "Назад" = cancel. No validation, no error highlighting — those only
@@ -389,6 +392,7 @@ function removeFromParcel(){
 function goBack(){
   if(mode==='add'){
     sessionStorage.removeItem('categoryFieldData_'+category);
+    sessionStorage.removeItem('categoryComplete_'+category);
     const ov=photoCategoryOverrides();
     const drop=Object.keys(ov).filter(k=>ov[k]===category).map(Number);
     if(drop.length){
