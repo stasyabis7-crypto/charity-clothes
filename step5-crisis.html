@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Выберите фонд и вещи</title>
+<title>Отдать вещи на благотворительность</title>
 <style>
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
@@ -14,8 +14,8 @@
 </head>
 <body>
 <div class="page"><header class="header"><button class="back" onclick="history.back()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><button class="save" onclick="saveAndExit()">Сохранить и выйти</button></header>
-<main><h1>Выберите фонд<br>и вещи для передачи<br>на благотворительность</h1><p class="lead">В посылку для фондов можно положить вещи из разных категорий</p><button class="how-button" onclick="openHow()">Как это работает</button>
-<section class="section"><h2 class="section-title">Какому фонду передать вещи</h2><button class="fund-row" onclick="openFundSheet()"><img class="fund-logo" id="fund-logo" alt="Логотип фонда"><span class="fund-copy"><span class="fund-name" id="fund-name"></span><span class="fund-description"><span id="fund-description"></span>. <span class="details">Что нужно фонду</span></span></span><img class="fund-arrow" src="new-podaca-V3/DataView.svg" alt=""></button><button class="secondary-button" onclick="openFundSelectSheet()">Изменить фонд</button></section>
+<main><h1>Отдать вещи<br>на благотворительность</h1><p class="lead">Соберите бесплатную посылку в фонд. В ней могут быть предметы разных категорий</p><button class="how-button" onclick="openHow()">Как это работает</button>
+<section class="section"><h2 class="section-title">Фонд</h2><button class="fund-row" onclick="openFundSheet()"><img class="fund-logo" id="fund-logo" alt="Логотип фонда"><span class="fund-copy"><span class="fund-name" id="fund-name"></span><span class="fund-description"><span id="fund-description"></span>. <span class="details">Что нужно фонду</span></span></span><img class="fund-arrow" src="new-podaca-V3/DataView.svg" alt=""></button><button class="secondary-button" onclick="openFundSelectSheet()">Выбрать другой</button></section>
 <section class="section"><h2 class="section-title">Посылка</h2><p class="parcel-subtitle">Подробно опишите вещи: это поможет волонтёрам</p><div class="parcel-list" id="items-grid"></div><button class="secondary-button" id="add-thing-btn" onclick="addThings()">Добавить вещь</button></section></main></div>
 <div class="footer"><div class="footer-inner"><button class="continue" onclick="continueFlow()">Продолжить</button></div></div>
 <div class="toast" id="toast">Добавьте хотя бы одну категорию вещей</div>
