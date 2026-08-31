@@ -632,7 +632,7 @@
         document.getElementById('ad-desc-display').textContent = desc;
 
         // ── CHARACTERISTICS ──
-        const PHOTO_CATEGORIES = {1:'Детская одежда',2:'Детская одежда',3:'Аксессуары',4:'Одежда',5:'Книги',6:'Книги',7:'Электроника',8:'Средства реабилитации'};
+        const PHOTO_CATEGORIES = {1:'Детская одежда',2:'Детская одежда',3:'Одежда для взрослых',4:'Одежда для взрослых',5:'Детская литература',6:'Детская литература',7:'Средства реабилитации',8:'Средства реабилитации'};
         const PROP_ROWS = [['pol','Пол'],['vozrast','Возраст'],['tip','Тип'],['razmer','Размер'],['sezon','Сезон'],['sostoyanie','Состояние']];
         function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
         function categoryForPhoto(id){const ov=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return ov[id]||PHOTO_CATEGORIES[id]||'Вещи';}
