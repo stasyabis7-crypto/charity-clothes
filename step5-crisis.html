@@ -32,6 +32,11 @@ const FUND_INFO={1:{categories:[{title:'Детская одежда',g:'f',accep
 function selectedPhotos(){const raw=sessionStorage.getItem('selectedPhotos');if(raw===null)return[1,2];return JSON.parse(raw).map(Number).filter(id=>PHOTO_FILES[id])}
 function categoryForPhoto(id){const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
 function selectedFundId(){const id=Number(sessionStorage.getItem('selectedFundId'));if(FUNDS[id])return id;const p=selectedPhotos()[0];return p<=2?1:p<=4?2:p<=6?3:4}
+// The photo→fund guess is only a recommendation. Once we land on the parcel
+// screen, lock the fund in: from here on the user fills categories freely and
+// adding photos anywhere must not re-point the fund. Changing the fund is an
+// explicit action (confirmFundSelect), which overwrites this.
+if(sessionStorage.getItem('selectedFundId')===null){sessionStorage.setItem('selectedFundId',String(selectedFundId()))}
 function renderFund(){const f=FUNDS[selectedFundId()];document.getElementById('fund-logo').src=f.logo;document.getElementById('fund-name').textContent=f.name;document.getElementById('fund-description').textContent=f.description}
 function categoryComplete(cat){return sessionStorage.getItem('categoryComplete_'+cat)==='1'}
 function categorySummary(cat){const data=JSON.parse(sessionStorage.getItem('categoryFieldData_'+cat)||'{}');const parts=[];Object.keys(data).forEach(k=>{const v=data[k];if(Array.isArray(v))v.forEach(x=>{if(x)parts.push(x)});else if(v)parts.push(v)});return parts.join(', ')}

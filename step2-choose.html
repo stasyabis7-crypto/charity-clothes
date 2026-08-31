@@ -247,6 +247,12 @@
 
     <script>
         const isCatPhotoEdit = !!sessionStorage.getItem('catPhotoEditId');
+        // Picking photos re-guesses the fund only during the very first pack
+        // selection. When we're adding photos to a parcel that already exists
+        // (a category's photos, or "add more" from the parcel screen), the fund
+        // is already locked and must stay put.
+        const parcelAlreadyBuilt = isCatPhotoEdit
+            || ['step5-crisis.html', 'category-details.html'].includes(sessionStorage.getItem('photoReturnPage'));
 
         // When opened from a category sheet: show close X instead of back arrow
         if (isCatPhotoEdit) {
@@ -286,7 +292,7 @@
             sessionStorage.setItem('selectedPhotos', JSON.stringify(selected));
             sessionStorage.setItem('catPhotoEditTakenPhotos', JSON.stringify(taken));
             sessionStorage.removeItem('initialPackCategories');
-            sessionStorage.removeItem('selectedFundId');
+            if (!parcelAlreadyBuilt) sessionStorage.removeItem('selectedFundId');
             render();
         }
 
