@@ -252,7 +252,7 @@ function renderPhotos(){
     tile.querySelector('.photo-delete').onclick=()=>{photos=photos.filter(p=>p!==id);renderFields()};
     wrap.appendChild(tile);
   });
-  const add=document.createElement('button');add.type='button';add.className='add-photo';add.innerHTML='<img src="step 2 materials/Camera.svg" alt=""><span>Добавить</span>';add.onclick=addPhotos;
+  const add=document.createElement('button');add.type='button';add.className='add-photo';add.innerHTML=`<img src="step 2 materials/Camera.svg" alt=""><span>${photos.length?'Добавить ещё':'Добавить'}</span>`;add.onclick=addPhotos;
   wrap.appendChild(add);
   return wrap;
 }
