@@ -166,7 +166,10 @@ const CATEGORY_PRESET={'Детская одежда':'clothingKids','Тёпла�
 function fieldsFor(category){return PRESETS[CATEGORY_PRESET[category]]||PRESETS.booksGeneric}
 
 function photoCategoryOverrides(){return JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}')}
-function categoryOfPhoto(id,overrides){return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
+function frozenPhotoCats(){try{return JSON.parse(sessionStorage.getItem('charityFrozenPhotoCats')||'{}')||{}}catch(e){return{}}}
+// A photo frozen to a category at recommendation time stays there — adding or
+// editing other categories never re-points it.
+function categoryOfPhoto(id,overrides){const f=frozenPhotoCats();return f[id]||overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
 
 let category=sessionStorage.getItem('categoryDetailsCategory');
 let mode=sessionStorage.getItem('categoryDetailsMode');
@@ -191,7 +194,8 @@ if(sessionStorage.getItem('catPhotoEditId')){
   allPhotos=[...taken,...own];
   sessionStorage.setItem('selectedPhotos',JSON.stringify(allPhotos));
   overrides=photoCategoryOverrides();
-  own.forEach(id=>{overrides[id]=category});
+  const fz=frozenPhotoCats();
+  own.forEach(id=>{if(!fz[id])overrides[id]=category});
   sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
   sessionStorage.removeItem('catPhotoEditId');
   sessionStorage.removeItem('catPhotoEditTakenPhotos');
@@ -384,7 +388,8 @@ function persistParcel(){
   const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
   const merged=[...others,...photos];
   overrides=photoCategoryOverrides();
-  photos.forEach(id=>{overrides[id]=category});
+  const fz=frozenPhotoCats();
+  photos.forEach(id=>{if(!fz[id])overrides[id]=category});
   sessionStorage.setItem('selectedPhotos',JSON.stringify(merged));
   sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
 }
@@ -410,9 +415,11 @@ function save(){
 function removeFromParcel(){
   const others=allPhotos.filter(id=>categoryOfPhoto(id,overrides)!==category);
   overrides=photoCategoryOverrides();
-  photos.forEach(id=>{delete overrides[id]});
+  const fz=frozenPhotoCats();
+  photos.forEach(id=>{delete overrides[id];delete fz[id]});
   sessionStorage.setItem('selectedPhotos',JSON.stringify(others));
   sessionStorage.setItem('photoCategoryOverrides',JSON.stringify(overrides));
+  sessionStorage.setItem('charityFrozenPhotoCats',JSON.stringify(fz));
   sessionStorage.removeItem('categoryFieldData_'+category);
   sessionStorage.removeItem('categoryComplete_'+category);
   returnToParcel();

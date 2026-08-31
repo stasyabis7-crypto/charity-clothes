@@ -264,6 +264,12 @@
         let selected = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
         let taken = JSON.parse(sessionStorage.getItem('catPhotoEditTakenPhotos') || '[]');
 
+        // Photos bound to a category at recommendation time can't be re-claimed
+        // by another category here — that binding is permanent.
+        const frozenCats = (() => { try { return JSON.parse(sessionStorage.getItem('charityFrozenPhotoCats') || '{}') || {}; } catch (e) { return {}; } })();
+        const editingCat = sessionStorage.getItem('catPhotoEditId');
+        function lockedElsewhere(id) { return frozenCats[id] && frozenCats[id] !== editingCat; }
+
         const files = {
             1: 'new podacha/fond 1 photo 1.png?v=2',
             2: 'new podacha/fond 1 photo 2.png?v=2',
@@ -276,6 +282,7 @@
         };
 
         function toggle(id) {
+            if (lockedElsewhere(id)) return;
             const inSelected = selected.includes(id);
             const inTaken = taken.includes(id);
 
@@ -301,8 +308,8 @@
                 const item = document.querySelector(`[data-id="${i}"]`);
                 if (!item) continue;
                 const badge = document.getElementById(`badge-${i}`);
-                const inSelected = selected.includes(i);
-                const inTaken = taken.includes(i);
+                const inSelected = selected.includes(i) && !lockedElsewhere(i);
+                const inTaken = taken.includes(i) || lockedElsewhere(i);
 
                 if (inSelected) {
                     item.classList.add('selected');

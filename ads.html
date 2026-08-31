@@ -548,7 +548,7 @@
         }
 
         function startNewAd() {
-            ['adTitle','adDesc','adDescText','adAddress','adNumber','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice','hasPublishedCharityAd','selectedFundId','photoCategoryOverrides'].forEach(k => sessionStorage.removeItem(k));
+            ['adTitle','adDesc','adDescText','adAddress','adNumber','adCategories','selectedPhotos','hasDraft','adCollection','bannerClosed','mainCategory','mainCondition','mainAdType','mainPrice','adPrice','hasPublishedCharityAd','selectedFundId','photoCategoryOverrides','charityFrozenPhotoCats'].forEach(k => sessionStorage.removeItem(k));
             Object.keys(sessionStorage).filter(k => k.indexOf('categoryFieldData_') === 0).forEach(k => sessionStorage.removeItem(k));
             window.location.href = 'step1.html';
         }

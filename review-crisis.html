@@ -104,7 +104,7 @@ const CATEGORY_FIELD_ORDER={
 };
 
 function selectedPhotos(){const raw=sessionStorage.getItem('selectedPhotos');if(raw===null)return[1,2];return JSON.parse(raw).map(Number).filter(id=>PHOTO_FILES[id])}
-function categoryForPhoto(id){const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
+function categoryForPhoto(id){let f={};try{f=JSON.parse(sessionStorage.getItem('charityFrozenPhotoCats')||'{}')||{}}catch(e){}if(f[id])return f[id];const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
 function parcelGroups(){const groups={};selectedPhotos().forEach(id=>{const c=categoryForPhoto(id);(groups[c]=groups[c]||[]).push(id)});return groups}
 // Filled characteristics of a category, or '' when nothing has been entered yet.
 function categoryChars(category){
