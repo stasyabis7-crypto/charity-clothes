@@ -496,13 +496,13 @@
             if (existing) existing.remove();
             if (sessionStorage.getItem('hasPublishedCharityAd') !== '1') return;
             const PHOTO_FILES = {
-                1: 'new-category-photos/kids-clothing.jpg', 2: 'new-category-photos/warm-clothing.jpg',
-                3: 'new-category-photos/adult-shoes.jpg', 4: 'new-category-photos/blankets.jpg',
-                5: 'new-category-photos/dishware.jpg', 6: 'new-category-photos/adult-clothing.jpg',
-                7: 'new-category-photos/hygiene-products.jpg', 8: 'new-category-photos/kids-books.jpg',
-                9: 'new-category-photos/fiction-books.jpg', 10: 'new-category-photos/textbooks.jpg',
-                11: 'new-category-photos/encyclopedias.jpg', 12: 'new-category-photos/rehab-equipment.jpg',
-                13: 'new-category-photos/bed-linens.jpg'
+                1: 'new-category-photos/kids-clothing.png', 2: 'new-category-photos/warm-clothing.png',
+                3: 'new-category-photos/adult-shoes.png', 4: 'new-category-photos/blankets.png',
+                5: 'new-category-photos/dishware.png', 6: 'new-category-photos/adult-clothing.png',
+                7: 'new-category-photos/hygiene-products.png', 8: 'new-category-photos/kids-books.png',
+                9: 'new-category-photos/fiction-books.png', 10: 'new-category-photos/textbooks.png',
+                11: 'new-category-photos/encyclopedias.png', 12: 'new-category-photos/rehab-equipment.png',
+                13: 'new-category-photos/bed-linens.png'
             };
             const photos = JSON.parse(sessionStorage.getItem('selectedPhotos') || '[]');
             const photoSrc = PHOTO_FILES[Number(photos[0])] || 'optimized/ui/img-drafts.jpg';
