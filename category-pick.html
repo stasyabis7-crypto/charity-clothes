@@ -35,7 +35,7 @@ function categoriesInParcel(){const set=new Set();selectedPhotos().forEach(id=>s
 function availableCategories(){
   const added=categoriesInParcel();
   const allCats=Object.values(FUND_INFO).flatMap(f=>f.categories.map(c=>c.title));
-  return allCats.filter(t=>!added.has(t));
+  return allCats.filter(t=>!added.has(t)).sort((a,b)=>a.localeCompare(b,'ru'));
 }
 function categoryImage(title){const p=CATEGORY_IMG[title];return p?encodeURI('fond category photos/'+p+'/cover.png'):''}
 function returnPage(){return sessionStorage.getItem('categoryReturnPage')||'step5-crisis.html'}

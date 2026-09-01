@@ -50,7 +50,7 @@ function categoriesInParcel(){const set=new Set();selectedPhotos().forEach(id=>s
 function availableCategories(){
   const added=categoriesInParcel();
   const allCats=Object.values(FUND_INFO).flatMap(f=>f.categories.map(c=>c.title));
-  return allCats.filter(t=>!added.has(t));
+  return allCats.filter(t=>!added.has(t)).sort((a,b)=>a.localeCompare(b,'ru'));
 }
 const CATEGORY_IMG={'Детская одежда':'Российский Красный Крест/Детская одежда','Тёплая одежда':'Российский Красный Крест/Тёплая одежда','Обувь для взрослых':'Российский Красный Крест/Обувь для взрослых','Одеяла':'Российский Красный Крест/Одеяла','Посуда':'Российский Красный Крест/Посуда','Одежда для взрослых':'Ночлежка/Одежда для взрослых','Обувь':'Ночлежка/Обувь','Тёплые вещи':'Ночлежка/Тёплые вещи','Средства гигиены':'Ночлежка/Средства гигиены','Детская литература':'Миллион книг/Детская литература','Художественная литература':'Миллион книг/Художественная литература','Учебная литература':'Миллион книг/Учебная литература','Энциклопедии':'Миллион книг/Энциклопедии','Средства реабилитации':'Дари надежду/Средства реабилитации','Постельное бельё':'Дари надежду/Постельное бельё'};
 function categoryImage(title){const p=CATEGORY_IMG[title];return p?encodeURI('fond category photos/'+p+'/cover.png'):''}
