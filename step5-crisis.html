@@ -45,12 +45,12 @@ function categorySummary(cat){const data=JSON.parse(sessionStorage.getItem('cate
 function photoCountFor(cat){return selectedPhotos().filter(id=>categoryForPhoto(id)===cat).length}
 function renderItems(){const grid=document.getElementById('items-grid');grid.innerHTML='';[...categoriesInParcel()].forEach(cat=>{const n=photoCountFor(cat);const row=document.createElement('button');row.className='parcel-row';row.type='button';row.onclick=()=>openCategory(cat);const img=categoryImage(cat);let desc;if(categoryComplete(cat)){const s=categorySummary(cat);desc=s?`${n} фото. ${s}`:`${n} фото`}else{row.classList.add('parcel-row--incomplete');desc=`${n} фото. <span class="parcel-row-warn">Не хватает данных.</span> <span class="parcel-row-link">Заполните всю информацию</span>`}row.innerHTML=`<span class="parcel-row-thumb"${img?` style="background-image:url('${img}')"`:''}></span><span class="parcel-row-copy"><span class="parcel-row-title">${cat}</span><span class="parcel-row-desc">${desc}</span></span><img class="parcel-row-arrow" src="new-podaca-V3/DataView.svg" alt="">`;grid.appendChild(row)})}
 function categoriesInParcel(){const set=new Set();selectedPhotos().forEach(id=>set.add(categoryForPhoto(id)));return set}
-// The add-category list is strictly the selected fund's own categories —
-// never another fund's, never a generic photo-default label.
+// This screen never picks a fund, so the add-category list spans every
+// fund's categories — just minus whatever's already in the parcel.
 function availableCategories(){
   const added=categoriesInParcel();
-  const fundCats=(FUND_INFO[selectedFundId()]?.categories||[]).map(c=>c.title);
-  return fundCats.filter(t=>!added.has(t));
+  const allCats=Object.values(FUND_INFO).flatMap(f=>f.categories.map(c=>c.title));
+  return allCats.filter(t=>!added.has(t));
 }
 const CATEGORY_IMG={'Детская одежда':'Российский Красный Крест/Детская одежда','Тёплая одежда':'Российский Красный Крест/Тёплая одежда','Обувь для взрослых':'Российский Красный Крест/Обувь для взрослых','Одеяла':'Российский Красный Крест/Одеяла','Посуда':'Российский Красный Крест/Посуда','Одежда для взрослых':'Ночлежка/Одежда для взрослых','Обувь':'Ночлежка/Обувь','Тёплые вещи':'Ночлежка/Тёплые вещи','Средства гигиены':'Ночлежка/Средства гигиены','Детская литература':'Миллион книг/Детская литература','Художественная литература':'Миллион книг/Художественная литература','Учебная литература':'Миллион книг/Учебная литература','Энциклопедии':'Миллион книг/Энциклопедии','Средства реабилитации':'Дари надежду/Средства реабилитации','Постельное бельё':'Дари надежду/Постельное бельё'};
 function categoryImage(title){const p=CATEGORY_IMG[title];return p?encodeURI('fond category photos/'+p+'/cover.png'):''}

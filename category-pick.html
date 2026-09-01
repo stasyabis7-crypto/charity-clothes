@@ -27,16 +27,15 @@ const PHOTO_FILES={1:'new-category-photos/kids-clothing.png',2:'new-category-pho
 const PHOTO_CATEGORIES={1:'Детская одежда',2:'Тёплая одежда',3:'Обувь для взрослых',4:'Одеяла',5:'Посуда',6:'Одежда для взрослых',7:'Средства гигиены',8:'Детская литература',9:'Художественная литература',10:'Учебная литература',11:'Энциклопедии',12:'Средства реабилитации',13:'Постельное бельё'};
 const CATEGORY_IMG={'Детская одежда':'Российский Красный Крест/Детская одежда','Тёплая одежда':'Российский Красный Крест/Тёплая одежда','Обувь для взрослых':'Российский Красный Крест/Обувь для взрослых','Одеяла':'Российский Красный Крест/Одеяла','Посуда':'Российский Красный Крест/Посуда','Одежда для взрослых':'Ночлежка/Одежда для взрослых','Обувь':'Ночлежка/Обувь','Тёплые вещи':'Ночлежка/Тёплые вещи','Средства гигиены':'Ночлежка/Средства гигиены','Детская литература':'Миллион книг/Детская литература','Художественная литература':'Миллион книг/Художественная литература','Учебная литература':'Миллион книг/Учебная литература','Энциклопедии':'Миллион книг/Энциклопедии','Средства реабилитации':'Дари надежду/Средства реабилитации','Постельное бельё':'Дари надежду/Постельное бельё'};
 function selectedPhotos(){const raw=sessionStorage.getItem('selectedPhotos');if(raw===null)return[1];return JSON.parse(raw).map(Number).filter(id=>PHOTO_FILES[id])}
-const PHOTO_FUND={1:1,2:1,3:1,4:1,5:1,6:2,7:2,8:3,9:3,10:3,11:3,12:4,13:4};
 function frozenPhotoCats(){try{return JSON.parse(sessionStorage.getItem('charityFrozenPhotoCats')||'{}')||{}}catch(e){return{}}}
 function categoryForPhoto(id){const f=frozenPhotoCats();if(f[id])return f[id];const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
-function selectedFundId(){const id=Number(sessionStorage.getItem('selectedFundId'));if(FUND_INFO[id])return id;const p=selectedPhotos()[0];return PHOTO_FUND[p]||1}
 function categoriesInParcel(){const set=new Set();selectedPhotos().forEach(id=>set.add(categoryForPhoto(id)));return set}
-// Strictly the selected fund's own categories — never another fund's.
+// No fund is picked on this screen — list spans every fund's categories,
+// just minus whatever's already in the parcel.
 function availableCategories(){
   const added=categoriesInParcel();
-  const fundCats=(FUND_INFO[selectedFundId()]?.categories||[]).map(c=>c.title);
-  return fundCats.filter(t=>!added.has(t));
+  const allCats=Object.values(FUND_INFO).flatMap(f=>f.categories.map(c=>c.title));
+  return allCats.filter(t=>!added.has(t));
 }
 function categoryImage(title){const p=CATEGORY_IMG[title];return p?encodeURI('fond category photos/'+p+'/cover.png'):''}
 function returnPage(){return sessionStorage.getItem('categoryReturnPage')||'step5-crisis.html'}
