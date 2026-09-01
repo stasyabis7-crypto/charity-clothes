@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Что кладёте в посылку</title>
+<style>
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-ExtraBold.ttf') format('truetype');font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:'CoFo Avito Text';src:url('fonts/CoFoAvitoText-Black.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:#111;font-family:'CoFo Avito Text',Arial,sans-serif}button{font:inherit;color:inherit}body{padding-bottom:96px}.page{width:100%;max-width:520px;margin:auto}.header{height:64px;padding:8px 16px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .2s}.header.scrolled{box-shadow:0 2px 12px rgba(0,0,0,.08)}.back{position:relative;z-index:1;width:40px;height:40px;flex-shrink:0;padding:0;border:0;background:none;cursor:pointer}.back img{width:40px;height:40px}.header-title{flex:1;text-align:center;margin:0 -48px;font-size:16px;line-height:20px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none}
+main{padding:8px 16px 24px}.category-pick-list{margin-top:8px;padding-bottom:16px}.fund-radio-row{width:100%;margin-top:16px;padding:0;border:0;background:none;display:grid;grid-template-columns:48px minmax(0,1fr) 20px;gap:12px;align-items:center;text-align:left;cursor:pointer}.fund-radio-row:first-child{margin-top:0}.fund-copy{min-width:0}.fund-name{display:block;font-size:14px;line-height:18px;font-weight:700}.category-pick-thumb{width:48px;height:48px;border-radius:12px;background-color:#f2f1f0;background-size:cover;background-position:center;flex-shrink:0}.fund-radio-check{width:20px;height:20px;border-radius:50%}
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px 10px max(20px,env(safe-area-inset-bottom));border-radius:24px 24px 0 0;background:#fff;transition:box-shadow .2s}.footer.has-shadow{box-shadow:0 -1px 3px rgba(0,0,0,.05),0 -4px 24px rgba(0,0,0,.12)}.footer-inner{max-width:480px;margin:auto}.continue{width:100%;min-height:52px;border:0;border-radius:16px;background:#141414;color:#fff;font-size:15px;line-height:20px;font-weight:400;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="header"><button class="back" onclick="goBack()" aria-label="Назад"><img src="step 2 materials/back.svg" alt=""></button><h1 class="header-title">Что кладёте в посылку</h1><span style="width:40px"></span></header>
+<main><div class="category-pick-list" id="category-pick-list"></div></main>
+</div>
+<div class="footer"><div class="footer-inner"><button class="continue" onclick="confirmCategoryPick()">Выбрать</button></div></div>
+<script>
+const FUND_INFO={1:{categories:[{title:'Детская одежда',g:'f',accept:['В хорошем состоянии','Для мальчиков и девочек','Размеры 80—152'],reject:'Не принимают вещи рваные и с пятнами, ношеное нижнее бельё.'},{title:'Тёплая одежда',g:'f',accept:['В хорошем состоянии','Куртки, свитеры, термобельё','Для взрослых и детей'],reject:'Не принимают сильно изношенные вещи, с порванными молниями и посторонним запахом.'},{title:'Обувь для взрослых',g:'f',accept:['По сезону','В чистом виде, парами','Без деформации подошвы'],reject:'Не принимают обувь с дырами, стоптанную и без пары.'},{title:'Одеяла',g:'pl',accept:['Одеяла, пледы, постельное бельё','В чистом виде'],reject:'Не принимают вещи с пятнами, дырами и неприятным запахом.'},{title:'Посуда',g:'f',accept:['Тарелки, кружки, столовые приборы','Без сколов и трещин'],reject:'Не принимают треснутую посуду и предметы с ржавчиной.'}]},2:{categories:[{title:'Одежда для взрослых',g:'f',accept:['В хорошем состоянии','По сезону','Мужская и женская'],reject:'Не принимают порванную одежду и вещи с пятнами.'},{title:'Тёплые вещи',g:'pl',accept:['Куртки, шапки, перчатки, шарфы','В хорошем состоянии'],reject:'Не принимают лёгкие летние вещи не по сезону.'},{title:'Средства гигиены',g:'pl',accept:['Новые, в упаковке','Мыло, зубные щётки, шампуни'],reject:'Не принимают использованные и открытые средства гигиены.'}]},3:{categories:[{title:'Детская литература',g:'f',accept:['Для детей от 0 до 12 лет','В хорошем состоянии'],reject:'Не принимают книги с вырванными страницами и повреждённой обложкой.'},{title:'Художественная литература',g:'f',accept:['Романы, повести, сборники рассказов','Для подростков и взрослых'],reject:'Не принимают книги с плесенью и запахом сырости.'},{title:'Учебная литература',g:'f',accept:['Учебники и пособия','Не старше 5 лет'],reject:'Не принимают устаревшие издания с испорченной обложкой.'},{title:'Энциклопедии',g:'pl',accept:['Справочники и энциклопедии','Полным комплектом'],reject:'Не принимают отдельные тома без набора.'}]},4:{categories:[{title:'Средства реабилитации',g:'pl',accept:['Трости, ходунки, инвалидные коляски','В рабочем состоянии'],reject:'Не принимают сломанные и неисправные изделия.'},{title:'Постельное бельё',g:'n',accept:['Комплекты постельного белья','В чистом виде'],reject:'Не принимают бельё с дырами и пятнами.'}]}};
+const PHOTO_FILES={1:'new podacha/fond 1 photo 1.png?v=2',2:'new podacha/fond 1 photo 2.png?v=2',3:'new podacha/fond 2 photo 1.png?v=2',4:'new podacha/fond 2 photo 2.png?v=2',5:'new podacha/fond 3 photo 1.png?v=2',6:'new podacha/fond 3 photo 2.png?v=2',7:'new podacha/fond 4 photo 1.png?v=2',8:'new podacha/fond 4 photo 2.png?v=2'};
+const PHOTO_CATEGORIES={1:'Детская одежда',2:'Детская одежда',3:'Одежда для взрослых',4:'Одежда для взрослых',5:'Детская литература',6:'Детская литература',7:'Средства реабилитации',8:'Средства реабилитации'};
+const CATEGORY_IMG={'Детская одежда':'Российский Красный Крест/Детская одежда','Тёплая одежда':'Российский Красный Крест/Тёплая одежда','Обувь для взрослых':'Российский Красный Крест/Обувь для взрослых','Одеяла':'Российский Красный Крест/Одеяла','Посуда':'Российский Красный Крест/Посуда','Одежда для взрослых':'Ночлежка/Одежда для взрослых','Обувь':'Ночлежка/Обувь','Тёплые вещи':'Ночлежка/Тёплые вещи','Средства гигиены':'Ночлежка/Средства гигиены','Детская литература':'Миллион книг/Детская литература','Художественная литература':'Миллион книг/Художественная литература','Учебная литература':'Миллион книг/Учебная литература','Энциклопедии':'Миллион книг/Энциклопедии','Средства реабилитации':'Дари надежду/Средства реабилитации','Постельное бельё':'Дари надежду/Постельное бельё'};
+function selectedPhotos(){const raw=sessionStorage.getItem('selectedPhotos');if(raw===null)return[1,2];return JSON.parse(raw).map(Number).filter(id=>PHOTO_FILES[id])}
+function frozenPhotoCats(){try{return JSON.parse(sessionStorage.getItem('charityFrozenPhotoCats')||'{}')||{}}catch(e){return{}}}
+function categoryForPhoto(id){const f=frozenPhotoCats();if(f[id])return f[id];const overrides=JSON.parse(sessionStorage.getItem('photoCategoryOverrides')||'{}');return overrides[id]||PHOTO_CATEGORIES[id]||'Вещи'}
+function selectedFundId(){const id=Number(sessionStorage.getItem('selectedFundId'));if(FUND_INFO[id])return id;const p=selectedPhotos()[0];return p<=2?1:p<=4?2:p<=6?3:4}
+function categoriesInParcel(){const set=new Set();selectedPhotos().forEach(id=>set.add(categoryForPhoto(id)));return set}
+// Strictly the selected fund's own categories — never another fund's.
+function availableCategories(){
+  const added=categoriesInParcel();
+  const fundCats=(FUND_INFO[selectedFundId()]?.categories||[]).map(c=>c.title);
+  return fundCats.filter(t=>!added.has(t));
+}
+function categoryImage(title){const p=CATEGORY_IMG[title];return p?encodeURI('fond category photos/'+p+'/cover.png'):''}
+function returnPage(){return sessionStorage.getItem('categoryReturnPage')||'step5-crisis.html'}
+let pendingCategoryTitle=null;
+function render(){
+  const list=document.getElementById('category-pick-list');
+  const cats=availableCategories();
+  if(!cats.length){location.replace(returnPage());return}
+  list.innerHTML='';
+  cats.forEach(title=>{
+    const row=document.createElement('button');
+    row.type='button';row.className='fund-radio-row';
+    row.onclick=()=>{pendingCategoryTitle=title;render()};
+    const img=categoryImage(title);
+    row.innerHTML=`<span class="category-pick-thumb"${img?` style="background-image:url('${img}')"`:''}></span><span class="fund-copy"><span class="fund-name">${title}</span></span><img class="fund-radio-check" src="step 4 materials/Checkmark ${title===pendingCategoryTitle?'on':'off'}.png" alt="">`;
+    list.appendChild(row);
+  });
+}
+function confirmCategoryPick(){
+  if(!pendingCategoryTitle)return;
+  sessionStorage.setItem('pendingCategory',pendingCategoryTitle);
+  sessionStorage.setItem('categoryReturnPage',returnPage());
+  location.href='category-details.html';
+}
+// Header "Назад" = cancel, never history.back() — this page must be
+// dismissable even when it's the first entry in the tab's history.
+function goBack(){
+  const dest=returnPage();
+  sessionStorage.removeItem('categoryReturnPage');
+  location.replace(dest);
+}
+render();
+function updateFooterShadow(){const el=document.querySelector('.footer');if(!el)return;el.classList.toggle('has-shadow',document.documentElement.scrollHeight-(window.scrollY+window.innerHeight)>4)}
+window.addEventListener('scroll',function(){document.querySelector('.header')?.classList.toggle('scrolled',window.scrollY>0);updateFooterShadow()},{passive:true});
+window.addEventListener('resize',updateFooterShadow);
+window.addEventListener('load',updateFooterShadow);
+updateFooterShadow();
+</script>
+</body>
+</html>
