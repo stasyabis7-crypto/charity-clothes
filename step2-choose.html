@@ -205,36 +205,56 @@
     <!-- All photos in unified 3-col grid -->
     <div class="photos-grid-all">
         <div class="photo-item" data-id="1" onclick="toggle(1)">
-            <img src="new podacha/fond 1 photo 1.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/kids-clothing.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-1"></span>
         </div>
         <div class="photo-item" data-id="2" onclick="toggle(2)">
-            <img src="new podacha/fond 1 photo 2.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/warm-clothing.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-2"></span>
         </div>
         <div class="photo-item" data-id="3" onclick="toggle(3)">
-            <img src="new podacha/fond 2 photo 1.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/adult-shoes.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-3"></span>
         </div>
         <div class="photo-item" data-id="4" onclick="toggle(4)">
-            <img src="new podacha/fond 2 photo 2.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/blankets.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-4"></span>
         </div>
         <div class="photo-item" data-id="5" onclick="toggle(5)">
-            <img src="new podacha/fond 3 photo 1.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/dishware.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-5"></span>
         </div>
         <div class="photo-item" data-id="6" onclick="toggle(6)">
-            <img src="new podacha/fond 3 photo 2.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/adult-clothing.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-6"></span>
         </div>
         <div class="photo-item" data-id="7" onclick="toggle(7)">
-            <img src="new podacha/fond 4 photo 1.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/hygiene-products.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-7"></span>
         </div>
         <div class="photo-item" data-id="8" onclick="toggle(8)">
-            <img src="new podacha/fond 4 photo 2.png?v=2" class="photo-img" alt="">
+            <img src="new-category-photos/kids-books.jpg" class="photo-img" alt="">
             <span class="badge" id="badge-8"></span>
+        </div>
+        <div class="photo-item" data-id="9" onclick="toggle(9)">
+            <img src="new-category-photos/fiction-books.jpg" class="photo-img" alt="">
+            <span class="badge" id="badge-9"></span>
+        </div>
+        <div class="photo-item" data-id="10" onclick="toggle(10)">
+            <img src="new-category-photos/textbooks.jpg" class="photo-img" alt="">
+            <span class="badge" id="badge-10"></span>
+        </div>
+        <div class="photo-item" data-id="11" onclick="toggle(11)">
+            <img src="new-category-photos/encyclopedias.jpg" class="photo-img" alt="">
+            <span class="badge" id="badge-11"></span>
+        </div>
+        <div class="photo-item" data-id="12" onclick="toggle(12)">
+            <img src="new-category-photos/rehab-equipment.jpg" class="photo-img" alt="">
+            <span class="badge" id="badge-12"></span>
+        </div>
+        <div class="photo-item" data-id="13" onclick="toggle(13)">
+            <img src="new-category-photos/bed-linens.jpg" class="photo-img" alt="">
+            <span class="badge" id="badge-13"></span>
         </div>
     </div>
 
@@ -271,14 +291,19 @@
         function lockedElsewhere(id) { return frozenCats[id] && frozenCats[id] !== editingCat; }
 
         const files = {
-            1: 'new podacha/fond 1 photo 1.png?v=2',
-            2: 'new podacha/fond 1 photo 2.png?v=2',
-            3: 'new podacha/fond 2 photo 1.png?v=2',
-            4: 'new podacha/fond 2 photo 2.png?v=2',
-            5: 'new podacha/fond 3 photo 1.png?v=2',
-            6: 'new podacha/fond 3 photo 2.png?v=2',
-            7: 'new podacha/fond 4 photo 1.png?v=2',
-            8: 'new podacha/fond 4 photo 2.png?v=2'
+            1: 'new-category-photos/kids-clothing.jpg',
+            2: 'new-category-photos/warm-clothing.jpg',
+            3: 'new-category-photos/adult-shoes.jpg',
+            4: 'new-category-photos/blankets.jpg',
+            5: 'new-category-photos/dishware.jpg',
+            6: 'new-category-photos/adult-clothing.jpg',
+            7: 'new-category-photos/hygiene-products.jpg',
+            8: 'new-category-photos/kids-books.jpg',
+            9: 'new-category-photos/fiction-books.jpg',
+            10: 'new-category-photos/textbooks.jpg',
+            11: 'new-category-photos/encyclopedias.jpg',
+            12: 'new-category-photos/rehab-equipment.jpg',
+            13: 'new-category-photos/bed-linens.jpg'
         };
 
         function toggle(id) {
@@ -304,7 +329,7 @@
         }
 
         function render() {
-            for (let i = 1; i <= 8; i++) {
+            for (let i = 1; i <= 13; i++) {
                 const item = document.querySelector(`[data-id="${i}"]`);
                 if (!item) continue;
                 const badge = document.getElementById(`badge-${i}`);
